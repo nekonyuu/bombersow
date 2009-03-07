@@ -8,7 +8,7 @@ int main()
     sfEvent Event;
 
     // Création de la fenêtre principale
-    Game = sfRenderWindow_Create(Mode, "Jeu (nom à choisir...)", sfClose, Settings);
+    Game = sfRenderWindow_Create(Mode, "BomberSow", sfClose, Settings);
     if (!Game)
         return EXIT_FAILURE;
 

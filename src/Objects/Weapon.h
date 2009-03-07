@@ -1,6 +1,10 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
+#define NB_WEAPONS 5
+
+#include "Objects.h"
+
 // Définition de la structure Arme
 typedef struct WEAPON
 {
@@ -12,7 +16,7 @@ typedef struct WEAPON
     unsigned int nb_max_bullets;    // Nombre de munitions max
     unsigned int nb_curr_bullets;   // Nombre de munitions restantes
     unsigned int damage;            // Dommages infligés
-    unsigned float reload_latency;  // Temps de recharge
+    float reload_latency;           // Temps de recharge
 } Weapon;
 
 #endif

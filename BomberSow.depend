@@ -20,3 +20,61 @@
 1236384671 source:d:\docs\fac\projets\projet i41\jeu\src\main.c
 	<SFML/Graphics.h>
 
+1236430651 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\audioengine.c
+
+1236442138 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\clientscreen.c
+
+1236430452 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.c
+
+1236431572 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\playscreen.c
+
+1236442138 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\serverscreen.c
+
+1236431572 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\settingsscreen.c
+
+1236445924 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\weapondefs.c
+
+1236383735 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\graphicengine\draw.c
+
+1236442175 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\inputscontrol\configparsing.c
+
+1236430452 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\inputscontrol\playercontrol.c
+
+1236446307 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
+	<SFML/Graphics.h>
+
+1236383484 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\map\maphandler.c
+
+1236383789 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\map\maploader.c
+
+1236431372 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\dataconstructor.c
+
+1236431619 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\serverthread.c
+
+1236444181 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\map.c
+	"Map.h"
+
+1236446361 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\map.h
+	<SFML/Graphics.h>
+	"Objects.h"
+
+1236446347 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.h
+	<SFML/Graphics.h>
+
+1236383651 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.c
+
+1236446551 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.c
+	"Player.h"
+
+1236446542 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.h
+	"Weapon.h"
+
+1236446530 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.h
+	"Objects.h"
+
+1236383803 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\physicsengine\collisionsystem.c
+
+1236383827 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\physicsengine\gravitysystem.c
+
+1236383803 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\physicsengine\particlesystem.c
+

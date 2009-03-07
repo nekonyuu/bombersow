@@ -7,8 +7,8 @@
 
 typedef struct MAP
 {
-    sfImage background; // Arrière-plan
-    Object* objects;    // Tableau des objets de la map
+    sfImage* background;    // Arrière-plan
+    Object* objects;        // Tableau des objets de la map
 } Map;
 
-#ifndef
+#endif

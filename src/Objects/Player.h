@@ -16,6 +16,6 @@ typedef struct PLAYER
 
     unsigned int frags;     // Nombre de tués
     unsigned int killed;    // Nombre de morts
-} Player
+} Player;
 
 #endif
