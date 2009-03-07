@@ -1,11 +1,16 @@
+#include <assert.h>
+
 #include "Player.h"
 
 // Constructeur
 Player* init_Player(char* name, Weapon* current_weapon)
 {
-    Player* new_player;
+    Player* new_player = NULL;
 
-    new_player->name = name;
+    assert(new_player = malloc(sizeof(Player)));
+
+    new_player->name = sfString_Create();
+    sfString_SetText(new_player->name, name);
     new_player->life = 100;
 
     /* TODO

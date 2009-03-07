@@ -5,7 +5,7 @@
 
 typedef struct PLAYER
 {
-    char* name;             // Nom du joueur
+    sfString *name;         // Nom du joueur
     unsigned int life;      // Vie restante
 
     Weapon current_weapon;  // Arme courante

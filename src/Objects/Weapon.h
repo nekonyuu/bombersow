@@ -8,7 +8,7 @@
 // Définition de la structure Arme
 typedef struct WEAPON
 {
-    char* name;                     // Nom de l'arme
+    sfString *name;                 // Nom de l'arme
 
     Object weapon_img;              // Image de l'arme
     Object bullet;                  // Image des munitions
