@@ -8,13 +8,14 @@ int main()
     sfVideoMode Mode = {900, 600, 32};
     sfRenderWindow* Game;
     sfEvent Event;
+    sfMusic* menuMusic = NULL;
 
     // Création de la fenêtre principale
     Game = sfRenderWindow_Create(Mode, "BomberSow", sfClose, Settings);
     if (!Game)
         return EXIT_FAILURE;
 
-    if (display_Menu() == EXIT_FAILURE)
+    if (display_Menu(menuMusic) == EXIT_FAILURE)
         return EXIT_FAILURE;
 
     // Démarrage du jeu
@@ -25,7 +26,10 @@ int main()
         {
             // Fermer : Quitter le jeu
             if (Event.Type == sfEvtClosed)
+            {
                 sfRenderWindow_Close(Game);
+                stopmusic_Menu(menuMusic);
+            }
 
             // Mettre ici tous les autres events à gérer
         }

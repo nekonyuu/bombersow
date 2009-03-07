@@ -18,4 +18,7 @@ typedef struct PLAYER
     unsigned int killed;    // Nombre de morts
 } Player;
 
+Player* player_Create(char*, Weapon*);
+void player_Destroy(Player*);
+
 #endif

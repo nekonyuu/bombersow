@@ -10,13 +10,16 @@ typedef struct WEAPON
 {
     sfString *name;                 // Nom de l'arme
 
-    Object weapon_img;              // Image de l'arme
-    Object bullet;                  // Image des munitions
+    Object *weapon_img;              // Image de l'arme
+    Object *bullet;                  // Image des munitions
 
     unsigned int nb_max_bullets;    // Nombre de munitions max
     unsigned int nb_curr_bullets;   // Nombre de munitions restantes
     unsigned int damage;            // Dommages infligés
     float reload_latency;           // Temps de recharge
 } Weapon;
+
+Weapon* weapon_Create(int);
+void weapon_Destroy(Weapon*);
 
 #endif

@@ -24,7 +24,7 @@
 
 1236442138 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\clientscreen.c
 
-1236448096 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.c
+1236452467 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.c
 	<SFML/Graphics.h>
 	<SFML/Audio.h>
 	"MenuScreen.h"
@@ -43,7 +43,7 @@
 
 1236430452 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\inputscontrol\playercontrol.c
 
-1236448231 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
+1236452543 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
 	<SFML/Graphics.h>
 	<SFML/Audio.h>
 	"Game/MenuScreen.h"
@@ -56,25 +56,30 @@
 
 1236431619 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\serverthread.c
 
-1236444181 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\map.c
+1236456135 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\map.c
+	<assert.h>
+	"Objects.h"
 	"Map.h"
 
-1236446361 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\map.h
+1236453303 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\map.h
 	<SFML/Graphics.h>
 	"Objects.h"
 
-1236447013 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.h
+1236453581 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.h
 	<SFML/Graphics.h>
 
-1236383651 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.c
+1236456338 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.c
+	<assert.h>
+	"Objects.h"
 
-1236446551 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.c
+1236456295 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.c
+	<assert.h>
 	"Player.h"
 
-1236446542 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.h
+1236456295 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.h
 	"Weapon.h"
 
-1236450078 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.h
+1236456240 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.h
 	"Objects.h"
 
 1236383803 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\physicsengine\collisionsystem.c
@@ -83,8 +88,176 @@
 
 1236383803 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\physicsengine\particlesystem.c
 
-1236446701 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.c
+1236453946 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.c
+	<assert.h>
 	"Weapon.h"
 
-1236448259 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.h
+1236452472 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.h
+
+1197292540 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\graphics.h
+	<SFML/Window.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Image.h>
+	<SFML/Graphics/PostFX.h>
+	<SFML/Graphics/Rect.h>
+	<SFML/Graphics/RenderWindow.h>
+	<SFML/Graphics/Sprite.h>
+	<SFML/Graphics/String.h>
+	<SFML/Graphics/View.h>
+
+1220440196 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\window.h
+	<SFML/System.h>
+	<SFML/Window/Context.h>
+	<SFML/Window/Event.h>
+	<SFML/Window/Input.h>
+	<SFML/Window/VideoMode.h>
+	<SFML/Window/Window.h>
+
+1194766558 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\system.h
+	<SFML/Config.h>
+	<SFML/System/Clock.h>
+	<SFML/System/Mutex.h>
+	<SFML/System/Randomizer.h>
+	<SFML/System/Sleep.h>
+	<SFML/System/Thread.h>
+
+1218699938 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\config.h
+	<stdlib.h>
+	<limits.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\system\clock.h
+	<SFML/Config.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\system\mutex.h
+	<SFML/Config.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\system\randomizer.h
+	<SFML/Config.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\system\sleep.h
+	<SFML/Config.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\system\thread.h
+	<SFML/Config.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\window\context.h
+	<SFML/Config.h>
+
+1228344646 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\window\event.h
+	<SFML/Config.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\window\input.h
+	<SFML/Config.h>
+	<SFML/Window/Event.h>
+
+1223820330 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\window\videomode.h
+	<SFML/Config.h>
+
+1223820330 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\window\window.h
+	<SFML/Config.h>
+	<SFML/Window/Event.h>
+	<SFML/Window/Input.h>
+	<SFML/Window/VideoMode.h>
+	<SFML/Window/WindowHandle.h>
+
+1223820330 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\window\windowhandle.h
+	<SFML/Config.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\graphics\color.h
+	<SFML/Config.h>
+
+1228344836 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\graphics\image.h
+	<SFML/Config.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Rect.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\graphics\rect.h
+	<SFML/Config.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\graphics\postfx.h
+	<SFML/Config.h>
+	<SFML/Graphics/Image.h>
+
+1236451917 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\graphics\renderwindow.h
+	<SFML/Config.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Image.h>
+	<SFML/Graphics/PostFX.h>
+	<SFML/Graphics/Rect.h>
+	<SFML/Graphics/Shape.h>
+	<SFML/Graphics/Sprite.h>
+	<SFML/Graphics/String.h>
+	<SFML/Graphics/View.h>
+	<SFML/Window/Event.h>
+	<SFML/Window/Input.h>
+	<SFML/Window/VideoMode.h>
+	<SFML/Window/Window.h>
+	<SFML/Window/WindowHandle.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\graphics\shape.h
+	<SFML/Config.h>
+	<SFML/Graphics/BlendMode.h>
+	<SFML/Graphics/Color.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\graphics\blendmode.h
+	<SFML/Config.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\graphics\sprite.h
+	<SFML/Config.h>
+	<SFML/Graphics/BlendMode.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Image.h>
+	<SFML/Graphics/Rect.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\graphics\string.h
+	<SFML/Config.h>
+	<SFML/Graphics/BlendMode.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Font.h>
+	<SFML/Graphics/Rect.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\graphics\font.h
+	<SFML/Graphics/Glyph.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\graphics\glyph.h
+	<SFML/Graphics/Rect.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\graphics\view.h
+	<SFML/Config.h>
+	<SFML/Graphics/Rect.h>
+
+1197815322 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\audio.h
+	<SFML/System.h>
+	<SFML/Audio/Listener.h>
+	<SFML/Audio/Music.h>
+	<SFML/Audio/Sound.h>
+	<SFML/Audio/SoundBuffer.h>
+	<SFML/Audio/SoundBufferRecorder.h>
+	<SFML/Audio/SoundRecorder.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\audio\listener.h
+	<SFML/Config.h>
+
+1223820332 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\audio\music.h
+	<SFML/Config.h>
+	<SFML/Audio/SoundStatus.h>
+
+1223820334 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\audio\soundstatus.h
+	<SFML/Config.h>
+
+1223820334 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\audio\sound.h
+	<SFML/Config.h>
+	<SFML/Audio/SoundBuffer.h>
+	<SFML/Audio/SoundStatus.h>
+
+1223820334 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\audio\soundbuffer.h
+	<SFML/Config.h>
+
+1223820334 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\audio\soundbufferrecorder.h
+	<SFML/Config.h>
+	<SFML/Audio/SoundBuffer.h>
+
+1225618936 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\audio\soundrecorder.h
+	<SFML/Config.h>
+	<SFML/Audio/SoundBuffer.h>
 

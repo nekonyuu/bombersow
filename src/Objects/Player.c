@@ -3,11 +3,11 @@
 #include "Player.h"
 
 // Constructeur
-Player* init_Player(char* name, Weapon* current_weapon)
+Player* player_Create(char* name, Weapon* current_weapon)
 {
     Player* new_player = NULL;
 
-    assert(new_player = malloc(sizeof(Player)));
+    assert(new_player = (Player*) malloc(sizeof(Player)));
 
     new_player->name = sfString_Create();
     sfString_SetText(new_player->name, name);
@@ -27,4 +27,11 @@ Player* init_Player(char* name, Weapon* current_weapon)
     new_player->killed = 0;
 
     return new_player;
+}
+
+// Destructeur
+void player_Destroy(Player* player2destroy)
+{
+    sfString_Destroy(player2destroy->name);
+    free(player2destroy);
 }

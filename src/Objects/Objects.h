@@ -18,4 +18,7 @@ typedef struct OBJECT
     unsigned int weapon_id; // ID de l'arme liée au dessin (si type = 2)
 } Object;
 
+Object* object_Create();
+void object_Destroy(Object*);
+
 #endif
