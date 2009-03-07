@@ -58,7 +58,7 @@
 	<SFML/Graphics.h>
 	"Objects.h"
 
-1236446347 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.h
+1236447013 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.h
 	<SFML/Graphics.h>
 
 1236383651 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.c
@@ -77,4 +77,7 @@
 1236383827 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\physicsengine\gravitysystem.c
 
 1236383803 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\physicsengine\particlesystem.c
+
+1236446701 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.c
+	"Weapon.h"
 

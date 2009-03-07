@@ -1,4 +1,6 @@
 #include <SFML/Graphics.h>
+#include <SFML/Audio.h>
+#include "Game/MenuScreen.h"
 
 int main()
 {
@@ -10,6 +12,9 @@ int main()
     // Création de la fenêtre principale
     Game = sfRenderWindow_Create(Mode, "BomberSow", sfClose, Settings);
     if (!Game)
+        return EXIT_FAILURE;
+
+    if (display_Menu() == EXIT_FAILURE)
         return EXIT_FAILURE;
 
     // Démarrage du jeu
