@@ -1,18 +1,18 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-#include <SFML/
-
 // Définition de la structure Arme
 typedef struct WEAPON
 {
-    unsigned int id;
-    char* name;
-    unsigned int nb_bullets;
-    unsigned int bullet_id;
-    unsigned int damage;
-    unsigned int bullet_speed;
-    unsigned float reload_latency;
+    char* name;                     // Nom de l'arme
+
+    Object weapon_img;              // Image de l'arme
+    Object bullet;                  // Image des munitions
+
+    unsigned int nb_max_bullets;    // Nombre de munitions max
+    unsigned int nb_curr_bullets;   // Nombre de munitions restantes
+    unsigned int damage;            // Dommages infligés
+    unsigned float reload_latency;  // Temps de recharge
 } Weapon;
 
 #endif

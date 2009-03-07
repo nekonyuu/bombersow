@@ -83,10 +83,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\Objects\Map.h" />
-		<Unit filename="src\Objects\Npc.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\Objects\Npc.h" />
 		<Unit filename="src\Objects\Objects.c">
 			<Option compilerVar="CC" />
 		</Unit>

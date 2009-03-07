@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
-	<File name="src\Main.c" open="1" top="0" tabpos="6">
+	<File name="src\Main.c" open="1" top="0" tabpos="5">
 		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="src\Objects\Map.h" open="1" top="0" tabpos="4">
-		<Cursor position="0" topLine="0" />
-	</File>
-	<File name="src\Objects\Npc.h" open="1" top="1" tabpos="3">
-		<Cursor position="220" topLine="0" />
+	<File name="src\Objects\Map.h" open="1" top="0" tabpos="3">
+		<Cursor position="145" topLine="0" />
 	</File>
 	<File name="src\Objects\Objects.h" open="1" top="0" tabpos="2">
-		<Cursor position="0" topLine="0" />
+		<Cursor position="635" topLine="0" />
 	</File>
 	<File name="src\Objects\Player.h" open="1" top="0" tabpos="1">
-		<Cursor position="0" topLine="0" />
+		<Cursor position="347" topLine="0" />
 	</File>
-	<File name="src\Objects\Weapon.h" open="1" top="0" tabpos="5">
-		<Cursor position="216" topLine="0" />
+	<File name="src\Objects\Weapon.h" open="1" top="1" tabpos="4">
+		<Cursor position="99" topLine="0" />
+	</File>
+	<File name="src\Objects\WeaponDefs.h" open="0" top="0" tabpos="0">
+		<Cursor position="21" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>
