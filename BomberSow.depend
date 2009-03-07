@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1236383617 source:d:\docs\fac\projets\projet i41\jeu\src\graphicengine\characters\player.c
+
+1236383735 source:d:\docs\fac\projets\projet i41\jeu\src\graphicengine\drawing\drawchar.c
+
+1236383697 source:d:\docs\fac\projets\projet i41\jeu\src\graphicengine\drawing\drawmap.c
+
+1236383556 source:d:\docs\fac\projets\projet i41\jeu\src\graphicengine\objects\dynamiccontrol.c
+
+1236383576 source:d:\docs\fac\projets\projet i41\jeu\src\graphicengine\objects\staticcontrol.c
+
+1236383484 source:d:\docs\fac\projets\projet i41\jeu\src\map\mapcreator.c
+
+1236383789 source:d:\docs\fac\projets\projet i41\jeu\src\map\maploader.c
+
+1236383827 source:d:\docs\fac\projets\projet i41\jeu\src\physicsengine\gravitysystem.c
+
+1236383803 source:d:\docs\fac\projets\projet i41\jeu\src\physicsengine\particlesystem.c
+
+1236384671 source:d:\docs\fac\projets\projet i41\jeu\src\main.c
+	<SFML/Graphics.h>
+
