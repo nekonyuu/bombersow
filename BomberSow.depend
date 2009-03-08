@@ -42,9 +42,9 @@
 
 1236430452 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\inputscontrol\playercontrol.c
 
-1236518868 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
-	<SFML/Graphics.h>
-	<SFML/Audio.h>
+1236519774 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
+	"SFML/Graphics.h"
+	"SFML/Audio.h"
 	"Game/MenuScreen.h"
 	"Objects/Screen.h"
 
@@ -70,7 +70,7 @@
 	"Objects/Objects.h"
 	"Objects/Player.h"
 
-1236476754 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.h
+1236523554 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.h
 	"SFML/Graphics.h"
 
 1236476731 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.c
@@ -85,7 +85,7 @@
 1236476501 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.h
 	"Objects/Weapon.h"
 
-1236508804 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.h
+1236523178 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.h
 	<stdbool.h>
 	"Objects/Objects.h"
 	"Objects/Bullet.h"
@@ -270,7 +270,7 @@
 	<SFML/Config.h>
 	<SFML/Audio/SoundBuffer.h>
 
-1236518798 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\screen.h
+1236519210 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\screen.h
 	"SFML/Graphics.h"
 	"SFML/Audio.h"
 
@@ -282,7 +282,7 @@
 1236476599 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\bullet.h
 	"SFML/Graphics.h"
 
-1236518845 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\screen.c
+1236519079 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\screen.c
 	<assert.h>
 	"Objects/Screen.h"
 

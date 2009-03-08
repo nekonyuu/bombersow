@@ -4,7 +4,7 @@
 void display_Menu(sfRenderWindow* Game)
 {
     Screen* Menu = screen_Create();
-    sfMusic *menuMusic = sfMusic_CreateFromFile("sounds/music/ParagonX9 - Defcon Zero.ogg");
+    sfMusic *menuMusic = sfMusic_CreateFromFile("sounds/music/ParagonX9 - Metropolis [8-Bit].ogg");
     sfImage *BG_image = sfImage_CreateFromFile("base/images/coming_soon.jpg");
     sfEvent Event;
 
