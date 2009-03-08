@@ -4,7 +4,7 @@
 
 int display_Menu(sfMusic* menuMusic)
 {
-    if(startmusic_Menu(menuMusic) == EXIT_FAILURE)
+    if (startmusic_Menu(menuMusic) == EXIT_FAILURE)
         return EXIT_FAILURE;
 
     // TODO : Affichage Menu & Options
@@ -26,5 +26,5 @@ int startmusic_Menu(sfMusic* menuMusic)
 
 void stopmusic_Menu(sfMusic* menuMusic)
 {
-   sfMusic_Destroy(menuMusic);
+    sfMusic_Destroy(menuMusic);
 }

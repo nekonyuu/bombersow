@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 #include "Objects/Objects.h"
+#include "Objects/Bullet.h"
 
 #define NB_MAX_WEAPONS 7
 
@@ -13,7 +14,7 @@ typedef struct WEAPON
     sfString *name;                 // Nom de l'arme
 
     Object *weapon_img;             // Image de l'arme
-    Object *bullet;                 // Image des projectiles
+    Bullet *bullet;                 // Projectile
 
     int nb_max_bullets;             // Nombre de munitions max (-1 si infini)
     int nb_curr_bullets;            // Nombre de munitions restantes (-1 si infini)

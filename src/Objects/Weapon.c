@@ -1,5 +1,4 @@
 #include <assert.h>
-
 #include "Objects/Weapon.h"
 
 // Constructeur
@@ -29,9 +28,10 @@ Weapon* weapon_Create(int type)
 // Destructeur
 void weapon_Destroy(Weapon* weapon2destroy)
 {
-    object_Destroy(weapon2destroy->weapon_img);
-    object_Destroy(weapon2destroy->bullet);
-    sfString_Destroy(weapon2destroy->name);
+    assert(weapon2destroy != NULL);
+    weapon2destroy->name = NULL;
+    weapon2destroy->weapon_img = NULL;
+    weapon2destroy->bullet = NULL;
 
     free(weapon2destroy);
 }

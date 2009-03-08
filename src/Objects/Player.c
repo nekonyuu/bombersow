@@ -1,5 +1,4 @@
 #include <assert.h>
-
 #include "Objects/Player.h"
 #include "Objects/Weapon.h"
 
@@ -14,7 +13,7 @@ Player* player_Create(char* name, unsigned int current_weapon)
     sfString_SetText(new_player->name, name);
     new_player->life = 100;
 
-    for(int i = 0; i < NB_MAX_WEAPONS; i++)
+    for (int i = 0; i < NB_MAX_WEAPONS; i++)
         new_player->weapons[i] = armory[i];
 
     new_player->weapons[current_weapon].collected = true;   // Arme active
@@ -35,7 +34,7 @@ Player* player_Create(char* name, unsigned int current_weapon)
 // Destructeur
 void player_Destroy(Player* player2destroy)
 {
+    assert(player2destroy != NULL);
     sfString_Destroy(player2destroy->name);
-
     free(player2destroy);
 }

@@ -24,10 +24,10 @@
 
 1236442138 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\clientscreen.c
 
-1236452467 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.c
+1236469381 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.c
 	<SFML/Graphics.h>
 	<SFML/Audio.h>
-	"MenuScreen.h"
+	"Game/MenuScreen.h"
 
 1236431572 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\playscreen.c
 
@@ -43,7 +43,7 @@
 
 1236430452 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\inputscontrol\playercontrol.c
 
-1236462234 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
+1236469293 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
 	<SFML/Graphics.h>
 	<SFML/Audio.h>
 	"Game/MenuScreen.h"
@@ -72,14 +72,16 @@
 	<assert.h>
 	"Objects/Objects.h"
 
-1236467622 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.c
+1236470653 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.c
 	<assert.h>
 	"Objects/Player.h"
-
-1236467614 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.h
 	"Objects/Weapon.h"
 
-1236467816 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.h
+1236470390 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.h
+	"Objects/Weapon.h"
+
+1236472357 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.h
+	<stdbool.h>
 	"Objects/Objects.h"
 
 1236383803 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\physicsengine\collisionsystem.c
@@ -88,9 +90,9 @@
 
 1236383803 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\physicsengine\particlesystem.c
 
-1236453946 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.c
+1236470556 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.c
 	<assert.h>
-	"Weapon.h"
+	"Objects/Weapon.h"
 
 1236452472 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.h
 
