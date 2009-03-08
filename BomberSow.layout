@@ -2,16 +2,19 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
 	<File name="src\Game\MenuScreen.c" open="1" top="0" tabpos="1">
-		<Cursor position="450" topLine="0" />
+		<Cursor position="313" topLine="0" />
 	</File>
 	<File name="src\Game\MenuScreen.h" open="1" top="0" tabpos="5">
-		<Cursor position="80" topLine="0" />
+		<Cursor position="72" topLine="0" />
 	</File>
 	<File name="src\Main.c" open="1" top="0" tabpos="2">
-		<Cursor position="239" topLine="0" />
+		<Cursor position="653" topLine="0" />
 	</File>
-	<File name="src\Map\MapHandler.h" open="0" top="0" tabpos="6">
-		<Cursor position="0" topLine="0" />
+	<File name="src\Map\MapHandler.c" open="1" top="1" tabpos="11">
+		<Cursor position="10" topLine="0" />
+	</File>
+	<File name="src\Map\MapHandler.h" open="1" top="0" tabpos="12">
+		<Cursor position="121" topLine="0" />
 	</File>
 	<File name="src\Map\MapLoader.h" open="0" top="0" tabpos="5">
 		<Cursor position="0" topLine="0" />
@@ -22,16 +25,16 @@
 	<File name="src\Objects\Bullet.h" open="0" top="0" tabpos="0">
 		<Cursor position="299" topLine="0" />
 	</File>
-	<File name="src\Objects\Map.c" open="0" top="0" tabpos="0">
-		<Cursor position="19" topLine="0" />
+	<File name="src\Objects\Map.c" open="1" top="0" tabpos="10">
+		<Cursor position="781" topLine="0" />
 	</File>
-	<File name="src\Objects\Map.h" open="0" top="0" tabpos="4">
-		<Cursor position="58" topLine="0" />
+	<File name="src\Objects\Map.h" open="1" top="0" tabpos="8">
+		<Cursor position="543" topLine="0" />
 	</File>
 	<File name="src\Objects\Objects.c" open="0" top="0" tabpos="8">
 		<Cursor position="19" topLine="0" />
 	</File>
-	<File name="src\Objects\Objects.h" open="0" top="0" tabpos="3">
+	<File name="src\Objects\Objects.h" open="1" top="0" tabpos="9">
 		<Cursor position="64" topLine="0" />
 	</File>
 	<File name="src\Objects\Player.c" open="0" top="0" tabpos="10">
@@ -41,15 +44,15 @@
 		<Cursor position="237" topLine="0" />
 	</File>
 	<File name="src\Objects\Screen.c" open="1" top="0" tabpos="3">
-		<Cursor position="799" topLine="0" />
+		<Cursor position="629" topLine="0" />
 	</File>
-	<File name="src\Objects\Screen.h" open="1" top="1" tabpos="4">
-		<Cursor position="64" topLine="0" />
+	<File name="src\Objects\Screen.h" open="1" top="0" tabpos="4">
+		<Cursor position="89" topLine="0" />
 	</File>
-	<File name="src\Objects\Weapon.c" open="0" top="0" tabpos="9">
-		<Cursor position="1111" topLine="24" />
+	<File name="src\Objects\Weapon.c" open="1" top="0" tabpos="6">
+		<Cursor position="1226" topLine="35" />
 	</File>
-	<File name="src\Objects\Weapon.h" open="0" top="0" tabpos="1">
-		<Cursor position="375" topLine="0" />
+	<File name="src\Objects\Weapon.h" open="1" top="0" tabpos="7">
+		<Cursor position="1512" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

@@ -6,17 +6,18 @@
 
 typedef struct SCREEN
 {
-    sfSprite* background;
+    sfSprite* background;       // Arrière-plan
 
-    sfSprite** img_options;
-    unsigned int nb_options;
+    sfSprite** img_options;     // Sprites des Options
+    unsigned int nb_options;    // Nombre d'options
 
-    sfMusic* music;
+    sfMusic* music;             // Musique
 } Screen;
 
 Screen* screen_Create();
 void screen_Destroy(Screen*);
-int screen_LoadMusic(Screen*, sfMusic*, sfBool);
-int screen_LoadBG(Screen*, sfImage*);
+void screen_LoadMusic(Screen*, sfMusic*, sfBool);
+void screen_PlayMusic(Screen*);
+void screen_LoadBG(Screen*, sfImage*);
 
 #endif

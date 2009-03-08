@@ -1,6 +1,7 @@
 #include <assert.h>
 #include "Objects/Screen.h"
 
+// Constructeur
 Screen* screen_Create()
 {
     Screen* new_screen = NULL;
@@ -15,8 +16,11 @@ Screen* screen_Create()
     return new_screen;
 }
 
+// Destructeur
 void screen_Destroy(Screen* screen2destroy)
 {
+    assert(screen2destroy != NULL);
+
     sfSprite_Destroy(screen2destroy->background);
     for(int i = 0; i < screen2destroy->nb_options; i++)
         sfSprite_Destroy(screen2destroy->img_options[i]);
@@ -24,25 +28,27 @@ void screen_Destroy(Screen* screen2destroy)
     free(screen2destroy);
 }
 
-int screen_LoadMusic(Screen* screen, sfMusic* music, sfBool loop)
+// Charge une musique dans un Screen
+void screen_LoadMusic(Screen* screen, sfMusic* music, sfBool loop)
 {
-    if (!music)
-        return EXIT_FAILURE;
+    assert(music != NULL);
 
     screen->music = music;
     sfMusic_SetLoop(screen->music, loop);
-    sfMusic_Play(screen->music);
-
-    return EXIT_SUCCESS;
 }
 
-int screen_LoadBG(Screen* screen, sfImage* BG)
+void screen_PlayMusic(Screen* screen)
 {
-    if (!BG)
-        return EXIT_FAILURE;
+    assert(screen->music != NULL);
+
+    sfMusic_Play(screen->music);
+}
+
+// Charge un arrière plan dans un Screen
+void screen_LoadBG(Screen* screen, sfImage* BG)
+{
+    assert(BG != NULL);
 
     screen->background = sfSprite_Create();
     sfSprite_SetImage(screen->background, BG);
-
-    return EXIT_SUCCESS;
 }

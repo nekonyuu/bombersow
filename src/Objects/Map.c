@@ -11,6 +11,7 @@ Map* map_Create()
     new_map->background = NULL;
     new_map->objects = NULL;
     new_map->nb_objects = 0;
+    new_map->nb_players = 0;
 
     assert(new_map->player_list = (Player**) malloc(sizeof(Player*)));
     for (int i = 0; i < NB_MAX_PLAYERS; i++)
@@ -23,6 +24,7 @@ Map* map_Create()
 void map_Destroy(Map* map2destroy)
 {
     assert(map2destroy != NULL);
+
     sfImage_Destroy(map2destroy->background);
     for (int i = 0; i < map2destroy->nb_objects; i++)
         object_Destroy(map2destroy->objects[i]);

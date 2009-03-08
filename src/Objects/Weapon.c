@@ -36,7 +36,7 @@ void weapon_Destroy(Weapon* weapon2destroy)
     free(weapon2destroy);
 }
 
-// Création de l'armurerie & WeaponDefs
+// Création de l'armurerie & WeaponDefs, TODO : Chargement des sprites des armes
 void armory_Create(Weapon* armory)
 {
     // Pied de biche
@@ -70,6 +70,7 @@ void armory_Create(Weapon* armory)
     sfString_SetText(armory[5].name, "Sniper");
 }
 
+// Destructeur de l'armurerie
 void armory_Destroy(Weapon* armory2destroy)
 {
     for(int i = 0; i < NB_MAX_WEAPONS; i++)
@@ -78,5 +79,5 @@ void armory_Destroy(Weapon* armory2destroy)
         object_Destroy(armory2destroy[i].weapon_img);
         bullet_Destroy(armory2destroy[i].bullet);
     }
-    free(armory2destroy)
+    free(armory2destroy);
 }

@@ -3,6 +3,6 @@
 
 #include "SFML/Graphics.h"
 
-int display_Menu(sfRenderWindow*);
+void display_Menu(sfRenderWindow*);
 
 #endif

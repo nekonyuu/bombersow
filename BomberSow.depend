@@ -24,7 +24,7 @@
 
 1236442138 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\clientscreen.c
 
-1236507747 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.c
+1236518636 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.c
 	"Game/MenuScreen.h"
 	"Objects/Screen.h"
 
@@ -42,13 +42,17 @@
 
 1236430452 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\inputscontrol\playercontrol.c
 
-1236479686 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
+1236518868 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
 	<SFML/Graphics.h>
 	<SFML/Audio.h>
 	"Game/MenuScreen.h"
 	"Objects/Screen.h"
 
-1236383484 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\map\maphandler.c
+1236512671 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\map\maphandler.c
+	<assert.h>
+	"Objects/Map.h"
+	"Map/MapLoader.h"
+	"Map/MapHandler.h"
 
 1236383789 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\map\maploader.c
 
@@ -56,12 +60,12 @@
 
 1236431619 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\serverthread.c
 
-1236476838 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\map.c
+1236512504 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\map.c
 	<assert.h>
 	"Objects/Objects.h"
 	"Objects/Map.h"
 
-1236476761 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\map.h
+1236512561 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\map.h
 	"SFML/Graphics.h"
 	"Objects/Objects.h"
 	"Objects/Player.h"
@@ -81,7 +85,7 @@
 1236476501 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.h
 	"Objects/Weapon.h"
 
-1236476904 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.h
+1236508804 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.h
 	<stdbool.h>
 	"Objects/Objects.h"
 	"Objects/Bullet.h"
@@ -92,11 +96,11 @@
 
 1236383803 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\physicsengine\particlesystem.c
 
-1236476731 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.c
+1236510111 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.c
 	<assert.h>
 	"Objects/Weapon.h"
 
-1236507803 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.h
+1236518603 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.h
 	"SFML/Graphics.h"
 
 1197292540 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\graphics.h
@@ -266,7 +270,7 @@
 	<SFML/Config.h>
 	<SFML/Audio/SoundBuffer.h>
 
-1236507679 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\screen.h
+1236518798 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\screen.h
 	"SFML/Graphics.h"
 	"SFML/Audio.h"
 
@@ -278,7 +282,11 @@
 1236476599 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\bullet.h
 	"SFML/Graphics.h"
 
-1236508079 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\screen.c
+1236518845 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\screen.c
 	<assert.h>
 	"Objects/Screen.h"
+
+1236442694 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\map\maploader.h
+
+1236512566 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\map\maphandler.h
 

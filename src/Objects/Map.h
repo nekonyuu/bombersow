@@ -10,9 +10,12 @@
 typedef struct MAP
 {
     sfImage* background;        // Arrière-plan
+
     Object** objects;           // Tableau des objets de la map
     unsigned int nb_objects;    // Nombre d'objets sur la map
+
     Player** player_list;       // Liste des joueurs de la map
+    unsigned int nb_players;    // Nombre de joueurs connectés sur la map
 } Map;
 
 Map* map_Create();
