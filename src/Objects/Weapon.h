@@ -23,7 +23,7 @@ typedef struct WEAPON
     unsigned int splash_radius;     // Distance de dommages collatéraux (dmg/(coef)^nbpixel)
     float splash_coef;              // Diminution des dommages selon la distance dans le cercle (dommage = (splash_coef) ^ distance par rapport au centre (en pixels) * dommages de base)
     float selfdamage_coef;          // Self-Damage (selfdamage * (splash_coef^distance du centre) * dmg)
-    unsigned proj_speed;            // Vitesse des projectiles
+    unsigned int proj_speed;        // Vitesse des projectiles
 
     _Bool collected;                // Ramassée ? (utilisé seulement pour l'inventaire du joueur)
 } Weapon;
