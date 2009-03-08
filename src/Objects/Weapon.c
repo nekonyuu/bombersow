@@ -75,6 +75,10 @@ void armory_Destroy(Weapon* armory2destroy)
 {
     for(int i = 0; i < NB_MAX_WEAPONS; i++)
     {
+        assert(armory2destroy[i].name != NULL
+            && armory2destroy[i].weapon_img != NULL
+            && armory2destroy[i].bullet != NULL);
+
         sfString_Destroy(armory2destroy[i].name);
         object_Destroy(armory2destroy[i].weapon_img);
         bullet_Destroy(armory2destroy[i].bullet);

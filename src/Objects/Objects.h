@@ -9,8 +9,11 @@ typedef struct OBJECT
 
     sfImage *draw_img;      // Image de l'objet
 
-    float coord_x;          // Coordonnées de l'objet
-    float coord_y;
+    float start_coord_x;    // Coordonnées de l'objet
+    float start_coord_y;
+
+    float curr_coord_x;     // Coordonnées courantes de l'objet (serviront au dessin et seront mises à jour pour le déplacement)
+    float curr_coord_y;
 
     float dest_coord_x;     // Coordonnées d'arrivée de l'objet (si dynamique)
     float dest_coord_y;

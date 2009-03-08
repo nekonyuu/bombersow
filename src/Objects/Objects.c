@@ -6,7 +6,7 @@ Object* object_Create()
     Object* new_object = NULL;
     assert(new_object = (Object*) malloc(sizeof(Object)));
 
-    // TODO
+    // TODO : Chargement du sprite et ses coordonnées
 
     return new_object;
 }

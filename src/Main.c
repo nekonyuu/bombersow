@@ -1,5 +1,5 @@
-#include <SFML/Graphics.h>
-#include <SFML/Audio.h>
+#include "SFML/Graphics.h"
+#include "SFML/Audio.h"
 #include "Game/MenuScreen.h"
 #include "Objects/Screen.h"
 

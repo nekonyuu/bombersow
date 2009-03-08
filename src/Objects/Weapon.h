@@ -21,7 +21,7 @@ typedef struct WEAPON
     unsigned int damage;            // Dommages infligés
     unsigned int reload_latency;    // Temps de recharge (en millisecondes)
     int range;                      // Portée de l'arme (-1 si infinie)
-    unsigned int splash_radius;     // Distance de dommages collatéraux (dmg/(coef)^nbpixel)
+    unsigned int splash_radius;     // Distance de dommages collatéraux
     float splash_coef;              // Diminution des dommages selon la distance dans le cercle (dommage = (splash_coef) ^ distance par rapport au centre (en pixels) * dommages de base)
     float selfdamage_coef;          // Self-Damage (selfdamage * (splash_coef^distance du centre) * dmg)
     unsigned int proj_speed;        // Vitesse des projectiles
