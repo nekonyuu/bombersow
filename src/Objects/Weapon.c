@@ -69,3 +69,14 @@ void armory_Create(Weapon* armory)
     armory[5].name = sfString_Create();
     sfString_SetText(armory[5].name, "Sniper");
 }
+
+void armory_Destroy(Weapon* armory2destroy)
+{
+    for(int i = 0; i < NB_MAX_WEAPONS; i++)
+    {
+        sfString_Destroy(armory2destroy[i].name);
+        object_Destroy(armory2destroy[i].weapon_img);
+        bullet_Destroy(armory2destroy[i].bullet);
+    }
+    free(armory2destroy)
+}

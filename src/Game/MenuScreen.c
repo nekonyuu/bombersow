@@ -13,27 +13,20 @@ int display_Menu(sfRenderWindow* Game)
 
     while (sfRenderWindow_IsOpened(Game))
     {
-        // Surveillance des évènements
-        while (sfRenderWindow_GetEvent(Game, &Event))
+        while (sfRenderWindow_GetEvent(Game, &Event))           // Surveillance des évènements
         {
-            // Fermer : Quitter le jeu
-            if (Event.Type == sfEvtClosed)
+            if (Event.Type == sfEvtClosed)                      // Fermer : Quitter le jeu
             {
                 sfRenderWindow_Close(Game);
-                screen_Destroy(Menu);
+                screen_Destroy(Menu);                           // Fermeture du Menu et nettoyage des ressources
             }
 
             // Mettre ici tous les autres events à gérer
         }
 
-        // Vidage de l'écran
-        sfRenderWindow_Clear(Game, sfBlack);
-
-        // Dessin du BG
-        sfRenderWindow_DrawSprite(Game, Menu->background);
-
-        // Mise à jour de la fenêtre
-        sfRenderWindow_Display(Game);
+        sfRenderWindow_Clear(Game, sfBlack);                    // Vidage de l'écran
+        sfRenderWindow_DrawSprite(Game, Menu->background);      // Dessin du BG
+        sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
     }
     return EXIT_SUCCESS;
 }

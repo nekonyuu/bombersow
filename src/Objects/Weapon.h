@@ -34,5 +34,6 @@ Weapon armory[NB_MAX_WEAPONS];      // Armes du jeu en accès global
 Weapon* weapon_Create(int);
 void weapon_Destroy(Weapon*);
 void armory_Create(Weapon*);
+void armory_Destroy(Weapon*);
 
 #endif

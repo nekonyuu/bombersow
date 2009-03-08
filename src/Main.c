@@ -15,11 +15,12 @@ int main()
         return EXIT_FAILURE;
 
     // Démarrage du jeu
-    // armory_Create(armory); // Remplissage du tableau
+    // armory_Create(armory);       // Remplissage du tableau
     display_Menu(Game);
 
     // Nettoyage des ressources
     sfRenderWindow_Destroy(Game);
+    // armory_Destroy(armory);      // Destruction du tableau
 
     return EXIT_SUCCESS;
 }
