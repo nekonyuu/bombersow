@@ -1,9 +1,10 @@
 #include <assert.h>
 
-#include "Player.h"
+#include "Objects/Player.h"
+#include "Objects/Weapon.h"
 
 // Constructeur
-Player* player_Create(char* name, Weapon* current_weapon)
+Player* player_Create(char* name, unsigned int current_weapon)
 {
     Player* new_player = NULL;
 
@@ -13,13 +14,15 @@ Player* player_Create(char* name, Weapon* current_weapon)
     sfString_SetText(new_player->name, name);
     new_player->life = 100;
 
-    /* TODO
-    if(current_weapon == NULL)
-        new_player->current_weapon = ;
-    else
-        new_player->current_weapon = current_weapon;
+    for(int i = 0; i < NB_MAX_WEAPONS; i++)
+        new_player->weapons[i] = armory[i];
 
-    new_player->coord_x = ;
+    new_player->weapons[current_weapon].collected = true;   // Arme active
+    new_player->nb_weapons = 1;
+    new_player->current_weapon = current_weapon;            // Arme choisie dès le spawn
+
+    /* TODO : Fonction random de coordonnées de spawn
+    new_player->coord_x = ;                                 // Coordonnées de spawn
     new_player->coord_y = ;
     */
 
@@ -33,5 +36,6 @@ Player* player_Create(char* name, Weapon* current_weapon)
 void player_Destroy(Player* player2destroy)
 {
     sfString_Destroy(player2destroy->name);
+
     free(player2destroy);
 }

@@ -1,24 +1,26 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Weapon.h"
+#include "Objects/Weapon.h"
 
 typedef struct PLAYER
 {
-    sfString *name;         // Nom du joueur
-    unsigned int life;      // Vie restante
+    sfString *name;                 // Nom du joueur
+    unsigned int life;              // Vie restante
 
-    Weapon current_weapon;  // Arme courante
+    Weapon weapons[NB_MAX_WEAPONS]; // Armes du joueur
+    unsigned int nb_weapons;        // Nombre d'armes
+    unsigned int current_weapon;    // Arme courante
 
     // Emplacement sur la map
     float coord_x;
     float coord_y;
 
-    unsigned int frags;     // Nombre de tués
-    unsigned int killed;    // Nombre de morts
+    unsigned int frags;             // Nombre de tués
+    unsigned int killed;            // Nombre de morts
 } Player;
 
-Player* player_Create(char*, Weapon*);
+Player* player_Create(char*, unsigned int);
 void player_Destroy(Player*);
 
 #endif

@@ -15,7 +15,9 @@ typedef struct OBJECT
     float move_distance;    // Distance de mouvement (0 si move_type = 0)
     unsigned int speed;     // Vitesse de mouvement (Plate-forme mobile & Pièges)
 
-    unsigned int weapon_id; // ID de l'arme liée au dessin (si type = 2)
+    unsigned int weapon_id; // ID de l'arme liée au dessin (si type <= 2)
+
+    unsigned int nb_ammo;
 } Object;
 
 Object* object_Create();

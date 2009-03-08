@@ -19,6 +19,8 @@ int main()
         return EXIT_FAILURE;
 
     // Démarrage du jeu
+    // armory_Create(armory); // Remplissage du tableau
+
     while (sfRenderWindow_IsOpened(Game))
     {
         // Surveillance des évènements

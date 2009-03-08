@@ -1,11 +1,13 @@
 #include <SFML/Graphics.h>
 #include <SFML/Audio.h>
-#include "MenuScreen.h"
+#include "Game/MenuScreen.h"
 
 int display_Menu(sfMusic* menuMusic)
 {
     if(startmusic_Menu(menuMusic) == EXIT_FAILURE)
         return EXIT_FAILURE;
+
+    // TODO : Affichage Menu & Options
     return EXIT_SUCCESS;
 }
 

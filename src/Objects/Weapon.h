@@ -1,25 +1,37 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-#define NB_WEAPONS 5
+#include <stdbool.h>
 
-#include "Objects.h"
+#include "Objects/Objects.h"
+
+#define NB_MAX_WEAPONS 7
 
 // Définition de la structure Arme
 typedef struct WEAPON
 {
     sfString *name;                 // Nom de l'arme
 
-    Object *weapon_img;              // Image de l'arme
-    Object *bullet;                  // Image des munitions
+    Object *weapon_img;             // Image de l'arme
+    Object *bullet;                 // Image des projectiles
 
-    unsigned int nb_max_bullets;    // Nombre de munitions max
-    unsigned int nb_curr_bullets;   // Nombre de munitions restantes
+    int nb_max_bullets;             // Nombre de munitions max (-1 si infini)
+    int nb_curr_bullets;            // Nombre de munitions restantes (-1 si infini)
     unsigned int damage;            // Dommages infligés
-    float reload_latency;           // Temps de recharge
+    unsigned int reload_latency;    // Temps de recharge (en millisecondes)
+    int range;                      // Portée de l'arme (-1 si infinie)
+    unsigned int splash_radius;     // Distance de dommages collatéraux (dmg/(coef)^nbpixel)
+    float splash_coef;              // Diminution des dommages selon la distance dans le cercle (dommage = (splash_coef) ^ distance par rapport au centre (en pixels) * dommages de base)
+    float selfdamage_coef;          // Self-Damage (selfdamage * (splash_coef^distance du centre) * dmg)
+    unsigned proj_speed;            // Vitesse des projectiles
+
+    _Bool collected;                // Ramassée ? (utilisé seulement pour l'inventaire du joueur)
 } Weapon;
+
+Weapon armory[NB_MAX_WEAPONS];      // Armes du jeu en accès global
 
 Weapon* weapon_Create(int);
 void weapon_Destroy(Weapon*);
+void armory_Create(Weapon*);
 
 #endif

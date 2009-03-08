@@ -1,7 +1,7 @@
 #include <assert.h>
 
-#include "Objects.h"
-#include "Map.h"
+#include "Objects/Objects.h"
+#include "Objects/Map.h"
 
 // Constructeur
 Map* map_Create()
