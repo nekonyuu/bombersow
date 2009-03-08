@@ -1,47 +1,22 @@
 #include <SFML/Graphics.h>
 #include <SFML/Audio.h>
 #include "Game/MenuScreen.h"
+#include "Objects/Screen.h"
 
 int main()
 {
     sfWindowSettings Settings = {24, 8, 0};
     sfVideoMode Mode = {900, 600, 32};
     sfRenderWindow* Game;
-    sfEvent Event;
-    sfMusic* menuMusic = NULL;
 
     // Création de la fenêtre principale
     Game = sfRenderWindow_Create(Mode, "BomberSow", sfClose, Settings);
     if (!Game)
         return EXIT_FAILURE;
 
-    if (display_Menu(menuMusic) == EXIT_FAILURE)
-        return EXIT_FAILURE;
-
     // Démarrage du jeu
     // armory_Create(armory); // Remplissage du tableau
-
-    while (sfRenderWindow_IsOpened(Game))
-    {
-        // Surveillance des évènements
-        while (sfRenderWindow_GetEvent(Game, &Event))
-        {
-            // Fermer : Quitter le jeu
-            if (Event.Type == sfEvtClosed)
-            {
-                sfRenderWindow_Close(Game);
-                stopmusic_Menu(menuMusic);
-            }
-
-            // Mettre ici tous les autres events à gérer
-        }
-
-        // Vidage de l'écran
-        sfRenderWindow_Clear(Game, sfBlack);
-
-        // Mise à jour de la fenêtre
-        sfRenderWindow_Display(Game);
-    }
+    display_Menu(Game);
 
     // Nettoyage des ressources
     sfRenderWindow_Destroy(Game);
