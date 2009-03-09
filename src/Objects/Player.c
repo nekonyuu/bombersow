@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
+#include "GraphicEngine/Draw.h"
 #include "Objects/Player.h"
 #include "Objects/Weapon.h"
 
@@ -48,4 +49,52 @@ void player_Destroy(Player* player2destroy)
 
     free(player2destroy->weapons);
     free(player2destroy);
+}
+
+// Déplacement du personnage sur la map
+void player_Displace(Player* player_, float x, float y)
+{
+    float temp_x = player_->coord_x + x;
+    float temp_y = player_->coord_y + y;
+
+    if(temp_x <= SCREEN_WIDTH)
+        if(temp_x < 0)
+            player_->coord_x = 0;
+        else
+            player_->coord_x = temp_x;
+    else
+        player_->coord_x = SCREEN_WIDTH;
+
+    if(temp_y <= SCREEN_WIDTH)
+        if(temp_y < 0)
+            player_->coord_y = 0;
+        else
+            player_->coord_y = temp_y;
+    else
+        player_->coord_y = SCREEN_WIDTH;
+}
+
+void player_SwitchWeapon(Player* player_, int weapon_type)
+{
+    if(weapon_type < NB_MAX_WEAPONS && player_->weapons[weapon_type]->collected)
+        player_->current_weapon = weapon_type;
+}
+
+void player_CollectWeapon(Player* player_, int weapon_type)
+{
+    if(weapon_type < NB_MAX_WEAPONS)
+        player_->weapons[weapon_type]->collected = true;
+}
+
+// Fonction qui gère le saut du joueur, TODO : Trajectoire lors du saut, vecteur force
+void player_Jump(Player* player_)
+{
+    if(player_->jump == NO_JUMP)
+    {
+        player_->jump = SIMPLE_JUMP;
+    }
+    else if (player_->jump == SIMPLE_JUMP)
+    {
+        player_->jump = NO_JUMP;
+    }
 }
