@@ -2,41 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Objects/Objects.h"
-#include "Objects/Map.h"
+#include <dirent.h>
+#include "file/file.h"
 
-// Constructeur
-Map* map_Create()
-{
-    Map* new_map = NULL;
-    assert(new_map = (Map*) malloc(sizeof(Map)));
-
-    new_map->background = NULL;
-    new_map->objects = NULL;
-    new_map->nb_objects = 0;
-    new_map->nb_players = 0;
-
-    assert(new_map->player_list = (Player**) malloc(sizeof(Player*)));
-    for (int i = 0; i < NB_MAX_PLAYERS; i++)
-        new_map->player_list[i] = NULL;
-
-    new_map->animation = NULL;
-    new_map->image = NULL;
-
-    return new_map;
-}
-
-// Destructeur
-void map_Destroy(Map* map2destroy)
-{
-    assert(map2destroy != NULL);
-
-    sfSprite_Destroy(map2destroy->background);
-    for (int i = 0; i < map2destroy->nb_objects; i++)
-        object_Destroy(map2destroy->objects[i]);
-
-    free(map2destroy);
-}
 
 Data* data_Create()
 {
@@ -138,40 +106,47 @@ Data* data_Parser(char *type, char* path)
     return data_;
 }
 
-// Loader d'image pour les map
-void map_Loader_Image(Image* image_, char* path)
-{
 
-    Data *liste = data_Parser("[IMAGES]", path);
 
-    char **image_list = NULL;
-    int image_list_taille = 0;
-    sscanf(liste->data[liste->taille-1], "%d", &image_list_taille);
+void dossier_Read_Image(Image* image, char* path){
 
-    assert(image_list = (char**) malloc(image_list_taille*sizeof(char*))); //Allocation de la mémoire
-    for (int i = 0; i < image_list_taille; i++)
-    {
-        assert(image_list[i] = (char*) malloc(sizeof(char)));
-    }
+    DIR *rep = opendir (path);
 
-    for (int i = 0; i < liste->taille; i++)
-    {
-        int id;
-        char path[100];
-        sscanf(liste->data[i], "%d %s", &id, path);
-        image_list[id] = path;
-    }
 
-    image_Loader(image_, image_list, image_list_taille);
+    int i = 0;
 
-    if (image_list != NULL)
-    {
-        for (int i = 0; i < image_list_taille; i++)
-        {
-            free(image_list[i]);
+    int nombre_image = 0;
+    char **image_path;
+
+    if (rep != NULL){
+        struct dirent *ent;
+
+        while ((ent = readdir (rep)) != NULL){
+            if(strcmp(ent->d_name, ".") && strcmp(ent->d_name,"..")){
+                nombre_image++;
+            }
         }
-        free(image_list);
+
+        assert(image_path = (char**) malloc(nombre_image*sizeof(char*)));
+        for(i = 0; i < nombre_image; i++)
+            assert(image_path[i] = (char*) malloc(100*sizeof(char*)));
+
+        rewinddir(rep);
+        i = 0;
+        while ((ent = readdir (rep)) != NULL){
+            if(strcmp(ent->d_name, ".") && strcmp(ent->d_name,"..")){
+                strcpy(image_path[i], path);
+                strcpy(image_path[i], strcat(image_path[i], ent->d_name));
+                i++;
+            }
+        }
+
+        closedir (rep);
     }
 
-    data_Destroy(liste);
+    image_Loader(image, image_path, nombre_image);
+
+    for(i = 0; i < nombre_image; i++)
+        free(image_path[i]);
+    free(image_path);
 }
