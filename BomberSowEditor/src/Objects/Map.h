@@ -3,7 +3,6 @@
 
 #include "SFML/Graphics.h"
 #include "Objects/Objects.h"
-#include "Objects/Player.h"
 
 #define NB_MAX_PLAYERS 4
 
@@ -17,8 +16,6 @@ typedef struct MAP
     Object** objects;           // Tableau des objets de la map
     unsigned int nb_objects;    // Nombre d'objets sur la map
 
-    Player** player_list;       // Liste des joueurs de la map
-    unsigned int nb_players;    // Nombre de joueurs connectés sur la map
 } Map;
 
 Map* map_Create();
@@ -29,17 +26,6 @@ void map_Loader(Map*, char*);         //Loader de la map
 void map_Loader_Image(Image*, char*);      //Loader pour les images
 Object** map_Loader_Object(char*);    //Loader pour les objects
 /********************************************************/
-
-//Structure pour chargée les données (a renommer/modifier/déplacer sans doute)
-typedef struct DATA {
-    char** data;
-    int taille;
-    int seek;
-}Data;
-
-Data* data_Create();
-void data_Destroy(Data*);
-Data* data_Parser(char *type, char* path); //Parser qui recupere un char des champs correspondant a un type
 
 #endif
 

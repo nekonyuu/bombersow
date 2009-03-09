@@ -333,7 +333,7 @@
 
 1236472781 source:c:\projet\bombersow\src\physicsengine\particlesystem.c
 
-1236621378 source:c:\projet\bombersow\src\game\menuscreen.c
+1236629177 source:c:\projet\bombersow\src\game\menuscreen.c
 	"Game/MenuScreen.h"
 	"Objects/Screen.h"
 	"GraphicEngine/Image.h"
@@ -513,12 +513,14 @@
 	<SFML/Config.h>
 	<SFML/Audio/SoundBuffer.h>
 
-1236624045 source:c:\projet\bombersow\src\main.c
+1236629739 source:c:\projet\bombersow\src\main.c
 	"SFML/Graphics.h"
 	"SFML/Audio.h"
 	"Game/MenuScreen.h"
 	"Objects/Screen.h"
+	"Objects/Weapon.h"
 	"GraphicEngine/Image.h"
+	"Objects/Map.h"
 
 1236544906 source:c:\projet\bombersow\src\map\maphandler.c
 	<assert.h>
@@ -526,12 +528,12 @@
 	"Map/MapLoader.h"
 	"Map/MapHandler.h"
 
-1236611170 c:\projet\bombersow\src\objects\map.h
+1236630958 c:\projet\bombersow\src\objects\map.h
 	"SFML/Graphics.h"
 	"Objects/Objects.h"
 	"Objects/Player.h"
 
-1236605479 c:\projet\bombersow\src\objects\objects.h
+1236629177 c:\projet\bombersow\src\objects\objects.h
 	"SFML/Graphics.h"
 	"GraphicEngine/Image.h"
 
@@ -555,34 +557,38 @@
 	"Objects/Bullet.h"
 	"Objects/Weapon.h"
 
-1236625436 source:c:\projet\bombersow\src\objects\map.c
+1236630767 source:c:\projet\bombersow\src\objects\map.c
 	<assert.h>
 	<stdio.h>
+	<stdlib.h>
+	<string.h>
 	"Objects/Objects.h"
 	"Objects/Map.h"
 
-1236605817 source:c:\projet\bombersow\src\objects\objects.c
+1236629177 source:c:\projet\bombersow\src\objects\objects.c
 	<assert.h>
 	"Objects/Objects.h"
 
-1236544906 source:c:\projet\bombersow\src\objects\player.c
+1236629177 source:c:\projet\bombersow\src\objects\player.c
 	<assert.h>
+	<stdio.h>
 	"Objects/Player.h"
 	"Objects/Weapon.h"
 
-1236544906 source:c:\projet\bombersow\src\objects\screen.c
+1236629177 source:c:\projet\bombersow\src\objects\screen.c
 	<assert.h>
+	<stdio.h>
 	"Objects/Screen.h"
 
-1236559108 source:c:\projet\bombersow\src\objects\weapon.c
+1236629177 source:c:\projet\bombersow\src\objects\weapon.c
 	<assert.h>
 	"Objects/Weapon.h"
 
-1236621241 source:c:\projet\bombersow\src\graphicengine\image.c
+1236629177 source:c:\projet\bombersow\src\graphicengine\image.c
 	<assert.h>
 	"GraphicEngine/Image.h"
 
-1236606376 c:\projet\bombersow\src\graphicengine\image.h
+1236629177 c:\projet\bombersow\src\graphicengine\image.h
 	"SFML/Graphics.h"
 
 1236627691 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\graphicengine\image.h
