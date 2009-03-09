@@ -1,0 +1,3 @@
+[IMAGES]
+0 base/images/animation.png
+1 base/images/animation.png
