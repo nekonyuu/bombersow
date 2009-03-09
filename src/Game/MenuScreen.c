@@ -1,12 +1,19 @@
 #include "Game/MenuScreen.h"
 #include "Objects/Screen.h"
+#include "GraphicEngine/Image.h"
 
 void display_Menu(sfRenderWindow* Game)
 {
     Screen* Menu = screen_Create();
     sfMusic *menuMusic = sfMusic_CreateFromFile("sounds/music/ParagonX9 - Metropolis [8-Bit].ogg");
     sfImage *BG_image = sfImage_CreateFromFile("base/images/coming_soon.jpg");
+
+    sfImage *image_animation = sfImage_CreateFromFile("base/images/animation.png");
+    Animation *animation = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, -1, 100);
+
+
     sfEvent Event;
+
 
     // Chargement de l'image d'arrière plan, de la musique, et lecture
     screen_LoadBG(Menu, BG_image);
@@ -30,6 +37,7 @@ void display_Menu(sfRenderWindow* Game)
 
         sfRenderWindow_Clear(Game, sfBlack);                    // Vidage de l'écran
         sfRenderWindow_DrawSprite(Game, Menu->background);      // Dessin du BG
+        animation_Draw(animation, Game);
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
     }
     return;

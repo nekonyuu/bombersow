@@ -290,3 +290,279 @@
 
 1236512566 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\map\maphandler.h
 
+1236472781 source:c:\projet\bombersow\src\audioengine.c
+
+1236472781 source:c:\projet\bombersow\src\game\clientscreen.c
+
+1236472781 source:c:\projet\bombersow\src\game\playscreen.c
+
+1236472781 source:c:\projet\bombersow\src\game\serverscreen.c
+
+1236472781 source:c:\projet\bombersow\src\game\settingsscreen.c
+
+1236472781 source:c:\projet\bombersow\src\graphicengine\draw.c
+
+1236472781 source:c:\projet\bombersow\src\inputscontrol\configparsing.c
+
+1236472781 source:c:\projet\bombersow\src\inputscontrol\playercontrol.c
+
+1236472781 source:c:\projet\bombersow\src\map\maploader.c
+
+1236472781 source:c:\projet\bombersow\src\networking\dataconstructor.c
+
+1236472781 source:c:\projet\bombersow\src\networking\serverthread.c
+
+1236472781 source:c:\projet\bombersow\src\physicsengine\collisionsystem.c
+
+1236472781 source:c:\projet\bombersow\src\physicsengine\gravitysystem.c
+
+1236472781 source:c:\projet\bombersow\src\physicsengine\particlesystem.c
+
+1236558482 source:c:\projet\bombersow\src\game\menuscreen.c
+	"Game/MenuScreen.h"
+	"Objects/Screen.h"
+	"GraphicEngine/Image.h"
+
+1236544906 c:\projet\bombersow\src\game\menuscreen.h
+	"SFML/Graphics.h"
+
+1236472780 c:\projet\bombersow\dep\include\sfml\graphics.h
+	<SFML/Window.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Image.h>
+	<SFML/Graphics/PostFX.h>
+	<SFML/Graphics/Rect.h>
+	<SFML/Graphics/RenderWindow.h>
+	<SFML/Graphics/Sprite.h>
+	<SFML/Graphics/String.h>
+	<SFML/Graphics/View.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\window.h
+	<SFML/System.h>
+	<SFML/Window/Context.h>
+	<SFML/Window/Event.h>
+	<SFML/Window/Input.h>
+	<SFML/Window/VideoMode.h>
+	<SFML/Window/Window.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\system.h
+	<SFML/Config.h>
+	<SFML/System/Clock.h>
+	<SFML/System/Mutex.h>
+	<SFML/System/Randomizer.h>
+	<SFML/System/Sleep.h>
+	<SFML/System/Thread.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\config.h
+	<stdlib.h>
+	<limits.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\system\clock.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\system\mutex.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\system\randomizer.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\system\sleep.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\system\thread.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\window\context.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\window\event.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\window\input.h
+	<SFML/Config.h>
+	<SFML/Window/Event.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\window\videomode.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\window\window.h
+	<SFML/Config.h>
+	<SFML/Window/Event.h>
+	<SFML/Window/Input.h>
+	<SFML/Window/VideoMode.h>
+	<SFML/Window/WindowHandle.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\window\windowhandle.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\graphics\color.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\graphics\image.h
+	<SFML/Config.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Rect.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\graphics\rect.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\graphics\postfx.h
+	<SFML/Config.h>
+	<SFML/Graphics/Image.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\graphics\renderwindow.h
+	<SFML/Config.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Image.h>
+	<SFML/Graphics/PostFX.h>
+	<SFML/Graphics/Rect.h>
+	<SFML/Graphics/Shape.h>
+	<SFML/Graphics/Sprite.h>
+	<SFML/Graphics/String.h>
+	<SFML/Graphics/View.h>
+	<SFML/Window/Event.h>
+	<SFML/Window/Input.h>
+	<SFML/Window/VideoMode.h>
+	<SFML/Window/Window.h>
+	<SFML/Window/WindowHandle.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\graphics\shape.h
+	<SFML/Config.h>
+	<SFML/Graphics/BlendMode.h>
+	<SFML/Graphics/Color.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\graphics\blendmode.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\graphics\sprite.h
+	<SFML/Config.h>
+	<SFML/Graphics/BlendMode.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Image.h>
+	<SFML/Graphics/Rect.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\graphics\string.h
+	<SFML/Config.h>
+	<SFML/Graphics/BlendMode.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Font.h>
+	<SFML/Graphics/Rect.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\graphics\font.h
+	<SFML/Graphics/Glyph.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\graphics\glyph.h
+	<SFML/Graphics/Rect.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\graphics\view.h
+	<SFML/Config.h>
+	<SFML/Graphics/Rect.h>
+
+1236544906 c:\projet\bombersow\src\objects\screen.h
+	"SFML/Graphics.h"
+	"SFML/Audio.h"
+
+1236472780 c:\projet\bombersow\dep\include\sfml\audio.h
+	<SFML/System.h>
+	<SFML/Audio/Listener.h>
+	<SFML/Audio/Music.h>
+	<SFML/Audio/Sound.h>
+	<SFML/Audio/SoundBuffer.h>
+	<SFML/Audio/SoundBufferRecorder.h>
+	<SFML/Audio/SoundRecorder.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\audio\listener.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\audio\music.h
+	<SFML/Config.h>
+	<SFML/Audio/SoundStatus.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\audio\soundstatus.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\audio\sound.h
+	<SFML/Config.h>
+	<SFML/Audio/SoundBuffer.h>
+	<SFML/Audio/SoundStatus.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\audio\soundbuffer.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\audio\soundbufferrecorder.h
+	<SFML/Config.h>
+	<SFML/Audio/SoundBuffer.h>
+
+1236472780 c:\projet\bombersow\dep\include\sfml\audio\soundrecorder.h
+	<SFML/Config.h>
+	<SFML/Audio/SoundBuffer.h>
+
+1236544906 source:c:\projet\bombersow\src\main.c
+	"SFML/Graphics.h"
+	"SFML/Audio.h"
+	"Game/MenuScreen.h"
+	"Objects/Screen.h"
+
+1236544906 source:c:\projet\bombersow\src\map\maphandler.c
+	<assert.h>
+	"Objects/Map.h"
+	"Map/MapLoader.h"
+	"Map/MapHandler.h"
+
+1236547243 c:\projet\bombersow\src\objects\map.h
+	"SFML/Graphics.h"
+	"Objects/Objects.h"
+	"Objects/Player.h"
+
+1236544906 c:\projet\bombersow\src\objects\objects.h
+	"SFML/Graphics.h"
+
+1236473312 c:\projet\bombersow\src\objects\player.h
+	"Objects/Weapon.h"
+
+1236559108 c:\projet\bombersow\src\objects\weapon.h
+	<stdbool.h>
+	"Objects/Objects.h"
+	"Objects/Bullet.h"
+
+1236544906 c:\projet\bombersow\src\objects\bullet.h
+	"SFML/Graphics.h"
+
+1236472781 c:\projet\bombersow\src\map\maploader.h
+
+1236544906 c:\projet\bombersow\src\map\maphandler.h
+
+1236544906 source:c:\projet\bombersow\src\objects\bullet.c
+	<assert.h>
+	"Objects/Bullet.h"
+	"Objects/Weapon.h"
+
+1236546277 source:c:\projet\bombersow\src\objects\map.c
+	<assert.h>
+	"Objects/Objects.h"
+	"Objects/Map.h"
+
+1236544906 source:c:\projet\bombersow\src\objects\objects.c
+	<assert.h>
+	"Objects/Objects.h"
+
+1236544906 source:c:\projet\bombersow\src\objects\player.c
+	<assert.h>
+	"Objects/Player.h"
+	"Objects/Weapon.h"
+
+1236544906 source:c:\projet\bombersow\src\objects\screen.c
+	<assert.h>
+	"Objects/Screen.h"
+
+1236544906 source:c:\projet\bombersow\src\objects\weapon.c
+	<assert.h>
+	"Objects/Weapon.h"
+
+1236558460 source:c:\projet\bombersow\src\graphicengine\image.c
+	<assert.h>
+	"GraphicEngine/Image.h"
+
+1236555632 c:\projet\bombersow\src\graphicengine\image.h
+	"SFML/Graphics.h"
+
