@@ -35,6 +35,7 @@ void image_Loader(Image *image_, char **image_liste, int taille_liste)
     {
         image_->image_tab[i] = sfImage_CreateFromFile(image_liste[i]);
     }
+
     image_->image_nombre = taille_liste;
 }
 
@@ -110,7 +111,7 @@ void animation_Play(Animation* animation_, int play)
 void animation_Draw(Animation* animation_, sfRenderWindow* App)
 {
 
-    int time = sfClock_GetTime(animation_->clock)*1000;
+    int time = sfClock_GetTime(animation_->clock);
 
     if (animation_->play != STOP && animation_->fps < time)
     {
