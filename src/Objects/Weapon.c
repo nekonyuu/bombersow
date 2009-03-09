@@ -60,7 +60,7 @@ void armory_Create(Weapon* armory)
     armory[0].damage = 20;
     armory[0].reload_latency = 1000;
     armory[0].switch_latency = 800;
-    armory[0].range = 10;
+    armory[0].range = 20;
     armory[0].splash_radius = 0;
     armory[0].splash_coef = 0;
     armory[0].selfdamage_coef = 0;
