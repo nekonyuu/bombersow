@@ -1,6 +1,7 @@
 #include "Game/MenuScreen.h"
 #include "Objects/Screen.h"
 #include "GraphicEngine/Image.h"
+#include "Objects/Map.h"
 
 void display_Menu(sfRenderWindow* Game)
 {
@@ -9,7 +10,7 @@ void display_Menu(sfRenderWindow* Game)
     sfImage *BG_image = sfImage_CreateFromFile("base/images/coming_soon.jpg");
 
     sfImage *image_animation = sfImage_CreateFromFile("base/images/animation.png");
-    Animation *animation = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, -1, 100);
+    Animation *animation = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, -1, 0.1);
 
 
     sfEvent Event;
@@ -40,5 +41,6 @@ void display_Menu(sfRenderWindow* Game)
         animation_Draw(animation, Game);
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
     }
+
     return;
 }

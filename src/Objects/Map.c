@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdio.h>
 #include "Objects/Objects.h"
 #include "Objects/Map.h"
 
@@ -17,6 +18,9 @@ Map* map_Create()
     for (int i = 0; i < NB_MAX_PLAYERS; i++)
         new_map->player_list[i] = NULL;
 
+    new_map->animation = NULL;
+    new_map->image = NULL;
+
     return new_map;
 }
 
@@ -32,4 +36,125 @@ void map_Destroy(Map* map2destroy)
     free(map2destroy);
 }
 
+Data* data_Create(){
+    Data *data_ = NULL;
+    assert(data_ = (Data*) malloc(sizeof(Data)));
+    data_->taille = 0;
+    data_->seek = 0;
+    data_->data = NULL;
+}
 
+void data_Destroy(Data *data_){
+
+    for(int i = 0; i < data_->taille; i++){
+        free(data_->data[i]);
+    }
+    free(data_->data);
+    data_->data = NULL;
+
+    free(data_);
+    data_ = NULL;
+}
+
+Data* data_Parser(char *type, char* path){
+    FILE* fichier = NULL;
+    fichier = fopen(path, "r");
+
+    if(fichier == NULL){     //Si on a pas pu ouvrir le fichier on renvoi NULL
+        printf("Erreur lors de l'ouverture du fichier %s\n", path);
+        return NULL;
+    }
+
+    char chaine[100];
+    char *chaine_temp;
+    char **list;
+    int bool_ = 0; //Permet de bien se placer
+
+    Data *data_ = data_Create();
+
+    int taille_type = strlen(type);
+
+    while(fgets(chaine, 100, fichier) != NULL){    //Boucle pour lire ligne
+
+        if(strlen(chaine) != 0){                                //Si la chaine n'est pas vide
+            if(!bool_ && strncmp(type, chaine,taille_type) == 0){     //On détermine si on est au bon endroit
+                bool_ = 1;
+                data_->seek = ftell(fichier)+2; //Permet de placer le seek à la ligne suivante pour évitez de reparcourir tout le fichier
+            }else if(chaine[0] == "["){
+                break;
+            }else{
+                if(chaine[0] != "#")
+                    data_->taille++;    //Incrémente le nombre d'element
+            }
+        }
+
+    }
+
+
+
+    if(data_->taille != 0){
+        assert(data_->data = (char**) malloc(data_->taille*sizeof(char*))); //Allocation de la mémoire
+        for(int i = 0; i < data_->taille; i++){
+            assert(data_->data[i] = (char*) malloc(100*sizeof(char)));
+        }
+    }
+
+    fseek(fichier, data_->seek, 0);
+
+    bool_ = 0;
+    int i = 0;
+    while(fgets(chaine, 100, fichier) != NULL){    //Boucle pour lire ligne
+
+        if(strlen(chaine) != 0){                                //Si la chaine n'est pas vide
+            if(!bool_ && strncmp(type, chaine,taille_type) == 0){     //On détermine si on est au bon endroit
+                bool_ = 1;
+            }else if(chaine[0] == "["){
+                break;
+            }else{
+                if(strlen(path) != 0){
+                    strcpy(data_->data[i], chaine);
+                    i++;
+                }
+
+            }
+        }
+
+    }
+
+    fclose(fichier);
+
+    return data_;
+}
+
+//Loader d'image pour les map
+void map_Loader_Image(Image* image_, char* path){
+
+    Data *liste = data_Parser("[IMAGES]", path);
+
+    char **image_list = NULL;
+    int image_list_taille = 0;
+    sscanf(liste->data[liste->taille-1], "%d", &image_list_taille);
+
+    assert(image_list = (char**) malloc(image_list_taille*sizeof(char*))); //Allocation de la mémoire
+    for(int i = 0; i < image_list_taille; i++){
+        assert(image_list[i] = (char*) malloc(sizeof(char)));
+    }
+
+    for(int i = 0; i < liste->taille; i++){
+        int id;
+        char path[100];
+        sscanf(liste->data[i], "%d %s", &id, path);
+        image_list[id] = path;
+    }
+
+    image_Loader(image_, image_list, image_list_taille);
+
+    if(image_list != NULL){
+        for(int i = 0; i < image_list_taille; i++){
+            free(image_list[i]);
+        }
+        free(image_list);
+    }
+
+    data_Destroy(liste);
+}
