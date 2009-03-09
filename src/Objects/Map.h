@@ -20,5 +20,18 @@ typedef struct MAP
 
 Map* map_Create();
 void map_Destroy();
+void map_Loader(Map*, char*);
+
 
 #endif
+
+//Structure des Fichier .MAP
+/*
+[BACKGROUND]
+PATH
+char
+[OBJECTS]
+TYPE    ID      X       Y      COLLISION
+int     int     int    int
+
+*/
