@@ -44,7 +44,7 @@
 
 1236430452 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\inputscontrol\playercontrol.c
 
-1236627835 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
+1236634143 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
 	"SFML/Graphics.h"
 	"SFML/Audio.h"
 	"Game/MenuScreen.h"
@@ -86,17 +86,18 @@
 	<assert.h>
 	"Objects/Objects.h"
 
-1236626854 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.c
+1236633393 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.c
 	<assert.h>
 	<stdio.h>
 	"Objects/Player.h"
 	"Objects/Weapon.h"
 
-1236476501 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.h
+1236632987 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.h
 	"Objects/Weapon.h"
 
-1236533973 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.h
+1236635014 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.h
 	<stdbool.h>
+	"SFML/Graphics.h"
 	"Objects/Objects.h"
 	"Objects/Bullet.h"
 
@@ -106,8 +107,9 @@
 
 1236383803 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\physicsengine\particlesystem.c
 
-1236626854 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.c
+1236635569 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.c
 	<assert.h>
+	<stdio.h>
 	"Objects/Weapon.h"
 
 1236518603 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.h
@@ -284,12 +286,12 @@
 	"SFML/Graphics.h"
 	"SFML/Audio.h"
 
-1236476834 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\bullet.c
+1236635528 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\bullet.c
 	<assert.h>
 	"Objects/Bullet.h"
 	"Objects/Weapon.h"
 
-1236476599 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\bullet.h
+1236635247 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\bullet.h
 	"SFML/Graphics.h"
 
 1236626854 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\screen.c

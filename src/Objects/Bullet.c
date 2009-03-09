@@ -8,8 +8,8 @@ Bullet* bullet_Create(unsigned int type)
     assert(new_bullet = (Bullet*) malloc(sizeof(Bullet)));
 
     new_bullet->bullet_type = type;
-    new_bullet->trajectory = armory[type].bullet->trajectory;
-    new_bullet->draw_image = armory[type].bullet->draw_image;
+    new_bullet->trajectory = armory[type].trajectory;
+    new_bullet->draw_image = armory[type].bullet_img;
 
     return new_bullet;
 }

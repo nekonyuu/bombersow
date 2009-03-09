@@ -8,7 +8,7 @@ typedef struct PLAYER
     sfString *name;                 // Nom du joueur
     unsigned int life;              // Vie restante
 
-    Weapon weapons[NB_MAX_WEAPONS]; // Armes du joueur
+    Weapon **weapons;               // Armes du joueur
     unsigned int nb_weapons;        // Nombre d'armes
     unsigned int current_weapon;    // Arme courante
 

@@ -14,10 +14,11 @@ Player* player_Create(char* name, unsigned int current_weapon)
     sfString_SetText(new_player->name, name);
     new_player->life = 100;
 
+    assert(new_player->weapons = (Weapon **) malloc(sizeof(Weapon*)));
     for (int i = 0; i < NB_MAX_WEAPONS; i++)
-        new_player->weapons[i] = armory[i];
+        new_player->weapons[i] = weapon_Create(i);
 
-    new_player->weapons[current_weapon].collected = true;   // Arme active
+    new_player->weapons[current_weapon]->collected = true;   // Arme active
     new_player->nb_weapons = 1;
     new_player->current_weapon = current_weapon;            // Arme choisie dès le spawn
 
@@ -37,9 +38,14 @@ void player_Destroy(Player* player2destroy)
 {
     if(!player2destroy)
     {
-        printf("Warning - player_Destroy : Player selectec doesn't exist\n");
+        printf("Warning - player_Destroy : Player object sent NULL\n");
         return;
     }
+
     sfString_Destroy(player2destroy->name);
+    for (int i = 0; i < NB_MAX_WEAPONS; i++)
+        weapon_Destroy(player2destroy->weapons[i]);
+
+    free(player2destroy->weapons);
     free(player2destroy);
 }

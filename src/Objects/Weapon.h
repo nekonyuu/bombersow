@@ -2,7 +2,7 @@
 #define WEAPON_H
 
 #include <stdbool.h>
-
+#include "SFML/Graphics.h"
 #include "Objects/Objects.h"
 #include "Objects/Bullet.h"
 
@@ -13,8 +13,8 @@ typedef struct WEAPON
 {
     sfString *name;                 // Nom de l'arme
 
-    Object *weapon_img;             // Image de l'arme
-    Bullet *bullet;                 // Projectile
+    sfSprite *weapon_img;           // Image de l'arme
+    sfSprite *bullet_img;           // Projectile
 
     int nb_max_bullets;             // Nombre de munitions max (-1 si infini)
     int nb_curr_bullets;            // Nombre de munitions restantes (-1 si infini)
@@ -26,6 +26,7 @@ typedef struct WEAPON
     float splash_coef;              // Diminution des dommages selon la distance dans le cercle (dommage = (splash_coef) ^ distance par rapport au centre (en pixels) * dommages de base)
     float selfdamage_coef;          // Self-Damage (selfdamage * (splash_coef^distance du centre) * dmg)
     int proj_speed;                 // Vitesse des projectiles (-1 si instantané)
+    unsigned int trajectory;        // Type de trajectoire (0 = Rectiligne, 1 = Parabole (Grenade), 2 = Spread (Shotgun)
 
     _Bool collected;                // Ramassée ? (utilisé seulement pour l'inventaire du joueur)
 } Weapon;

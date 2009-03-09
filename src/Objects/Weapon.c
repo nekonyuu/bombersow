@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdio.h>
 #include "Objects/Weapon.h"
 
 // Constructeur
@@ -10,7 +11,7 @@ Weapon* weapon_Create(int type)
     new_weapon->name = armory[type].name;
 
     new_weapon->weapon_img = armory[type].weapon_img;
-    new_weapon->bullet = armory[type].bullet;
+    new_weapon->bullet_img = armory[type].bullet_img;
 
     new_weapon->nb_curr_bullets = armory[type].nb_curr_bullets;
     new_weapon->nb_max_bullets = armory[type].nb_max_bullets;
@@ -22,6 +23,9 @@ Weapon* weapon_Create(int type)
     new_weapon->splash_coef = armory[type].splash_coef;
     new_weapon->selfdamage_coef = armory[type].selfdamage_coef;
     new_weapon->proj_speed = armory[type].proj_speed;
+    new_weapon->trajectory = armory[type].trajectory;
+
+    new_weapon->collected = false;
 
     return new_weapon;
 }
@@ -29,10 +33,14 @@ Weapon* weapon_Create(int type)
 // Destructeur
 void weapon_Destroy(Weapon* weapon2destroy)
 {
-    assert(weapon2destroy != NULL);
+    if (!weapon2destroy)
+    {
+        printf("Warning - weapon_Destroy : Weapon object sent NULL");
+        return;
+    }
     weapon2destroy->name = NULL;
     weapon2destroy->weapon_img = NULL;
-    weapon2destroy->bullet = NULL;
+    weapon2destroy->bullet_img = NULL;
 
     free(weapon2destroy);
 }
@@ -45,7 +53,7 @@ void armory_Create(Weapon* armory)
     sfString_SetText(armory[0].name, "Crowbar");
 
     armory[0].weapon_img = NULL;
-    armory[0].bullet = NULL;
+    armory[0].bullet_img = NULL;
 
     armory[0].nb_max_bullets = -1;
     armory[0].nb_curr_bullets = -1;
@@ -57,6 +65,7 @@ void armory_Create(Weapon* armory)
     armory[0].splash_coef = 0;
     armory[0].selfdamage_coef = 0;
     armory[0].proj_speed = -1;
+    armory[0].trajectory = 0;
 
     armory[0].collected = false;
 
@@ -66,7 +75,7 @@ void armory_Create(Weapon* armory)
     sfString_SetText(armory[1].name, "Rocket-Launcher");
 
     armory[1].weapon_img = NULL;
-    armory[1].bullet = NULL;
+    armory[1].bullet_img = NULL;
 
     armory[1].nb_max_bullets = 40;
     armory[1].nb_curr_bullets = 0;
@@ -78,6 +87,7 @@ void armory_Create(Weapon* armory)
     armory[1].splash_coef = 0.95;
     armory[1].selfdamage_coef = 0.6;
     armory[1].proj_speed = 350;
+    armory[1].trajectory = 0;
 
     armory[1].collected = false;
 
@@ -87,7 +97,7 @@ void armory_Create(Weapon* armory)
     sfString_SetText(armory[2].name, "Grenade-Launcher");
 
     armory[2].weapon_img = NULL;
-    armory[2].bullet = NULL;
+    armory[2].bullet_img = NULL;
 
     armory[2].nb_max_bullets = 20;
     armory[2].nb_curr_bullets = 0;
@@ -99,6 +109,7 @@ void armory_Create(Weapon* armory)
     armory[2].splash_coef = 0.97;
     armory[2].selfdamage_coef = 0.9;
     armory[2].proj_speed = 200;
+    armory[2].trajectory = 1;
 
     armory[2].collected = false;
 
@@ -108,7 +119,7 @@ void armory_Create(Weapon* armory)
     sfString_SetText(armory[3].name, "Shotgun");
 
     armory[3].weapon_img = NULL;
-    armory[3].bullet = NULL;
+    armory[3].bullet_img = NULL;
 
     armory[3].nb_max_bullets = 20;					// Nombre de cartouches, soit 140 projectiles
     armory[3].nb_curr_bullets = 0;
@@ -120,6 +131,7 @@ void armory_Create(Weapon* armory)
     armory[3].splash_coef = 1;
     armory[3].selfdamage_coef = 0;
     armory[3].proj_speed = -1;
+    armory[3].trajectory = 2;
 
     armory[3].collected = false;
 
@@ -129,7 +141,7 @@ void armory_Create(Weapon* armory)
     sfString_SetText(armory[4].name, "Minigun");
 
     armory[4].weapon_img = NULL;
-    armory[4].bullet = NULL;
+    armory[4].bullet_img = NULL;
 
     armory[4].nb_max_bullets = 200;
     armory[4].nb_curr_bullets = 0;
@@ -141,6 +153,7 @@ void armory_Create(Weapon* armory)
     armory[4].splash_coef = 0.85;
     armory[4].selfdamage_coef = 0;
     armory[4].proj_speed = 600;
+    armory[4].trajectory = 0;
 
     armory[4].collected = false;
 
@@ -150,7 +163,7 @@ void armory_Create(Weapon* armory)
     sfString_SetText(armory[5].name, "Sniper");
 
     armory[5].weapon_img = NULL;
-    armory[5].bullet = NULL;
+    armory[5].bullet_img = NULL;
 
     armory[5].nb_max_bullets = 5;
     armory[5].nb_curr_bullets = 0;
@@ -161,7 +174,8 @@ void armory_Create(Weapon* armory)
     armory[5].splash_radius = 0;
     armory[5].splash_coef = 1;
     armory[5].selfdamage_coef = 0;
-    armory[5].proj_speed = 1200 ;
+    armory[5].proj_speed = 1200;
+    armory[5].trajectory = 0;
 
     armory[5].collected = false;
 
@@ -171,7 +185,7 @@ void armory_Create(Weapon* armory)
     sfString_SetText(armory[6].name, "Lasergun");
 
     armory[6].weapon_img = NULL;
-    armory[6].bullet = NULL;
+    armory[6].bullet_img = NULL;
 
     armory[6].nb_max_bullets = 500;
     armory[6].nb_curr_bullets = 0;
@@ -182,7 +196,8 @@ void armory_Create(Weapon* armory)
     armory[6].splash_radius = 0;
     armory[6].splash_coef = 1;
     armory[6].selfdamage_coef = 0;
-    armory[6].proj_speed = -1 ;
+    armory[6].proj_speed = -1;
+    armory[6].trajectory = 0;
 
     armory[6].collected = false;
 }
@@ -192,13 +207,13 @@ void armory_Destroy(Weapon* armory2destroy)
 {
     for (int i = 0; i < NB_MAX_WEAPONS; i++)
     {
-        if(armory2destroy[i].name != NULL && armory2destroy[i].weapon_img != NULL
-        && armory2destroy[i].bullet != NULL)
-            {
-                sfString_Destroy(armory2destroy[i].name);
-                object_Destroy(armory2destroy[i].weapon_img);
-                bullet_Destroy(armory2destroy[i].bullet);
-            }
+        if (armory2destroy[i].name != NULL && armory2destroy[i].weapon_img != NULL
+                && armory2destroy[i].bullet_img != NULL)
+        {
+            sfString_Destroy(armory2destroy[i].name);
+            sfSprite_Destroy(armory2destroy[i].weapon_img);
+            sfSprite_Destroy(armory2destroy[i].bullet_img);
+        }
     }
     free(armory2destroy);
 }
