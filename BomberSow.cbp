@@ -85,6 +85,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\GraphicEngine\Draw.h" />
+		<Unit filename="src\GraphicEngine\Image.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\GraphicEngine\Image.h" />
 		<Unit filename="src\InputsControl\ConfigParsing.c">
 			<Option compilerVar="CC" />
 		</Unit>
