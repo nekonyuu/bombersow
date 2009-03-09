@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdio.h>
 #include "Objects/Screen.h"
 
 // Constructeur
@@ -31,7 +32,11 @@ void screen_Destroy(Screen* screen2destroy)
 // Charge une musique dans un Screen
 void screen_LoadMusic(Screen* screen, sfMusic* music, sfBool loop)
 {
-    assert(music != NULL);
+    if(!music)
+    {
+        printf("Warning - screen_LoadMusic : sfMusic object doesn't exist\n");
+        return;
+    }
 
     screen->music = music;
     sfMusic_SetLoop(screen->music, loop);
@@ -39,9 +44,8 @@ void screen_LoadMusic(Screen* screen, sfMusic* music, sfBool loop)
 
 void screen_PlayMusic(Screen* screen)
 {
-    assert(screen->music != NULL);
-
-    sfMusic_Play(screen->music);
+    if(screen->music)
+        sfMusic_Play(screen->music);
 }
 
 // Charge un arrière plan dans un Screen

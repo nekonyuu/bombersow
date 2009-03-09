@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdio.h>
 #include "Objects/Player.h"
 #include "Objects/Weapon.h"
 
@@ -34,7 +35,11 @@ Player* player_Create(char* name, unsigned int current_weapon)
 // Destructeur
 void player_Destroy(Player* player2destroy)
 {
-    assert(player2destroy != NULL);
+    if(!player2destroy)
+    {
+        printf("Warning - player_Destroy : Player selectec doesn't exist\n");
+        return;
+    }
     sfString_Destroy(player2destroy->name);
     free(player2destroy);
 }

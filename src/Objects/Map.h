@@ -9,7 +9,7 @@
 
 typedef struct MAP
 {
-    sfImage* background;        // Arrière-plan
+    sfSprite* background;        // Arrière-plan
 
     Object** objects;           // Tableau des objets de la map
     unsigned int nb_objects;    // Nombre d'objets sur la map

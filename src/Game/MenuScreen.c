@@ -9,11 +9,9 @@ void display_Menu(sfRenderWindow* Game)
     sfImage *BG_image = sfImage_CreateFromFile("base/images/coming_soon.jpg");
 
     sfImage *image_animation = sfImage_CreateFromFile("base/images/animation.png");
-    Animation *animation = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, -1, 100);
-
+    Animation *animation = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, BOUCLE, 100);
 
     sfEvent Event;
-
 
     // Chargement de l'image d'arrière plan, de la musique, et lecture
     screen_LoadBG(Menu, BG_image);

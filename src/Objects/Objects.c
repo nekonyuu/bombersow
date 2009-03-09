@@ -14,6 +14,6 @@ Object* object_Create()
 void object_Destroy(Object* object2destroy)
 {
     assert(object2destroy != NULL);
-    sfImage_Destroy(object2destroy->draw_img);
+    sfSprite_Destroy(object2destroy->draw_img);
     free(object2destroy);
 }

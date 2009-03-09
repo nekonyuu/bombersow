@@ -1,5 +1,6 @@
 #ifndef IMAGE_H
 #define IMAGE_H
+
 #include "SFML/Graphics.h"
 
 #define BOUCLE -1
@@ -7,28 +8,28 @@
 
 typedef struct IMAGE
 {
-    sfImage **image_tab;
-    int image_nombre;
+    sfImage **image_tab;        // Tableau stockant les images d'une map
+    int image_nombre;           // Nombre d'images du tableau
 }Image;
 
-Image * image_Create();
+Image* image_Create();
 void image_Destroy(Image*);
 void image_Loader(Image*, char**, int);
 sfImage* image_Get(Image*, int);
 
 typedef struct ANIMATION
 {
-    sfSprite *sprite;
-    float x;
+    sfSprite *sprite;           // Image convertie en Sprite de l'animation
+    float x;                    // Coordonnées
     float y;
-    int image_hauteur;
+    int image_hauteur;          // Dimensions
     int image_largeur;
     int nombre_image;
-    int cur_image;
-    int play;
-    int fps; //en ms
-    sfClock *clock;
-}Animation;
+    int cur_image;              // Position dans l'animation
+    int play;                   // Nombre de lectures à effectuer
+    int fps;                    // Temps d'attente entre chaque image (en ms)
+    sfClock *clock;             // Timer
+} Animation;
 
 //Animation* animation_Create();
 Animation* animation_Create(sfImage*, float, float, int, int, int, int, int, float);

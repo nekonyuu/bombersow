@@ -1,7 +1,9 @@
 #include "SFML/Graphics.h"
 #include "SFML/Audio.h"
+
 #include "Game/MenuScreen.h"
 #include "Objects/Screen.h"
+#include "Objects/Weapon.h"
 
 int main()
 {
@@ -15,12 +17,12 @@ int main()
         return EXIT_FAILURE;
 
     // Démarrage du jeu
-    // armory_Create(armory);       // Remplissage du tableau
+    armory_Create(armory);          // Remplissage de l'armurerie
     display_Menu(Game);
 
     // Nettoyage des ressources
     sfRenderWindow_Destroy(Game);
-    // armory_Destroy(armory);      // Destruction du tableau
+    armory_Destroy(armory);         // Destruction de l'armurerie
 
     return EXIT_SUCCESS;
 }

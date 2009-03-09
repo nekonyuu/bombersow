@@ -25,7 +25,7 @@ void map_Destroy(Map* map2destroy)
 {
     assert(map2destroy != NULL);
 
-    sfImage_Destroy(map2destroy->background);
+    sfSprite_Destroy(map2destroy->background);
     for (int i = 0; i < map2destroy->nb_objects; i++)
         object_Destroy(map2destroy->objects[i]);
 

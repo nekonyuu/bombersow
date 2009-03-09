@@ -7,7 +7,7 @@ typedef struct OBJECT
 {
     unsigned int type;      // Type d'objet (0 = Plate-forme, 1 = Piège, 2 = Arme, 3 = Ammo)
 
-    sfImage *draw_img;      // Image de l'objet
+    sfSprite *draw_img;      // Image de l'objet
 
     float start_coord_x;    // Coordonnées de l'objet
     float start_coord_y;
