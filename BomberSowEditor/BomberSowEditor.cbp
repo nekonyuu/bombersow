@@ -3,11 +3,14 @@
 	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="BomberSowEditor" />
+		<Option platforms="Windows;" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
+				<Option platforms="Windows;" />
 				<Option output="bin\Debug\BomberSowEditor" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\bin\Debug" />
 				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -25,8 +28,9 @@
 			</Target>
 			<Target title="Release">
 				<Option output="bin\Release\BomberSowEditor" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\bin\Release" />
 				<Option object_output="obj\Release\" />
-				<Option type="1" />
+				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
@@ -98,6 +102,7 @@
 		<Extensions>
 			<code_completion />
 			<debugger />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
