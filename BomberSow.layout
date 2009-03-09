@@ -2,7 +2,7 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
 	<File name="src\Game\MenuScreen.c" open="1" top="0" tabpos="1">
-		<Cursor position="1110" topLine="0" />
+		<Cursor position="234" topLine="0" />
 	</File>
 	<File name="src\Game\MenuScreen.h" open="1" top="0" tabpos="5">
 		<Cursor position="80" topLine="0" />
@@ -31,7 +31,7 @@
 	<File name="src\Objects\Map.h" open="0" top="0" tabpos="8">
 		<Cursor position="543" topLine="0" />
 	</File>
-	<File name="src\Objects\Objects.c" open="1" top="1" tabpos="10">
+	<File name="src\Objects\Objects.c" open="1" top="0" tabpos="10">
 		<Cursor position="193" topLine="0" />
 	</File>
 	<File name="src\Objects\Objects.h" open="1" top="0" tabpos="9">
@@ -40,8 +40,8 @@
 	<File name="src\Objects\Player.c" open="1" top="0" tabpos="11">
 		<Cursor position="1122" topLine="0" />
 	</File>
-	<File name="src\Objects\Player.h" open="1" top="0" tabpos="8">
-		<Cursor position="237" topLine="0" />
+	<File name="src\Objects\Player.h" open="1" top="1" tabpos="8">
+		<Cursor position="313" topLine="0" />
 	</File>
 	<File name="src\Objects\Screen.c" open="1" top="0" tabpos="3">
 		<Cursor position="706" topLine="0" />
@@ -50,9 +50,9 @@
 		<Cursor position="324" topLine="0" />
 	</File>
 	<File name="src\Objects\Weapon.c" open="1" top="0" tabpos="6">
-		<Cursor position="2454" topLine="40" />
+		<Cursor position="1505" topLine="0" />
 	</File>
 	<File name="src\Objects\Weapon.h" open="1" top="0" tabpos="7">
-		<Cursor position="1296" topLine="0" />
+		<Cursor position="615" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

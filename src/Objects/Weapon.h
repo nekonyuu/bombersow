@@ -18,13 +18,14 @@ typedef struct WEAPON
 
     int nb_max_bullets;             // Nombre de munitions max (-1 si infini)
     int nb_curr_bullets;            // Nombre de munitions restantes (-1 si infini)
-    unsigned int damage;            // Dommages infligés
+    unsigned int damage;            // Dommages infligés par projectile
     unsigned int reload_latency;    // Temps de recharge (en millisecondes)
+    unsigned int switch_latency;    // Temps avant possibilité de changement d'arme
     int range;                      // Portée de l'arme (-1 si infinie)
     unsigned int splash_radius;     // Distance de dommages collatéraux
     float splash_coef;              // Diminution des dommages selon la distance dans le cercle (dommage = (splash_coef) ^ distance par rapport au centre (en pixels) * dommages de base)
     float selfdamage_coef;          // Self-Damage (selfdamage * (splash_coef^distance du centre) * dmg)
-    unsigned int proj_speed;        // Vitesse des projectiles
+    int proj_speed;                 // Vitesse des projectiles (-1 si instantané)
 
     _Bool collected;                // Ramassée ? (utilisé seulement pour l'inventaire du joueur)
 } Weapon;
