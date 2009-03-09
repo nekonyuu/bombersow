@@ -99,7 +99,7 @@ void armory_Create(Weapon* armory)
     armory[CROWBAR].switch_latency = 800;
     //armory[CROWBAR].respawn_time = ;
 
-    armory[CROWBAR].range = 10;
+    armory[CROWBAR].range = 20;
     armory[CROWBAR].splash_radius = 0;
     armory[CROWBAR].splash_coef = 0;
     armory[CROWBAR].selfdamage_coef = 0;
