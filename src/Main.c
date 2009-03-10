@@ -19,7 +19,7 @@ int main()
     image_Destroy(image);
 
     // Création de la fenêtre principale
-    Game = sfRenderWindow_Create(Mode, "BomberSow", sfClose, Settings);
+    Game = sfRenderWindow_Create(Mode, GAME_NAME, sfClose, Settings);
     if (!Game)
         return EXIT_FAILURE;
 

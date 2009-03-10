@@ -9,9 +9,13 @@ Screen* screen_Create()
 
     assert(new_screen = (Screen*) malloc(sizeof(Screen)));
 
-    new_screen->background = NULL;
-    new_screen->nb_options = 0;
-    new_screen->img_options = NULL;
+    new_screen->images = NULL;
+    new_screen->nb_img = 0;
+
+    new_screen->texts = NULL;
+    new_screen->nb_text = 0;
+
+    new_screen->font = NULL;
     new_screen->music = NULL;
 
     return new_screen;
@@ -22,11 +26,57 @@ void screen_Destroy(Screen* screen2destroy)
 {
     assert(screen2destroy != NULL);
 
-    sfSprite_Destroy(screen2destroy->background);
-    for(int i = 0; i < screen2destroy->nb_options; i++)
-        sfSprite_Destroy(screen2destroy->img_options[i]);
+    for(int i = 0; i < screen2destroy->nb_text; i++)
+        sfString_Destroy(screen2destroy->texts[i]);
+    free(screen2destroy->texts);
+
+    for(int i = 0; i < screen2destroy->nb_img; i++)
+        sfSprite_Destroy(screen2destroy->images[i]);
+    free(screen2destroy->images);
+
+    sfFont_Destroy(screen2destroy->font);
     sfMusic_Destroy(screen2destroy->music);
     free(screen2destroy);
+}
+
+// Charge une police
+void screen_LoadFont(Screen* screen, sfFont* font_)
+{
+    if(!font_)
+    {
+        printf("Warning - screen_LoadFont : sfFont object sent NULL\n");
+        return;
+    }
+
+    screen->font = font_;
+}
+
+// Ajout d'une sfString dans Screen
+void screen_LoadText(Screen* screen, char* text, sfColor color)
+{
+    assert(screen != NULL);
+
+    screen->nb_text++;
+    if(!screen->texts)
+        assert(screen->texts = (sfString**) malloc(sizeof(sfString*)));
+    else
+        assert(screen->texts = (sfString**) realloc(screen->texts, screen->nb_text * sizeof(sfString*)));
+
+    screen->texts[screen->nb_text - 1] = sfString_Create();
+    sfString_SetText(screen->texts[screen->nb_text - 1], text);
+    sfString_SetFont(screen->texts[screen->nb_text - 1], screen->font);
+    sfString_SetColor(screen->texts[screen->nb_text - 1], color);
+}
+
+// Dessin de texte
+void screen_DrawText(sfRenderWindow* window, Screen* screen, int id, int font_size, float x, float y)
+{
+    assert(screen != NULL && screen->texts != NULL);
+
+    sfString_SetSize(screen->texts[id], font_size);
+    sfString_SetX(screen->texts[id], x);
+    sfString_SetY(screen->texts[id], y);
+    sfRenderWindow_DrawString(window, screen->texts[id]);
 }
 
 // Charge une musique dans un Screen
@@ -49,10 +99,16 @@ void screen_PlayMusic(Screen* screen)
 }
 
 // Charge un arrière plan dans un Screen
-void screen_LoadBG(Screen* screen, sfImage* BG)
+void screen_LoadImage(Screen* screen, sfImage* image)
 {
-    assert(BG != NULL);
+    assert(image != NULL);
 
-    screen->background = sfSprite_Create();
-    sfSprite_SetImage(screen->background, BG);
+    screen->nb_img++;
+    if(!screen->images)
+        assert(screen->images = (sfSprite**) malloc(sizeof(sfSprite*)));
+    else
+        assert(screen->images = (sfSprite**) realloc(screen->images, screen->nb_img * sizeof(sfSprite*)));
+
+    screen->images[screen->nb_img - 1] = sfSprite_Create();
+    sfSprite_SetImage(screen->images[screen->nb_img - 1], image);
 }
