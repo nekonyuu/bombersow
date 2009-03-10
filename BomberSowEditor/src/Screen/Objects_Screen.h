@@ -24,6 +24,7 @@ typedef struct OBJECT_SCREEN{
 
     int page;
     int last_id;
+    int first_id;
 
 }Object_Screen;
 
@@ -31,5 +32,6 @@ Object_Screen* object_screen_Create(sfRenderWindow*, sfImage*, int, int, int, in
 void object_screen_Destroy(Object_Screen*);
 void object_screen_Draw(Object_Screen*);
 void object_screen_Load_Object(Object_Screen*, Image*); // Load sans copie et malloc, il faut donc un tableau d'object qui existe
+int object_screen_Click(Object_Screen* screen, int mouse_x, int mouse_y);
 
 #endif

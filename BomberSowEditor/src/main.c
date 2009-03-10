@@ -26,6 +26,11 @@ int main()
 
     sfRenderWindow_SetFramerateLimit(Game, 60);
     // Démarrage du jeu
+
+    int id_image = 0;
+    sfSprite* temp_sprite = sfSprite_Create();
+    sfSprite_SetImage(temp_sprite, image_Get(image_object, id_image));
+
     while (sfRenderWindow_IsOpened(Game))
     {
         while (sfRenderWindow_GetEvent(Game, &Event))           // Surveillance des évènements
@@ -37,12 +42,29 @@ int main()
                 sfRenderWindow_Close(Game);
             }
 
+            if (Event.Type == sfEvtMouseButtonPressed){
+
+               int id_temp = object_screen_Click(object_screen, Event.MouseButton.X, Event.MouseButton.Y) ;
+               if(id_temp != -1){
+                    id_image = id_temp;
+                    sfSprite_SetImage(temp_sprite, image_Get(image_object, id_image));
+               }
+
+            }
+
+            if(Event.Type == sfEvtMouseMoved){
+                sfSprite_SetPosition(temp_sprite, Event.MouseMove.X, Event.MouseMove.Y);
+            }
+
             // Mettre ici tous les autres events à gérer
         }
 
         sfRenderWindow_Clear(Game, sfBlack);                    // Vidage de l'écran
 
         object_screen_Draw(object_screen);
+
+
+        sfRenderWindow_DrawSprite(Game, temp_sprite);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
     }
@@ -51,6 +73,7 @@ int main()
     sfRenderWindow_Destroy(Game);
     image_Destroy(image_object);
     sfImage_Destroy(fond_menu);
+    sfSprite_Destroy(temp_sprite);
 
     return EXIT_SUCCESS;
 
