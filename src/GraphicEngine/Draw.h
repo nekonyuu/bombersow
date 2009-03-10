@@ -4,7 +4,7 @@
 #include "SFML/Graphics.h"
 
 #define SCREEN_WIDTH 900
-#define SCREEN_HEIGHT 600
+#define SCREEN_HEIGHT 675
 #define GAME_NAME "BomberSow"
 
 #endif

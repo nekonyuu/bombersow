@@ -6,8 +6,8 @@
 
 typedef struct SCREEN
 {
-    sfSprite** images;          // Sprites des Options
-    unsigned int nb_img;        // Nombre d'options
+    sfSprite** images;          // Sprites de l'écran
+    unsigned int nb_img;        // Nombre d'images
 
     sfString** texts;           // Textes
     unsigned int nb_text;       // Nombre de textes

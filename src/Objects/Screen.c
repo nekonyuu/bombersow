@@ -92,6 +92,7 @@ void screen_LoadMusic(Screen* screen, sfMusic* music, sfBool loop)
     sfMusic_SetLoop(screen->music, loop);
 }
 
+// Lecture de la musique de l'écran donné
 void screen_PlayMusic(Screen* screen)
 {
     if(screen->music)
