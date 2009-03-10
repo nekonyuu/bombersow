@@ -116,7 +116,7 @@ void dossier_Read_Image(Image* image, char* path){
     int i = 0;
 
     int nombre_image = 0;
-    char **image_path;
+    char **image_path = NULL;
 
     if (rep != NULL){
         struct dirent *ent;

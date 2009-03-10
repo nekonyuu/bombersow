@@ -52,7 +52,7 @@ void weapon_Destroy(Weapon* weapon2destroy)
 // Diminue le nombre de cartouche restantes et crée un bullet
 Bullet** weapon_Shoot(Weapon* weapon_, int* nb_bullet)
 {
-    Bullet** new_bullet;
+    Bullet** new_bullet = NULL;
 
     if(weapon_->type == SHOTGUN)
     {
