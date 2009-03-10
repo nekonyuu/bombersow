@@ -6,6 +6,7 @@
 
 typedef struct OBJECT
 {
+    unsigned int objectID;  // ID de l'object (transmission réseau)
     unsigned int type;      // Type d'objet (0 = Plate-forme, 1 = Piège, 2 = Arme, 3 = Ammo)
 
     /*Voir pour inclusion dans une struct*/

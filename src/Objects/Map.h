@@ -9,10 +9,11 @@
 
 typedef struct MAP
 {
-    sfSprite* background;        // Arrière-plan
+    unsigned int mapId;         // ID de la map (transmission réseau)
+    sfSprite* background;       // Arrière-plan
 
-    Image** image;              //Tableau pour les images de la map
-    Animation** animation;      //Tableau pour les animations
+    Image** image;              // Tableau pour les images de la map
+    Animation** animation;      // Tableau pour les animations
 
     Object** objects;           // Tableau des objets de la map
     unsigned int nb_objects;    // Nombre d'objets sur la map
@@ -39,7 +40,7 @@ typedef struct DATA {
 
 Data* data_Create();
 void data_Destroy(Data*);
-Data* data_Parser(char *type, char* path); //Parser qui recupere un char des champs correspondant a un type
+Data* data_Parser(char*, char*); //Parser qui recupere un char des champs correspondant a un type
 
 #endif
 

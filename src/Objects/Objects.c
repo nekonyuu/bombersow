@@ -6,7 +6,7 @@ Object* object_Create()
     Object* new_object = NULL;
     assert(new_object = (Object*) malloc(sizeof(Object)));
 
-
+    new_object->objectID = 0;
     new_object->type = 0;
 
     new_object->draw_img = sfSprite_Create();

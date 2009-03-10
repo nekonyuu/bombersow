@@ -102,7 +102,7 @@ void screen_PlayMusic(Screen* screen)
 // Charge un arrière plan dans un Screen
 void screen_LoadImage(Screen* screen, sfImage* image)
 {
-    assert(image != NULL);
+    assert(screen != NULL);
 
     screen->nb_img++;
     if(!screen->images)
@@ -111,5 +111,12 @@ void screen_LoadImage(Screen* screen, sfImage* image)
         assert(screen->images = (sfSprite**) realloc(screen->images, screen->nb_img * sizeof(sfSprite*)));
 
     screen->images[screen->nb_img - 1] = sfSprite_Create();
+
+    if(!image)
+    {
+        printf("Warning - screen_LoadImage : sfImage object sent NULL, skipping\n");
+        return;
+    }
+
     sfSprite_SetImage(screen->images[screen->nb_img - 1], image);
 }

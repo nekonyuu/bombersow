@@ -20,6 +20,7 @@ int main()
 
     // Création de la fenêtre principale
     Game = sfRenderWindow_Create(Mode, GAME_NAME, sfClose, Settings);
+    sfRenderWindow_SetFramerateLimit(Game, FRAMERATE);
     if (!Game)
         return EXIT_FAILURE;
 

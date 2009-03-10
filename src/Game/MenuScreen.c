@@ -31,7 +31,7 @@ void display_Menu(sfRenderWindow* Game)
         sfRenderWindow_DrawSprite(Game, Menu->images[0]);       // Dessin du BG
 
         screen_DrawText(Game, Menu, 0, 60, 500.0f, 40.0f);      // Dessin du titre
-        screen_DrawText(Game, Menu, 1, 35, 500.0f, 140.0f);
+        screen_DrawText(Game, Menu, 1, 35, 500.0f, 140.0f);     // Dessin des options
         screen_DrawText(Game, Menu, 2, 35, 500.0f, 190.0f);
         screen_DrawText(Game, Menu, 3, 35, 500.0f, 240.0f);
         screen_DrawText(Game, Menu, 4, 35, 500.0f, 290.0f);
@@ -48,9 +48,10 @@ void display_Menu(sfRenderWindow* Game)
                 sfRenderWindow_Close(Game);                     // Fermeture de la fenêtre
                 screen_Destroy(Menu);                           // Fermeture du Menu et nettoyage des ressources
             }
+
             if (Event.Type == sfEvtKeyPressed)
             {
-                if (Event.Key.Code == sfKeyEscape)
+                if (Event.Key.Code == sfKeyEscape)              // Echap : Quitte le jeu
                 {
                     sfRenderWindow_Close(Game);
                     screen_Destroy(Menu);
@@ -65,7 +66,7 @@ void display_Menu(sfRenderWindow* Game)
                         break;
                     case 3:
                         break;
-                    case 4:
+                    case 4:                                     //
                         sfRenderWindow_Close(Game);
                         screen_Destroy(Menu);
                         break;
