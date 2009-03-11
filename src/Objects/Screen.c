@@ -34,7 +34,7 @@ void screen_Destroy(Screen* screen2destroy)
         sfSprite_Destroy(screen2destroy->images[i]);
     free(screen2destroy->images);
 
-    sfFont_Destroy(screen2destroy->font);
+    screen2destroy->font = NULL;
     sfMusic_Destroy(screen2destroy->music);
     free(screen2destroy);
 }
@@ -52,7 +52,7 @@ void screen_LoadFont(Screen* screen, sfFont* font_)
 }
 
 // Ajout d'une sfString dans Screen
-void screen_LoadText(Screen* screen, char* text, sfColor color)
+void screen_LoadText(Screen* screen, char* text, sfColor color, int font_size, sfStringStyle style, float x, float y)
 {
     assert(screen != NULL);
 
@@ -66,16 +66,17 @@ void screen_LoadText(Screen* screen, char* text, sfColor color)
     sfString_SetText(screen->texts[screen->nb_text - 1], text);
     sfString_SetFont(screen->texts[screen->nb_text - 1], screen->font);
     sfString_SetColor(screen->texts[screen->nb_text - 1], color);
+    sfString_SetStyle(screen->texts[screen->nb_text - 1], style);
+    sfString_SetSize(screen->texts[screen->nb_text - 1], font_size);
+    sfString_SetX(screen->texts[screen->nb_text - 1], x);
+    sfString_SetY(screen->texts[screen->nb_text - 1], y);
 }
 
 // Dessin de texte
-void screen_DrawText(sfRenderWindow* window, Screen* screen, int id, int font_size, float x, float y)
+void screen_DrawText(sfRenderWindow* window, Screen* screen, int id)
 {
     assert(screen != NULL && screen->texts != NULL);
 
-    sfString_SetSize(screen->texts[id], font_size);
-    sfString_SetX(screen->texts[id], x);
-    sfString_SetY(screen->texts[id], y);
     sfRenderWindow_DrawString(window, screen->texts[id]);
 }
 

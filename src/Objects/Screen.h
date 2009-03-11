@@ -19,8 +19,8 @@ typedef struct SCREEN
 Screen* screen_Create();
 void screen_Destroy(Screen*);
 void screen_LoadFont(Screen*, sfFont*);
-void screen_LoadText(Screen*, char*, sfColor);
-void screen_DrawText(sfRenderWindow*, Screen*, int, int, float, float);
+void screen_LoadText(Screen*, char*, sfColor, int, sfStringStyle, float, float);
+void screen_DrawText(sfRenderWindow*, Screen*, int);
 void screen_LoadMusic(Screen*, sfMusic*, sfBool);
 void screen_PlayMusic(Screen*);
 void screen_LoadImage(Screen*, sfImage*);

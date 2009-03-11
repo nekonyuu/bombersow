@@ -120,7 +120,14 @@ void animation_Draw(Animation* animation_, sfRenderWindow* App)
         sfClock_Reset(animation_->clock);
     }
 
-    sfIntRect rect = {animation_->x + animation_->image_largeur*animation_->cur_image, animation_->y, animation_->x + animation_->image_largeur*animation_->cur_image+animation_->image_largeur, animation_->y + animation_->image_hauteur};
+    sfIntRect rect =
+    {
+        animation_->x + animation_->image_largeur*animation_->cur_image,
+        animation_->y,
+        animation_->x + animation_->image_largeur*animation_->cur_image+animation_->image_largeur,
+        animation_->y + animation_->image_hauteur
+    };
+
     sfSprite_SetSubRect(animation_->sprite, &rect);
     sfRenderWindow_DrawSprite(App, animation_->sprite);
 }

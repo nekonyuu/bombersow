@@ -2,38 +2,34 @@
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
 
-_Bool display_Credits(sfRenderWindow* Game)
+_Bool display_Credits(sfRenderWindow* Game, sfImage* BG_image, sfFont* creditsFont)
 {
     Screen* Credits = screen_Create();
-    sfImage *BG_image = sfImage_CreateFromFile("base/images/Menu/menu_bg.png");
-    sfFont *creditsFont = sfFont_CreateFromFile("base/fonts/ITCKRIST.TTF", 50, NULL);
     sfEvent Event;
     _Bool launched = true, close = false;
 
     screen_LoadImage(Credits, BG_image);                        // Chargement de l'arrière-plan
     screen_LoadFont(Credits, creditsFont);                      // Chargement de la police d'écriture
-    screen_LoadText(Credits, GAME_NAME, sfRed);                 // Préparation des textes
-    screen_LoadText(Credits, "Auteurs :", sfWhite);
-    screen_LoadText(Credits, "Raffre Jonathan (Loven x Kotonoha)", sfWhite);
-    screen_LoadText(Credits, "Brieulle Ludovic", sfWhite);
-    screen_LoadText(Credits, "Norindr Ananda (kastor)", sfWhite);
-    screen_LoadText(Credits, "Ce jeu a été codé avec la SFML", sfWhite);
-    screen_LoadText(Credits, "http://www.sfml-dev.org/", sfWhite);
-    screen_LoadText(Credits, "Appuyez sur Echap pour revenir en arrière", sfWhite);
+    // Préparation des textes
+    screen_LoadText(Credits, GAME_NAME, sfRed, 60, sfStringRegular, 450.0f, 40.0f);
+    screen_LoadText(Credits, "Auteurs :", sfWhite, 20, sfStringRegular, 450.0f, 140.0f);
+    screen_LoadText(Credits, "Raffre Jonathan (Loven x Kotonoha)", sfWhite, 20, sfStringRegular, 450.0f, 190.0f);
+    screen_LoadText(Credits, "Netcode, Gestion Objects", sfWhite, 20, sfStringRegular, 450.0f, 220.0f);
+    screen_LoadText(Credits, "Brieulle Ludovic", sfWhite, 20, sfStringRegular, 450.0f, 260.0f);
+    screen_LoadText(Credits, "Graphisme, Détection clavier", sfWhite, 20, sfStringRegular, 450.0f, 290.0f);
+    screen_LoadText(Credits, "Norindr Ananda (kastor)", sfWhite, 20, sfStringRegular, 450.0f, 330.0f);
+    screen_LoadText(Credits, "Moteur graphique", sfWhite, 20, sfStringRegular, 450.0f, 360.0f);
+    screen_LoadText(Credits, "Ce jeu a été codé en C \"POO\" avec la SFML", sfWhite, 20, sfStringRegular, 450.0f, 430.0f);
+    screen_LoadText(Credits, "http://www.sfml-dev.org/", sfWhite, 20, sfStringRegular, 450.0f, 460.0f);
 
-    while (launched)
+    do
     {
         sfRenderWindow_Clear(Game, sfBlack);                    // Vidage de l'écran
 
         sfRenderWindow_DrawSprite(Game, Credits->images[0]);    // Dessin du BG
-        screen_DrawText(Game, Credits, 0, 60, 450.0f, 40.0f);   // Dessin du titre
-        screen_DrawText(Game, Credits, 1, 20, 450.0f, 140.0f);  // Dessin des credits
-        screen_DrawText(Game, Credits, 2, 20, 450.0f, 180.0f);
-        screen_DrawText(Game, Credits, 3, 20, 450.0f, 220.0f);
-        screen_DrawText(Game, Credits, 4, 20, 450.0f, 260.0f);
-        screen_DrawText(Game, Credits, 5, 20, 450.0f, 320.0f);
-        screen_DrawText(Game, Credits, 6, 20, 450.0f, 360.0f);
-        screen_DrawText(Game, Credits, 7, 20, 450.0f, 420.0f);
+
+        for(int i = 0; i < Credits->nb_text; i++)               // Dessin des textes
+            screen_DrawText(Game, Credits, i);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 
@@ -43,19 +39,18 @@ _Bool display_Credits(sfRenderWindow* Game)
             if (Event.Type == sfEvtClosed)
             {
                 screen_Destroy(Credits);
-                close = true;                         // Fermeture du Menu et nettoyage des ressources
+                close = true;                                   // Fermeture du Menu et nettoyage des ressources
                 launched = false;
             }
-
-            if (Event.Type == sfEvtKeyPressed && Event.Key.Code == sfKeyEscape) // Reviens en arrière
+            // Reviens en arrière
+            if (Event.Type == sfEvtKeyPressed && (Event.Key.Code == sfKeyEscape || Event.Key.Code == sfKeyReturn))
             {
-                    screen_Destroy(Credits);
-                    launched = false;
+                screen_Destroy(Credits);
+                launched = false;
             }
         }
     }
-
-    sfImage_Destroy(BG_image);
+    while (launched);
 
     return close;
 }

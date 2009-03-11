@@ -1,4 +1,5 @@
 #include "Game/MenuScreen.h"
+#include "Game/PlayScreen.h"
 #include "Game/CreditsScreen.h"
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
@@ -19,11 +20,12 @@ void display_Menu(sfRenderWindow* Game)
 
     screen_LoadImage(Menu, BG_image);                           // Chargement de l'arrière-plan
     screen_LoadFont(Menu, menuFont);                            // Chargement de la police d'écriture
-    screen_LoadText(Menu, GAME_NAME, sfRed);                    // Préparation des textes
-    screen_LoadText(Menu, "Jouer", sfRed);
-    screen_LoadText(Menu, "Options", sfWhite);
-    screen_LoadText(Menu, "Credits", sfWhite);
-    screen_LoadText(Menu, "Quitter", sfWhite);
+    // Préparation des textes
+    screen_LoadText(Menu, GAME_NAME, sfRed, 60, sfStringRegular, 450.0f, 40.0f);
+    screen_LoadText(Menu, "Jouer", sfRed, 35, sfStringItalic, 450.0f, 140.0f);
+    screen_LoadText(Menu, "Options", sfWhite, 35, sfStringItalic, 450.0f, 190.0f);
+    screen_LoadText(Menu, "Credits", sfWhite, 35, sfStringItalic, 450.0f, 240.0f);
+    screen_LoadText(Menu, "Quitter", sfWhite, 35, sfStringItalic, 450.0f, 290.0f);
     screen_LoadMusic(Menu, menuMusic, sfTrue);                  // Chargement de la musique
     screen_PlayMusic(Menu);                                     // Lecture
 
@@ -32,11 +34,10 @@ void display_Menu(sfRenderWindow* Game)
         sfRenderWindow_Clear(Game, sfBlack);                    // Vidage de l'écran
 
         sfRenderWindow_DrawSprite(Game, Menu->images[0]);       // Dessin du BG
-        screen_DrawText(Game, Menu, 0, 60, 450.0f, 40.0f);      // Dessin du titre
-        screen_DrawText(Game, Menu, 1, 35, 450.0f, 140.0f);     // Dessin des options
-        screen_DrawText(Game, Menu, 2, 35, 450.0f, 190.0f);
-        screen_DrawText(Game, Menu, 3, 35, 450.0f, 240.0f);
-        screen_DrawText(Game, Menu, 4, 35, 450.0f, 290.0f);
+
+        for(int i = 0; i < Menu->nb_text; i++)
+            screen_DrawText(Game, Menu, i);                 // Dessin des textes
+
         animation_Draw(animation, Game);                        // Dessin animation test
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
@@ -62,11 +63,13 @@ void display_Menu(sfRenderWindow* Game)
                     switch (menu_select)
                     {
                     case 1:
+                        if (display_PlayMenu(Game, BG_image, menuFont))
+                            launched = false;
                         break;
                     case 2:
                         break;
                     case 3:
-                        if (display_Credits())
+                        if (display_Credits(Game, BG_image, menuFont))
                             launched = false;
                         break;
                     case 4:                                     // Sélection de l'option Quitter
@@ -89,6 +92,7 @@ void display_Menu(sfRenderWindow* Game)
         }
     }
 
+    sfFont_Destroy(menuFont);
     sfImage_Destroy(BG_image);
     sfImage_Destroy(image_animation);
     animation_Destroy(animation);
