@@ -1,4 +1,5 @@
 #include "Game/MenuScreen.h"
+#include "Game/CreditsScreen.h"
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
 #include "GraphicEngine/Image.h"
@@ -13,6 +14,7 @@ void display_Menu(sfRenderWindow* Game)
     sfFont *menuFont = sfFont_CreateFromFile("base/fonts/ITCKRIST.TTF", 50, NULL);
     Animation *animation = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, -1, 0.1);
     sfEvent Event;
+    _Bool launched = true;
     int menu_select = 1;
 
     screen_LoadImage(Menu, BG_image);                           // Chargement de l'arrière-plan
@@ -25,17 +27,16 @@ void display_Menu(sfRenderWindow* Game)
     screen_LoadMusic(Menu, menuMusic, sfTrue);                  // Chargement de la musique
     screen_PlayMusic(Menu);                                     // Lecture
 
-    while (sfRenderWindow_IsOpened(Game))
+    while (launched)
     {
         sfRenderWindow_Clear(Game, sfBlack);                    // Vidage de l'écran
+
         sfRenderWindow_DrawSprite(Game, Menu->images[0]);       // Dessin du BG
-
-        screen_DrawText(Game, Menu, 0, 60, 500.0f, 40.0f);      // Dessin du titre
-        screen_DrawText(Game, Menu, 1, 35, 500.0f, 140.0f);     // Dessin des options
-        screen_DrawText(Game, Menu, 2, 35, 500.0f, 190.0f);
-        screen_DrawText(Game, Menu, 3, 35, 500.0f, 240.0f);
-        screen_DrawText(Game, Menu, 4, 35, 500.0f, 290.0f);
-
+        screen_DrawText(Game, Menu, 0, 60, 450.0f, 40.0f);      // Dessin du titre
+        screen_DrawText(Game, Menu, 1, 35, 450.0f, 140.0f);     // Dessin des options
+        screen_DrawText(Game, Menu, 2, 35, 450.0f, 190.0f);
+        screen_DrawText(Game, Menu, 3, 35, 450.0f, 240.0f);
+        screen_DrawText(Game, Menu, 4, 35, 450.0f, 290.0f);
         animation_Draw(animation, Game);                        // Dessin animation test
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
@@ -45,16 +46,16 @@ void display_Menu(sfRenderWindow* Game)
             // Fermer : Quitter le jeu
             if (Event.Type == sfEvtClosed)
             {
-                sfRenderWindow_Close(Game);                     // Fermeture de la fenêtre
                 screen_Destroy(Menu);                           // Fermeture du Menu et nettoyage des ressources
+                launched = false;
             }
 
             if (Event.Type == sfEvtKeyPressed)
             {
                 if (Event.Key.Code == sfKeyEscape)              // Echap : Quitte le jeu
                 {
-                    sfRenderWindow_Close(Game);
                     screen_Destroy(Menu);
+                    launched = false;
                 }
                 else if (Event.Key.Code == sfKeyReturn)
                 {
@@ -65,10 +66,12 @@ void display_Menu(sfRenderWindow* Game)
                     case 2:
                         break;
                     case 3:
+                        if (display_Credits())
+                            launched = false;
                         break;
-                    case 4:                                     //
-                        sfRenderWindow_Close(Game);
+                    case 4:                                     // Sélection de l'option Quitter
                         screen_Destroy(Menu);
+                        launched = false;
                         break;
                     }
                 }
@@ -85,6 +88,10 @@ void display_Menu(sfRenderWindow* Game)
             }
         }
     }
+
+    sfImage_Destroy(BG_image);
+    sfImage_Destroy(image_animation);
+    animation_Destroy(animation);
 
     return;
 }

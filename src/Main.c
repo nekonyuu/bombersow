@@ -29,6 +29,7 @@ int main()
     display_Menu(Game);
 
     // Nettoyage des ressources
+    sfRenderWindow_Close(Game);     // Fermeture de la fenêtre
     sfRenderWindow_Destroy(Game);
     armory_Destroy(armory);         // Destruction de l'armurerie
 

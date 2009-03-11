@@ -24,8 +24,9 @@
 
 1236646413 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\clientscreen.c
 
-1236724590 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.c
+1236775031 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.c
 	"Game/MenuScreen.h"
+	"Game/CreditsScreen.h"
 	"Objects/Screen.h"
 	"GraphicEngine/Draw.h"
 	"GraphicEngine/Image.h"
@@ -46,7 +47,7 @@
 
 1236646413 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\inputscontrol\playercontrol.c
 
-1236721022 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
+1236773249 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
 	"SFML/Graphics.h"
 	"SFML/Audio.h"
 	"Game/MenuScreen.h"
@@ -603,7 +604,10 @@
 1236721009 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\graphicengine\draw.h
 	"SFML/Graphics.h"
 
-1236721246 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\creditsscreen.c
+1236774908 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\creditsscreen.c
+	"Game/CreditsScreen.h"
+	"Objects/Screen.h"
+	"GraphicEngine/Draw.h"
 
 1236729145 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\strippedobject.c
 	<stdio.h>
@@ -620,5 +624,9 @@
 	"Networking/StrippedPlayer.h"
 
 1236728361 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\strippedplayer.h
+	"SFML/Graphics.h"
+
+1236774893 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\creditsscreen.h
+	<stdbool.h>
 	"SFML/Graphics.h"
 
