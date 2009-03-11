@@ -68,8 +68,7 @@ void screen_LoadText(Screen* screen, char* text, sfColor color, int font_size, s
     sfString_SetColor(screen->texts[screen->nb_text - 1], color);
     sfString_SetStyle(screen->texts[screen->nb_text - 1], style);
     sfString_SetSize(screen->texts[screen->nb_text - 1], font_size);
-    sfString_SetX(screen->texts[screen->nb_text - 1], x);
-    sfString_SetY(screen->texts[screen->nb_text - 1], y);
+    sfString_SetPosition(screen->texts[screen->nb_text - 1], x, y);
 }
 
 // Dessin de texte

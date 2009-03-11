@@ -36,7 +36,7 @@ void display_Menu(sfRenderWindow* Game)
         sfRenderWindow_DrawSprite(Game, Menu->images[0]);       // Dessin du BG
 
         for(int i = 0; i < Menu->nb_text; i++)
-            screen_DrawText(Game, Menu, i);                 // Dessin des textes
+            screen_DrawText(Game, Menu, i);                     // Dessin des textes
 
         animation_Draw(animation, Game);                        // Dessin animation test
 
