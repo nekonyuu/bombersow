@@ -34,7 +34,8 @@
 	"GraphicEngine/Image.h"
 	"Objects/Map.h"
 
-1236790031 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\playscreen.c
+1236863897 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\playscreen.c
+	"BaseSystem/Logging.h"
 	"Game/MenuScreen.h"
 	"Game/CreditsScreen.h"
 	"Objects/Screen.h"
@@ -55,7 +56,7 @@
 
 1236646413 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\inputscontrol\playercontrol.c
 
-1236863711 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
+1236865381 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
 	"SFML/Graphics.h"
 	"SFML/Audio.h"
 	"BaseSystem/Logging.h"
@@ -99,9 +100,8 @@
 	<assert.h>
 	"Objects/Objects.h"
 
-1236646414 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.c
-	<assert.h>
-	<stdio.h>
+1236865395 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.c
+	"BaseSystem/Logging.h"
 	"GraphicEngine/Draw.h"
 	"Objects/Player.h"
 	"Objects/Weapon.h"
@@ -301,15 +301,15 @@
 	"SFML/Graphics.h"
 	"SFML/Audio.h"
 
-1236646413 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\bullet.c
-	<assert.h>
+1236864037 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\bullet.c
+	"BaseSystem/Logging.h"
 	"Objects/Bullet.h"
 	"Objects/Weapon.h"
 
 1236646413 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\bullet.h
 	"SFML/Graphics.h"
 
-1236863293 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\screen.c
+1236864084 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\screen.c
 	"BaseSystem/Logging.h"
 	"Objects/Screen.h"
 
@@ -613,7 +613,8 @@
 1236721009 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\graphicengine\draw.h
 	"SFML/Graphics.h"
 
-1236789773 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\creditsscreen.c
+1236863889 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\creditsscreen.c
+	"BaseSystem/Logging.h"
 	"Game/CreditsScreen.h"
 	"Objects/Screen.h"
 	"GraphicEngine/Draw.h"

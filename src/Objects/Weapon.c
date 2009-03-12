@@ -1,5 +1,4 @@
-#include <assert.h>
-#include <stdio.h>
+#include "BaseSystem/Logging.h"
 #include "Objects/Weapon.h"
 
 // Constructeur

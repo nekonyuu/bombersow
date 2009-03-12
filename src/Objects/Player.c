@@ -87,7 +87,7 @@ void player_CollectWeapon(Player* player_, int weapon_type)
 // Fonction qui gère le saut du joueur, TODO : Trajectoire lors du saut, vecteur force
 void player_Jump(Player* player_)
 {
-    assert(player_)
+    assert(player_);
     if (player_->jump == NO_JUMP)
     {
         player_->jump = SIMPLE_JUMP;

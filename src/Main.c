@@ -24,6 +24,7 @@ int main()
     if (!Game)
         return EXIT_FAILURE;
 
+    assert(0);
     // Démarrage du jeu
     armory_Create(armory);          // Remplissage de l'armurerie
     logging_Info("main", "Game Start");

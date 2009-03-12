@@ -1,7 +1,7 @@
-#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "BaseSystem/Logging.h"
 #include "Objects/Objects.h"
 #include "Objects/Map.h"
 
@@ -73,7 +73,11 @@ Data* data_Parser(char *type, char* path)
 
     if (fichier == NULL)                        // Si on a pas pu ouvrir le fichier on renvoi NULL
     {
-        logging_Warning("data_Parser", strcat(srtrcat("File ", path), " doesn't exist"));
+        char str[200];
+        strcat(str, "File ");
+        strcat(str, path);
+        strcat(str, " doesn't exist");
+        logging_Warning("data_Parser", str);
         return NULL;
     }
 
