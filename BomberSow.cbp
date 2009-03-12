@@ -8,7 +8,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option platforms="Windows;Unix;" />
+				<Option platforms="Windows;" />
 				<Option output="bin\Debug\BomberSow" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin\Debug\" />
 				<Option object_output="obj\Debug\" />
@@ -28,7 +28,7 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option platforms="Windows;Unix;" />
+				<Option platforms="Windows;" />
 				<Option output="bin\Release\BomberSow" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin\Release\" />
 				<Option object_output="obj\Release\" />
@@ -128,14 +128,6 @@
 		<Unit filename="src\Networking\ServerThread.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Networking\StrippedObject.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\Networking\StrippedObject.h" />
-		<Unit filename="src\Networking\StrippedPlayer.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\Networking\StrippedPlayer.h" />
 		<Unit filename="src\Objects\Bullet.c">
 			<Option compilerVar="CC" />
 		</Unit>

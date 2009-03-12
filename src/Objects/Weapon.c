@@ -47,37 +47,6 @@ void weapon_Destroy(Weapon* weapon2destroy)
     }
 }
 
-// Diminue le nombre de cartouche restantes et crée un bullet
-Bullet** weapon_Shoot(Weapon* weapon_, int* nb_bullet)
-{
-    Bullet** new_bullet = NULL;
-
-    if (weapon_->type == SHOTGUN)
-    {
-        assert(new_bullet = (Bullet**) malloc(SHOTGUN_SHRAPNELS * sizeof(Bullet*)));
-        for (*nb_bullet = 0; *nb_bullet < SHOTGUN_SHRAPNELS; *nb_bullet++)
-        {
-            assert(new_bullet[*nb_bullet] = (Bullet*) malloc(sizeof(Bullet)));
-            new_bullet[*nb_bullet]->bullet_type = weapon_->type;
-            new_bullet[*nb_bullet]->damage = weapon_->damage;
-            new_bullet[*nb_bullet]->trajectory = weapon_->trajectory;
-            new_bullet[*nb_bullet]->draw_image = weapon_->bullet_img;
-        }
-    }
-    else
-    {
-        assert(new_bullet[0] = (Bullet*) malloc(sizeof(Bullet)));
-        new_bullet[0]->bullet_type = weapon_->type;
-        new_bullet[0]->damage = weapon_->damage;
-        new_bullet[0]->trajectory = weapon_->trajectory;
-        new_bullet[0]->draw_image = weapon_->bullet_img;
-    }
-
-    weapon_->nb_curr_bullets--;
-
-    return new_bullet;
-}
-
 // Création de l'armurerie & WeaponDefs, TODO : Chargement des sprites des armes
 void armory_Create(Weapon* armory)
 {

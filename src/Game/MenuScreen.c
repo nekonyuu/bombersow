@@ -2,9 +2,8 @@
 #include "Game/MenuScreen.h"
 #include "Game/PlayScreen.h"
 #include "Game/CreditsScreen.h"
-#include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
-#include "GraphicEngine/Image.h"
+#include "Objects/Screen.h"
 #include "Objects/Map.h"
 
 void display_Menu(sfRenderWindow* Game)

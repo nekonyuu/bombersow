@@ -22,13 +22,15 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->nb_weapons = 1;
     new_player->current_weapon = current_weapon;                // Arme choisie dès le spawn
 
-    /* TODO : Fonction random de coordonnées de spawn
+    /* TODO : Fonction donnant les coordonnées de spawn
     new_player->coord_x = ;                                     // Coordonnées de spawn
     new_player->coord_y = ;
     */
 
     new_player->frags = 0;
     new_player->killed = 0;
+
+    new_player->stripped = stplayer_Create(new_player);
 
     return new_player;
 }
@@ -47,6 +49,36 @@ void player_Destroy(Player* player2destroy)
         free(player2destroy->weapons);
         free(player2destroy);
     }
+}
+
+stPlayer* stplayer_Create(Player* player_)
+{
+    stPlayer* new_stplayer;
+    assert(new_stplayer = (stPlayer*) malloc(sizeof(stPlayer)));
+
+    new_stplayer->name = player_->name;
+
+    new_stplayer->current_weapon = &player_->current_weapon;
+
+    new_stplayer->coord_x = &player_->coord_x;
+    new_stplayer->coord_y = &player_->coord_y;
+
+    return new_stplayer;
+}
+
+void stplayer_Destroy(stPlayer* stplayer_)
+{
+    if (!stplayer_)
+    {
+        logging_Warning("stplayer_Destroy", "StPlayer object sent NULL");
+        return;
+    }
+    stplayer_->name = NULL;
+    stplayer_->current_weapon = NULL;
+    stplayer_->coord_x = NULL;
+    stplayer_->coord_y = NULL;
+
+    free(stplayer_);
 }
 
 // Déplacement du personnage sur la map
@@ -82,6 +114,25 @@ void player_CollectWeapon(Player* player_, int weapon_type)
 {
     if (weapon_type < NB_MAX_WEAPONS)
         player_->weapons[weapon_type]->collected = true;
+}
+
+// Diminue le nombre de cartouches restantes et crée un/des bullet(s)
+Bullet** player_WeaponShoot(Player* player_, int* nb_bullet)
+{
+    Bullet** new_bullet = NULL;
+
+    if (player_->weapons[player_->current_weapon]->type == SHOTGUN)
+    {
+        assert(new_bullet = (Bullet**) malloc(SHOTGUN_SHRAPNELS * sizeof(Bullet*)));
+        for (*nb_bullet = 0; *nb_bullet < SHOTGUN_SHRAPNELS; *nb_bullet++)
+            bullet_Create(player_->player_id, player_->current_weapon);
+    }
+    else
+        bullet_Create(player_->player_id, player_->current_weapon);
+
+    player_->weapons[player_->current_weapon]->nb_curr_bullets--;
+
+    return new_bullet;
 }
 
 // Fonction qui gère le saut du joueur, TODO : Trajectoire lors du saut, vecteur force

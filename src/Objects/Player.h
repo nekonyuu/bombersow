@@ -5,18 +5,33 @@
 
 typedef enum JUMP_TYPE {NO_JUMP, SIMPLE_JUMP} jump_t;
 
+typedef struct STRIP_PLAYER
+{
+    sfString* name;                 // Nom
+
+    unsigned int *current_weapon;   // Arme courante
+
+    // Emplacement sur la map
+    float* coord_x;
+    float* coord_y;
+
+} stPlayer;
+
 typedef struct PLAYER
 {
     sfString *name;                 // Nom du joueur
+    unsigned int player_id;         // ID joueur
     unsigned int life;              // Vie restante
+
+    stPlayer* stripped;             // Pointeur vers le player allégé
 
     Weapon **weapons;               // Armes du joueur
     unsigned int nb_weapons;        // Nombre d'armes
     unsigned int current_weapon;    // Arme courante
 
-    // Emplacement sur la map
-    float coord_x;
-    float coord_y;
+    float coord_x, coord_y;         // Emplacement sur la map
+
+    unsigned int speed_x, speed_y;  // Vitesse
 
     jump_t jump;                    // Type de saut en cours
 
@@ -29,6 +44,10 @@ void player_Destroy(Player*);
 void player_Displace(Player*, float, float);
 void player_SwitchWeapon(Player*, int);
 void player_CollectWeapon(Player*, int);
+Bullet** player_WeaponShoot(Player*, int*);
 void player_Jump(Player*);
+
+stPlayer* stplayer_Create(Player*);
+void stplayer_Destroy(stPlayer*);
 
 #endif

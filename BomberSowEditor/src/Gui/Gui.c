@@ -178,7 +178,6 @@ void widget_textbox_Write(Widget_textbox* textbox, sfUint32 lettre)
     }
 }
 
-
 _Bool widget_textbox_Check(Widget_textbox* textbox)
 {
     if (textbox->active == 1)

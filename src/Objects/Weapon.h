@@ -3,7 +3,6 @@
 
 #include <stdbool.h>
 #include "SFML/Graphics.h"
-#include "Objects/Objects.h"
 #include "Objects/Bullet.h"
 
 #define NB_MAX_WEAPONS 7
