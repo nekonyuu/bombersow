@@ -1,5 +1,4 @@
-#include <assert.h>
-#include <stdio.h>
+#include "BaseSystem/Logging.h"
 #include "Objects/Screen.h"
 
 // Constructeur
@@ -24,7 +23,7 @@ Screen* screen_Create()
 // Destructeur
 void screen_Destroy(Screen* screen2destroy)
 {
-    assert(screen2destroy != NULL);
+    assert(screen2destroy);
 
     for(int i = 0; i < screen2destroy->nb_text; i++)
         sfString_Destroy(screen2destroy->texts[i]);
@@ -43,10 +42,7 @@ void screen_Destroy(Screen* screen2destroy)
 void screen_LoadFont(Screen* screen, sfFont* font_)
 {
     if(!font_)
-    {
-        printf("Warning - screen_LoadFont : sfFont object sent NULL\n");
-        return;
-    }
+        logging_Error("screen_LoadFont", "sfFont object sent NULL");
 
     screen->font = font_;
 }
@@ -54,7 +50,8 @@ void screen_LoadFont(Screen* screen, sfFont* font_)
 // Ajout d'une sfString dans Screen
 void screen_LoadText(Screen* screen, char* text, sfColor color, int font_size, sfStringStyle style, float x, float y)
 {
-    assert(screen != NULL);
+    if(!screen)
+        logging_Error("screen_LoadText", "Screen object sent NULL");
 
     screen->nb_text++;
     if(!screen->texts)
@@ -74,19 +71,19 @@ void screen_LoadText(Screen* screen, char* text, sfColor color, int font_size, s
 // Dessin de texte
 void screen_DrawText(sfRenderWindow* window, Screen* screen, int id)
 {
-    assert(screen != NULL && screen->texts != NULL);
-
-    sfRenderWindow_DrawString(window, screen->texts[id]);
+    if(!screen)
+        logging_Error("screen_DrawText", "Screen object sent NULL");
+    if(!screen->texts)
+        logging_Warning("screen_DrawText", "No texts loaded in Screen object sent");
+    else
+        sfRenderWindow_DrawString(window, screen->texts[id]);
 }
 
 // Charge une musique dans un Screen
 void screen_LoadMusic(Screen* screen, sfMusic* music, sfBool loop)
 {
     if(!music)
-    {
-        printf("Warning - screen_LoadMusic : sfMusic object doesn't exist\n");
-        return;
-    }
+        logging_Warning("screen_LoadMusic", "sfMusic object sent NULL");
 
     screen->music = music;
     sfMusic_SetLoop(screen->music, loop);
@@ -102,7 +99,10 @@ void screen_PlayMusic(Screen* screen)
 // Charge un arrière plan dans un Screen
 void screen_LoadImage(Screen* screen, sfImage* image)
 {
-    assert(screen != NULL);
+    if(!image)
+        logging_Error("screen_LoadImage", "sfImage object sent NULL");
+    if(!screen)
+        logging_Error("screen_LoadImage", "Screen object sent NULL");
 
     screen->nb_img++;
     if(!screen->images)
@@ -111,12 +111,5 @@ void screen_LoadImage(Screen* screen, sfImage* image)
         assert(screen->images = (sfSprite**) realloc(screen->images, screen->nb_img * sizeof(sfSprite*)));
 
     screen->images[screen->nb_img - 1] = sfSprite_Create();
-
-    if(!image)
-    {
-        printf("Warning - screen_LoadImage : sfImage object sent NULL, skipping\n");
-        return;
-    }
-
     sfSprite_SetImage(screen->images[screen->nb_img - 1], image);
 }

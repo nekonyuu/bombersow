@@ -1,6 +1,6 @@
 #include "SFML/Graphics.h"
 #include "SFML/Audio.h"
-
+#include "BaseSystem/Logging.h"
 #include "Game/MenuScreen.h"
 #include "Objects/Screen.h"
 #include "Objects/Weapon.h"
@@ -26,6 +26,7 @@ int main()
 
     // Démarrage du jeu
     armory_Create(armory);          // Remplissage de l'armurerie
+    logging_Info("main", "Game Start");
     display_Menu(Game);
 
     // Nettoyage des ressources

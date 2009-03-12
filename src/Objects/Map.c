@@ -29,13 +29,16 @@ Map* map_Create()
 // Destructeur
 void map_Destroy(Map* map2destroy)
 {
-    assert(map2destroy != NULL);
+    if (!map2destroy)
+        logging_Warning("map_Destroy", "Map object sent NULL");
+    else
+    {
+        sfSprite_Destroy(map2destroy->background);
+        for (int i = 0; i < map2destroy->nb_objects; i++)
+            object_Destroy(map2destroy->objects[i]);
 
-    sfSprite_Destroy(map2destroy->background);
-    for (int i = 0; i < map2destroy->nb_objects; i++)
-        object_Destroy(map2destroy->objects[i]);
-
-    free(map2destroy);
+        free(map2destroy);
+    }
 }
 
 Data* data_Create()
@@ -68,28 +71,28 @@ Data* data_Parser(char *type, char* path)
     FILE* fichier = NULL;
     fichier = fopen(path, "r");
 
-    if (fichier == NULL)     //Si on a pas pu ouvrir le fichier on renvoi NULL
+    if (fichier == NULL)                        // Si on a pas pu ouvrir le fichier on renvoi NULL
     {
-        printf("Erreur lors de l'ouverture du fichier %s\n", path);
+        logging_Warning("data_Parser", strcat(srtrcat("File ", path), " doesn't exist"));
         return NULL;
     }
 
     char chaine[100];
-    int bool_ = 0; //Permet de bien se placer
+    int bool_ = 0;                              // Permet de bien se placer
 
     Data *data_ = data_Create();
 
     int taille_type = strlen(type);
 
-    while (fgets(chaine, 100, fichier) != NULL)    //Boucle pour lire ligne
+    while (fgets(chaine, 100, fichier) != NULL) // Boucle pour lire ligne
     {
 
-        if (strlen(chaine) != 0)                                //Si la chaine n'est pas vide
+        if (strlen(chaine) != 0)                // Si la chaine n'est pas vide
         {
-            if (!bool_ && strncmp(type, chaine,taille_type) == 0)     //On détermine si on est au bon endroit
+            if (!bool_ && strncmp(type, chaine,taille_type) == 0) // On détermine si on est au bon endroit
             {
                 bool_ = 1;
-                data_->seek = ftell(fichier); //Permet de placer le seek à la ligne suivante pour évitez de reparcourir tout le fichier
+                data_->seek = ftell(fichier);    // Permet de placer le seek à la ligne suivante pour évitez de reparcourir tout le fichier
             }
             else if (chaine[0] == '[')
             {
@@ -98,7 +101,7 @@ Data* data_Parser(char *type, char* path)
             else
             {
                 if (chaine[0] != '#')
-                    data_->taille++;    //Incrémente le nombre d'element
+                    data_->taille++;            // Incrémente le nombre d'element
             }
         }
 
@@ -148,7 +151,7 @@ void map_Loader_Image(Image* image_, char* path)
     int image_list_taille = 0;
     sscanf(liste->data[liste->taille-1], "%d", &image_list_taille);
 
-    assert(image_list = (char**) malloc(image_list_taille*sizeof(char*))); //Allocation de la mémoire
+    assert(image_list = (char**) malloc(image_list_taille * sizeof(char*))); //Allocation de la mémoire
     for (int i = 0; i < image_list_taille; i++)
     {
         assert(image_list[i] = (char*) malloc(sizeof(char)));

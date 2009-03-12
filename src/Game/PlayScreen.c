@@ -1,3 +1,4 @@
+#include "BaseSystem/Logging.h"
 #include "Game/MenuScreen.h"
 #include "Game/CreditsScreen.h"
 #include "Objects/Screen.h"
@@ -19,6 +20,8 @@ _Bool display_PlayMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont
     screen_LoadText(playMenu, "Rejoindre une partie", sfRed, 35, sfStringItalic, 450.0f, 140.0f);
     screen_LoadText(playMenu, "Créer un serveur", sfWhite, 35, sfStringItalic, 450.0f, 190.0f);
     screen_LoadText(playMenu, "Retour", sfWhite, 35, sfStringItalic, 450.0f, 240.0f);
+
+    logging_Info("display_PlayMenu", "Started without error");
 
     do
     {

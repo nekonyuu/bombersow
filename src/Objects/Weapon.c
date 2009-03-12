@@ -38,15 +38,14 @@ Weapon* weapon_Create(int type)
 void weapon_Destroy(Weapon* weapon2destroy)
 {
     if (!weapon2destroy)
+        logging_Warning("weapon_Destroy", "Weapon object sent NULL");
+    else
     {
-        printf("Warning - weapon_Destroy : Weapon object sent NULL");
-        return;
+        weapon2destroy->name = NULL;
+        weapon2destroy->weapon_img = NULL;
+        weapon2destroy->bullet_img = NULL;
+        free(weapon2destroy);
     }
-    weapon2destroy->name = NULL;
-    weapon2destroy->weapon_img = NULL;
-    weapon2destroy->bullet_img = NULL;
-
-    free(weapon2destroy);
 }
 
 // Diminue le nombre de cartouche restantes et crée un bullet
@@ -270,6 +269,8 @@ void armory_Create(Weapon* armory)
     armory[LASERGUN].trajectory = 0;
 
     armory[LASERGUN].collected = false;
+
+    logging_Info("armory_Create", "Armory loaded");
 }
 
 // Destructeur de l'armurerie

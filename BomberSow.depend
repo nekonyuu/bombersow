@@ -24,7 +24,8 @@
 
 1236646413 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\clientscreen.c
 
-1236790053 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.c
+1236863619 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.c
+	"BaseSystem/Logging.h"
 	"Game/MenuScreen.h"
 	"Game/PlayScreen.h"
 	"Game/CreditsScreen.h"
@@ -54,9 +55,10 @@
 
 1236646413 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\inputscontrol\playercontrol.c
 
-1236773249 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
+1236863711 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
 	"SFML/Graphics.h"
 	"SFML/Audio.h"
+	"BaseSystem/Logging.h"
 	"Game/MenuScreen.h"
 	"Objects/Screen.h"
 	"Objects/Weapon.h"
@@ -120,7 +122,7 @@
 
 1236646414 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\physicsengine\particlesystem.c
 
-1236646414 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.c
+1236863822 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.c
 	<assert.h>
 	<stdio.h>
 	"Objects/Weapon.h"
@@ -307,9 +309,8 @@
 1236646413 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\bullet.h
 	"SFML/Graphics.h"
 
-1236791600 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\screen.c
-	<assert.h>
-	<stdio.h>
+1236863293 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\screen.c
+	"BaseSystem/Logging.h"
 	"Objects/Screen.h"
 
 1236646413 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\map\maploader.h
@@ -643,4 +644,13 @@
 	"SFML/Graphics.h"
 
 1236787059 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\physicsengine\gravitysystem.h
+
+1236861507 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\basesystem\config.c
+
+1236863860 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\basesystem\logging.c
+	<stdio.h>
+	"BaseSystem/Logging.h"
+
+1236863849 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\basesystem\logging.h
+	<assert.h>
 

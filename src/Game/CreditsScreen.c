@@ -1,3 +1,4 @@
+#include "BaseSystem/Logging.h"
 #include "Game/CreditsScreen.h"
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
@@ -21,6 +22,8 @@ _Bool display_Credits(sfRenderWindow* Game, sfImage* BG_image, sfFont* creditsFo
     screen_LoadText(Credits, "Moteur graphique", sfWhite, 20, sfStringRegular, 450.0f, 360.0f);
     screen_LoadText(Credits, "Ce jeu a été codé en C \"POO\" avec la SFML", sfWhite, 20, sfStringRegular, 450.0f, 430.0f);
     screen_LoadText(Credits, "http://www.sfml-dev.org/", sfWhite, 20, sfStringItalic, 450.0f, 460.0f);
+
+    logging_Info("display_Credits", "Started without error");
 
     do
     {

@@ -1,4 +1,4 @@
-#include <assert.h>
+#include "BaseSystem/Logging.h"
 #include "Objects/Bullet.h"
 #include "Objects/Weapon.h"
 
@@ -16,7 +16,8 @@ Bullet* bullet_Create(unsigned int type)
 
 void bullet_Destroy(Bullet* bullet2destroy)
 {
-    assert(bullet2destroy != NULL);
+    if(!bullet2destroy)
+        logging_Error("bullet_Destroy", "Bullet object sent NULL");
     bullet2destroy->draw_image = NULL;
     free(bullet2destroy);
 }

@@ -1,3 +1,4 @@
+#include "BaseSystem/Logging.h"
 #include "Game/MenuScreen.h"
 #include "Game/PlayScreen.h"
 #include "Game/CreditsScreen.h"
@@ -27,9 +28,12 @@ void display_Menu(sfRenderWindow* Game)
     screen_LoadText(Menu, "Credits", sfWhite, 35, sfStringItalic, 450.0f, 240.0f);
     screen_LoadText(Menu, "Quitter", sfWhite, 35, sfStringItalic, 450.0f, 290.0f);
     screen_LoadMusic(Menu, menuMusic, sfTrue);                  // Chargement de la musique
-    screen_PlayMusic(Menu);                                     // Lecture
+    if(Menu->music)
+        screen_PlayMusic(Menu);                                 // Lecture
 
-    while (launched)
+    logging_Info("display_Menu", "Started without error");
+
+    do
     {
         sfRenderWindow_Clear(Game, sfBlack);                    // Vidage de l'écran
 
@@ -91,6 +95,7 @@ void display_Menu(sfRenderWindow* Game)
             }
         }
     }
+    while (launched);
 
     sfFont_Destroy(menuFont);
     sfImage_Destroy(BG_image);

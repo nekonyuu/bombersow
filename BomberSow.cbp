@@ -17,6 +17,7 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-std=c99" />
+					<Add option="-DDEBUG_MODE" />
 				</Compiler>
 				<Linker>
 					<Add option="-lcsfml-audio-d" />
@@ -65,6 +66,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\AudioEngine.h" />
+		<Unit filename="src\BaseSystem\Config.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\BaseSystem\Config.h" />
+		<Unit filename="src\BaseSystem\Logging.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\BaseSystem\Logging.h" />
 		<Unit filename="src\Game\ClientScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -79,6 +88,7 @@
 		<Unit filename="src\Game\PlayScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src\Game\PlayScreen.h" />
 		<Unit filename="src\Game\ServerScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
