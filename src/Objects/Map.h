@@ -32,7 +32,8 @@ Object** map_Loader_Object(char*);    //Loader pour les objects
 /********************************************************/
 
 //Structure pour chargée les données (a renommer/modifier/déplacer sans doute)
-typedef struct DATA {
+typedef struct DATA
+{
     char** data;
     int taille;
     int seek;

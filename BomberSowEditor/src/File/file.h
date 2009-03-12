@@ -6,7 +6,8 @@
 #include "GraphicEngine/Image.h"
 
 //Structure pour chargée les données (a renommer/modifier/déplacer sans doute)
-typedef struct DATA {
+typedef struct DATA
+{
     char** data;
     int taille;
     int seek;

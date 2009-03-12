@@ -50,13 +50,15 @@ int main()
         {
             // Fermer : Quitter le jeu
             if (Event.Type == sfEvtClosed
-            || (Event.Type == sfEvtKeyPressed && Event.Key.Code == sfKeyEscape))
+                    || (Event.Type == sfEvtKeyPressed && Event.Key.Code == sfKeyEscape))
             {
                 sfRenderWindow_Close(Game);
             }
 
-            if(Event.Type == sfEvtTextEntered){
-                if(widget_textbox_Check(textbox)){
+            if (Event.Type == sfEvtTextEntered)
+            {
+                if (widget_textbox_Check(textbox))
+                {
                     widget_textbox_Write(textbox, Event.Text.Unicode);
                 }
 
@@ -65,18 +67,21 @@ int main()
                 printf("%s\n", var_test_char);
             }
 
-            if (Event.Type == sfEvtMouseButtonPressed){
+            if (Event.Type == sfEvtMouseButtonPressed)
+            {
 
-               int id_temp = object_screen_Click(object_screen, Event.MouseButton.X, Event.MouseButton.Y) ;
-               if(id_temp != -1){
+                int id_temp = object_screen_Click(object_screen, Event.MouseButton.X, Event.MouseButton.Y) ;
+                if (id_temp != -1)
+                {
                     id_image = id_temp;
                     sfSprite_SetImage(temp_sprite, image_Get(image_object, id_image));
-               }
-               widget_textbox_Click(textbox, Event.MouseButton.X, Event.MouseButton.Y);
+                }
+                widget_textbox_Click(textbox, Event.MouseButton.X, Event.MouseButton.Y);
 
             }
 
-            if(Event.Type == sfEvtMouseMoved){
+            if (Event.Type == sfEvtMouseMoved)
+            {
                 sfSprite_SetPosition(temp_sprite, Event.MouseMove.X, Event.MouseMove.Y);
             }
 

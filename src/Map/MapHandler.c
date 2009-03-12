@@ -8,7 +8,7 @@ int map_AddPlayer(Map* map, Player* player)
 {
     assert(map != NULL && player != NULL);
 
-    if(map->nb_players + 1 > NB_MAX_PLAYERS)
+    if (map->nb_players + 1 > NB_MAX_PLAYERS)
         return EXIT_FAILURE;
 
     map->nb_players++;
@@ -21,7 +21,7 @@ int map_DelPlayer(Map* map, Player* player)
 {
     assert(map != NULL && player != NULL);
 
-    if(map->nb_players - 1 < 0)
+    if (map->nb_players - 1 < 0)
         return EXIT_FAILURE;
 
     map->nb_players--;

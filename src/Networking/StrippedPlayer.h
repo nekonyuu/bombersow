@@ -3,7 +3,8 @@
 
 #include "SFML/Graphics.h"
 
-typedef struct STRIP_PLAYER {
+typedef struct STRIP_PLAYER
+{
     sfString* name;                 // Nom
 
     unsigned int *current_weapon;   // Arme courante

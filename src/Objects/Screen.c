@@ -25,11 +25,11 @@ void screen_Destroy(Screen* screen2destroy)
 {
     assert(screen2destroy);
 
-    for(int i = 0; i < screen2destroy->nb_text; i++)
+    for (int i = 0; i < screen2destroy->nb_text; i++)
         sfString_Destroy(screen2destroy->texts[i]);
     free(screen2destroy->texts);
 
-    for(int i = 0; i < screen2destroy->nb_img; i++)
+    for (int i = 0; i < screen2destroy->nb_img; i++)
         sfSprite_Destroy(screen2destroy->images[i]);
     free(screen2destroy->images);
 
@@ -41,7 +41,7 @@ void screen_Destroy(Screen* screen2destroy)
 // Charge une police
 void screen_LoadFont(Screen* screen, sfFont* font_)
 {
-    if(!font_)
+    if (!font_)
         logging_Error("screen_LoadFont", "sfFont object sent NULL");
 
     screen->font = font_;
@@ -50,11 +50,11 @@ void screen_LoadFont(Screen* screen, sfFont* font_)
 // Ajout d'une sfString dans Screen
 void screen_LoadText(Screen* screen, char* text, sfColor color, int font_size, sfStringStyle style, float x, float y)
 {
-    if(!screen)
+    if (!screen)
         logging_Error("screen_LoadText", "Screen object sent NULL");
 
     screen->nb_text++;
-    if(!screen->texts)
+    if (!screen->texts)
         assert(screen->texts = (sfString**) malloc(sizeof(sfString*)));
     else
         assert(screen->texts = (sfString**) realloc(screen->texts, screen->nb_text * sizeof(sfString*)));
@@ -71,9 +71,9 @@ void screen_LoadText(Screen* screen, char* text, sfColor color, int font_size, s
 // Dessin de texte
 void screen_DrawText(sfRenderWindow* window, Screen* screen, int id)
 {
-    if(!screen)
+    if (!screen)
         logging_Error("screen_DrawText", "Screen object sent NULL");
-    if(!screen->texts)
+    if (!screen->texts)
         logging_Warning("screen_DrawText", "No texts loaded in Screen object sent");
     else
         sfRenderWindow_DrawString(window, screen->texts[id]);
@@ -82,7 +82,7 @@ void screen_DrawText(sfRenderWindow* window, Screen* screen, int id)
 // Charge une musique dans un Screen
 void screen_LoadMusic(Screen* screen, sfMusic* music, sfBool loop)
 {
-    if(!music)
+    if (!music)
         logging_Warning("screen_LoadMusic", "sfMusic object sent NULL");
 
     screen->music = music;
@@ -92,20 +92,20 @@ void screen_LoadMusic(Screen* screen, sfMusic* music, sfBool loop)
 // Lecture de la musique de l'écran donné
 void screen_PlayMusic(Screen* screen)
 {
-    if(screen->music)
+    if (screen->music)
         sfMusic_Play(screen->music);
 }
 
 // Charge un arrière plan dans un Screen
 void screen_LoadImage(Screen* screen, sfImage* image)
 {
-    if(!image)
+    if (!image)
         logging_Error("screen_LoadImage", "sfImage object sent NULL");
-    if(!screen)
+    if (!screen)
         logging_Error("screen_LoadImage", "Screen object sent NULL");
 
     screen->nb_img++;
-    if(!screen->images)
+    if (!screen->images)
         assert(screen->images = (sfSprite**) malloc(sizeof(sfSprite*)));
     else
         assert(screen->images = (sfSprite**) realloc(screen->images, screen->nb_img * sizeof(sfSprite*)));

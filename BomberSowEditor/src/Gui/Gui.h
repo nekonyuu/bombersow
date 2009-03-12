@@ -5,24 +5,26 @@
 #include <stdlib.h>
 #include "SFML/Graphics.h"
 
-typedef enum WIDGET_TYPE {BOUTON, TEXTBOX}Widget_Type; //Type de Widget
+// Type de Widget
+typedef enum WIDGET_TYPE {BOUTON, TEXTBOX} Widget_Type;
 
-typedef enum WIDGET_TEXTBOX_TYPE {INT, CHAR, STRING}Widget_textbox_type; //Type de textbox
+// Type de textbox
+typedef enum WIDGET_TEXTBOX_TYPE {INT, CHAR, STRING}Widget_textbox_type;
 
-//Variable associé à une textbox
-typedef struct WIDGET_TEXTBOX_VAR {
-
+// Variable associé à une textbox
+typedef struct WIDGET_TEXTBOX_VAR
+{
     int *var_int;
     sfString *var_string;
     char *var_char;
     Widget_textbox_type type;
 
-}Widget_textbox_var;
+} Widget_textbox_var;
 
 
-//Widget Textbox
-typedef struct WIDGET_TEXTBOX {
-
+// Widget Textbox
+typedef struct WIDGET_TEXTBOX
+{
     int x;
     int y;
     int width;
@@ -30,12 +32,12 @@ typedef struct WIDGET_TEXTBOX {
 
     sfSprite *cadre;
 
-    Widget_textbox_var *var;     //Variable associé
+    Widget_textbox_var *var;        // Variable associé
     char *text_char;
     int taille;
-    sfString *text;                 //Texte de la textbox
+    sfString *text;                 // Texte de la textbox
 
-    _Bool active;               //booléen de seleciton
+    _Bool active;                   // Booléen de seleciton
 
 }Widget_textbox;
 
@@ -62,20 +64,22 @@ _Bool widget_textbox_Check(Widget_textbox*);
 void widget_textbox_Draw(sfRenderWindow*, Widget_textbox*);
 
 //Widget
-typedef struct WIDGET {
+typedef struct WIDGET
+{
 
-    Widget_Type widget_type;    //Type de widget
-    //Widget_bouton *bouton;      //Widget bouton
+    Widget_Type widget_type;        // Type de widget
+    //Widget_bouton *bouton;          // Widget bouton
     Widget_textbox *textbox;
 
 }Widget;
 
 //Gui
-typedef struct GUI {
+typedef struct GUI
+{
 
-    Widget** widget;            //Tableau de tout les widgets du Gui
-    int widget_nombre;          //Nombre de widgets
+    Widget** widget;                // Tableau de tout les widgets du Gui
+    int widget_nombre;              // Nombre de widgets
 
-}Gui;
+} Gui;
 
 #endif

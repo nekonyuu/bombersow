@@ -52,10 +52,10 @@ Bullet** weapon_Shoot(Weapon* weapon_, int* nb_bullet)
 {
     Bullet** new_bullet = NULL;
 
-    if(weapon_->type == SHOTGUN)
+    if (weapon_->type == SHOTGUN)
     {
         assert(new_bullet = (Bullet**) malloc(SHOTGUN_SHRAPNELS * sizeof(Bullet*)));
-        for(*nb_bullet = 0; *nb_bullet < SHOTGUN_SHRAPNELS; *nb_bullet++)
+        for (*nb_bullet = 0; *nb_bullet < SHOTGUN_SHRAPNELS; *nb_bullet++)
         {
             assert(new_bullet[*nb_bullet] = (Bullet*) malloc(sizeof(Bullet)));
             new_bullet[*nb_bullet]->bullet_type = weapon_->type;

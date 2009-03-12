@@ -28,7 +28,7 @@ void display_Menu(sfRenderWindow* Game)
     screen_LoadText(Menu, "Credits", sfWhite, 35, sfStringItalic, 450.0f, 240.0f);
     screen_LoadText(Menu, "Quitter", sfWhite, 35, sfStringItalic, 450.0f, 290.0f);
     screen_LoadMusic(Menu, menuMusic, sfTrue);                  // Chargement de la musique
-    if(Menu->music)
+    if (Menu->music)
         screen_PlayMusic(Menu);                                 // Lecture
 
     logging_Info("display_Menu", "Started without error");
@@ -39,7 +39,7 @@ void display_Menu(sfRenderWindow* Game)
 
         sfRenderWindow_DrawSprite(Game, Menu->images[0]);       // Dessin du BG
 
-        for(int i = 0; i < Menu->nb_text; i++)
+        for (int i = 0; i < Menu->nb_text; i++)
             screen_DrawText(Game, Menu, i);                     // Dessin des textes
 
         animation_Draw(animation, Game);                        // Dessin animation test

@@ -29,7 +29,7 @@ _Bool display_PlayMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont
 
         sfRenderWindow_DrawSprite(Game, playMenu->images[0]);       // Dessin du BG
 
-        for(int i = 0; i < playMenu->nb_text; i++)
+        for (int i = 0; i < playMenu->nb_text; i++)
             screen_DrawText(Game, playMenu, i);                     // Dessin des textes
 
         sfRenderWindow_Display(Game);                               // Mise à jour de la fenêtre

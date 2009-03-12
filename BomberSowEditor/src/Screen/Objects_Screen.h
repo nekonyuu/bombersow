@@ -4,7 +4,8 @@
 #include "SFML/Graphics.h"
 #include "Objects/Objects.h"
 
-typedef struct OBJECT_SCREEN{
+typedef struct OBJECT_SCREEN
+{
 
     sfRenderWindow* Game;
 

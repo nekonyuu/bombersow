@@ -20,7 +20,7 @@ StPlayer* stplayer_Create(Player* player_)
 
 void stplayer_Destroy(StPlayer* stplayer_)
 {
-    if(!stplayer_)
+    if (!stplayer_)
     {
         printf("Warning - stplayer_Destroy : StPlayer object sent NULL\n");
         return;

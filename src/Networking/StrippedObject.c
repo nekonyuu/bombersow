@@ -21,7 +21,7 @@ StObject* stobject_Create(Object* object_)
 
 void stobject_Destroy(StObject* stobject_)
 {
-    if(!stobject_)
+    if (!stobject_)
     {
         printf("Warning - stobject_Destroy : StObject object sent NULL\n");
         return;

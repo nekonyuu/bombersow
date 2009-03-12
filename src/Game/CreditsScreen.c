@@ -31,7 +31,7 @@ _Bool display_Credits(sfRenderWindow* Game, sfImage* BG_image, sfFont* creditsFo
 
         sfRenderWindow_DrawSprite(Game, Credits->images[0]);    // Dessin du BG
 
-        for(int i = 0; i < Credits->nb_text; i++)               // Dessin des textes
+        for (int i = 0; i < Credits->nb_text; i++)              // Dessin des textes
             screen_DrawText(Game, Credits, i);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre

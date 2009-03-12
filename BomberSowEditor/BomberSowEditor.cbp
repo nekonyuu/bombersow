@@ -16,6 +16,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-DDEBUG_MODE" />
 				</Compiler>
 				<Linker>
 					<Add option="-lcsfml-audio-d" />
@@ -60,6 +61,10 @@
 			<Add option="-lcsfml-system-d" />
 			<Add directory="..\dep\lib\" />
 		</Linker>
+		<Unit filename="src\BaseSystem\Logging.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\BaseSystem\Logging.h" />
 		<Unit filename="src\File\file.c">
 			<Option compilerVar="CC" />
 		</Unit>
