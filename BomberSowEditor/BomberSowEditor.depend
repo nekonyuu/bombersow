@@ -170,13 +170,15 @@
 	<SFML/Config.h>
 	<SFML/Audio/SoundBuffer.h>
 
-1236643495 source:c:\projet\bombersow\bombersoweditor\src\main.c
+1236866590 source:c:\projet\bombersow\bombersoweditor\src\main.c
 	"SFML/Graphics.h"
 	"SFML/Audio.h"
 	"Screen/Objects_Screen.h"
 	"File/file.h"
+	"Gui/Gui.h"
 
-1236472781 source:c:\projet\bombersow\bombersoweditor\src\graphicengine\draw.c
+1236776212 source:c:\projet\bombersow\bombersoweditor\src\graphicengine\draw.c
+	"GraphicEngine/Draw.h"
 
 1236629177 source:c:\projet\bombersow\bombersoweditor\src\graphicengine\image.c
 	<assert.h>
@@ -213,7 +215,7 @@
 	"SFML/Graphics.h"
 	"GraphicEngine/Image.h"
 
-1236638350 source:c:\projet\bombersow\bombersoweditor\src\file\file.c
+1236776212 source:c:\projet\bombersow\bombersoweditor\src\file\file.c
 	<assert.h>
 	<stdio.h>
 	<stdlib.h>
@@ -482,4 +484,52 @@
 	<dirent.h>
 	"SFML/Graphics.h"
 	"GraphicEngine/Image.h"
+
+1236866656 source:c:\projet\bombersow\bombersoweditor\src\gui\gui.c
+	<assert.h>
+	<string.h>
+	"SFML/Graphics.h"
+	"Gui/Gui.h"
+
+1236776212 c:\projet\bombersow\bombersoweditor\src\\graphicengine\draw.h
+	"SFML/Graphics.h"
+
+1236639641 source:c:\projet\bombersow\bombersoweditor\src\objects\bullet.c
+	<assert.h>
+	"Objects/Bullet.h"
+	"Objects/Weapon.h"
+
+1236644128 c:\projet\bombersow\bombersoweditor\src\\objects\bullet.h
+	"SFML/Graphics.h"
+
+1236644128 c:\projet\bombersow\bombersoweditor\src\\objects\weapon.h
+	<stdbool.h>
+	"SFML/Graphics.h"
+	"Objects/Objects.h"
+	"Objects/Bullet.h"
+
+1236644128 source:c:\projet\bombersow\bombersoweditor\src\objects\player.c
+	<assert.h>
+	<stdio.h>
+	"GraphicEngine/Draw.h"
+	"Objects/Player.h"
+	"Objects/Weapon.h"
+
+1236644128 c:\projet\bombersow\bombersoweditor\src\\objects\player.h
+	"Objects/Weapon.h"
+
+1236776212 source:c:\projet\bombersow\bombersoweditor\src\objects\weapon.c
+	<assert.h>
+	<stdio.h>
+	"Objects/Weapon.h"
+
+1236866321 c:\projet\bombersow\bombersoweditor\src\gui\gui.h
+	<stdio.h>
+	<stdlib.h>
+	"SFML/Graphics.h"
+
+1236866321 c:\projet\bombersow\bombersoweditor\src\\gui\gui.h
+	<stdio.h>
+	<stdlib.h>
+	"SFML/Graphics.h"
 
