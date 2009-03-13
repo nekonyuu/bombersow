@@ -9,25 +9,29 @@
 		<Build>
 			<Target title="Debug">
 				<Option platforms="Windows;" />
-				<Option output="bin\Debug\BomberSowEditor" prefix_auto="1" extension_auto="1" />
+				<Option output="..\bin\Debug\BomberSowEditor" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="..\bin\Debug" />
 				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-pg" />
 					<Add option="-g" />
 					<Add option="-DDEBUG_MODE" />
 				</Compiler>
 				<Linker>
+					<Add option="-pg -lgmon" />
 					<Add option="-lcsfml-audio-d" />
 					<Add option="-lcsfml-graphics-d" />
 					<Add option="-lcsfml-window-d" />
 					<Add option="-lcsfml-network-d" />
 					<Add option="-lcsfml-system-d" />
+					<Add option="-lmingw32" />
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="bin\Release\BomberSowEditor" prefix_auto="1" extension_auto="1" />
+				<Option platforms="Windows;" />
+				<Option output="..\bin\Release\BomberSowEditor" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="..\bin\Release" />
 				<Option object_output="obj\Release\" />
 				<Option type="0" />

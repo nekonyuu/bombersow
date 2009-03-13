@@ -6,21 +6,6 @@
 
 #define UNI32_RETURN 8
 
-
-/*typedef enum CADRE {TOP, LEFT, RIGHT, BOTTOM, TL, TR, BL, BR} cadre;
-
-typedef struct WIDGET_CADRE
-{
-
-    sfSprite *sprite_cadre[8];
-    sfSprite *background;
-    int x;
-    int y;
-    int width;
-    int height;
-
-} Widget_cadre;*/
-
 Widget_cadre* widget_cadre_Create(sfImage* image, sfSprite* sprite_background, int x, int y, int width, int height){
 
     Widget_cadre* cadre = NULL;
@@ -301,6 +286,8 @@ _Bool widget_textbox_Check(Widget_textbox* textbox)
 
 void widget_textbox_Draw(sfRenderWindow* Game, Widget_textbox* textbox)
 {
+    assert(Game && textbox);
+
     widget_cadre_Draw(Game, textbox->cadre);
     sfRenderWindow_DrawString(Game, textbox->text);
 }

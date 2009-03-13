@@ -15,11 +15,13 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-pg" />
 					<Add option="-g" />
 					<Add option="-std=c99" />
 					<Add option="-DDEBUG_MODE" />
 				</Compiler>
 				<Linker>
+					<Add option="-pg -lgmon" />
 					<Add option="-lcsfml-audio-d" />
 					<Add option="-lcsfml-graphics-d" />
 					<Add option="-lcsfml-window-d" />

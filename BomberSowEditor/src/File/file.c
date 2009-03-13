@@ -108,7 +108,7 @@ Data* data_Parser(char *type, char* path)
 void dossier_Read_Image(Image* image, char* path)
 {
 
-    DIR *rep = opendir (path);
+    DIR *rep = opendir(path);
 
 
     int i = 0;
@@ -120,7 +120,7 @@ void dossier_Read_Image(Image* image, char* path)
     {
         struct dirent *ent;
 
-        while ((ent = readdir (rep)) != NULL)
+        while ((ent = readdir(rep)) != NULL)
         {
             if (strcmp(ent->d_name, ".") && strcmp(ent->d_name,".."))
             {
