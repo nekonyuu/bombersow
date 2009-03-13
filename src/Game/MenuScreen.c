@@ -13,7 +13,7 @@ void display_Menu(sfRenderWindow* Game)
     sfImage *BG_image = sfImage_CreateFromFile("base/images/Menu/menu_bg.png");
     sfImage *image_animation = sfImage_CreateFromFile("base/images/animation.png"); // Test
     sfFont *menuFont = sfFont_CreateFromFile("base/fonts/ITCKRIST.TTF", 50, NULL);
-    Animation *animation = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, -1, 0.1);
+    Animation *animation = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1);
     sfEvent Event;
     _Bool launched = true;
     int menu_select = 1;

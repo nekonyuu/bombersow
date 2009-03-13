@@ -28,7 +28,7 @@ Object* object_Create()
 
     new_object->spawned = true;
 
-    new_object->stripped = stobject_Create(new_object);
+    stobject_Create(new_object);
 
     return new_object;
 }
@@ -41,20 +41,16 @@ void object_Destroy(Object* object2destroy)
     free(object2destroy);
 }
 
-stObject* stobject_Create(Object* object_)
+void stobject_Create(Object* object_)
 {
-    stObject* new_stobject;
-    assert(new_stobject = (stObject*) malloc(sizeof(stObject)));
+    assert(object_);
 
-    new_stobject->objectID = &object_->objectID;
+    assert(object_->stripped = (stObject*) malloc(sizeof(stObject)));
 
-    new_stobject->start_coord_x = &object_->start_coord_x;
-    new_stobject->start_coord_y = &object_->start_coord_y;
-
-    new_stobject->dest_coord_x = &object_->dest_coord_x;
-    new_stobject->dest_coord_y = &object_->dest_coord_y;
-
-    return new_stobject;
+    object_->stripped->objectID = (sfUint8) object_->objectID;
+    object_->stripped->coord_x = object_->curr_coord_x;
+    object_->stripped->coord_y = object_->curr_coord_y;
+    object_->stripped->speed = (sfUint8) object_->speed;
 }
 
 void stobject_Destroy(stObject* stobject_)
@@ -64,13 +60,13 @@ void stobject_Destroy(stObject* stobject_)
         logging_Warning("stobject_Destroy", "StObject object sent NULL");
         return;
     }
-    stobject_->start_coord_x = NULL;
-    stobject_->start_coord_y = NULL;
-
-    stobject_->dest_coord_x = NULL;
-    stobject_->dest_coord_y = NULL;
-
-    stobject_->speed = NULL;
 
     free(stobject_);
+}
+
+void stobject_Update(Object* object_)
+{
+    object_->stripped->coord_x = object_->curr_coord_x;
+    object_->stripped->coord_y = object_->curr_coord_y;
+    object_->stripped->speed = object_->speed;
 }

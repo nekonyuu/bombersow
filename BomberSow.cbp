@@ -123,13 +123,15 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\Map\MapLoader.h" />
-		<Unit filename="src\Networking\DataConstructor.c">
+		<Unit filename="src\Networking\DataHandler.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src\Networking\DataHandler.h" />
 		<Unit filename="src\Networking\PacketDefines.h" />
 		<Unit filename="src\Networking\ServerThread.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src\Networking\ServerThread.h" />
 		<Unit filename="src\Objects\Bullet.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -24,7 +24,7 @@
 
 1236646413 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\clientscreen.c
 
-1236893368 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.c
+1236982843 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\menuscreen.c
 	"BaseSystem/Logging.h"
 	"Game/MenuScreen.h"
 	"Game/PlayScreen.h"
@@ -74,9 +74,12 @@
 
 1236646413 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\map\maploader.c
 
-1236646413 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\dataconstructor.c
+1236979775 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\dataconstructor.c
+	"BaseSystem/Logging.h"
+	"Networking/DataConstructor.h"
 
-1236646413 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\serverthread.c
+1236976126 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\serverthread.c
+	"SFML/Network.h"
 
 1236895265 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\map.c
 	<stdio.h>
@@ -91,7 +94,7 @@
 	"Objects/Objects.h"
 	"GraphicEngine/Image.h"
 
-1236896404 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.h
+1236980697 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.h
 	<stdbool.h>
 	"SFML/Graphics.h"
 	"GraphicEngine/Image.h"
@@ -106,7 +109,7 @@
 	"Objects/Player.h"
 	"Objects/Weapon.h"
 
-1236896395 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.h
+1236980692 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.h
 	"Objects/Weapon.h"
 
 1236893438 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.h
@@ -655,4 +658,41 @@
 
 1236863849 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\basesystem\logging.h
 	<assert.h>
+
+1236979314 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\dataconstructor.h
+	"SFML/Network.h"
+	"Objects/Player.h"
+
+1236646411 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\network.h
+	<SFML/System.h>
+	<SFML/Network/IPAddress.h>
+	<SFML/Network/Packet.h>
+	<SFML/Network/Selector.h>
+	<SFML/Network/SocketTCP.h>
+	<SFML/Network/SocketUDP.h>
+
+1236646411 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\network\ipaddress.h
+	<SFML/Config.h>
+
+1236646411 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\network\packet.h
+	<SFML/Config.h>
+
+1236646411 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\network\selector.h
+	<SFML/Config.h>
+	<SFML/Network/SocketTCP.h>
+	<SFML/Network/SocketUDP.h>
+
+1236646411 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\network\sockettcp.h
+	<SFML/Config.h>
+	<SFML/Network/IPAddress.h>
+	<SFML/Network/Packet.h>
+	<SFML/Network/SocketStatus.h>
+
+1236646411 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\network\socketstatus.h
+
+1236646411 d:\docs\fac\projets\projet i41\bombersow\bombersow\dep\include\sfml\network\socketudp.h
+	<SFML/Config.h>
+	<SFML/Network/IPAddress.h>
+	<SFML/Network/Packet.h>
+	<SFML/Network/SocketStatus.h>
 

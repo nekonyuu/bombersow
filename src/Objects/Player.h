@@ -7,13 +7,9 @@ typedef enum JUMP_TYPE {NO_JUMP, SIMPLE_JUMP} jump_t;
 
 typedef struct STRIP_PLAYER
 {
-    sfString* name;                 // Nom
-
-    unsigned int *current_weapon;   // Arme courante
-
-    // Emplacement sur la map
-    float* coord_x;
-    float* coord_y;
+    char* name;                 // Nom
+    sfUint8 current_weapon;      // Arme courante
+    float coord_x, coord_y;     // Emplacement sur la map
 
 } stPlayer;
 
@@ -47,7 +43,8 @@ void player_CollectWeapon(Player*, int);
 Bullet** player_WeaponShoot(Player*, int*);
 void player_Jump(Player*);
 
-stPlayer* stplayer_Create(Player*);
+void stplayer_Create(Player*);
 void stplayer_Destroy(stPlayer*);
+void stplayer_Update(Player*);
 
 #endif

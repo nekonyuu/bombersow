@@ -1,3 +1,4 @@
+#include <string.h>
 #include "BaseSystem/Logging.h"
 #include "GraphicEngine/Draw.h"
 #include "Objects/Player.h"
@@ -30,7 +31,7 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->frags = 0;
     new_player->killed = 0;
 
-    new_player->stripped = stplayer_Create(new_player);
+    stplayer_Create(new_player);
 
     return new_player;
 }
@@ -51,19 +52,20 @@ void player_Destroy(Player* player2destroy)
     }
 }
 
-stPlayer* stplayer_Create(Player* player_)
+void stplayer_Create(Player* player_)
 {
-    stPlayer* new_stplayer;
-    assert(new_stplayer = (stPlayer*) malloc(sizeof(stPlayer)));
+    assert(player_);
 
-    new_stplayer->name = player_->name;
+    const char* name = sfString_GetText(player_->name);
 
-    new_stplayer->current_weapon = &player_->current_weapon;
+    assert(player_->stripped = (stPlayer*) malloc(sizeof(stPlayer)));
+    assert(player_->stripped->name = (char*) malloc(strlen(name) * sizeof(char)));
+    strcpy(player_->stripped->name, name);
 
-    new_stplayer->coord_x = &player_->coord_x;
-    new_stplayer->coord_y = &player_->coord_y;
+    player_->stripped->current_weapon = (sfUint8) player_->current_weapon;
 
-    return new_stplayer;
+    player_->stripped->coord_x = player_->coord_x;
+    player_->stripped->coord_y = player_->coord_y;
 }
 
 void stplayer_Destroy(stPlayer* stplayer_)
@@ -73,12 +75,15 @@ void stplayer_Destroy(stPlayer* stplayer_)
         logging_Warning("stplayer_Destroy", "StPlayer object sent NULL");
         return;
     }
-    stplayer_->name = NULL;
-    stplayer_->current_weapon = NULL;
-    stplayer_->coord_x = NULL;
-    stplayer_->coord_y = NULL;
-
+    free(stplayer_->name);
     free(stplayer_);
+}
+
+void stplayer_Update(Player* player_)
+{
+    player_->stripped->current_weapon = player_->current_weapon;
+    player_->stripped->coord_x = player_->coord_x;
+    player_->stripped->coord_y = player_->coord_y;
 }
 
 // Déplacement du personnage sur la map

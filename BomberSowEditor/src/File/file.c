@@ -103,8 +103,6 @@ Data* data_Parser(char *type, char* path)
     return data_;
 }
 
-
-
 void dossier_Read_Image(Image* image, char* path)
 {
 

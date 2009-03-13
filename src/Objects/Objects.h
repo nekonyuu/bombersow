@@ -7,15 +7,9 @@
 
 typedef struct STRIPPED_OBJECT  // Envoi des objets dynamiques
 {
-    unsigned int* objectID;      // ID de l'object
-
-    float* start_coord_x;       // Coordonnées de l'objet
-    float* start_coord_y;
-
-    float* dest_coord_x;        // Coordonnées d'arrivée de l'objet (si dynamique)
-    float* dest_coord_y;
-
-    unsigned int* speed;        // Vitesse de mouvement (Plate-forme mobile & Pièges)
+    sfUint8 objectID;           // ID de l'object
+    float coord_x, coord_y;     // Coordonnées courantes
+    sfUint8 speed;              // Vitesse de mouvement (Plate-forme mobile & Pièges)
 } stObject;
 
 typedef struct OBJECT
@@ -50,7 +44,8 @@ typedef struct OBJECT
 Object* object_Create();
 void object_Destroy(Object*);
 
-stObject* stobject_Create(Object*);
+void stobject_Create(Object*);
 void stobject_Destroy(stObject*);
+void stobject_Update(Object*);
 
 #endif

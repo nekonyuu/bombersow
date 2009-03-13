@@ -124,5 +124,3 @@ void animation_Draw(Animation* animation_, sfRenderWindow* App)
     sfSprite_SetSubRect(animation_->sprite, &rect);
     sfRenderWindow_DrawSprite(App, animation_->sprite);
 }
-
-
