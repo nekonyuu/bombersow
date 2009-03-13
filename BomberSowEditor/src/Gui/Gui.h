@@ -11,6 +11,27 @@ typedef enum WIDGET_TYPE {BOUTON, TEXTBOX} Widget_Type;
 // Type de textbox
 typedef enum WIDGET_TEXTBOX_TYPE {INT, CHAR, STRING}Widget_textbox_type;
 
+
+//Cadre et background des Widget
+
+typedef enum CADRE {TOP, LEFT, RIGHT, BOTTOM, TL, TR, BL, BR} cadre;
+
+typedef struct WIDGET_CADRE
+{
+
+    sfSprite *sprite_cadre[8];
+    sfSprite *background;
+    int x;
+    int y;
+    int width;
+    int height;
+
+} Widget_cadre;
+
+Widget_cadre* widget_cadre_Create(sfImage* image, sfSprite*, int, int, int, int);
+void widget_cadre_Destroy(Widget_cadre*);
+void widget_cadre_Draw(sfRenderWindow*, Widget_cadre*);
+
 // Variable associé à une textbox
 typedef struct WIDGET_TEXTBOX_VAR
 {
@@ -30,7 +51,7 @@ typedef struct WIDGET_TEXTBOX
     int width;
     int height;
 
-    sfSprite *cadre;
+    Widget_cadre *cadre;
 
     Widget_textbox_var *var;        // Variable associé
     char *text_char;
@@ -56,7 +77,7 @@ typedef struct WIDGET_BOUTON {
     void* onClick_Callback;
 };*/
 
-Widget_textbox* widget_textbox_Create(int, int, int, int, int, sfImage*, Widget_textbox_type, void*);
+Widget_textbox* widget_textbox_Create(int, int, int, int, int, sfImage*, sfSprite*, Widget_textbox_type, void*);
 void widget_textbox_Destroy(Widget_textbox*);
 void widget_textbox_Click(Widget_textbox*, int, int);
 void widget_textbox_Write(Widget_textbox*, sfUint32);

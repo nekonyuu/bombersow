@@ -26,11 +26,16 @@ int main()
 
 
     //TEST GUI
-    sfImage *curseur = sfImage_CreateFromFile("base/curseur.jpg");
+    sfImage *image_cadre = sfImage_CreateFromFile("base/gui.png");
+    sfSprite *background = sfSprite_Create();
+    sfSprite_SetImage(background, image_cadre);
+    sfIntRect rect = {0, 0, 127, 127};
+    sfSprite_SetSubRect(background, &rect);
+
     int var_test = 10;
     char var_test_char[100] = "Salut";
-    Widget_textbox *textbox = widget_textbox_Create(20, 30, 100, 40, 100, curseur, INT, &var_test);
-    Widget_textbox *textbox2 = widget_textbox_Create(0, 0, 100, 40, 100, curseur, CHAR, &var_test_char);
+    Widget_textbox *textbox = widget_textbox_Create(20, 30, 100, 40, 100, image_cadre,background, INT, &var_test);
+    //Widget_textbox *textbox2 = widget_textbox_Create(0, 0, 100, 40, 100, image_cadre,background, CHAR, &var_test_char);
     //FIN TEST GUI
 
 
@@ -61,10 +66,6 @@ int main()
                 {
                     widget_textbox_Write(textbox, Event.Text.Unicode);
                 }
-
-                widget_textbox_Write(textbox2, Event.Text.Unicode);
-                printf("%d\n", var_test);
-                printf("%s\n", var_test_char);
             }
 
             if (Event.Type == sfEvtMouseButtonPressed)
@@ -102,12 +103,19 @@ int main()
 
     // Nettoyage des ressources
     sfRenderWindow_Destroy(Game);
+
+    object_screen_Destroy(object_screen);
+
     image_Destroy(image_object);
+
     sfImage_Destroy(fond_menu);
-    sfImage_Destroy(curseur);
+    sfImage_Destroy(image_cadre);
+
     sfSprite_Destroy(temp_sprite);
+    sfSprite_Destroy(background);
 
     widget_textbox_Destroy(textbox);
+    //widget_textbox_Destroy(textbox2);
 
     return EXIT_SUCCESS;
 

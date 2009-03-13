@@ -139,8 +139,9 @@ int object_screen_Click(Object_Screen* screen, int mouse_x, int mouse_y)
 
             }
         }
+            sfSprite_Destroy(sprite_temp);
+            return -1;
 
-        sfSprite_Destroy(sprite_temp);
 
     }
     else
