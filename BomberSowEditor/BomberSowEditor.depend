@@ -245,7 +245,7 @@
 	"SFML/Graphics.h"
 	"GraphicEngine/Image.h"
 
-1236879755 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\bombersoweditor\src\file\file.c
+1236947782 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\bombersoweditor\src\file\file.c
 	<assert.h>
 	<stdio.h>
 	<stdlib.h>
@@ -536,16 +536,17 @@
 1236876407 d:\docs\fac\projets\projet i41\bombersow\bombersow\bombersoweditor\src\\graphicengine\draw.h
 	"SFML/Graphics.h"
 
-1236944517 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\bombersoweditor\src\gui\gui.c
+1236949528 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\bombersoweditor\src\gui\gui.c
 	<assert.h>
 	<string.h>
 	"SFML/Graphics.h"
 	"BaseSystem/Logging.h"
 	"Gui/Gui.h"
 
-1236943451 d:\docs\fac\projets\projet i41\bombersow\bombersow\bombersoweditor\src\\gui\gui.h
+1236950501 d:\docs\fac\projets\projet i41\bombersow\bombersow\bombersoweditor\src\\gui\gui.h
 	<stdio.h>
 	<stdlib.h>
+	<stdbool.h>
 	"SFML/Graphics.h"
 
 1236879755 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\bombersoweditor\src\basesystem\logging.c
@@ -582,9 +583,10 @@
 	"BaseSystem/Logging.h"
 	"Objects/Weapon.h"
 
-1236943451 d:\docs\fac\projets\projet i41\bombersow\bombersow\bombersoweditor\src\gui\gui.h
+1236950501 d:\docs\fac\projets\projet i41\bombersow\bombersow\bombersoweditor\src\gui\gui.h
 	<stdio.h>
 	<stdlib.h>
+	<stdbool.h>
 	"SFML/Graphics.h"
 
 1236897404 source:c:\projet\bombersow\bombersoweditor\src\basesystem\logging.c
