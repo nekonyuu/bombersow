@@ -9,16 +9,14 @@
 typedef enum WIDGET_TYPE {BOUTON, TEXTBOX} Widget_Type;
 
 // Type de textbox
-typedef enum WIDGET_TEXTBOX_TYPE {INT, CHAR, STRING}Widget_textbox_type;
+typedef enum WIDGET_TEXTBOX_TYPE {INT, CHAR, STRING} Widget_textbox_type;
 
 
-//Cadre et background des Widget
-
+// Cadre et background des Widget
 typedef enum CADRE {TOP, LEFT, RIGHT, BOTTOM, TL, TR, BL, BR} cadre;
 
 typedef struct WIDGET_CADRE
 {
-
     sfSprite *sprite_cadre[8];
     sfSprite *background;
     int x;
@@ -54,9 +52,9 @@ typedef struct WIDGET_TEXTBOX
     Widget_cadre *cadre;
 
     Widget_textbox_var *var;        // Variable associé
-    char *text_char;
+    char *text_char;                // Utile ? Présent dans Widget_textbox_var
     int taille;
-    sfString *text;                 // Texte de la textbox
+    sfString *text;                 // Texte de la textbox (Utile ? Présent dans Widget_textbox_var)
 
     _Bool active;                   // Booléen de seleciton
 
@@ -87,7 +85,6 @@ void widget_textbox_Draw(sfRenderWindow*, Widget_textbox*);
 //Widget
 typedef struct WIDGET
 {
-
     Widget_Type widget_type;        // Type de widget
     //Widget_bouton *bouton;          // Widget bouton
     Widget_textbox *textbox;
@@ -97,7 +94,6 @@ typedef struct WIDGET
 //Gui
 typedef struct GUI
 {
-
     Widget** widget;                // Tableau de tout les widgets du Gui
     int widget_nombre;              // Nombre de widgets
 

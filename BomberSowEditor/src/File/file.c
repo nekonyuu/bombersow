@@ -51,7 +51,6 @@ Data* data_Parser(char *type, char* path)
 
     while (fgets(chaine, 100, fichier) != NULL)    //Boucle pour lire ligne
     {
-
         if (strlen(chaine) != 0)                                //Si la chaine n'est pas vide
         {
             if (!bool_ && strncmp(type, chaine,taille_type) == 0)     //On détermine si on est au bon endroit
@@ -69,9 +68,7 @@ Data* data_Parser(char *type, char* path)
                     data_->taille++;    //Incrémente le nombre d'element
             }
         }
-
     }
-
 
     if (data_->taille != 0)
     {

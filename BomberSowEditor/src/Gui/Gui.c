@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <string.h>
 #include "SFML/Graphics.h"
+#include "BaseSystem/Logging.h"
 #include "Gui/Gui.h"
 
 #define UNI32_RETURN 8
@@ -84,10 +85,15 @@ Widget_cadre* widget_cadre_Create(sfImage* image, sfSprite* sprite_background, i
     sfSprite_SetScale(cadre->background, width/sfSprite_GetWidth(cadre->background), height/sfSprite_GetHeight(cadre->background));
 
     return cadre;
-
 }
 
-void widget_cadre_Destroy(Widget_cadre* cadre){
+void widget_cadre_Destroy(Widget_cadre* cadre)
+{
+    if(!cadre)
+    {
+        logging_Warning("widget_cadre_Destroy", "Widget_cadre object sent NULL");
+        return;
+    }
 
     for(int i = 0; i < 8; i++){
         sfSprite_Destroy(cadre->sprite_cadre[i]);
@@ -96,58 +102,71 @@ void widget_cadre_Destroy(Widget_cadre* cadre){
     sfSprite_Destroy(cadre->background);
 
     free(cadre);
-
 }
 
-void widget_cadre_Draw(sfRenderWindow* Game, Widget_cadre* cadre){
+void widget_cadre_Draw(sfRenderWindow* Game, Widget_cadre* cadre)
+{
+    assert(Game && cadre);
 
     sfRenderWindow_DrawSprite(Game, cadre->background);
-    for(int i = 0; i < 8; i++){
+    for(int i = 0; i < 8; i++)
         sfRenderWindow_DrawSprite(Game, cadre->sprite_cadre[i]);
-    }
-
 }
 
-
-
+// Construit la Widget_textbox_var
 Widget_textbox_var* widget_text_box_var_Create(Widget_textbox_type type, void* var)
 {
     Widget_textbox_var *textbox_var = NULL;
     assert(textbox_var = (Widget_textbox_var*) malloc(sizeof(Widget_textbox_var)));
 
-    if (type == INT)
+    switch(type)
     {
-        textbox_var->type = INT;
-        textbox_var->var_int = var;
-        textbox_var->var_char = NULL;
-        textbox_var->var_string = NULL;
-    }
-    else if (type == CHAR)
-    {
-        textbox_var->type = CHAR;
-        textbox_var->var_char = var;
-        textbox_var->var_int = NULL;
-        textbox_var->var_string = NULL;
-    }
-    else if (type == STRING)
-    {
-        textbox_var->type = STRING;
-        textbox_var->var_char = NULL;
-        textbox_var->var_int = NULL;
-        textbox_var->var_string = var;
+        case INT:
+            textbox_var->type = INT;
+            textbox_var->var_int = (int*) var;
+            textbox_var->var_string = NULL;
+            textbox_var->var_char = NULL;
+            break;
+
+        case STRING:
+            textbox_var->type = STRING;
+            textbox_var->var_int = NULL;
+            textbox_var->var_string = (sfString*) var;
+            textbox_var->var_char = NULL;
+            break;
+
+        case CHAR:
+            textbox_var->type = CHAR;
+            textbox_var->var_int = NULL;
+            textbox_var->var_string = NULL;
+            textbox_var->var_char = (char*) var;
+            break;
     }
 
     return textbox_var;
 }
 
+// Détruit la Widget_textbox_var
 void widget_textbox_var_Destroy(Widget_textbox_var* textbox_var)
 {
+    if(!textbox_var)
+    {
+        logging_Warning("widget_textbox_var_Destroy", "Widget_textbox_var object sent NULL");
+        return;
+    }
+
+    if(textbox_var->var_char)
+        free(textbox_var->var_char);
+    if(textbox_var->var_int)
+        free(textbox_var->var_int);
+    if(textbox_var->var_string)
+        sfString_Destroy(textbox_var->var_string);
 
     free(textbox_var);
     textbox_var = NULL;
-
 }
 
+// Récupère la valeur active de la Widget_textbox_var
 void widget_textbox_var_Get(Widget_textbox_var* textbox_var, Widget_textbox* textbox)
 {
     if (textbox_var->type == INT)
@@ -168,17 +187,20 @@ void widget_textbox_var_Get(Widget_textbox_var* textbox_var, Widget_textbox* tex
 
 void widget_textbox_var_Set(Widget_textbox_var* textbox_var, Widget_textbox* textbox)
 {
-    if (textbox_var->type == INT)
+    switch(textbox_var->type)
     {
-        *textbox_var->var_int = atoi(textbox->text_char);
-    }
-    else if (textbox_var->type == CHAR)
-    {
-        strcpy(textbox_var->var_char, textbox->text_char);
-    }
-    else
-    {
-        textbox_var->var_string = textbox->text; //A CORRIGER
+        case INT:
+            *textbox_var->var_int = atoi(textbox->text_char);
+            break;
+
+        case STRING:
+            // textbox_var->var_string détruit dans widget_textbox_var_Destroy, utilisé par widget_textbox_Destroy
+            textbox_var->var_string = textbox->text;
+            break;
+
+        case CHAR:
+            strcpy(textbox_var->var_char, textbox->text_char);
+            break;
     }
 }
 
@@ -207,7 +229,7 @@ Widget_textbox* widget_textbox_Create(int x, int y, int width, int height, int t
     textbox->var = widget_text_box_var_Create(type, var);
     widget_textbox_var_Get(textbox->var, textbox);
 
-    textbox->active = 0;
+    textbox->active = false;
 
     return textbox;
 }
@@ -215,7 +237,6 @@ Widget_textbox* widget_textbox_Create(int x, int y, int width, int height, int t
 void widget_textbox_Destroy(Widget_textbox* textbox)
 {
     widget_textbox_var_Destroy(textbox->var);
-    textbox->var = NULL;
 
     sfString_Destroy(textbox->text);
 
@@ -232,14 +253,11 @@ void widget_textbox_Destroy(Widget_textbox* textbox)
 void widget_textbox_Click(Widget_textbox* textbox, int x, int y)
 {
     sfIntRect cadre_screen = {textbox->x, textbox->y, textbox->x+textbox->width, textbox->y+textbox->height};
+
     if (sfIntRect_Contains(&cadre_screen, x, y))
-    {
-        textbox->active = 1;
-    }
+        textbox->active = true;
     else
-    {
-        textbox->active = 0;
-    }
+        textbox->active = false;
 }
 
 void widget_textbox_Write(Widget_textbox* textbox, sfUint32 lettre)
@@ -278,10 +296,7 @@ void widget_textbox_Write(Widget_textbox* textbox, sfUint32 lettre)
 
 _Bool widget_textbox_Check(Widget_textbox* textbox)
 {
-    if (textbox->active == 1)
-        return 1;
-    else
-        return 0;
+    return textbox->active;
 }
 
 void widget_textbox_Draw(sfRenderWindow* Game, Widget_textbox* textbox)
