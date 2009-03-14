@@ -94,7 +94,7 @@ void map_DelPlayer(Map* map_, unsigned int player_id)
 {
     if (!map_->players_list[player_id])
     {
-        logging_Warning("map_DelPlayer", "Player object at object_id is NULL");
+        logging_Warning("map_DelPlayer", "Player object at player_id is NULL");
         return;
     }
 

@@ -34,6 +34,8 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->frags = 0;
     new_player->killed = 0;
 
+    //new_player->listening_thread = sfThread_Create(/* Fonction d'écoute */, /* Données */);
+
     stplayer_Create(new_player);
 
     return new_player;
@@ -53,6 +55,18 @@ void player_Destroy(Player* player2destroy)
         free(player2destroy->weapons);
         free(player2destroy);
     }
+}
+
+Player* player_CreateFromstPlayer(stPlayer* player)
+{
+    Player* new_player = player_Create(player->name, (unsigned int) player->current_weapon);
+    new_player->m_coord_x = player->m_coord_x;
+    new_player->m_coord_y = player->m_coord_y;
+    new_player->coord_x = player->coord_x;
+    new_player->coord_y = player->coord_y;
+    new_player->stripped = player;
+
+    return new_player;
 }
 
 void stplayer_Create(Player* player_)

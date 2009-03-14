@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "SFML/Network.h"
 #include "Objects/Weapon.h"
 
 typedef enum JUMP_TYPE {NO_JUMP, SIMPLE_JUMP} jump_t;
@@ -18,6 +19,7 @@ typedef struct PLAYER
 {
     sfString *name;                 // Nom du joueur
     unsigned int player_id;         // ID joueur
+    sfIPAddress player_ip;          // IP joueur
     unsigned int life;              // Vie restante
 
     stPlayer* stripped;             // Pointeur vers le player allégé
@@ -35,6 +37,8 @@ typedef struct PLAYER
 
     unsigned int frags;             // Nombre de tués
     unsigned int killed;            // Nombre de morts
+
+    sfThread* listening_thread;      // Thread d'écoute
 } Player;
 
 Player* player_Create(char*, unsigned int);

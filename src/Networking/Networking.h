@@ -1,10 +1,8 @@
-#ifndef DATACONSTRUCTOR_H
-#define DATACONSTRUCTOR_H
+#ifndef NETWORKING_H
+#define NETWORKING_H
 
 #include "SFML/Network.h"
 #include "Objects/Map.h"
-
-enum {PLAYER, OBJECT};
 
 typedef struct PACKET_LIST
 {
@@ -13,10 +11,19 @@ typedef struct PACKET_LIST
 
 } PacketList;
 
+_Bool started;
+
+void server_Main(Map* map, unsigned int port);
+
+sfPacket* chat_CreatePacket(Player* player, const char* message);
+void chat_ReadPacket(sfPacket* packet, char* recv_mess);
+
 sfPacket* stplayer_CreatePacket(Player*);
 stPlayer* stplayer_CreateFromPacket(sfPacket*);
 sfPacket* stobject_CreatePacket(Object*);
 PacketList* map_CreateAllPackets(Map*);
 void map_DestroyAllPackets(PacketList*);
+
+sfPacket* player_CreateDisconnectPacket(char* name);
 
 #endif

@@ -1,5 +1,6 @@
 #include "BaseSystem/Logging.h"
-#include "Networking/DataHandler.h"
+#include "Networking/Networking.h"
+#include "Networking/PacketDefines.h"
 
 // Le destructeur de paquet utilisé sera sfPacket_Destroy(sfPacket*)
 
