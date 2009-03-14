@@ -170,7 +170,7 @@
 	<SFML/Config.h>
 	<SFML/Audio/SoundBuffer.h>
 
-1236905085 source:c:\projet\bombersow\bombersoweditor\src\main.c
+1236995983 source:c:\projet\bombersow\bombersoweditor\src\main.c
 	"SFML/Graphics.h"
 	"SFML/Audio.h"
 	"Screen/Objects_Screen.h"
@@ -180,7 +180,7 @@
 1236776212 source:c:\projet\bombersow\bombersoweditor\src\graphicengine\draw.c
 	"GraphicEngine/Draw.h"
 
-1236629177 source:c:\projet\bombersow\bombersoweditor\src\graphicengine\image.c
+1236986391 source:c:\projet\bombersow\bombersoweditor\src\graphicengine\image.c
 	<assert.h>
 	"GraphicEngine/Image.h"
 
@@ -215,7 +215,7 @@
 	"SFML/Graphics.h"
 	"GraphicEngine/Image.h"
 
-1236897404 source:c:\projet\bombersow\bombersoweditor\src\file\file.c
+1236986391 source:c:\projet\bombersow\bombersoweditor\src\file\file.c
 	<assert.h>
 	<stdio.h>
 	<stdlib.h>
@@ -487,10 +487,11 @@
 	"SFML/Graphics.h"
 	"GraphicEngine/Image.h"
 
-1236905063 source:c:\projet\bombersow\bombersoweditor\src\gui\gui.c
+1236995899 source:c:\projet\bombersow\bombersoweditor\src\gui\gui.c
 	<assert.h>
 	<string.h>
 	"SFML/Graphics.h"
+	"BaseSystem/Logging.h"
 	"Gui/Gui.h"
 
 1236776212 c:\projet\bombersow\bombersoweditor\src\\graphicengine\draw.h
@@ -523,14 +524,16 @@
 	"BaseSystem/Logging.h"
 	"Objects/Weapon.h"
 
-1236903671 c:\projet\bombersow\bombersoweditor\src\gui\gui.h
+1236995074 c:\projet\bombersow\bombersoweditor\src\gui\gui.h
 	<stdio.h>
 	<stdlib.h>
+	<stdbool.h>
 	"SFML/Graphics.h"
 
-1236903671 c:\projet\bombersow\bombersoweditor\src\\gui\gui.h
+1236995074 c:\projet\bombersow\bombersoweditor\src\\gui\gui.h
 	<stdio.h>
 	<stdlib.h>
+	<stdbool.h>
 	"SFML/Graphics.h"
 
 1236876407 d:\docs\fac\projets\projet i41\bombersow\bombersow\bombersoweditor\src\\graphicengine\draw.h

@@ -140,12 +140,12 @@ void widget_textbox_var_Destroy(Widget_textbox_var* textbox_var)
         return;
     }
 
-    if(textbox_var->var_char)
+    /*if(textbox_var->var_char)
         free(textbox_var->var_char);
     if(textbox_var->var_int)
         free(textbox_var->var_int);
     if(textbox_var->var_string)
-        sfString_Destroy(textbox_var->var_string);
+        sfString_Destroy(textbox_var->var_string);*/
 
     free(textbox_var);
     textbox_var = NULL;
@@ -198,6 +198,7 @@ Widget_textbox* widget_textbox_Create(int x, int y, int width, int height, int t
     textbox->text = sfString_Create();
     sfString_SetPosition(textbox->text, x+5, y);
     sfString_SetColor(textbox->text, sfBlack);
+    sfString_SetSize(textbox->text, height-5);
 
     textbox->text_char = NULL;
     assert(textbox->text_char = (char*) malloc(taille*sizeof(char)));
@@ -290,4 +291,176 @@ void widget_textbox_Draw(sfRenderWindow* Game, Widget_textbox* textbox)
 
     widget_cadre_Draw(Game, textbox->cadre);
     sfRenderWindow_DrawString(Game, textbox->text);
+}
+
+
+//Widget bouton
+
+Widget_bouton* widget_bouton_Create(sfIntRect rect, void (*f)(void*), void* arg, sfImage* image_OnOver, sfImage* image_OnClick, sfImage* image_OnNothing)
+{
+
+    Widget_bouton *bouton = NULL;
+    assert(bouton = (Widget_bouton*) malloc(sizeof(Widget_bouton)));
+
+    bouton->rect = rect;
+    bouton->onClick_Callback = f;
+    bouton->onClick_Callback_arg = arg;
+
+    bouton->sprite_OnClick = sfSprite_Create();
+    sfSprite_SetImage(bouton->sprite_OnClick, image_OnClick);
+    sfSprite_Resize(bouton->sprite_OnClick, rect.Right-rect.Left, rect.Bottom-rect.Top);
+    sfSprite_SetPosition(bouton->sprite_OnClick, rect.Left, rect.Top);
+
+    bouton->sprite_OnNothing = sfSprite_Create();
+    sfSprite_SetImage(bouton->sprite_OnNothing, image_OnNothing);
+    sfSprite_Resize(bouton->sprite_OnNothing, rect.Right-rect.Left, rect.Bottom-rect.Top);
+    sfSprite_SetPosition(bouton->sprite_OnNothing, rect.Left, rect.Top);
+
+    bouton->sprite_OnOver = sfSprite_Create();
+    sfSprite_SetImage(bouton->sprite_OnOver, image_OnOver);
+    sfSprite_Resize(bouton->sprite_OnOver, rect.Right-rect.Left, rect.Bottom-rect.Top);
+    sfSprite_SetPosition(bouton->sprite_OnOver, rect.Left, rect.Top);
+
+    bouton->On = 0;
+
+    return bouton;
+
+}
+
+void widget_bouton_Destroy(Widget_bouton* bouton)
+{
+
+    sfSprite_Destroy(bouton->sprite_OnClick);
+    sfSprite_Destroy(bouton->sprite_OnNothing);
+    sfSprite_Destroy(bouton->sprite_OnOver);
+
+    free(bouton);
+    bouton = NULL;
+
+
+}
+
+void widget_bouton_Click(Widget_bouton* bouton, int x, int y)
+{
+
+    if (sfIntRect_Contains(&bouton->rect, x, y))
+        bouton->onClick_Callback(bouton->onClick_Callback_arg);
+
+}
+
+void widget_bouton_Draw(sfRenderWindow* Game, Widget_bouton* bouton)
+{
+
+    switch(bouton->On)
+    {
+            case NOTHING:
+                sfRenderWindow_DrawSprite(Game, bouton->sprite_OnNothing);
+                break;
+
+            case OVER:
+                sfRenderWindow_DrawSprite(Game, bouton->sprite_OnOver);
+                break;
+
+            case CLICK:
+                sfRenderWindow_DrawSprite(Game, bouton->sprite_OnClick);
+                break;
+
+    }
+
+}
+
+
+//Gui
+Gui* gui_Create()
+{
+
+    Gui* gui = NULL;
+    assert(gui = (Gui*)malloc(sizeof(Gui)));
+
+    gui->widget_textbox = NULL;
+    gui->widget_textbox_nombre = 0;
+
+    return gui;
+}
+
+void gui_Load_Textbox(Gui* gui, Widget_textbox** widget, int taille)
+{
+
+    gui->widget_textbox_nombre = taille;
+    gui->widget_textbox = widget;
+
+}
+
+void gui_Add_Textbox(Gui* gui, Widget_textbox* widget)
+{
+
+    gui->widget_textbox_nombre = gui->widget_textbox_nombre+1;
+    assert(gui->widget_textbox = realloc(gui->widget_textbox, gui->widget_textbox_nombre*sizeof(Widget_textbox*)));
+    gui->widget_textbox[gui->widget_textbox_nombre-1] = widget;
+
+}
+
+void gui_Load_Bouton(Gui* gui, Widget_bouton** widget, int taille)
+{
+
+    gui->widget_bouton_nombre = taille;
+    gui->widget_bouton = widget;
+
+}
+
+void gui_Add_Bouton(Gui* gui, Widget_bouton* widget)
+{
+
+    gui->widget_bouton_nombre = gui->widget_bouton_nombre+1;
+    assert(gui->widget_bouton = realloc(gui->widget_bouton, gui->widget_bouton_nombre*sizeof(Widget_bouton*)));
+    gui->widget_bouton[gui->widget_bouton_nombre-1] = widget;
+
+}
+
+void gui_Destroy(Gui* gui)
+{
+
+    for(int i = 0; i < gui->widget_textbox_nombre; i++)
+        widget_textbox_Destroy(gui->widget_textbox[i]);
+
+    free(gui->widget_textbox);
+    gui->widget_textbox = NULL;
+
+    free(gui);
+    gui = NULL;
+
+}
+
+void gui_Draw(sfRenderWindow* Game, Gui* gui)
+{
+
+    for(int i = 0; i < gui->widget_textbox_nombre; i++)
+        widget_textbox_Draw(Game, gui->widget_textbox[i]);
+
+    for(int i = 0; i < gui->widget_bouton_nombre; i++)
+        widget_bouton_Draw(Game, gui->widget_bouton[i]);
+
+}
+
+void gui_Click(Gui* gui, int x, int y)
+{
+
+    for(int i = 0; i < gui->widget_textbox_nombre; i++)
+        widget_textbox_Click(gui->widget_textbox[i], x, y);
+
+    for(int i = 0; i < gui->widget_bouton_nombre; i++)
+        widget_bouton_Click(gui->widget_bouton[i], x, y);
+
+}
+
+void gui_TextEntered(Gui* gui, sfUint32 unicode)
+{
+
+    for(int i = 0; i < gui->widget_textbox_nombre; i++){
+        if (widget_textbox_Check(gui->widget_textbox[i]))
+        {
+            widget_textbox_Write(gui->widget_textbox[i], unicode);
+        }
+    }
+
 }

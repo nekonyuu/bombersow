@@ -67,15 +67,6 @@ void widget_textbox_var_Destroy(Widget_textbox_var*);
 void widget_textbox_var_Get(Widget_textbox_var*, Widget_textbox*);
 void widget_textbox_var_Set(Widget_textbox_var*, Widget_textbox*);
 
-/*
-typedef struct WIDGET_BOUTON {
-
-    int x;
-    int y;
-
-    void* onClick_Callback;
-};*/
-
 Widget_textbox* widget_textbox_Create(int, int, int, int, int, sfImage*, sfSprite*, Widget_textbox_type, void*);
 void widget_textbox_Destroy(Widget_textbox*);
 void widget_textbox_Click(Widget_textbox*, int, int);
@@ -83,21 +74,45 @@ void widget_textbox_Write(Widget_textbox*, sfUint32);
 _Bool widget_textbox_Check(Widget_textbox*);
 void widget_textbox_Draw(sfRenderWindow*, Widget_textbox*);
 
-//Widget
-typedef struct WIDGET
-{
-    Widget_Type widget_type;        // Type de widget
-    //Widget_bouton *bouton;          // Widget bouton
-    Widget_textbox *textbox;
 
-}Widget;
+//Widget bouton
+typedef enum BOUTON_ACTION {NOTHING, OVER, CLICK}Bouton_action;
+typedef struct WIDGET_BOUTON {
+
+    sfIntRect rect;
+
+    sfSprite *sprite_OnOver;
+    sfSprite *sprite_OnClick;
+    sfSprite *sprite_OnNothing;
+
+    Bouton_action On;
+
+    void (*onClick_Callback)(void*);
+    void *onClick_Callback_arg;
+}Widget_bouton;
+
+Widget_bouton* widget_bouton_Create(sfIntRect, void (*)(void*), void*, sfImage*, sfImage*, sfImage*);
+void widget_bouton_Destroy(Widget_bouton*);
+
 
 //Gui
 typedef struct GUI
 {
-    Widget** widget;                // Tableau de tout les widgets du Gui
-    int widget_nombre;              // Nombre de widgets
+    Widget_textbox** widget_textbox;                // Tableau de tout les widgets du Gui
+    int widget_textbox_nombre;                      // Nombre de widgets
+
+    Widget_bouton** widget_bouton;
+    int widget_bouton_nombre;
 
 } Gui;
 
+Gui* gui_Create();
+void gui_Destroy(Gui*);
+void gui_Load_Textbox(Gui*, Widget_textbox**, int);
+void gui_Add_Textbox(Gui*, Widget_textbox*);
+void gui_Load_Bouton(Gui*, Widget_bouton**, int);
+void gui_Add_Bouton(Gui*, Widget_bouton*);
+void gui_Draw(sfRenderWindow*, Gui*);
+void gui_Click(Gui*, int, int);
+void gui_TextEntered(Gui*, sfUint32);
 #endif
