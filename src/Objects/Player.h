@@ -7,9 +7,10 @@ typedef enum JUMP_TYPE {NO_JUMP, SIMPLE_JUMP} jump_t;
 
 typedef struct STRIP_PLAYER
 {
-    char* name;                 // Nom
-    sfUint8 current_weapon;      // Arme courante
-    float coord_x, coord_y;     // Emplacement sur la map
+    char* name;                     // Nom
+    sfUint8 current_weapon;         // Arme courante
+    float coord_x, coord_y;         // Emplacement sur la map
+    float m_coord_x, m_coord_y;     // Coordonnées souris
 
 } stPlayer;
 
@@ -26,6 +27,7 @@ typedef struct PLAYER
     unsigned int current_weapon;    // Arme courante
 
     float coord_x, coord_y;         // Emplacement sur la map
+    float m_coord_x, m_coord_y;     // Coordonnées souris
 
     unsigned int speed_x, speed_y;  // Vitesse
 

@@ -28,6 +28,9 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->coord_y = ;
     */
 
+    player_->m_coord_x = 0;
+    player_->m_coord_y = 0;
+
     new_player->frags = 0;
     new_player->killed = 0;
 
@@ -66,6 +69,8 @@ void stplayer_Create(Player* player_)
 
     player_->stripped->coord_x = player_->coord_x;
     player_->stripped->coord_y = player_->coord_y;
+    player_->stripped->coord_x = player_->m_coord_x;
+    player_->stripped->coord_y = player_->m_coord_y;
 }
 
 void stplayer_Destroy(stPlayer* stplayer_)
@@ -81,9 +86,17 @@ void stplayer_Destroy(stPlayer* stplayer_)
 
 void stplayer_Update(Player* player_)
 {
+    if(!player_)
+    {
+        logging_Warning("stplayer_Update", "Player object sent NULL, aborting update");
+        return;
+    }
+
     player_->stripped->current_weapon = player_->current_weapon;
     player_->stripped->coord_x = player_->coord_x;
     player_->stripped->coord_y = player_->coord_y;
+    player_->stripped->coord_x = player_->m_coord_x;
+    player_->stripped->coord_y = player_->m_coord_y;
 }
 
 // Déplacement du personnage sur la map
