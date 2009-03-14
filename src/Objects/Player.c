@@ -28,8 +28,8 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->coord_y = ;
     */
 
-    player_->m_coord_x = 0;
-    player_->m_coord_y = 0;
+    new_player->m_coord_x = 0;
+    new_player->m_coord_y = 0;
 
     new_player->frags = 0;
     new_player->killed = 0;

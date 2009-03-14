@@ -4,6 +4,11 @@
 #include "File/file.h"
 #include "Gui/Gui.h"
 
+
+void test(int *a){
+        printf("TEST%dTEST\n", *a);
+}
+
 int main()
 {
     sfWindowSettings Settings = {24, 8, 0};
@@ -34,8 +39,19 @@ int main()
 
     int var_test = 10;
     char var_test_char[100] = "Salut";
-    Widget_textbox *textbox = widget_textbox_Create(20, 30, 100, 40, 100, image_cadre,background, INT, &var_test);
-    //Widget_textbox *textbox2 = widget_textbox_Create(0, 0, 100, 40, 100, image_cadre,background, CHAR, &var_test_char);
+    Widget_textbox *textbox = widget_textbox_Create(10, 60, 100, 40, 100, image_cadre,background, INT, &var_test);
+    Widget_textbox *textbox2 = widget_textbox_Create(10, 10, 100, 40, 100, image_cadre,background, CHAR, &var_test_char);
+
+    void (*p)(void*);
+    p = (void*) &test;
+
+    sfIntRect rect2 = {100, 100, 227, 227};
+    Widget_bouton *bouton = widget_bouton_Create(rect2, p, &var_test, fond_menu, fond_menu, image_cadre);
+
+    Gui *gui = gui_Create();
+    gui_Add_Textbox(gui, textbox);
+    gui_Add_Textbox(gui, textbox2);
+    gui_Add_Bouton(gui, bouton);
     //FIN TEST GUI
 
 
@@ -62,10 +78,7 @@ int main()
 
             if (Event.Type == sfEvtTextEntered)
             {
-                if (widget_textbox_Check(textbox))
-                {
-                    widget_textbox_Write(textbox, Event.Text.Unicode);
-                }
+                gui_TextEntered(gui, Event.Text.Unicode);
             }
 
             if (Event.Type == sfEvtMouseButtonPressed)
@@ -77,7 +90,7 @@ int main()
                     id_image = id_temp;
                     sfSprite_SetImage(temp_sprite, image_Get(image_object, id_image));
                 }
-                widget_textbox_Click(textbox, Event.MouseButton.X, Event.MouseButton.Y);
+                gui_Click(gui, Event.MouseButton.X, Event.MouseButton.Y);
 
             }
 
@@ -96,7 +109,7 @@ int main()
 
         sfRenderWindow_DrawSprite(Game, temp_sprite);
 
-        widget_textbox_Draw(Game, textbox);
+        gui_Draw(Game, gui);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
     }
@@ -114,8 +127,7 @@ int main()
     sfSprite_Destroy(temp_sprite);
     sfSprite_Destroy(background);
 
-    widget_textbox_Destroy(textbox);
-    //widget_textbox_Destroy(textbox2);
+    gui_Destroy(gui);
 
     return EXIT_SUCCESS;
 
