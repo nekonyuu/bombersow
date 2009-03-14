@@ -8,13 +8,8 @@
 #define NB_MAX_WEAPONS 7
 #define SHOTGUN_SHRAPNELS 7
 
-#define CROWBAR 0
-#define ROCKET_LAUNCHER 1
-#define GRENADE_LAUNCHER 2
-#define SHOTGUN 3
-#define MINIGUN 4
-#define SNIPER 5
-#define LASERGUN 6
+// Liste des armes
+enum WEAPON_TYPE { CROWBAR, ROCKET_LAUNCHER, GRENADES, SHOTGUN, MACHINEGUN, SNIPER, LASERGUN };
 
 // Définition de la structure Arme
 typedef struct WEAPON

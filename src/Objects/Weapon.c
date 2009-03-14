@@ -104,31 +104,31 @@ void armory_Create(Weapon* armory)
     armory[ROCKET_LAUNCHER].collected = false;
 
 
-    // Lance Grenades (explosion 3500ms)
-    armory[GRENADE_LAUNCHER].name = sfString_Create();
-    sfString_SetText(armory[GRENADE_LAUNCHER].name, "Grenade-Launcher");
-    armory[GRENADE_LAUNCHER].type = GRENADE_LAUNCHER;
+    // Grenades (explosion 3500ms)
+    armory[GRENADES].name = sfString_Create();
+    sfString_SetText(armory[GRENADES].name, "Grenades");
+    armory[GRENADES].type = GRENADES;
 
-    armory[GRENADE_LAUNCHER].weapon_img = NULL;
-    armory[GRENADE_LAUNCHER].bullet_img = NULL;
+    armory[GRENADES].weapon_img = NULL;
+    armory[GRENADES].bullet_img = NULL;
 
-    armory[GRENADE_LAUNCHER].nb_max_bullets = 20;
-    armory[GRENADE_LAUNCHER].nb_curr_bullets = 0;
-    armory[GRENADE_LAUNCHER].damage = 80;
+    armory[GRENADES].nb_max_bullets = 20;
+    armory[GRENADES].nb_curr_bullets = 0;
+    armory[GRENADES].damage = 80;
 
-    armory[GRENADE_LAUNCHER].reload_latency = 1500;
-    armory[GRENADE_LAUNCHER].switch_latency = 500;
-    //armory[GRENADE_LAUNCHER].respawn_time = ;
+    armory[GRENADES].reload_latency = 1500;
+    armory[GRENADES].switch_latency = 500;
+    //armory[GRENADES].respawn_time = ;
 
-    armory[GRENADE_LAUNCHER].range = 2000;
-    armory[GRENADE_LAUNCHER].splash_radius = 50;
-    armory[GRENADE_LAUNCHER].splash_coef = 0.97;
-    armory[GRENADE_LAUNCHER].selfdamage_coef = 0.9;
+    armory[GRENADES].range = 2000;
+    armory[GRENADES].splash_radius = 50;
+    armory[GRENADES].splash_coef = 0.97;
+    armory[GRENADES].selfdamage_coef = 0.9;
 
-    armory[GRENADE_LAUNCHER].proj_speed = 200;
-    armory[GRENADE_LAUNCHER].trajectory = 1;
+    armory[GRENADES].proj_speed = 200;
+    armory[GRENADES].trajectory = 1;
 
-    armory[GRENADE_LAUNCHER].collected = false;
+    armory[GRENADES].collected = false;
 
 
     // Fusil à pompe
@@ -159,30 +159,30 @@ void armory_Create(Weapon* armory)
 
 
     // Mitrailleuse
-    armory[MINIGUN].name = sfString_Create();
-    sfString_SetText(armory[MINIGUN].name, "Minigun");
-    armory[MINIGUN].type = MINIGUN;
+    armory[MACHINEGUN].name = sfString_Create();
+    sfString_SetText(armory[MACHINEGUN].name, "MachineGun");
+    armory[MACHINEGUN].type = MACHINEGUN;
 
-    armory[MINIGUN].weapon_img = NULL;
-    armory[MINIGUN].bullet_img = NULL;
+    armory[MACHINEGUN].weapon_img = NULL;
+    armory[MACHINEGUN].bullet_img = NULL;
 
-    armory[MINIGUN].nb_max_bullets = 200;
-    armory[MINIGUN].nb_curr_bullets = 0;
-    armory[MINIGUN].damage = 10;
+    armory[MACHINEGUN].nb_max_bullets = 200;
+    armory[MACHINEGUN].nb_curr_bullets = 0;
+    armory[MACHINEGUN].damage = 10;
 
-    armory[MINIGUN].reload_latency = 100;
-    armory[MINIGUN].switch_latency = 0;
-    //armory[MINIGUN].respawn_time = ;
+    armory[MACHINEGUN].reload_latency = 100;
+    armory[MACHINEGUN].switch_latency = 0;
+    //armory[MACHINEGUN].respawn_time = ;
 
-    armory[MINIGUN].range = 2000;
-    armory[MINIGUN].splash_radius = 5;
-    armory[MINIGUN].splash_coef = 0.85;
-    armory[MINIGUN].selfdamage_coef = 0;
+    armory[MACHINEGUN].range = 2000;
+    armory[MACHINEGUN].splash_radius = 5;
+    armory[MACHINEGUN].splash_coef = 0.85;
+    armory[MACHINEGUN].selfdamage_coef = 0;
 
-    armory[MINIGUN].proj_speed = 600;
-    armory[MINIGUN].trajectory = 0;
+    armory[MACHINEGUN].proj_speed = 600;
+    armory[MACHINEGUN].trajectory = 0;
 
-    armory[MINIGUN].collected = false;
+    armory[MACHINEGUN].collected = false;
 
 
     // Sniper
