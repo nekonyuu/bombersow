@@ -1,6 +1,5 @@
 #include "BaseSystem/Logging.h"
-#include "Objects/Bullet.h"
-#include "Objects/Weapon.h"
+#include "Objects/GameObjects.h"
 
 Bullet* bullet_Create(unsigned int player_id, unsigned int type)
 {

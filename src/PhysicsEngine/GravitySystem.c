@@ -1,5 +1,5 @@
 #include "PhysicsEngine/GravitySystem.h"
-#include "Objects/Map.h"
+#include "Objects/GameObjects.h"
 
 void gravitysystem_WorldUpdate(Map* map_)
 {

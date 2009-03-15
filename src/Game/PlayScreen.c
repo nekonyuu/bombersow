@@ -4,7 +4,7 @@
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
 #include "GraphicEngine/Image.h"
-#include "Objects/Map.h"
+#include "Objects/GameObjects.h"
 
 _Bool display_PlayMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont)
 {

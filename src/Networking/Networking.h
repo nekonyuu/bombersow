@@ -1,11 +1,12 @@
 #ifndef NETWORKING_H
 #define NETWORKING_H
 
-#include "Objects/Map.h"
+#include "Objects/GameObjects.h"
 
 _Bool started;
 
-void server_Main(Map* map, unsigned int port);
+void server_Main(Map* map);
+void server_Listen_Connections(void* UserData);
 void server_Listen_Game(void* UserData);
 
 sfPacket* chat_CreatePacket(Player* player, const char* message);

@@ -1,6 +1,5 @@
 #include "BaseSystem/Logging.h"
-#include "Objects/Objects.h"
-#include "Objects/Map.h"
+#include "Objects/GameObjects.h"
 
 // Constructeur
 Map* map_Create(unsigned int map_id, unsigned int nb_players)
@@ -29,6 +28,9 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players)
 
     new_map->chat_started = false;
     new_map->game_started = false;
+
+    new_map->game_socket = NULL;
+    new_map->game_port = 0;
 
     return new_map;
 }

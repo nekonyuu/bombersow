@@ -4,7 +4,7 @@
 #include "Game/CreditsScreen.h"
 #include "GraphicEngine/Draw.h"
 #include "Objects/Screen.h"
-#include "Objects/Map.h"
+#include "Objects/GameObjects.h"
 
 void display_Menu(sfRenderWindow* Game)
 {

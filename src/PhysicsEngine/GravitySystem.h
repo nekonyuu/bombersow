@@ -1,7 +1,7 @@
 #ifndef GRAVITYSYSTEM_H
 #define GRAVITYSYSTEM_H
 
-#include "Objects/Map.h"
+#include "Objects/GameObjects.h"
 
 typedef struct VECTOR2D
 {

@@ -3,13 +3,13 @@
 #include "Networking/Networking.h"
 #include "Networking/PacketDefines.h"
 
-void server_Main(Map* map, unsigned int port)
+void server_Main(Map* map)
 {
     sfThread* chat_listening = sfThread_Create(&server_Listen_Connections, map);
 
-    map->game_port = sfSocketUDP_Create();
-    sfSocketUDP_Bind(game_bound_socket, (unsigned short) port);
-    if(!sfSocketUDP_IsValid(game_bound_socket))
+    map->game_socket = sfSocketUDP_Create();
+    sfSocketUDP_Bind(map->game_socket, map->game_port);
+    if(!sfSocketUDP_IsValid(map->game_socket))
         logging_Error("server_Start", "Sent port already used");
 
     map->chat_started = true;
@@ -17,8 +17,7 @@ void server_Main(Map* map, unsigned int port)
     // Ecran d'attente joueurs (Salon de discussion)
     do
     {
-
-
+        // TODO : Mutex des thread d'écoute
         if(map->game_started)
             map->chat_started = false;
 
@@ -26,7 +25,6 @@ void server_Main(Map* map, unsigned int port)
     }
     while(map->chat_started);
 
-    /*
     // Préparation des threads pour l'écoute des paquets
     for (int i = 0; i < map->nb_players; i++)
     {
@@ -41,17 +39,15 @@ void server_Main(Map* map, unsigned int port)
         map_CreateAllPackets(map);
         for(int i = 0; i < map->packets2send->nb_packets; i++)
             for(int j = 0; j < map->nb_players; j++)
-                sfSocketUDP_SendPacket(game_bound_socket, map->packets2send->packets[i], map->players_list[j]->player_ip, (unsigned short) port);
+                sfSocketUDP_SendPacket(map->game_socket, map->packets2send->packets[i], *map->players_list[j]->player_ip, map->game_port);
 
         map_DestroyAllPackets(map);
         sfSleep(1.0f/FRAMERATE);
     }
     while(map->game_started);
-    */
 
-    sfSocketTCP_Destroy(chat_bound_socket);
-    sfSocketUDP_Unbind(game_bound_socket);
-    sfSocketUDP_Destroy(game_bound_socket);
+    sfSocketUDP_Unbind(map->game_socket);
+    sfSocketUDP_Destroy(map->game_socket);
 }
 
 void server_Listen_Connections(void* UserData)
@@ -59,16 +55,26 @@ void server_Listen_Connections(void* UserData)
     Map* map = (Map*) UserData;
 
     sfSocketTCP* chat_bound_socket = sfSocketTCP_Create();
-    sfSocketTCP_Listen(chat_bound_socket, (unsigned short) port);
+    sfSocketTCP_Listen(chat_bound_socket, map->game_port);
 
     while(map->game_started)
     {
-        //map_AddPlayer(map, , CROWBAR);
         sfSocketTCP* new_player = sfSocketTCP_Create();
-        sfSocketTCP_Accept(chat_bound_socket, new_player, map->players_list[map->nb_players]->player_ip);
+        sfIPAddress* new_player_ip;
+        sfPacket* new_player_packet;
+        char* name;
+        sfSocketTCP_Accept(chat_bound_socket, &new_player, new_player_ip);
+        sfSocketTCP_ReceivePacket(new_player, new_player_packet);
+        if(sfPacket_ReadUint8(new_player_packet) == (sfUint8) CONNECT)
+        {
+            sfPacket_ReadString(new_player_packet, name);
+            map_AddPlayer(map, player_Create(name, CROWBAR));
+            map->players_list[map->nb_players - 1]->player_ip = new_player_ip;
+            map->players_list[map->nb_players - 1]->chat_socket = new_player;
 
-        map->nb_players++;
+        }
     }
+    sfSocketTCP_Destroy(chat_bound_socket);
 }
 
 void server_Listen_Game(void* UserData)

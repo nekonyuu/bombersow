@@ -1,5 +1,5 @@
 #include "BaseSystem/Logging.h"
-#include "Objects/Objects.h"
+#include "Objects/GameObjects.h"
 
 Object* object_Create()
 {

@@ -1,5 +1,5 @@
 #include "BaseSystem/Logging.h"
-#include "Objects/Weapon.h"
+#include "Objects/GameObjects.h"
 
 // Constructeur
 Weapon* weapon_Create(int type)

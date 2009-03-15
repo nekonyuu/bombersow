@@ -3,7 +3,7 @@
 #include "Objects/Screen.h"
 #include "Map/MapLoader.h"
 #include "GraphicEngine/Draw.h"
-#include "Objects/Map.h"
+#include "Objects/GameObjects.h"
 
 int main()
 {

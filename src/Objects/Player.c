@@ -1,8 +1,7 @@
 #include <string.h>
 #include "BaseSystem/Logging.h"
 #include "GraphicEngine/Draw.h"
-#include "Objects/Player.h"
-#include "Objects/Weapon.h"
+#include "Objects/GameObjects.h"
 
 // Constructeur
 Player* player_Create(char* name, unsigned int current_weapon)
@@ -163,21 +162,16 @@ void player_CollectWeapon(Player* player_, int weapon_type)
 // Diminue le nombre de cartouches restantes et crée un/des bullet(s)
 void player_WeaponShoot(Map* map, Player* player_)
 {
-    Bullet** new_bullet = NULL;
-    int nb_bullet = 0;
-
     if (player_->weapons[player_->current_weapon]->type == SHOTGUN)
     {
-        assert(new_bullet = (Bullet**) malloc(SHOTGUN_SHRAPNELS * sizeof(Bullet*)));
-        for (nb_bullet = 0; nb_bullet < SHOTGUN_SHRAPNELS; nb_bullet++)
-            new_bullet[nb_bullet] = bullet_Create(player_->player_id, player_->current_weapon);
+        for (int nb_bullet = 0; nb_bullet < SHOTGUN_SHRAPNELS; nb_bullet++)
+            map_AddBullet(map, bullet_Create(player_->player_id, player_->current_weapon));
     }
     else
-        new_bullet[0] = bullet_Create(player_->player_id, player_->current_weapon);
+        map_AddBullet(map, bullet_Create(player_->player_id, player_->current_weapon));
 
     player_->weapons[player_->current_weapon]->nb_curr_bullets--;
 
-    return new_bullet;
 }
 
 // Fonction qui gère le saut du joueur, TODO : Trajectoire lors du saut, vecteur force

@@ -140,19 +140,16 @@
 		<Unit filename="src\Objects\Bullet.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Objects\Bullet.h" />
+		<Unit filename="src\Objects\GameObjects.h" />
 		<Unit filename="src\Objects\Map.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Objects\Map.h" />
 		<Unit filename="src\Objects\Objects.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Objects\Objects.h" />
 		<Unit filename="src\Objects\Player.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Objects\Player.h" />
 		<Unit filename="src\Objects\Screen.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -160,7 +157,6 @@
 		<Unit filename="src\Objects\Weapon.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Objects\Weapon.h" />
 		<Unit filename="src\PhysicsEngine\CollisionSystem.c">
 			<Option compilerVar="CC" />
 		</Unit>

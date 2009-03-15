@@ -2,7 +2,7 @@
 #define MAPLOADER_H
 
 #include "GraphicEngine/Image.h"
-#include "Objects/Map.h"
+#include "Objects/GameObjects.h"
 
 // Structure pour chargée les données
 typedef struct DATA
