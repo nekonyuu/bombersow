@@ -5,48 +5,60 @@
 
 void server_Main(Map* map, unsigned int port)
 {
-    sfSocketUDP* bound_socket = sfSocketUDP_Create();
-    _Bool chat_start;
-    sfSocketUDP_Bind(bound_socket, (unsigned short) port);
-    if(!sfSocketUDP_IsValid(bound_socket))
+    sfSocketTCP* chat_bound_socket = sfSocketTCP_Create();
+    sfSocketUDP* game_bound_socket = sfSocketUDP_Create();
+
+    sfSocketUDP_Bind(game_bound_socket, (unsigned short) port);
+    if(!sfSocketUDP_IsValid(game_bound_socket))
         logging_Error("server_Start", "Sent port already used");
 
-    chat_start = true;
+    map->chat_started = true;
 
-    for (int i = 0; i < map->nb_players; i++)
-        sfThread_Launch(map->players_list[i]->listening_thread);
-
-    while(chat_start)
+    // Ecran d'attente joueurs (Salon de discussion)
+    do
     {
-        //
-        chat_start = false;
+
+
+        if(map->game_started)
+            map->chat_started = false;
+
         sfSleep(1.0f/FRAMERATE);
     }
+    while(map->chat_started);
 
-    /*while(started)
+    /*
+    // Préparation des threads pour l'écoute des paquets
+    for (int i = 0; i < map->nb_players; i++)
+    {
+        map->players_list[i]->player_thread = sfThread_Create(&server_Listen_Game, map->players_list[i]);
+        sfThread_Launch(map->players_list[i]->player_thread);
+    }
+
+    // Boucle principale du serveur
+    do
     {
         // TODO : Polling packets reçus
-        PacketList* packets = map_CreateAllPackets(map);
-        for(int i = 0; i < packets->nb_packets; i++)
-        {
+        map_CreateAllPackets(map);
+        for(int i = 0; i < map->packets2send->nb_packets; i++)
             for(int j = 0; j < map->nb_players; j++)
-            {
-                sfSocketTCP_SendPacket(bound_socket, packets->packets[i], map->players_list[j]->player_ip, (unsigned short) port);
-            }
-        }
-        sfSleep(1.0f/FRAMERATE);
-    }*/
+                sfSocketUDP_SendPacket(game_bound_socket, map->packets2send->packets[i], map->players_list[j]->player_ip, (unsigned short) port);
 
-    sfSocketUDP_Unbind(bound_socket);
-    sfSocketUDP_Destroy(bound_socket);
+        map_DestroyAllPackets(map);
+        sfSleep(1.0f/FRAMERATE);
+    }
+    while(started);
+    */
+
+    sfSocketTCP_Destroy(chat_bound_socket);
+    sfSocketUDP_Unbind(game_bound_socket);
+    sfSocketUDP_Destroy(game_bound_socket);
 }
 
-void server_Listen(void* UserData)
+void server_Listen_Game(void* UserData)
 {
     Player* player = (Player*) UserData;
-    _Bool connected = true;
 
-    while (connected)
+    while (player->connected)
     {
 
     }

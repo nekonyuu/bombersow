@@ -18,13 +18,14 @@ sfPacket* chat_CreatePacket(Player* player, const char* message)
 
     sfPacket* new_packet = sfPacket_Create();
     char* mess2send = NULL;
+    int size = strlen(player->stripped->name) + strlen(message) + 4;
 
-    assert(mess2send = (char*) malloc((strlen(player->stripped->name) + strlen(message) + 4) * sizeof(char)));
+    assert(mess2send = (char*) malloc(size * sizeof(char)));
     strcpy(mess2send, (const char*) player->stripped->name);
     strcat(mess2send, " : ");
     strcat(mess2send, message);
-    mess2send[strlen(mess2send) + 1] = '\0';
-    sfPacket_WriteInt8(new_packet, (sfUint8) CHAT);
+    mess2send[size - 1] = '\0';
+    sfPacket_WriteUint8(new_packet, (sfUint8) CHAT);
     sfPacket_WriteString(new_packet, mess2send);
     free(mess2send);
 

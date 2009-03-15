@@ -48,36 +48,33 @@ sfPacket* stobject_CreatePacket(Object* object_)
     return new_packet;
 }
 
-PacketList* map_CreateAllPackets(Map* map_)
+void map_CreateAllPackets(Map* map_)
 {
     if (!map_)
         logging_Error("map_CreateAllPacket", "Map object sent NULL, can't create packet list");
 
-    PacketList* packets;
-    assert(packets = (PacketList*) malloc(sizeof(PacketList)));
+    assert(map_->packets2send = (PacketList*) malloc(sizeof(PacketList)));
 
-    packets->nb_packets = map_->nb_players;
+    map_->packets2send->nb_packets = map_->nb_players;
 
     for (int i = 0; i < map_->nb_objects; i++)
         if (map_->objects_list[i]->type > 0)
-            packets->nb_packets++;
+            map_->packets2send->nb_packets++;
 
-    assert(packets->packets = (sfPacket**) malloc(packets->nb_packets * sizeof(sfPacket*)));
+    assert(map_->packets2send->packets = (sfPacket**) malloc(map_->packets2send->nb_packets * sizeof(sfPacket*)));
 
     for (int i = 0; i < map_->nb_players; i++)
-        packets->packets[i] = stplayer_CreatePacket(map_->players_list[i]);
+        map_->packets2send->packets[i] = stplayer_CreatePacket(map_->players_list[i]);
 
-    for (int i = map_->nb_players; i < packets->nb_packets; i++)
+    for (int i = map_->nb_players; i < map_->packets2send->nb_packets; i++)
         if (map_->objects_list[i]->type > 0)
-            packets->packets[i] = stobject_CreatePacket(map_->objects_list[i]);
-
-    return packets;
+            map_->packets2send->packets[i] = stobject_CreatePacket(map_->objects_list[i]);
 }
 
-void map_DestroyAllPackets(PacketList* pl)
+void map_DestroyAllPackets(Map* map_)
 {
-    for (int i = 0; i < pl->nb_packets; i++)
-        sfPacket_Destroy(pl->packets[i]);
-    free(pl->packets);
-    free(pl);
+    for (int i = 0; i < map_->packets2send->nb_packets; i++)
+        sfPacket_Destroy(map_->packets2send->packets[i]);
+    free(map_->packets2send->packets);
+    free(map_->packets2send);
 }

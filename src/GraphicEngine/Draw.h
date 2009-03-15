@@ -5,7 +5,7 @@
 
 #define SCREEN_WIDTH 900
 #define SCREEN_HEIGHT 675
-#define FRAMERATE 60
+#define FRAMERATE 60.0f
 #define GAME_NAME "BomberSow"
 
 #endif

@@ -1,10 +1,7 @@
-#include "SFML/Graphics.h"
-#include "SFML/Audio.h"
 #include "BaseSystem/Logging.h"
 #include "Game/MenuScreen.h"
 #include "Objects/Screen.h"
-#include "Objects/Weapon.h"
-#include "GraphicEngine/Image.h"
+#include "Map/MapLoader.h"
 #include "GraphicEngine/Draw.h"
 #include "Objects/Map.h"
 

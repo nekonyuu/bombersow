@@ -55,14 +55,11 @@
 
 1236646413 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\inputscontrol\playercontrol.c
 
-1236876279 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
-	"SFML/Graphics.h"
-	"SFML/Audio.h"
+1237136689 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\main.c
 	"BaseSystem/Logging.h"
 	"Game/MenuScreen.h"
 	"Objects/Screen.h"
-	"Objects/Weapon.h"
-	"GraphicEngine/Image.h"
+	"Map/MapLoader.h"
 	"GraphicEngine/Draw.h"
 	"Objects/Map.h"
 
@@ -72,47 +69,53 @@
 	"Map/MapLoader.h"
 	"Map/MapHandler.h"
 
-1236646413 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\map\maploader.c
+1237136610 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\map\maploader.c
+	<stdio.h>
+	<string.h>
+	"BaseSystem/Logging.h"
+	"Map/MapLoader.h"
 
 1236979775 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\dataconstructor.c
 	"BaseSystem/Logging.h"
 	"Networking/DataConstructor.h"
 
-1236976126 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\serverthread.c
-	"SFML/Network.h"
+1237142377 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\serverthread.c
+	"BaseSystem/Logging.h"
+	"GraphicEngine/Draw.h"
+	"Networking/Networking.h"
+	"Networking/PacketDefines.h"
 
-1236895265 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\map.c
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
+1237137384 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\map.c
 	"BaseSystem/Logging.h"
 	"Objects/Objects.h"
 	"Objects/Map.h"
 
-1236894640 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\map.h
+1237137418 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\map.h
+	"SFML/Network.h"
 	"Objects/Player.h"
 	"Objects/Objects.h"
-	"GraphicEngine/Image.h"
 
-1236980697 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.h
+1236983253 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.h
 	<stdbool.h>
 	"SFML/Graphics.h"
 	"GraphicEngine/Image.h"
 
-1236896600 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.c
+1236983968 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\objects.c
 	"BaseSystem/Logging.h"
 	"Objects/Objects.h"
 
-1236896544 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.c
+1237141168 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.c
+	<string.h>
 	"BaseSystem/Logging.h"
 	"GraphicEngine/Draw.h"
 	"Objects/Player.h"
 	"Objects/Weapon.h"
 
-1236980692 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.h
+1237138652 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\player.h
+	"SFML/Network.h"
 	"Objects/Weapon.h"
 
-1236893438 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.h
+1237043734 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.h
 	<stdbool.h>
 	"SFML/Graphics.h"
 	"Objects/Bullet.h"
@@ -125,7 +128,7 @@
 
 1236646414 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\physicsengine\particlesystem.c
 
-1236893447 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.c
+1237043694 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\objects\weapon.c
 	"BaseSystem/Logging.h"
 	"Objects/Weapon.h"
 
@@ -315,7 +318,9 @@
 	"BaseSystem/Logging.h"
 	"Objects/Screen.h"
 
-1236646413 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\map\maploader.h
+1237136910 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\map\maploader.h
+	"GraphicEngine/Image.h"
+	"Objects/Map.h"
 
 1236891889 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\map\maphandler.h
 
@@ -613,7 +618,7 @@
 	<assert.h>
 	"GraphicEngine/Image.h"
 
-1236721009 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\graphicengine\draw.h
+1237138161 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\graphicengine\draw.h
 	"SFML/Graphics.h"
 
 1236879772 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\game\creditsscreen.c
@@ -695,4 +700,25 @@
 	<SFML/Network/IPAddress.h>
 	<SFML/Network/Packet.h>
 	<SFML/Network/SocketStatus.h>
+
+1237130564 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\chathandler.c
+	<string.h>
+	"BaseSystem/Logging.h"
+	"Networking/Networking.h"
+	"Networking/PacketDefines.h"
+
+1237142404 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\networking.h
+	"Objects/Map.h"
+
+1237056281 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\packetdefines.h
+
+1237129226 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\clientthread.c
+	"BaseSystem/Logging.h"
+	"Networking/Networking.h"
+	"Networking/PacketDefines.h"
+
+1237137815 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\src\networking\datahandler.c
+	"BaseSystem/Logging.h"
+	"Networking/Networking.h"
+	"Networking/PacketDefines.h"
 

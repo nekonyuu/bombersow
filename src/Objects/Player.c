@@ -34,7 +34,8 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->frags = 0;
     new_player->killed = 0;
 
-    //new_player->listening_thread = sfThread_Create(/* Fonction d'écoute */, /* Données */);
+    new_player->connected = sfTrue;
+    new_player->ready = sfFalse;
 
     stplayer_Create(new_player);
 
@@ -85,6 +86,8 @@ void stplayer_Create(Player* player_)
     player_->stripped->coord_y = player_->coord_y;
     player_->stripped->coord_x = player_->m_coord_x;
     player_->stripped->coord_y = player_->m_coord_y;
+    player_->stripped->connected = player_->connected;
+    player_->stripped->ready = player_->ready;
 }
 
 void stplayer_Destroy(stPlayer* stplayer_)

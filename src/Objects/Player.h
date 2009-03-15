@@ -12,7 +12,8 @@ typedef struct STRIP_PLAYER
     sfUint8 current_weapon;         // Arme courante
     float coord_x, coord_y;         // Emplacement sur la map
     float m_coord_x, m_coord_y;     // Coordonnées souris
-
+    sfBool connected;               // Connecté ?
+    sfBool ready;                   // Prêt à jouer ?
 } stPlayer;
 
 typedef struct PLAYER
@@ -38,7 +39,9 @@ typedef struct PLAYER
     unsigned int frags;             // Nombre de tués
     unsigned int killed;            // Nombre de morts
 
-    sfThread* listening_thread;      // Thread d'écoute
+    sfThread* player_thread;        // Thread du player (d'écoute si serveur, de transmission si client)
+    sfBool connected;               // Booléen de présence sur le serveur
+    sfBool ready;                   // Prêt à jouer
 } Player;
 
 Player* player_Create(char*, unsigned int);
