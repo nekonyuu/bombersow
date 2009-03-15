@@ -6,70 +6,24 @@
 
 #define UNI32_RETURN 8
 
-Widget_cadre* widget_cadre_Create(sfImage* image, sfSprite* sprite_background, int x, int y, int width, int height)
+Widget_cadre* widget_cadre_Create(sfImage* image, sfColor couleur, int x, int y, int width, int height)
 {
 
     Widget_cadre* cadre = NULL;
     assert(cadre = (Widget_cadre*) malloc(sizeof(Widget_cadre)));
 
-    for (int i = 0; i < 8; i++)
-    {
-        cadre->sprite_cadre[i] = sfSprite_Create();
-        sfSprite_SetImage(cadre->sprite_cadre[i], image);
-    }
-
     cadre->background = sfSprite_Create();
-    sfSprite_SetImage(cadre->background, sfSprite_GetImage(sprite_background));
-    sfSprite_SetSubRect(cadre->background, sfSprite_GetSubRect(sprite_background));
+    sfSprite_SetImage(cadre->background, image);
+    sfSprite_Resize(cadre->background, width, height);
+    sfSprite_SetPosition(cadre->background, x, y);
+
+    cadre->shape = sfShape_CreateRectangle(x, y, x+width, y+height, sfColor_FromRGB(0,0,0), 1, couleur);
+    sfShape_EnableFill(cadre->shape, false);
 
     cadre->x = x;
     cadre->y = y;
     cadre->width = width;
     cadre->height = height;
-
-    sfIntRect rect = {131, 0, 188, 3};
-    sfSprite_SetSubRect(cadre->sprite_cadre[TOP], &rect);
-
-    sfIntRect rect2 = {131, 61, 188, 64};
-    sfSprite_SetSubRect(cadre->sprite_cadre[BOTTOM], &rect2);
-
-    sfIntRect rect3 = {128, 3, 131, 60};
-    sfSprite_SetSubRect(cadre->sprite_cadre[LEFT], &rect3);
-
-    sfIntRect rect4 = {188, 3, 192, 60};
-    sfSprite_SetSubRect(cadre->sprite_cadre[RIGHT], &rect4);
-
-    sfIntRect rect5 = {128, 0, 130, 2};
-    sfSprite_SetSubRect(cadre->sprite_cadre[TL], &rect5);
-
-    sfIntRect rect6 = {128, 61, 130, 63};
-    sfSprite_SetSubRect(cadre->sprite_cadre[TR], &rect6);
-
-    sfIntRect rect7 = {189, 0, 192, 3};
-    sfSprite_SetSubRect(cadre->sprite_cadre[BL], &rect7);
-
-    sfIntRect rect8 = {189, 61, 192, 63};
-    sfSprite_SetSubRect(cadre->sprite_cadre[BR], &rect8);
-
-    sfSprite_SetPosition(cadre->sprite_cadre[TL], x, y);
-    sfSprite_SetPosition(cadre->sprite_cadre[TR], x+width, y);
-    sfSprite_SetPosition(cadre->sprite_cadre[BL], x, y+height);
-    sfSprite_SetPosition(cadre->sprite_cadre[BR], x+width, y+height);
-
-    sfSprite_SetPosition(cadre->sprite_cadre[TOP], x+1, y);
-    sfSprite_SetScaleX(cadre->sprite_cadre[TOP], width/sfSprite_GetWidth(cadre->sprite_cadre[TOP]));
-
-    sfSprite_SetPosition(cadre->sprite_cadre[BOTTOM], x+1, y+height);
-    sfSprite_SetScaleX(cadre->sprite_cadre[BOTTOM], width/sfSprite_GetWidth(cadre->sprite_cadre[BOTTOM]));
-
-    sfSprite_SetPosition(cadre->sprite_cadre[LEFT], x, y+1);
-    sfSprite_SetScaleY(cadre->sprite_cadre[LEFT], height/sfSprite_GetHeight(cadre->sprite_cadre[LEFT]));
-
-    sfSprite_SetPosition(cadre->sprite_cadre[RIGHT], x+width, y+1);
-    sfSprite_SetScaleY(cadre->sprite_cadre[RIGHT], height/sfSprite_GetHeight(cadre->sprite_cadre[RIGHT]));
-
-    sfSprite_SetPosition(cadre->background, x+1, y+1);
-    sfSprite_SetScale(cadre->background, width/sfSprite_GetWidth(cadre->background), height/sfSprite_GetHeight(cadre->background));
 
     return cadre;
 }
@@ -82,11 +36,7 @@ void widget_cadre_Destroy(Widget_cadre* cadre)
         return;
     }
 
-    for (int i = 0; i < 8; i++)
-    {
-        sfSprite_Destroy(cadre->sprite_cadre[i]);
-    }
-
+    sfShape_Destroy(cadre->shape);
     sfSprite_Destroy(cadre->background);
 
     free(cadre);
@@ -97,8 +47,7 @@ void widget_cadre_Draw(sfRenderWindow* Game, Widget_cadre* cadre)
     assert(Game && cadre);
 
     sfRenderWindow_DrawSprite(Game, cadre->background);
-    for (int i = 0; i < 8; i++)
-        sfRenderWindow_DrawSprite(Game, cadre->sprite_cadre[i]);
+    sfRenderWindow_DrawShape(Game, cadre->shape);
 }
 
 // Construit la Widget_textbox_var
@@ -114,6 +63,15 @@ Widget_textbox_var* widget_text_box_var_Create(Widget_textbox_type type, void* v
         textbox_var->var_int = (int*) var;
         textbox_var->var_string = NULL;
         textbox_var->var_char = NULL;
+        textbox_var->var_float = NULL;
+        break;
+
+    case FLOAT:
+        textbox_var->type = FLOAT;
+        textbox_var->var_int = NULL;
+        textbox_var->var_float = (float*) var;
+        textbox_var->var_string = NULL;
+        textbox_var->var_char = NULL;
         break;
 
     case STRING:
@@ -121,6 +79,7 @@ Widget_textbox_var* widget_text_box_var_Create(Widget_textbox_type type, void* v
         textbox_var->var_int = NULL;
         textbox_var->var_string = (sfString*) var;
         textbox_var->var_char = NULL;
+        textbox_var->var_float = NULL;
         break;
 
     case CHAR:
@@ -128,6 +87,7 @@ Widget_textbox_var* widget_text_box_var_Create(Widget_textbox_type type, void* v
         textbox_var->var_int = NULL;
         textbox_var->var_string = NULL;
         textbox_var->var_char = (char*) var;
+        textbox_var->var_float = NULL;
         break;
     }
 
@@ -161,6 +121,10 @@ void widget_textbox_var_Get(Widget_textbox_var* textbox_var, Widget_textbox* tex
     {
         sprintf(textbox->text_char, "%d", *textbox_var->var_int);
         sfString_SetText(textbox->text, textbox->text_char);
+    }else if (textbox_var->type == FLOAT)
+    {
+        sprintf(textbox->text_char, "%f", *textbox_var->var_float);
+        sfString_SetText(textbox->text, textbox->text_char);
     }
     else if (textbox_var->type == CHAR)
     {
@@ -181,6 +145,10 @@ void widget_textbox_var_Set(Widget_textbox_var* textbox_var, Widget_textbox* tex
         *textbox_var->var_int = atoi(textbox->text_char);
         break;
 
+    case FLOAT:
+        *textbox_var->var_float = atof(textbox->text_char);
+        break;
+
     case STRING:
         // textbox_var->var_string détruit dans widget_textbox_var_Destroy, utilisé par widget_textbox_Destroy
         textbox_var->var_string = textbox->text;
@@ -193,27 +161,40 @@ void widget_textbox_var_Set(Widget_textbox_var* textbox_var, Widget_textbox* tex
 }
 
 
-Widget_textbox* widget_textbox_Create(int x, int y, int width, int height, int taille, sfImage* image, sfSprite* sprite_background, Widget_textbox_type type, void* var)
+Widget_textbox* widget_textbox_Create(int x, int y, int width, int height, int taille, sfImage* image, sfColor couleur, Widget_textbox_type type, void* var, char* texte, int texte_size)
 {
     Widget_textbox* textbox = NULL;
     assert(textbox = malloc(sizeof(Widget_textbox)));
 
+    textbox->alt = sfString_Create();
+    sfString_SetText(textbox->alt, texte);
+    sfString_SetColor(textbox->alt, sfBlack);
+    sfString_SetSize(textbox->alt, texte_size);
+
+
+    sfFloatRect* rect = sfString_GetRect(textbox->alt);
+    sfString_SetPosition(textbox->alt, x, y+ ((height-(rect->Bottom-rect->Top))/2) - 2 );
+
+    rect = sfString_GetRect(textbox->alt);
+    rect->Right += 2;
+
+
     textbox->text = sfString_Create();
-    sfString_SetPosition(textbox->text, x+5, y);
+    sfString_SetPosition(textbox->text, rect->Right, y-2);
     sfString_SetColor(textbox->text, sfBlack);
-    sfString_SetSize(textbox->text, height-5);
+    sfString_SetSize(textbox->text, height-2);
 
     textbox->text_char = NULL;
     assert(textbox->text_char = (char*) malloc(taille*sizeof(char)));
 
     textbox->taille = taille;
 
-    textbox->x = x;
+    textbox->x = rect->Right;
     textbox->y = y;
     textbox->width = width;
     textbox->height = height;
 
-    textbox->cadre = widget_cadre_Create(image, sprite_background, x, y, width, height);
+    textbox->cadre = widget_cadre_Create(image, couleur, rect->Right, y, width, height);
 
     textbox->var = widget_text_box_var_Create(type, var);
     widget_textbox_var_Get(textbox->var, textbox);
@@ -228,6 +209,7 @@ void widget_textbox_Destroy(Widget_textbox* textbox)
     widget_textbox_var_Destroy(textbox->var);
 
     sfString_Destroy(textbox->text);
+    sfString_Destroy(textbox->alt);
 
     widget_cadre_Destroy(textbox->cadre);
     textbox->cadre = NULL;
@@ -271,6 +253,11 @@ void widget_textbox_Write(Widget_textbox* textbox, sfUint32 lettre)
                     textbox->text_char[taille] = lettre;
                     textbox->text_char[taille+1] = '\0';
                 }
+                else if(textbox->var->type == FLOAT && ((lettre > 47 && lettre < 58) || lettre == '.'))
+                {
+                    textbox->text_char[taille] = lettre;
+                    textbox->text_char[taille+1] = '\0';
+                }
                 else if (textbox->var->type == CHAR)
                 {
                     textbox->text_char[taille] = lettre;
@@ -292,6 +279,7 @@ void widget_textbox_Draw(sfRenderWindow* Game, Widget_textbox* textbox)
 {
     assert(Game && textbox);
 
+    sfRenderWindow_DrawString(Game, textbox->alt);
     widget_cadre_Draw(Game, textbox->cadre);
     sfRenderWindow_DrawString(Game, textbox->text);
 }
@@ -299,7 +287,7 @@ void widget_textbox_Draw(sfRenderWindow* Game, Widget_textbox* textbox)
 
 //Widget bouton
 
-Widget_bouton* widget_bouton_Create(sfIntRect rect, void (*f)(void*), void* arg, sfImage* image_OnOver, sfImage* image_OnClick, sfImage* image_OnNothing)
+Widget_bouton* widget_bouton_Create(sfIntRect rect, void (*f)(void*, void*), void* arg, void* arg2, sfImage* image_OnOver, sfImage* image_OnClick, sfImage* image_OnNothing)
 {
     Widget_bouton *bouton = NULL;
     assert(bouton = (Widget_bouton*) malloc(sizeof(Widget_bouton)));
@@ -307,6 +295,7 @@ Widget_bouton* widget_bouton_Create(sfIntRect rect, void (*f)(void*), void* arg,
     bouton->rect = rect;
     bouton->onClick_Callback = f;
     bouton->onClick_Callback_arg = arg;
+    bouton->onClick_Callback_arg2 = arg2;
 
     bouton->sprite_OnClick = sfSprite_Create();
     sfSprite_SetImage(bouton->sprite_OnClick, image_OnClick);
@@ -340,9 +329,20 @@ void widget_bouton_Destroy(Widget_bouton* bouton)
 
 void widget_bouton_Click(Widget_bouton* bouton, int x, int y)
 {
+
     if (sfIntRect_Contains(&bouton->rect, x, y))
-        bouton->onClick_Callback(bouton->onClick_Callback_arg);
+        bouton->onClick_Callback(bouton->onClick_Callback_arg, bouton->onClick_Callback_arg2);
+
 }
+
+void widget_bouton_Over(Widget_bouton* bouton, int x, int y)
+{
+    if (sfIntRect_Contains(&bouton->rect, x, y))
+        bouton->On = OVER;
+    else
+        bouton->On = NOTHING;
+}
+
 
 void widget_bouton_Draw(sfRenderWindow* Game, Widget_bouton* bouton)
 {
@@ -436,6 +436,14 @@ void gui_Click(Gui* gui, int x, int y)
 
     for (int i = 0; i < gui->widget_bouton_nombre; i++)
         widget_bouton_Click(gui->widget_bouton[i], x, y);
+}
+
+void gui_MouseOver(Gui* gui, int x, int y)
+{
+
+    for (int i = 0; i < gui->widget_bouton_nombre; i++)
+        widget_bouton_Over(gui->widget_bouton[i], x, y);
+
 }
 
 void gui_TextEntered(Gui* gui, sfUint32 unicode)

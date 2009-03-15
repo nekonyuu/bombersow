@@ -37,6 +37,7 @@ void image_Loader(Image *image_, char **image_liste, int taille_liste)
     }
 
     image_->image_nombre = taille_liste;
+
 }
 
 // Acquisition d'une image suivant son id dans l'objet Image
@@ -88,15 +89,30 @@ Animation* animation_Create(sfImage *image, float x, float y, int hauteur, int l
     animation_->fps = fps;
     animation_->clock = sfClock_Create();
 
+    animation_->x_c = 0;
+    animation_->y_c = 0;
+
     return animation_;
 }
 
 // Destructeur
 void animation_Destroy(Animation *animation_)
 {
-    sfSprite_Destroy(animation_->sprite);
-    sfClock_Destroy(animation_->clock);
-    free(animation_);
+    if(animation_ != NULL){
+        sfSprite_Destroy(animation_->sprite);
+        sfClock_Destroy(animation_->clock);
+        free(animation_);
+    }
+}
+
+//Set position
+void animation_SetPosition(Animation* animation, int x, int y)
+{
+
+    animation->x_c = x;
+    animation->y_c = y;
+    sfSprite_SetPosition(animation->sprite, x, y);
+
 }
 
 // Lecture
