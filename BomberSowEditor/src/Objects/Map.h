@@ -10,7 +10,7 @@ typedef struct MAP
 {
     sfSprite* background;        // Arrière-plan
 
-    Image** image;              //Tableau pour les images de la map
+    Image* image;              //Tableau pour les images de la map
     Animation** animation;      //Tableau pour les animations
 
     Object** objects;           // Tableau des objets de la map
