@@ -38,6 +38,8 @@ typedef struct MAP
     _Bool chat_started;         // Salon de discussion démarré ?
     _Bool game_started;         // Partie démarrée ?
 
+    sfSocketUDP* game_port;     // Socket de jeu
+
 } Map;
 
 Map* map_Create();

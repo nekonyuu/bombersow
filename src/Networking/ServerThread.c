@@ -5,9 +5,9 @@
 
 void server_Main(Map* map, unsigned int port)
 {
-    sfSocketTCP* chat_bound_socket = sfSocketTCP_Create();
-    sfSocketUDP* game_bound_socket = sfSocketUDP_Create();
+    sfThread* chat_listening = sfThread_Create(&server_Listen_Connections, map);
 
+    map->game_port = sfSocketUDP_Create();
     sfSocketUDP_Bind(game_bound_socket, (unsigned short) port);
     if(!sfSocketUDP_IsValid(game_bound_socket))
         logging_Error("server_Start", "Sent port already used");
@@ -46,12 +46,29 @@ void server_Main(Map* map, unsigned int port)
         map_DestroyAllPackets(map);
         sfSleep(1.0f/FRAMERATE);
     }
-    while(started);
+    while(map->game_started);
     */
 
     sfSocketTCP_Destroy(chat_bound_socket);
     sfSocketUDP_Unbind(game_bound_socket);
     sfSocketUDP_Destroy(game_bound_socket);
+}
+
+void server_Listen_Connections(void* UserData)
+{
+    Map* map = (Map*) UserData;
+
+    sfSocketTCP* chat_bound_socket = sfSocketTCP_Create();
+    sfSocketTCP_Listen(chat_bound_socket, (unsigned short) port);
+
+    while(map->game_started)
+    {
+        //map_AddPlayer(map, , CROWBAR);
+        sfSocketTCP* new_player = sfSocketTCP_Create();
+        sfSocketTCP_Accept(chat_bound_socket, new_player, map->players_list[map->nb_players]->player_ip);
+
+        map->nb_players++;
+    }
 }
 
 void server_Listen_Game(void* UserData)

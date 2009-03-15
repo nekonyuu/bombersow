@@ -13,6 +13,7 @@ Player* player_Create(char* name, unsigned int current_weapon)
 
     new_player->name = sfString_Create();
     sfString_SetText(new_player->name, name);
+    new_player->player_id = 0;
     new_player->life = 100;
 
     assert(new_player->weapons = (Weapon **) malloc(sizeof(Weapon*)));
@@ -31,8 +32,16 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->m_coord_x = 0;
     new_player->m_coord_y = 0;
 
+    new_player->speed_x = 0;
+    new_player->speed_y = 0;
+
+    new_player->jump = NO_JUMP;
+    new_player->jetpack_mode = false;
+
     new_player->frags = 0;
     new_player->killed = 0;
+
+    new_player->player_thread = NULL;
 
     new_player->connected = sfTrue;
     new_player->ready = sfFalse;
@@ -152,18 +161,19 @@ void player_CollectWeapon(Player* player_, int weapon_type)
 }
 
 // Diminue le nombre de cartouches restantes et crée un/des bullet(s)
-Bullet** player_WeaponShoot(Player* player_, int* nb_bullet)
+void player_WeaponShoot(Map* map, Player* player_)
 {
     Bullet** new_bullet = NULL;
+    int nb_bullet = 0;
 
     if (player_->weapons[player_->current_weapon]->type == SHOTGUN)
     {
         assert(new_bullet = (Bullet**) malloc(SHOTGUN_SHRAPNELS * sizeof(Bullet*)));
-        for (*nb_bullet = 0; *nb_bullet < SHOTGUN_SHRAPNELS; *nb_bullet++)
-            bullet_Create(player_->player_id, player_->current_weapon);
+        for (nb_bullet = 0; nb_bullet < SHOTGUN_SHRAPNELS; nb_bullet++)
+            new_bullet[nb_bullet] = bullet_Create(player_->player_id, player_->current_weapon);
     }
     else
-        bullet_Create(player_->player_id, player_->current_weapon);
+        new_bullet[0] = bullet_Create(player_->player_id, player_->current_weapon);
 
     player_->weapons[player_->current_weapon]->nb_curr_bullets--;
 

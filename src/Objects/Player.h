@@ -20,7 +20,7 @@ typedef struct PLAYER
 {
     sfString *name;                 // Nom du joueur
     unsigned int player_id;         // ID joueur
-    sfIPAddress player_ip;          // IP joueur
+    sfIPAddress* player_ip;         // IP joueur
     unsigned int life;              // Vie restante
 
     stPlayer* stripped;             // Pointeur vers le player allégé
@@ -35,11 +35,13 @@ typedef struct PLAYER
     unsigned int speed_x, speed_y;  // Vitesse
 
     jump_t jump;                    // Type de saut en cours
+    _Bool jetpack_mode;             // Mode JetPack ?
 
     unsigned int frags;             // Nombre de tués
     unsigned int killed;            // Nombre de morts
 
     sfThread* player_thread;        // Thread du player (d'écoute si serveur, de transmission si client)
+    sfSocketTCP* chat_socket;       // Socket d'écoute de discussion
     sfBool connected;               // Booléen de présence sur le serveur
     sfBool ready;                   // Prêt à jouer
 } Player;
@@ -49,7 +51,7 @@ void player_Destroy(Player*);
 void player_Displace(Player*, float, float);
 void player_SwitchWeapon(Player*, int);
 void player_CollectWeapon(Player*, int);
-Bullet** player_WeaponShoot(Player*, int*);
+void player_WeaponShoot(Map*, Player*);
 void player_Jump(Player*);
 
 void stplayer_Create(Player*);
