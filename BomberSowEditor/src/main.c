@@ -24,12 +24,15 @@ int main()
     object_screen_Load_Object(object_screen, image_object);
 
     Image *image_menu = image_Create();
-    char *image_text[] = {"base/fond_menu.png", "base/textbox_back.png", "base/fond_menu_bouton.png"};
-    image_Loader(image_menu, image_text, 3);
+    char *image_text[] = {"base/fond_menu.png", "base/textbox_back.png", "base/fond_menu_bouton.png", "base/slide_top.png", "base/slide_middle.png", "base/slide_bottom.png"};
+    image_Loader(image_menu, image_text, 6);
 
     Editor* editor = editor_Create();
     Object_Menu* menu_screen = menu_screen_Create(Game, image_menu, 0, 0, 200, 600, editor);
 
+    //TEST GUI
+    Widget_slide* slide = widget_slide_Create(0, 0, 11, 100, 3, sfColor_FromRGB(85, 137, 199), image_Get(image_menu, 3), image_Get(image_menu, 5), image_Get(image_menu, 4));
+    //FIN TEST GUI
 
 
     if (!Game)
@@ -41,6 +44,10 @@ int main()
     int id_image = 0;
     sfSprite* temp_sprite = sfSprite_Create();
     sfSprite_SetImage(temp_sprite, image_Get(image_object, id_image));
+
+    editor->selected_id = 0;
+    editor->selected_image = temp_sprite;
+    editor->selected_type = 1;
 
     while (sfRenderWindow_IsOpened(Game))
     {
@@ -65,14 +72,19 @@ int main()
                 if (id_temp != -1)
                 {
                     id_image = id_temp;
+                    temp_sprite = sfSprite_Create();
                     sfSprite_SetImage(temp_sprite, image_Get(image_object, id_image));
+                    editor->selected_image = temp_sprite;
+                    editor->selected_id = id_image;
+                    editor->selected_type = 1;
                 }
                 menu_screen_Click(menu_screen, Event.MouseButton.X, Event.MouseButton.Y) ;
+                widget_slide_Click(slide, Event.MouseButton.X, Event.MouseButton.Y) ;
             }
 
             if (Event.Type == sfEvtMouseMoved)
             {
-                sfSprite_SetPosition(temp_sprite, Event.MouseMove.X, Event.MouseMove.Y);
+                editor_MouseMove(editor, Event.MouseMove.X, Event.MouseMove.Y);
                 menu_screen_MouseOver(menu_screen, Event.MouseMove.X, Event.MouseMove.Y);
             }
 
@@ -84,8 +96,9 @@ int main()
         object_screen_Draw(object_screen);
         menu_screen_Draw(menu_screen);
 
+        editor_Draw(Game, editor);
 
-        sfRenderWindow_DrawSprite(Game, temp_sprite);
+        widget_slide_Draw(Game, slide);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
     }
@@ -103,6 +116,8 @@ int main()
     sfSprite_Destroy(temp_sprite);
 
     editor_Destroy(editor);
+
+    widget_slide_Destroy(slide);
 
 
     return EXIT_SUCCESS;

@@ -11,8 +11,8 @@ typedef struct ANIMATION
 {
     sfSprite *sprite;           // Image convertie en Sprite de l'animation
     //Coordonnée de la premiere case
-    float x;
-    float y;
+    int x;
+    int y;
 
     //Coordonnée de dessin
     int x_c;
@@ -25,17 +25,18 @@ typedef struct ANIMATION
     int nombre_image;
     int cur_image;              // Position dans l'animation
     int play;                   // Nombre de lectures à effectuer
-    int fps;                    // Temps d'attente entre chaque image (en ms)
+    float fps;                    // Temps d'attente entre chaque image (en s)
 
     sfClock *clock;             // Timer
 } Animation;
 
 //Animation* animation_Create();
-Animation* animation_Create(sfImage*, float, float, int, int, int, int, int, float);
+Animation* animation_Create(sfImage*, int, int, int, int, int, int, int, float);
 void animation_Destroy(Animation*);
 
 void animation_Play(Animation*, int);
 void animation_Draw(Animation*, sfRenderWindow*);
+void animation_SetPosition(Animation*, int, int);
 
 
 //Struct du gestionnaire d'image

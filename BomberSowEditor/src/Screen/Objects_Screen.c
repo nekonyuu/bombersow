@@ -70,6 +70,7 @@ void object_screen_Draw(Object_Screen* screen)
         int page = 0;
         for (int i = 0; i < screen->image->image_nombre; i++)
         {
+            sprite_temp = sfSprite_Create();
             sfSprite_SetImage(sprite_temp, screen->image->image_tab[i]);
 
             if (screen->x_cur+sfSprite_GetWidth(sprite_temp) > screen->largeur)
@@ -115,6 +116,7 @@ int object_screen_Click(Object_Screen* screen, int mouse_x, int mouse_y)
             int page = 0;
             for (int i = 0; i < screen->image->image_nombre; i++)
             {
+                sprite_temp = sfSprite_Create();
                 sfSprite_SetImage(sprite_temp, screen->image->image_tab[i]);
 
                 if (screen->x_cur+sfSprite_GetWidth(sprite_temp) > screen->largeur)
