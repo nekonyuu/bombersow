@@ -30,11 +30,6 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->frags = 0;
     new_player->killed = 0;
 
-    new_player->player_thread = NULL;
-    new_player->chat_socket = NULL;
-    new_player->connected = true;
-    new_player->ready = false;
-
     return new_player;
 }
 

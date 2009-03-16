@@ -634,3 +634,218 @@
 	<assert.h>
 	"GraphicEngine/Image.h"
 
+1237154955 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\basesystem\logging.c
+	<stdio.h>
+	"BaseSystem/Logging.h"
+
+1237154955 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\\basesystem\logging.h
+	<assert.h>
+
+1237154955 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\file\file.c
+	<assert.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<dirent.h>
+	"file/file.h"
+
+1237154955 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\\file\file.h
+	<dirent.h>
+	"SFML/Graphics.h"
+	"GraphicEngine/Image.h"
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\graphics.h
+	<SFML/Window.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Image.h>
+	<SFML/Graphics/PostFX.h>
+	<SFML/Graphics/Rect.h>
+	<SFML/Graphics/RenderWindow.h>
+	<SFML/Graphics/Sprite.h>
+	<SFML/Graphics/String.h>
+	<SFML/Graphics/View.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\window.h
+	<SFML/System.h>
+	<SFML/Window/Context.h>
+	<SFML/Window/Event.h>
+	<SFML/Window/Input.h>
+	<SFML/Window/VideoMode.h>
+	<SFML/Window/Window.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\system.h
+	<SFML/Config.h>
+	<SFML/System/Clock.h>
+	<SFML/System/Mutex.h>
+	<SFML/System/Randomizer.h>
+	<SFML/System/Sleep.h>
+	<SFML/System/Thread.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\config.h
+	<stdlib.h>
+	<limits.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\system\clock.h
+	<SFML/Config.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\system\mutex.h
+	<SFML/Config.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\system\randomizer.h
+	<SFML/Config.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\system\sleep.h
+	<SFML/Config.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\system\thread.h
+	<SFML/Config.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\window\context.h
+	<SFML/Config.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\window\event.h
+	<SFML/Config.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\window\input.h
+	<SFML/Config.h>
+	<SFML/Window/Event.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\window\videomode.h
+	<SFML/Config.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\window\window.h
+	<SFML/Config.h>
+	<SFML/Window/Event.h>
+	<SFML/Window/Input.h>
+	<SFML/Window/VideoMode.h>
+	<SFML/Window/WindowHandle.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\window\windowhandle.h
+	<SFML/Config.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\graphics\color.h
+	<SFML/Config.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\graphics\image.h
+	<SFML/Config.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Rect.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\graphics\rect.h
+	<SFML/Config.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\graphics\postfx.h
+	<SFML/Config.h>
+	<SFML/Graphics/Image.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\graphics\renderwindow.h
+	<SFML/Config.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Image.h>
+	<SFML/Graphics/PostFX.h>
+	<SFML/Graphics/Rect.h>
+	<SFML/Graphics/Shape.h>
+	<SFML/Graphics/Sprite.h>
+	<SFML/Graphics/String.h>
+	<SFML/Graphics/View.h>
+	<SFML/Window/Event.h>
+	<SFML/Window/Input.h>
+	<SFML/Window/VideoMode.h>
+	<SFML/Window/Window.h>
+	<SFML/Window/WindowHandle.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\graphics\shape.h
+	<SFML/Config.h>
+	<SFML/Graphics/BlendMode.h>
+	<SFML/Graphics/Color.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\graphics\blendmode.h
+	<SFML/Config.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\graphics\sprite.h
+	<SFML/Config.h>
+	<SFML/Graphics/BlendMode.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Image.h>
+	<SFML/Graphics/Rect.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\graphics\string.h
+	<SFML/Config.h>
+	<SFML/Graphics/BlendMode.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Font.h>
+	<SFML/Graphics/Rect.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\graphics\font.h
+	<SFML/Graphics/Glyph.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\graphics\glyph.h
+	<SFML/Graphics/Rect.h>
+
+1237154957 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\graphics\view.h
+	<SFML/Config.h>
+	<SFML/Graphics/Rect.h>
+
+1237154955 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\\graphicengine\image.h
+	"SFML/Graphics.h"
+
+1237154955 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\graphicengine\draw.c
+	"GraphicEngine/Draw.h"
+
+1237154955 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\\graphicengine\draw.h
+	"SFML/Graphics.h"
+
+1237154955 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\graphicengine\image.c
+	<assert.h>
+	"GraphicEngine/Image.h"
+
+1237154955 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\gui\gui.c
+	<assert.h>
+	<string.h>
+	"SFML/Graphics.h"
+	"BaseSystem/Logging.h"
+	"Gui/Gui.h"
+
+1237154955 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\\gui\gui.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	"SFML/Graphics.h"
+
+1237154955 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\map\maploader.c
+
+1237154955 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\objects\bullet.c
+	"BaseSystem/Logging.h"
+	"Objects/Bullet.h"
+	"Objects/Weapon.h"
+
+1237154955 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\\objects\bullet.h
+	"SFML/Graphics.h"
+
+1237154955 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\\objects\weapon.h
+	<stdbool.h>
+	"SFML/Graphics.h"
+	"Objects/Objects.h"
+	"Objects/Bullet.h"
+
+1237154955 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\\objects\objects.h
+	"SFML/Graphics.h"
+	"GraphicEngine/Image.h"
+
+1237154955 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\objects\map.c
+	<assert.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Objects/Objects.h"
+	"Objects/Map.h"
+	"file/file.h"
+
+1237154955 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\\objects\map.h
+	"SFML/Graphics.h"
+	"Objects/Objects.h"
+
+1237154955 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\objects\objects.c
+	<assert.h>
+	"Objects/Objects.h"
+

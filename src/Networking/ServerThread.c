@@ -12,6 +12,7 @@ void server_Main(Map* map)
     if(!sfSocketUDP_IsValid(map->game_socket))
         logging_Error("server_Start", "Sent port already used");
 
+    sfThread_Launch(chat_listening);
     map->chat_started = true;
 
     // Ecran d'attente joueurs (Salon de discussion)
@@ -60,9 +61,9 @@ void server_Listen_Connections(void* UserData)
     while(map->game_started)
     {
         sfSocketTCP* new_player = sfSocketTCP_Create();
-        sfIPAddress* new_player_ip;
-        sfPacket* new_player_packet;
-        char* name;
+        sfIPAddress* new_player_ip = NULL;
+        sfPacket* new_player_packet = NULL;
+        char* name = NULL;
         sfSocketTCP_Accept(chat_bound_socket, &new_player, new_player_ip);
         sfSocketTCP_ReceivePacket(new_player, new_player_packet);
         if(sfPacket_ReadUint8(new_player_packet) == (sfUint8) CONNECT)

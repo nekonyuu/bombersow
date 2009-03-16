@@ -3,7 +3,7 @@
 
 void control_Playercontrols(sfRenderWindow* App, Player* player_ )            //Fonction qui gère les touches pour les mouvements/tirs des joueurs
 {
-    _Bool ingame;
+    _Bool ingame = true;
     sfEvent Event;
 
     while (ingame)                                           //Tant qu'on est dans une partie
