@@ -100,6 +100,33 @@ typedef struct WIDGET_BOUTON
 
 Widget_bouton* widget_bouton_Create(sfIntRect, void (*)(void*, void*), void*, void*, sfImage*, sfImage*, sfImage*);
 void widget_bouton_Destroy(Widget_bouton*);
+void widget_bouton_Click(Widget_bouton*, int, int);
+void widget_bouton_Over(Widget_bouton*, int, int);
+void widget_bouton_Draw(sfRenderWindow*, Widget_bouton*);
+
+//Widget slide
+typedef struct WIDGET_SLIDE
+{
+
+    sfSprite *sprite_top;
+    sfSprite *sprite_bottom;
+    sfSprite *sprite_middle;
+    sfColor couleur;
+
+    int x;
+    int y;
+    int largeur;
+    int hauteur;
+
+    int hauteur_step;
+    int nombre_valeur;
+    int valeur;
+
+}Widget_slide;
+
+Widget_slide* widget_slide_Create(int, int, int, int, int, sfColor, sfImage*, sfImage*, sfImage*);
+void widget_slide_Destroy(Widget_slide*);
+void widget_slide_Draw(sfRenderWindow*, Widget_slide*);
 
 
 //Gui

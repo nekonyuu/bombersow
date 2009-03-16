@@ -1,15 +1,18 @@
 #include <assert.h>
 #include "SFML/Graphics.h"
 #include "Gui/Gui.h"
+#include "GraphicEngine/Image.h"
 #include "Screen/Menu_Screen.h"
 #include "Objects/Editor.h"
 
 void editor_Add_Animation(Editor* editor, Animation* animation){
 
+    animation_Destroy(editor->selected_animation);
+    editor->selected_animation = animation_Create(sfSprite_GetImage(editor->selected_image), animation->x, animation->y, animation->image_hauteur, animation->image_largeur, animation->nombre_image, 0, BOUCLE, animation->fps);
+    editor->selected_type = 2;
 
 }
-
-
+//$order->products[$i]['qty']
 /*
 [IMAGES]
 ID PATH

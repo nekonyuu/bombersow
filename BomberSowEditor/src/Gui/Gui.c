@@ -139,6 +139,7 @@ void widget_textbox_var_Get(Widget_textbox_var* textbox_var, Widget_textbox* tex
 
 void widget_textbox_var_Set(Widget_textbox_var* textbox_var, Widget_textbox* textbox)
 {
+
     switch (textbox_var->type)
     {
     case INT:
@@ -361,6 +362,100 @@ void widget_bouton_Draw(sfRenderWindow* Game, Widget_bouton* bouton)
         sfRenderWindow_DrawSprite(Game, bouton->sprite_OnClick);
         break;
     }
+}
+
+
+
+//Widget slide
+Widget_slide* widget_slide_Create(int x, int y, int l, int h, int nbr_valeur, sfColor couleur, sfImage* s_top, sfImage* s_bottom, sfImage* s_middle)
+{
+
+    Widget_slide* slide = NULL;
+    assert(slide = (Widget_slide*) malloc(sizeof(Widget_slide)));
+
+    slide->sprite_top = sfSprite_Create();
+    sfSprite_SetImage(slide->sprite_top, s_top);
+    sfSprite_SetPosition(slide->sprite_top, x, y);
+    sfSprite_Resize(slide->sprite_top, l, sfSprite_GetHeight(slide->sprite_top));
+
+    slide->sprite_bottom = sfSprite_Create();
+    sfSprite_SetImage(slide->sprite_bottom, s_bottom);
+    sfSprite_SetPosition(slide->sprite_bottom, x, y+h-sfSprite_GetHeight(slide->sprite_bottom));
+    sfSprite_Resize(slide->sprite_bottom, l, sfSprite_GetHeight(slide->sprite_bottom));
+
+    slide->sprite_middle = sfSprite_Create();
+    sfSprite_SetImage(slide->sprite_middle, s_middle);
+    sfSprite_SetPosition(slide->sprite_middle, x, y+sfSprite_GetHeight(slide->sprite_top));
+    sfSprite_Resize(slide->sprite_middle, l, (h-sfSprite_GetHeight(slide->sprite_bottom)-sfSprite_GetHeight(slide->sprite_top))/nbr_valeur);
+
+    slide->x = x;
+    slide->y = y;
+    slide->largeur = l;
+    slide->hauteur = h;
+
+    slide->hauteur_step = (h-sfSprite_GetHeight(slide->sprite_bottom)-sfSprite_GetHeight(slide->sprite_top))/nbr_valeur;
+
+    slide->couleur = couleur;
+
+    slide->nombre_valeur = nbr_valeur;
+    slide->valeur = 0;
+
+    return slide;
+
+}
+
+void widget_slide_Destroy(Widget_slide* slide)
+{
+
+    sfSprite_Destroy(slide->sprite_top);
+    sfSprite_Destroy(slide->sprite_bottom);
+    sfSprite_Destroy(slide->sprite_middle);
+
+    free(slide);
+    slide = NULL;
+
+}
+
+void widget_slide_Draw(sfRenderWindow* Game, Widget_slide* slide)
+{
+
+    sfShape* shape = sfShape_CreateRectangle(slide->x, slide->y, slide->x+slide->largeur, slide->y+slide->hauteur, slide->couleur, 0, slide->couleur);
+
+    sfRenderWindow_DrawShape(Game, shape);
+    sfRenderWindow_DrawSprite(Game, slide->sprite_top);
+    sfRenderWindow_DrawSprite(Game, slide->sprite_bottom);
+    sfRenderWindow_DrawSprite(Game, slide->sprite_middle);
+
+    sfShape_Destroy(shape);
+
+}
+
+void widget_slide_Click(Widget_slide* slide, int x, int y)
+{
+
+    sfIntRect rect = {sfSprite_GetX(slide->sprite_top), sfSprite_GetY(slide->sprite_top), sfSprite_GetX(slide->sprite_top)+sfSprite_GetWidth(slide->sprite_top), sfSprite_GetY(slide->sprite_top)+sfSprite_GetHeight(slide->sprite_top)};
+    if (sfIntRect_Contains(&rect, x, y))
+    {
+        if(slide->valeur > 0)
+        {
+            slide->valeur--;
+            sfSprite_Move(slide->sprite_middle, 0, -slide->hauteur_step);
+        }
+
+    }
+
+    sfIntRect rect2 = {sfSprite_GetX(slide->sprite_bottom), sfSprite_GetY(slide->sprite_bottom), sfSprite_GetX(slide->sprite_bottom)+sfSprite_GetWidth(slide->sprite_bottom), sfSprite_GetY(slide->sprite_bottom)+sfSprite_GetHeight(slide->sprite_bottom)};
+    if (sfIntRect_Contains(&rect2, x, y))
+    {
+        if(slide->valeur < slide->nombre_valeur-1)
+        {
+            slide->valeur++;
+            sfSprite_Move(slide->sprite_middle, 0, slide->hauteur_step);
+        }
+
+    }
+
+
 }
 
 
