@@ -7,7 +7,7 @@ void client_Main()
 
 }
 
-sfPacket* player_CreateConnectPacket(char* name)
+sfPacket* client_CreateConnectPacket(char* name)
 {
     if(!name)
     {
@@ -22,7 +22,7 @@ sfPacket* player_CreateConnectPacket(char* name)
     return new_packet;
 }
 
-sfPacket* player_CreateDisconnectPacket(char* name)
+sfPacket* client_CreateDisconnectPacket(char* name)
 {
     if(!name)
     {

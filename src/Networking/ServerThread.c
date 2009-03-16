@@ -87,3 +87,8 @@ void server_Listen_Game(void* UserData)
 
     }
 }
+
+sfPacket* server_CreateResponsePacket(unsigned int player_id)
+{
+
+}

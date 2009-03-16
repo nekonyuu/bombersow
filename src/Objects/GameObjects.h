@@ -18,18 +18,10 @@ typedef struct PACKET_LIST
 
 } PacketList;
 
-typedef struct STRIPPED_OBJECT      // Envoi des objets dynamiques
-{
-    sfUint8 objectID;               // ID de l'object
-    float coord_x, coord_y;         // Coordonnées courantes
-    sfUint8 speed;                  // Vitesse de mouvement (Plate-forme mobile & Pièges)
-} stObject;
-
 typedef struct OBJECT
 {
     unsigned int objectID;          // ID de l'object (transmission réseau)
     unsigned int type;              // Type d'objet (0 = Plate-forme, 1 = Piège, 2 = Arme, 3 = Ammo)
-    stObject* stripped;             // Pointeur vers l'object allégé
 
     /*Voir pour inclusion dans une struct*/
     sfSprite *draw_img;             // Image de l'objet
@@ -85,24 +77,13 @@ typedef struct WEAPON
     _Bool collected;                // Ramassée ? (utilisé seulement pour l'inventaire du joueur)
 } Weapon;
 
-typedef struct STRIP_PLAYER
-{
-    char* name;                     // Nom
-    sfUint8 current_weapon;         // Arme courante
-    float coord_x, coord_y;         // Emplacement sur la map
-    float m_coord_x, m_coord_y;     // Coordonnées souris
-    sfBool connected;               // Connecté ?
-    sfBool ready;                   // Prêt à jouer ?
-} stPlayer;
-
 typedef struct PLAYER
 {
     sfString *name;                 // Nom du joueur
+    char* char_name;                // Nom du joueur en char*
     unsigned int player_id;         // ID joueur
     sfIPAddress* player_ip;         // IP joueur
     unsigned int life;              // Vie restante
-
-    stPlayer* stripped;             // Pointeur vers le player allégé
 
     Weapon **weapons;               // Armes du joueur
     unsigned int nb_weapons;        // Nombre d'armes
@@ -167,9 +148,6 @@ Weapon armory[NB_MAX_WEAPONS];      // Armes du jeu en accès global
 
 Object* object_Create();
 void object_Destroy(Object*);
-void stobject_Create(Object*);
-void stobject_Destroy(stObject*);
-void stobject_Update(Object*);
 
 Weapon* weapon_Create(int);
 void weapon_Destroy(Weapon*);
@@ -178,14 +156,12 @@ void armory_Destroy(Weapon*);
 
 Player* player_Create(char*, unsigned int);
 void player_Destroy(Player*);
+Player* player_GetPlayerFromID(Map*, unsigned int);
 void player_Displace(Player*, float, float);
 void player_SwitchWeapon(Player*, int);
 void player_CollectWeapon(Player*, int);
 void player_WeaponShoot(Map*, Player*);
 void player_Jump(Player*);
-void stplayer_Create(Player*);
-void stplayer_Destroy(stPlayer*);
-void stplayer_Update(Player*);
 
 Bullet* bullet_Create(unsigned int, unsigned int);
 void bullet_Destroy(Bullet*);

@@ -4,48 +4,53 @@
 
 // Le destructeur de paquet utilisé sera sfPacket_Destroy(sfPacket*)
 
-sfPacket* stplayer_CreatePacket(Player* player_)
+sfPacket* player_CreatePacket(Player* player_)
 {
     if (!player_)
-        logging_Error("stplayer_PacketCreate", "Player object sent NULL, can't continue networking");
+        logging_Error("player_PacketCreate", "Player object sent NULL, can't continue networking");
 
     sfPacket* new_packet = sfPacket_Create();
 
     sfPacket_WriteUint8(new_packet, PLAYER);
-    sfPacket_WriteString(new_packet, player_->stripped->name);
-    sfPacket_WriteUint8(new_packet, player_->stripped->current_weapon);
-    sfPacket_WriteFloat(new_packet, player_->stripped->coord_x);
-    sfPacket_WriteFloat(new_packet, player_->stripped->coord_y);
+    sfPacket_WriteString(new_packet, player_->char_name);
+    sfPacket_WriteUint8(new_packet, player_->current_weapon);
+    sfPacket_WriteFloat(new_packet, player_->coord_x);
+    sfPacket_WriteFloat(new_packet, player_->coord_y);
 
     return new_packet;
 }
 
-stPlayer* stplayer_CreateFromPacket(sfPacket* packet)
+Player* player_CreateFromPacket(sfPacket* packet)
 {
     assert(packet);
 
-    stPlayer* new_player;
-    assert(new_player = (stPlayer*) malloc(sizeof(stPlayer)));
+    Player* new_player;
+    assert(new_player = (Player*) malloc(sizeof(Player)));
 
     // TODO : Lecture du paquet, brainstorming sur la gestion des players
 
     return new_player;
 }
 
-sfPacket* stobject_CreatePacket(Object* object_)
+sfPacket* object_CreatePacket(Object* object_)
 {
     if (!object_)
-        logging_Error("stobject_Create", "Object object sent NULL, can't continue networking");
+        logging_Error("object_Create", "Object object sent NULL, can't continue networking");
 
     sfPacket* new_packet = sfPacket_Create();
 
     sfPacket_WriteUint8(new_packet, OBJECT);
-    sfPacket_WriteUint8(new_packet, object_->stripped->objectID);
-    sfPacket_WriteFloat(new_packet, object_->stripped->coord_x);
-    sfPacket_WriteFloat(new_packet, object_->stripped->coord_y);
-    sfPacket_WriteUint8(new_packet, object_->stripped->speed);
+    sfPacket_WriteUint8(new_packet, object_->objectID);
+    sfPacket_WriteFloat(new_packet, object_->curr_coord_x);
+    sfPacket_WriteFloat(new_packet, object_->curr_coord_y);
+    sfPacket_WriteUint8(new_packet, object_->speed);
 
     return new_packet;
+}
+
+Object* object_CreateFromPacket(sfPacket* packet)
+{
+    assert(packet);
 }
 
 void map_CreateAllPackets(Map* map_)
@@ -64,11 +69,11 @@ void map_CreateAllPackets(Map* map_)
     assert(map_->packets2send->packets = (sfPacket**) malloc(map_->packets2send->nb_packets * sizeof(sfPacket*)));
 
     for (int i = 0; i < map_->nb_players; i++)
-        map_->packets2send->packets[i] = stplayer_CreatePacket(map_->players_list[i]);
+        map_->packets2send->packets[i] = player_CreatePacket(map_->players_list[i]);
 
     for (int i = map_->nb_players; i < map_->packets2send->nb_packets; i++)
         if (map_->objects_list[i]->type > 0)
-            map_->packets2send->packets[i] = stobject_CreatePacket(map_->objects_list[i]);
+            map_->packets2send->packets[i] = object_CreatePacket(map_->objects_list[i]);
 }
 
 void map_DestroyAllPackets(Map* map_)

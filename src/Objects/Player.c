@@ -12,6 +12,7 @@ Player* player_Create(char* name, unsigned int current_weapon)
 
     new_player->name = sfString_Create();
     sfString_SetText(new_player->name, name);
+    new_player->char_name = name;
     new_player->player_id = 0;
     new_player->life = 100;
 
@@ -19,9 +20,10 @@ Player* player_Create(char* name, unsigned int current_weapon)
     for (int i = 0; i < NB_MAX_WEAPONS; i++)
         new_player->weapons[i] = weapon_Create(i);
 
+    new_player->current_weapon = current_weapon;                // Arme choisie dès le spawn
     new_player->weapons[current_weapon]->collected = true;      // Arme active
     new_player->nb_weapons = 1;
-    new_player->current_weapon = current_weapon;                // Arme choisie dès le spawn
+
 
     /* TODO : Fonction donnant les coordonnées de spawn
     new_player->coord_x = ;                                     // Coordonnées de spawn
@@ -45,8 +47,6 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->connected = sfTrue;
     new_player->ready = sfFalse;
 
-    stplayer_Create(new_player);
-
     return new_player;
 }
 
@@ -66,62 +66,14 @@ void player_Destroy(Player* player2destroy)
     }
 }
 
-Player* player_CreateFromstPlayer(stPlayer* player)
+Player* player_GetPlayerFromID(Map* map, unsigned int player_id)
 {
-    Player* new_player = player_Create(player->name, (unsigned int) player->current_weapon);
-    new_player->m_coord_x = player->m_coord_x;
-    new_player->m_coord_y = player->m_coord_y;
-    new_player->coord_x = player->coord_x;
-    new_player->coord_y = player->coord_y;
-    new_player->stripped = player;
+    int i = 0;
+    for(i = 0; i < map->nb_players; i++)
+        if(player_id == map->players_list[i]->player_id)
+            break;
 
-    return new_player;
-}
-
-void stplayer_Create(Player* player_)
-{
-    assert(player_);
-
-    const char* name = sfString_GetText(player_->name);
-
-    assert(player_->stripped = (stPlayer*) malloc(sizeof(stPlayer)));
-    assert(player_->stripped->name = (char*) malloc(strlen(name) * sizeof(char)));
-    strcpy(player_->stripped->name, name);
-
-    player_->stripped->current_weapon = (sfUint8) player_->current_weapon;
-
-    player_->stripped->coord_x = player_->coord_x;
-    player_->stripped->coord_y = player_->coord_y;
-    player_->stripped->coord_x = player_->m_coord_x;
-    player_->stripped->coord_y = player_->m_coord_y;
-    player_->stripped->connected = player_->connected;
-    player_->stripped->ready = player_->ready;
-}
-
-void stplayer_Destroy(stPlayer* stplayer_)
-{
-    if (!stplayer_)
-    {
-        logging_Warning("stplayer_Destroy", "StPlayer object sent NULL");
-        return;
-    }
-    free(stplayer_->name);
-    free(stplayer_);
-}
-
-void stplayer_Update(Player* player_)
-{
-    if(!player_)
-    {
-        logging_Warning("stplayer_Update", "Player object sent NULL, aborting update");
-        return;
-    }
-
-    player_->stripped->current_weapon = player_->current_weapon;
-    player_->stripped->coord_x = player_->coord_x;
-    player_->stripped->coord_y = player_->coord_y;
-    player_->stripped->coord_x = player_->m_coord_x;
-    player_->stripped->coord_y = player_->m_coord_y;
+    return map->players_list[i];
 }
 
 // Déplacement du personnage sur la map
