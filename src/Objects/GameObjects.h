@@ -133,8 +133,8 @@ typedef struct MAP
     Bullet** bullets_list;          // Liste des balles tirées
     unsigned int nb_bullets;        // Nombre de balles tirées
 
-    PacketList* packets2send;       // Liste des paquets a envoyer de la map
-    PacketList* packets2use;
+    PacketList* game_packets2send;  // Liste des paquets de jeu à envoyer
+    PacketList* chat_packets2send;  // Liste des paquets de conversation à envoyer
 
     _Bool chat_started;             // Salon de discussion démarré ?
     _Bool game_started;             // Partie démarrée ?

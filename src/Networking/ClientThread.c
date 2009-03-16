@@ -2,8 +2,13 @@
 #include "Networking/Networking.h"
 #include "Networking/PacketDefines.h"
 
-void client_Main()
+void client_Main(Map* map, sfIPAddress ip, char* name)
 {
+    sfPacket* connect_request = client_CreateConnectPacket(name);
+    sfSocketTCP* client_socket = sfSocketTCP_Create();
+    sfSocketTCP_Connect(client_socket, map->game_port, ip, 30.0f);
+    sfSocketTCP_SendPacket(client_socket, connect_request);
+    sfPacket_Destroy(connect_request);
 
 }
 
@@ -22,17 +27,17 @@ sfPacket* client_CreateConnectPacket(char* name)
     return new_packet;
 }
 
-sfPacket* client_CreateDisconnectPacket(char* name)
+sfPacket* client_CreateDisconnectPacket(unsigned int player_id)
 {
-    if(!name)
+    if(!player_id)
     {
-        logging_Warning("player_CreateDisconnectPacket", "No name sent, aborting packet creation");
+        logging_Warning("player_CreateDisconnectPacket", "No player_id sent, aborting packet creation");
         return NULL;
     }
 
     sfPacket* new_packet = sfPacket_Create();
     sfPacket_WriteUint8(new_packet, DISCONNECT);
-    sfPacket_WriteString(new_packet, name);
+    sfPacket_WriteUint8(new_packet, (sfUint8) player_id);
 
     return new_packet;
 }

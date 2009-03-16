@@ -26,6 +26,9 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players)
     new_map->bullets_list = NULL;
     new_map->nb_bullets = 0;
 
+    new_map->game_packets2send = NULL;
+    new_map->chat_packets2send = NULL;
+
     new_map->chat_started = false;
     new_map->game_started = false;
 
@@ -90,7 +93,7 @@ void map_AddPlayer(Map* map_, Player* player_)
         logging_Error("map_AddPlayer", "Memory allocation error");
 
     map_->players_list[map_->nb_players - 1] = player_;
-    map_->players_list[map_->nb_players - 1]->player_id = map_->nb_players - 1;
+    map_->players_list[map_->nb_players - 1]->player_id = map_->nb_players;
 }
 
 // A voir suivant la gestion des player/signaux envoyés lors de la déco
@@ -107,7 +110,7 @@ void map_DelPlayer(Map* map_, unsigned int player_id)
     for (int i = player_id; i < map_->nb_players - 1; i++)
     {
         map_->players_list[i] = map_->players_list[i + 1];
-        map_->players_list[i]->player_id = i;
+        map_->players_list[i]->player_id = i + 1;
     }
 
     assert(map_->players_list = (Player**) realloc(map_->players_list, --map_->nb_players * sizeof(Player*)));
