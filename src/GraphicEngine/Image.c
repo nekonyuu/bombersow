@@ -71,7 +71,7 @@ sfImage* image_Get(Image *image_, int id)
 }*/
 
 // Constructeur
-Animation* animation_Create(sfImage *image, float x, float y, int hauteur, int largeur, int nombre_image, int cur_image, int play, float fps)
+Animation* animation_Create(sfImage *image, int x, int y, int hauteur, int largeur, int nombre_image, int cur_image, int play, float fps)
 {
     Animation* animation_ = NULL;
     assert(animation_ = (Animation*) malloc(sizeof(Animation)));

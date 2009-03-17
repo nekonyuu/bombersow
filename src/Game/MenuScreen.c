@@ -13,8 +13,7 @@ void display_Menu(sfRenderWindow* Game)
     sfImage *BG_image = sfImage_CreateFromFile("base/images/Menu/menu_bg.png");
     sfImage *image_animation = sfImage_CreateFromFile("base/images/animation.png"); // Test
     sfFont *menuFont = sfFont_CreateFromFile("base/fonts/ITCKRIST.TTF", 50, NULL);
-    // Objet Animation a voir, Instruction Illégale sous Linux
-    //Animation *animation = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1);
+    Animation *animation = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
     sfEvent Event;
     _Bool launched = true;
     int menu_select = 1;
@@ -42,7 +41,7 @@ void display_Menu(sfRenderWindow* Game)
         for (int i = 0; i < Menu->nb_text; i++)
             screen_DrawText(Game, Menu, i);                     // Dessin des textes
 
-        //animation_Draw(animation, Game);                        // Dessin animation test
+        animation_Draw(animation, Game);                        // Dessin animation test
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 
@@ -100,7 +99,7 @@ void display_Menu(sfRenderWindow* Game)
     sfFont_Destroy(menuFont);
     sfImage_Destroy(BG_image);
     sfImage_Destroy(image_animation);
-    //animation_Destroy(animation);
+    animation_Destroy(animation);
 
     return;
 }
