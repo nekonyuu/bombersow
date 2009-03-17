@@ -1,7 +1,7 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
-#include "SFML/Graphics.h"
+#include <SFML/Graphics.h>
 
 #define BOUCLE -1
 #define STOP 0

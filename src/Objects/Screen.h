@@ -1,8 +1,8 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-#include "SFML/Graphics.h"
-#include "SFML/Audio.h"
+#include <SFML/Graphics.h>
+#include <SFML/Audio.h>
 
 typedef struct SCREEN
 {

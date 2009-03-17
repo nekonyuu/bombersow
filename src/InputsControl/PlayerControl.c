@@ -1,4 +1,4 @@
-#include "SFML/Graphics.h"
+#include <SFML/Graphics.h>
 #include "Objects/GameObjects.h"
 
 void control_Playercontrols(sfRenderWindow* App, Player* player_ )            //Fonction qui gère les touches pour les mouvements/tirs des joueurs

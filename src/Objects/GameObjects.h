@@ -2,7 +2,7 @@
 #define GAMEOBJECTS_H
 
 #include <stdbool.h>
-#include "SFML/Network.h"
+#include <SFML/Network.h>
 #include "GraphicEngine/Image.h"
 
 #define NB_MAX_PLAYERS 4
