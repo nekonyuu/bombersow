@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <SFML/Graphics.h>
+#include "SFML/Graphics.h"
 
 // Type de Widget
 typedef enum WIDGET_TYPE {BOUTON, TEXTBOX} Widget_Type;
@@ -140,15 +140,24 @@ typedef struct GUI
     Widget_bouton** widget_bouton;
     int widget_bouton_nombre;
 
+    Widget_slide** widget_slide;
+    int widget_slide_nombre;
+
 
 } Gui;
 
 Gui* gui_Create();
 void gui_Destroy(Gui*);
+
 void gui_Load_Textbox(Gui*, Widget_textbox**, int);
 void gui_Add_Textbox(Gui*, Widget_textbox*);
+
 void gui_Load_Bouton(Gui*, Widget_bouton**, int);
 void gui_Add_Bouton(Gui*, Widget_bouton*);
+
+void gui_Load_Slide(Gui*, Widget_slide**, int);
+void gui_Add_Slide(Gui*, Widget_slide*);
+
 void gui_Draw(sfRenderWindow*, Gui*);
 void gui_Click(Gui*, int, int);
 void gui_TextEntered(Gui*, sfUint32);

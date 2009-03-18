@@ -1145,3 +1145,187 @@
 	<SFML/Graphics.h>
 	"Objects/GameObjects.h"
 
+1237252295 source:c:\projet\bombersow\dep\csfml-gui\gui\gui.c
+	<assert.h>
+	<string.h>
+	"SFML/Graphics.h"
+	"BaseSystem/Logging.h"
+	"Gui/Gui.h"
+
+1236866836 c:\projet\bombersow\src\\basesystem\logging.h
+	<assert.h>
+
+1237246778 c:\projet\bombersow\dep\csfml-gui\gui\gui.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	"SFML/Graphics.h"
+
+1236897404 source:c:\projet\bombersow\src\basesystem\logging.c
+	<stdio.h>
+	"BaseSystem/Logging.h"
+
+1236776212 source:c:\projet\bombersow\src\graphicengine\draw.c
+	"GraphicEngine/Draw.h"
+
+1237387779 c:\projet\bombersow\src\\graphicengine\draw.h
+	<SFML/Graphics.h>
+
+1237387779 source:c:\projet\bombersow\src\graphicengine\image.c
+	<assert.h>
+	"GraphicEngine/Image.h"
+
+1237387779 c:\projet\bombersow\src\\graphicengine\image.h
+	<SFML/Graphics.h>
+
+1237388151 source:c:\projet\bombersow\src\main-editor.c
+	"SFML/Graphics.h"
+	"SFML/Audio.h"
+	"Screen/Objects_Screen.h"
+	"Screen/Menu_Screen.h"
+	"Screen/Map_Screen.h"
+	"Map/MapLoader.h"
+	"Gui/Gui.h"
+
+1237388075 c:\projet\bombersow\src\screen\objects_screen.h
+	"SFML/Graphics.h"
+	"Objects/GameObjects.h"
+
+1237332400 c:\projet\bombersow\src\\objects\gameobjects.h
+	<stdbool.h>
+	<SFML/Network.h>
+	"GraphicEngine/Image.h"
+
+1236472780 c:\projet\bombersow\dep\include\\sfml\network.h
+	<SFML/System.h>
+	<SFML/Network/IPAddress.h>
+	<SFML/Network/Packet.h>
+	<SFML/Network/Selector.h>
+	<SFML/Network/SocketTCP.h>
+	<SFML/Network/SocketUDP.h>
+
+1236472780 c:\projet\bombersow\dep\include\\sfml\network\ipaddress.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\\sfml\network\packet.h
+	<SFML/Config.h>
+
+1236472780 c:\projet\bombersow\dep\include\\sfml\network\selector.h
+	<SFML/Config.h>
+	<SFML/Network/SocketTCP.h>
+	<SFML/Network/SocketUDP.h>
+
+1236472780 c:\projet\bombersow\dep\include\\sfml\network\sockettcp.h
+	<SFML/Config.h>
+	<SFML/Network/IPAddress.h>
+	<SFML/Network/Packet.h>
+	<SFML/Network/SocketStatus.h>
+
+1236472780 c:\projet\bombersow\dep\include\\sfml\network\socketstatus.h
+
+1236472780 c:\projet\bombersow\dep\include\\sfml\network\socketudp.h
+	<SFML/Config.h>
+	<SFML/Network/IPAddress.h>
+	<SFML/Network/Packet.h>
+	<SFML/Network/SocketStatus.h>
+
+1237387779 c:\projet\bombersow\src\screen\menu_screen.h
+	<SFML/Graphics.h>
+	"Gui/Gui.h"
+	"Objects/Editor.h"
+	"Objects/GameObjects.h"
+
+1237388081 c:\projet\bombersow\src\\objects\editor.h
+	"SFML/Graphics.h"
+	"GraphicEngine/Image.h"
+	"Objects/GameObjects.h"
+
+1237388084 c:\projet\bombersow\src\screen\map_screen.h
+	"SFML/Graphics.h"
+	"Gui/Gui.h"
+	"Objects/Editor.h"
+	"Objects/GameObjects.h"
+
+1237387779 c:\projet\bombersow\src\map\maploader.h
+	"GraphicEngine/Image.h"
+	"Objects/GameObjects.h"
+
+1237387779 source:c:\projet\bombersow\src\map\maploader.c
+	<stdio.h>
+	<string.h>
+	<dirent.h>
+	"BaseSystem/Logging.h"
+	"Map/MapLoader.h"
+
+1237387779 c:\projet\bombersow\src\\map\maploader.h
+	"GraphicEngine/Image.h"
+	"Objects/GameObjects.h"
+
+1237163035 source:c:\projet\bombersow\src\objects\bullet.c
+	"BaseSystem/Logging.h"
+	"Objects/GameObjects.h"
+
+1237334678 source:c:\projet\bombersow\src\objects\editor.c
+	<assert.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"SFML/Graphics.h"
+	"GraphicEngine/Image.h"
+	"Objects/Editor.h"
+
+1237332400 source:c:\projet\bombersow\src\objects\map.c
+	"BaseSystem/Logging.h"
+	"Objects/GameObjects.h"
+
+1237245077 source:c:\projet\bombersow\src\objects\objects.c
+	"BaseSystem/Logging.h"
+	"Objects/GameObjects.h"
+
+1237245077 source:c:\projet\bombersow\src\objects\player.c
+	<string.h>
+	"BaseSystem/Logging.h"
+	"GraphicEngine/Draw.h"
+	"Objects/GameObjects.h"
+
+1237163036 source:c:\projet\bombersow\src\objects\weapon.c
+	"BaseSystem/Logging.h"
+	"Objects/GameObjects.h"
+
+1237334984 source:c:\projet\bombersow\src\screen\map_screen.c
+	<assert.h>
+	"SFML/Graphics.h"
+	"Gui/Gui.h"
+	"GraphicEngine/Image.h"
+	"Screen/Map_Screen.h"
+	"Objects/Editor.h"
+
+1237388084 c:\projet\bombersow\src\\screen\map_screen.h
+	"SFML/Graphics.h"
+	"Gui/Gui.h"
+	"Objects/Editor.h"
+	"Objects/GameObjects.h"
+
+1237251346 source:c:\projet\bombersow\src\screen\menu_screen.c
+	<assert.h>
+	"SFML/Graphics.h"
+	"Gui/Gui.h"
+	"GraphicEngine/Image.h"
+	"Screen/Menu_Screen.h"
+	"Objects/Editor.h"
+
+1237387779 c:\projet\bombersow\src\\screen\menu_screen.h
+	<SFML/Graphics.h>
+	"Gui/Gui.h"
+	"Objects/Editor.h"
+	"Objects/GameObjects.h"
+
+1237248967 source:c:\projet\bombersow\src\screen\objects_screen.c
+	<assert.h>
+	"SFML/Graphics.h"
+	"Screen/Objects_Screen.h"
+
+1237388075 c:\projet\bombersow\src\\screen\objects_screen.h
+	"SFML/Graphics.h"
+	"Objects/GameObjects.h"
+

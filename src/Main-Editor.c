@@ -1,8 +1,9 @@
-#include <SFML/Graphics.h>
-#include <SFML/Audio.h>
+#include "SFML/Graphics.h"
+#include "SFML/Audio.h"
 #include "Screen/Objects_Screen.h"
 #include "Screen/Menu_Screen.h"
-#include "File/file.h"
+#include "Screen/Map_Screen.h"
+#include "Map/MapLoader.h"
 #include "Gui/Gui.h"
 
 int main()
@@ -18,7 +19,6 @@ int main()
 
     // Création de la fenêtre principale
     Game = sfRenderWindow_Create(Mode, "BomberSowEditor", sfClose, Settings);
-
     sfImage *fond_object = sfImage_CreateFromFile("base/fond_object.png");
     Object_Screen* object_screen = object_screen_Create(Game, fond_object, 0, 600, 1100, 200);
     object_screen_Load_Object(object_screen, image_object);
@@ -30,9 +30,7 @@ int main()
     Editor* editor = editor_Create();
     Object_Menu* menu_screen = menu_screen_Create(Game, image_menu, 0, 0, 200, 600, editor);
 
-    //TEST GUI
-    Widget_slide* slide = widget_slide_Create(0, 0, 11, 100, 3, sfColor_FromRGB(85, 137, 199), image_Get(image_menu, 3), image_Get(image_menu, 5), image_Get(image_menu, 4));
-    //FIN TEST GUI
+    Map_screen* map_screen = map_screen_Create(Game, NULL, editor, 200, 0, 900, 600);
 
 
     if (!Game)
@@ -72,14 +70,16 @@ int main()
                 if (id_temp != -1)
                 {
                     id_image = id_temp;
+                    sfSprite_Destroy(temp_sprite);
                     temp_sprite = sfSprite_Create();
                     sfSprite_SetImage(temp_sprite, image_Get(image_object, id_image));
+                    sfSprite_SetPosition(temp_sprite, Event.MouseButton.X, Event.MouseButton.Y);
                     editor->selected_image = temp_sprite;
                     editor->selected_id = id_image;
                     editor->selected_type = 1;
                 }
                 menu_screen_Click(menu_screen, Event.MouseButton.X, Event.MouseButton.Y) ;
-                widget_slide_Click(slide, Event.MouseButton.X, Event.MouseButton.Y) ;
+                map_screen_Click(map_screen, Event.MouseButton.X, Event.MouseButton.Y) ;
             }
 
             if (Event.Type == sfEvtMouseMoved)
@@ -95,10 +95,9 @@ int main()
 
         object_screen_Draw(object_screen);
         menu_screen_Draw(menu_screen);
+        map_screen_Draw(map_screen);
 
         editor_Draw(Game, editor);
-
-        widget_slide_Draw(Game, slide);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
     }
@@ -117,7 +116,7 @@ int main()
 
     editor_Destroy(editor);
 
-    widget_slide_Destroy(slide);
+    map_screen_Destroy(map_screen);
 
 
     return EXIT_SUCCESS;

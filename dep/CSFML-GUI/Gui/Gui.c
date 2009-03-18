@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <string.h>
-#include <SFML/Graphics.h>
+#include "SFML/Graphics.h"
 #include "BaseSystem/Logging.h"
 #include "Gui/Gui.h"
 
@@ -8,6 +8,7 @@
 
 Widget_cadre* widget_cadre_Create(sfImage* image, sfColor couleur, int x, int y, int width, int height)
 {
+
     Widget_cadre* cadre = NULL;
     assert(cadre = (Widget_cadre*) malloc(sizeof(Widget_cadre)));
 
@@ -39,6 +40,7 @@ void widget_cadre_Destroy(Widget_cadre* cadre)
     sfSprite_Destroy(cadre->background);
 
     free(cadre);
+    cadre = NULL;
 }
 
 void widget_cadre_Draw(sfRenderWindow* Game, Widget_cadre* cadre)
@@ -108,7 +110,6 @@ void widget_textbox_var_Destroy(Widget_textbox_var* textbox_var)
         free(textbox_var->var_int);
     if(textbox_var->var_string)
         sfString_Destroy(textbox_var->var_string);*/
-
     free(textbox_var);
     textbox_var = NULL;
 }
@@ -139,6 +140,7 @@ void widget_textbox_var_Get(Widget_textbox_var* textbox_var, Widget_textbox* tex
 
 void widget_textbox_var_Set(Widget_textbox_var* textbox_var, Widget_textbox* textbox)
 {
+
     switch (textbox_var->type)
     {
     case INT:
@@ -189,12 +191,12 @@ Widget_textbox* widget_textbox_Create(int x, int y, int width, int height, int t
 
     textbox->taille = taille;
 
-    textbox->x = rect->Right;
+    textbox->x = (int)rect->Right;
     textbox->y = y;
     textbox->width = width;
     textbox->height = height;
 
-    textbox->cadre = widget_cadre_Create(image, couleur, rect->Right, y, width, height);
+    textbox->cadre = widget_cadre_Create(image, couleur, (int)rect->Right, y, width, height);
 
     textbox->var = widget_text_box_var_Create(type, var);
     widget_textbox_var_Get(textbox->var, textbox);
@@ -212,7 +214,6 @@ void widget_textbox_Destroy(Widget_textbox* textbox)
     sfString_Destroy(textbox->alt);
 
     widget_cadre_Destroy(textbox->cadre);
-    textbox->cadre = NULL;
 
     free(textbox->text_char);
     textbox->text_char = NULL;
@@ -285,7 +286,8 @@ void widget_textbox_Draw(sfRenderWindow* Game, Widget_textbox* textbox)
 }
 
 
-// Widget bouton
+//Widget bouton
+
 Widget_bouton* widget_bouton_Create(sfIntRect rect, void (*f)(void*, void*), void* arg, void* arg2, sfImage* image_OnOver, sfImage* image_OnClick, sfImage* image_OnNothing)
 {
     Widget_bouton *bouton = NULL;
@@ -359,7 +361,9 @@ void widget_bouton_Draw(sfRenderWindow* Game, Widget_bouton* bouton)
     }
 }
 
-// Widget slide
+
+
+//Widget slide
 Widget_slide* widget_slide_Create(int x, int y, int l, int h, int nbr_valeur, sfColor couleur, sfImage* s_top, sfImage* s_bottom, sfImage* s_middle)
 {
     Widget_slide* slide = NULL;
@@ -442,6 +446,7 @@ void widget_slide_Click(Widget_slide* slide, int x, int y)
     }
 }
 
+
 //Gui
 Gui* gui_Create()
 {
@@ -453,6 +458,9 @@ Gui* gui_Create()
 
     gui->widget_bouton = NULL;
     gui->widget_bouton_nombre = 0;
+
+    gui->widget_slide = NULL;
+    gui->widget_slide_nombre = 0;
 
     return gui;
 }
@@ -486,13 +494,40 @@ void gui_Add_Bouton(Gui* gui, Widget_bouton* widget)
     gui->widget_bouton[gui->widget_bouton_nombre - 1] = widget;
 }
 
+
+void gui_Load_Slide(Gui* gui, Widget_slide** widget, int taille)
+{
+    gui->widget_slide_nombre = taille;
+    gui->widget_slide = widget;
+}
+
+void gui_Add_Slide(Gui* gui, Widget_slide* widget)
+{
+    gui->widget_slide_nombre = gui->widget_slide_nombre+1;
+    assert(gui->widget_slide = realloc(gui->widget_slide, gui->widget_slide_nombre*sizeof(Widget_slide*)));
+    gui->widget_slide[gui->widget_slide_nombre-1] = widget;
+}
+
+
 void gui_Destroy(Gui* gui)
 {
     for (int i = 0; i < gui->widget_textbox_nombre; i++)
         widget_textbox_Destroy(gui->widget_textbox[i]);
 
+    for (int i = 0; i < gui->widget_bouton_nombre; i++)
+        widget_bouton_Destroy(gui->widget_bouton[i]);
+
+    for (int i = 0; i < gui->widget_slide_nombre; i++)
+        widget_slide_Destroy(gui->widget_slide[i]);
+
     free(gui->widget_textbox);
     gui->widget_textbox = NULL;
+
+    free(gui->widget_bouton);
+    gui->widget_bouton = NULL;
+
+    free(gui->widget_slide);
+    gui->widget_slide = NULL;
 
     free(gui);
     gui = NULL;
@@ -505,6 +540,9 @@ void gui_Draw(sfRenderWindow* Game, Gui* gui)
 
     for (int i = 0; i < gui->widget_bouton_nombre; i++)
         widget_bouton_Draw(Game, gui->widget_bouton[i]);
+
+    for (int i = 0; i < gui->widget_slide_nombre; i++)
+        widget_slide_Draw(Game, gui->widget_slide[i]);
 }
 
 void gui_Click(Gui* gui, int x, int y)
@@ -514,17 +552,26 @@ void gui_Click(Gui* gui, int x, int y)
 
     for (int i = 0; i < gui->widget_bouton_nombre; i++)
         widget_bouton_Click(gui->widget_bouton[i], x, y);
+
+    for (int i = 0; i < gui->widget_slide_nombre; i++)
+        widget_slide_Click(gui->widget_slide[i], x, y);
 }
 
 void gui_MouseOver(Gui* gui, int x, int y)
 {
+
     for (int i = 0; i < gui->widget_bouton_nombre; i++)
         widget_bouton_Over(gui->widget_bouton[i], x, y);
+
 }
 
 void gui_TextEntered(Gui* gui, sfUint32 unicode)
 {
     for (int i = 0; i < gui->widget_textbox_nombre; i++)
+    {
         if (widget_textbox_Check(gui->widget_textbox[i]))
+        {
             widget_textbox_Write(gui->widget_textbox[i], unicode);
+        }
+    }
 }

@@ -1,5 +1,5 @@
 #include <assert.h>
-#include <SFML/Graphics.h>
+#include "SFML/Graphics.h"
 #include "Gui/Gui.h"
 #include "GraphicEngine/Image.h"
 #include "Screen/Menu_Screen.h"
@@ -61,6 +61,7 @@ Object_Menu* menu_screen_Create(sfRenderWindow* Game, Image* image, int x, int y
     menu->image = image;
 
     menu->background = sfSprite_Create();
+    sfImage_SetSmooth(image_Get(menu->image, MENU_BACKGROUND), false);
     sfSprite_SetImage(menu->background, image_Get(menu->image, MENU_BACKGROUND));
     sfSprite_SetPosition(menu->background, x, y);
 
@@ -87,6 +88,13 @@ Object_Menu* menu_screen_Create(sfRenderWindow* Game, Image* image, int x, int y
 
     Widget_textbox *textbox6 = widget_textbox_Create(10, 105, 80, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), FLOAT, &animation_var->fps, "FPS :", 12);
     gui_Add_Textbox(menu->gui, textbox6);
+
+    Widget_slide* slide = widget_slide_Create(0, 0, 11, 100, 3, sfColor_FromRGB(85, 137, 199), image_Get(image, 3), image_Get(image, 5), image_Get(image, 4));
+    gui_Add_Slide(menu->gui, slide);
+
+    //Widget objects editor
+    textbox = widget_textbox_Create(10, 155, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &editor->current_plan, "Plan :", 12);
+    gui_Add_Textbox(menu->gui, textbox);
 
 
 
