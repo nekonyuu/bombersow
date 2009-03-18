@@ -72,7 +72,7 @@ void widget_textbox_var_Destroy(Widget_textbox_var*);
 void widget_textbox_var_Get(Widget_textbox_var*, Widget_textbox*);
 void widget_textbox_var_Set(Widget_textbox_var*, Widget_textbox*);
 
-Widget_textbox* widget_textbox_Create(int, int, int, int, int, sfImage*, sfColor, Widget_textbox_type, void*, char*, int);
+Widget_textbox* widget_textbox_Create(int, int, int, int, int, sfImage*, sfColor, Widget_textbox_type, void*, char*, sfColor, sfFont*, int);
 void widget_textbox_Destroy(Widget_textbox*);
 void widget_textbox_Click(Widget_textbox*, int, int);
 void widget_textbox_Write(Widget_textbox*, sfUint32);
@@ -134,11 +134,11 @@ void widget_slide_Click(Widget_slide*, int, int);
 typedef struct GUI
 {
 
-    Widget_textbox** widget_textbox;                // Tableau de tout les widgets du Gui
+    Widget_textbox** widget_textbox;                // Tableau de tous les widgets textbox du Gui
     int widget_textbox_nombre;                      // Nombre de widgets
 
-    Widget_bouton** widget_bouton;
-    int widget_bouton_nombre;
+    Widget_bouton** widget_bouton;                  // Tableau de tous les widgets bouton du Gui
+    int widget_bouton_nombre;                       // Nombre
 
 
 } Gui;

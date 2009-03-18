@@ -2,7 +2,7 @@
 #include <SFML/Audio.h>
 #include "Screen/Objects_Screen.h"
 #include "Screen/Menu_Screen.h"
-#include "File/file.h"
+#include "Map/MapLoader.h"
 #include "Gui/Gui.h"
 
 int main()

@@ -70,22 +70,22 @@ Object_Menu* menu_screen_Create(sfRenderWindow* Game, Image* image, int x, int y
     //Widget animation editor
     Animation* animation_var = animation_Create(image_Get(image, 0), 0, 0, 0, 0, 0 ,0 ,0 ,0);
 
-    Widget_textbox *textbox = widget_textbox_Create(10, 65, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &animation_var->image_largeur, "Largeur :", 12);
+    Widget_textbox *textbox = widget_textbox_Create(10, 65, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &animation_var->image_largeur, "Largeur :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox);
 
-    Widget_textbox *textbox2 = widget_textbox_Create(90, 65, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &animation_var->image_hauteur, "Hauteur :", 12);
+    Widget_textbox *textbox2 = widget_textbox_Create(90, 65, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &animation_var->image_hauteur, "Hauteur :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox2);
 
-    Widget_textbox *textbox3 = widget_textbox_Create(110, 85, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &animation_var->nombre_image, "Nbr img :", 12);
+    Widget_textbox *textbox3 = widget_textbox_Create(110, 85, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &animation_var->nombre_image, "Nbr img :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox3);
 
-    Widget_textbox *textbox4 = widget_textbox_Create(10, 85, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &animation_var->x, "X :", 12);
+    Widget_textbox *textbox4 = widget_textbox_Create(10, 85, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &animation_var->x, "X :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox4);
 
-    Widget_textbox *textbox5 = widget_textbox_Create(60, 85, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &animation_var->y, "Y :", 12);
+    Widget_textbox *textbox5 = widget_textbox_Create(60, 85, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &animation_var->y, "Y :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox5);
 
-    Widget_textbox *textbox6 = widget_textbox_Create(10, 105, 80, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), FLOAT, &animation_var->fps, "FPS :", 12);
+    Widget_textbox *textbox6 = widget_textbox_Create(10, 105, 80, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), FLOAT, &animation_var->fps, "FPS :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox6);
 
 

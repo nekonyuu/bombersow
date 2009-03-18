@@ -14,6 +14,8 @@ Screen* screen_Create()
     new_screen->texts = NULL;
     new_screen->nb_text = 0;
 
+    new_screen->gui = gui_Create();
+
     new_screen->font = NULL;
     new_screen->music = NULL;
 
@@ -112,4 +114,19 @@ void screen_LoadImage(Screen* screen, sfImage* image)
 
     screen->images[screen->nb_img - 1] = sfSprite_Create();
     sfSprite_SetImage(screen->images[screen->nb_img - 1], image);
+}
+
+void screen_AddTextbox(Screen* screen, int x, int y, int width, int height, int length, sfImage* image,
+                       sfColor border_color, Widget_textbox_type type, void* var, char* text,
+                       sfColor label_color, sfFont* label_font, int text_size)
+{
+    if(!screen)
+        logging_Error("screen_AddTextbox", "Screen object sent NULL");
+    Widget_textbox* textbox = widget_textbox_Create(x, y, width, height, length, image, border_color, type, var, text, label_color, label_font, text_size);
+    gui_Add_Textbox(screen->gui, textbox);
+}
+
+void screen_DrawTextbox(Screen* screen)
+{
+
 }
