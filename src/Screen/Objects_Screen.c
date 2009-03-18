@@ -3,13 +3,16 @@
 #include "OpenGL/glu.h"
 #include "SFML/Graphics.h"
 #include "Gui/Gui.h"
+#include "Objects/Editor.h"
 #include "Screen/Objects_Screen.h"
 
-Object_Screen* object_screen_Create(sfRenderWindow* Game, sfImage* image, int x, int y, int largeur, int hauteur, Image* image_obj)
+Object_Screen* object_screen_Create(sfRenderWindow* Game, sfImage* image, int x, int y, int largeur, int hauteur, Image* image_obj, Editor* editor)
 {
 
     Object_Screen* screen = NULL;
     assert(screen = (Object_Screen*) malloc(sizeof(Object_Screen)));
+
+    screen->editor = editor;
 
     screen->Game = Game;
 
@@ -33,6 +36,8 @@ Object_Screen* object_screen_Create(sfRenderWindow* Game, sfImage* image, int x,
 
     screen->y_pos = 0;
 
+    screen->valeur = 0;
+
 
     screen->background = sfSprite_Create();
     sfSprite_SetImage(screen->background, image);
@@ -40,7 +45,10 @@ Object_Screen* object_screen_Create(sfRenderWindow* Game, sfImage* image, int x,
 
     screen->gui = gui_Create();
 
-    Widget_slide* slide = widget_slide_Create(x+largeur-16, y+8, 11, hauteur-16, 3, sfColor_FromRGB(85, 137, 199), image_Get(image_obj, 3), image_Get(image_obj, 5), image_Get(image_obj, 4));
+    Widget_slide* slide = widget_slide_Create(x+largeur-16, y+8, 11, hauteur-16, 1, sfColor_FromRGB(85, 137, 199), image_Get(image_obj, 3), image_Get(image_obj, 5), image_Get(image_obj, 4));
+    gui_Add_Slide(screen->gui, slide);
+
+    slide = widget_slide_Create(x+largeur-16, y+8, 11, hauteur-16, 1, sfColor_FromRGB(85, 137, 199), image_Get(image_obj, 3), image_Get(image_obj, 5), image_Get(image_obj, 4));
     gui_Add_Slide(screen->gui, slide);
 
 
@@ -53,36 +61,46 @@ void object_screen_Load_Object(Object_Screen* screen, Image* image)
 
     screen->image = image;
 
-
-    sfSprite *sprite_temp = sfSprite_Create();
-    screen->x_cur = screen->espace+screen->x;
-    screen->y_cur = screen->espace+screen->y;
-
-    screen->y_max = 0;
-
     if (screen->image != NULL)
     {
 
-        for (int i = 0; i < screen->image->image_nombre; i++)
-        {
-            sfSprite_Destroy(sprite_temp);
-            sprite_temp = sfSprite_Create();
-            sfSprite_SetImage(sprite_temp, screen->image->image_tab[i]);
+        assert(screen->sprite = (sfSprite**) malloc(image->image_nombre*sizeof(sfSprite*)));
+        for(int i = 0; i < image->image_nombre; i++)
+            screen->sprite[i] = sfSprite_Create();
 
-            if (screen->x_cur+sfSprite_GetWidth(sprite_temp) > screen->largeur)
+        screen->sprite_nombre = image->image_nombre;
+
+        screen->x_cur = screen->espace+screen->x;
+        screen->y_cur = screen->espace+screen->y;
+
+        screen->y_max = 0;
+
+        for (int i = 0; i < image->image_nombre; i++)
+        {
+
+            sfSprite_SetImage(screen->sprite[i], image->image_tab[i]);
+
+            if (screen->x_cur+sfSprite_GetWidth(screen->sprite[i]) > screen->largeur)
             {
                 screen->x_cur = screen->x+screen->espace;
                 screen->y_cur = screen->espace+screen->y_max;
             }
 
-            sfSprite_SetPosition(sprite_temp, screen->x_cur, screen->y_cur);
+            sfSprite_SetPosition(screen->sprite[i], screen->x_cur, screen->y_cur);
 
-            screen->y_max = (screen->y_cur+sfSprite_GetHeight(sprite_temp) > screen->y_max) ? screen->y_cur+sfSprite_GetHeight(sprite_temp) : screen->y_max;
-            screen->x_cur += screen->espace+sfSprite_GetWidth(sprite_temp);
+            screen->y_max = (screen->y_cur+sfSprite_GetHeight(screen->sprite[i]) > screen->y_max) ? screen->y_cur+sfSprite_GetHeight(screen->sprite[i]) : screen->y_max;
+            screen->x_cur += screen->espace+sfSprite_GetWidth(screen->sprite[i]);
         }
-    }
 
-    sfSprite_Destroy(sprite_temp);
+        sfSprite_Destroy(screen->editor->selected_image);
+        screen->editor->selected_image = sfSprite_Create();
+
+        sfSprite_SetImage(screen->editor->selected_image, image_Get(screen->image, 0));
+        sfSprite_SetPosition(screen->editor->selected_image, 0, 0);
+
+        screen->editor->selected_id = 0;
+        screen->editor->selected_type = 0;
+    }
 
     widget_slide_SetNbrVal(screen->gui->widget_slide[0], (screen->y_max-screen->y)/(screen->hauteur-(2*screen->espace))+1);
 }
@@ -104,6 +122,12 @@ void object_screen_Destroy(Object_Screen* screen)
     free(screen->animation);
     screen->animation = NULL;
 
+    for (int i = 0; i < screen->sprite_nombre; i++)
+        sfSprite_Destroy(screen->sprite[i]);
+
+    free(screen->sprite);
+    screen->sprite = NULL;
+
     gui_Destroy(screen->gui);
 
     sfSprite_Destroy(screen->background);
@@ -118,48 +142,46 @@ void object_screen_Draw(Object_Screen* screen)
     glEnable (GL_SCISSOR_TEST);
     glScissor(screen->x, 800-screen->hauteur-screen->y+screen->espace, screen->largeur-40,  screen->hauteur-(2*screen->espace));
 
+    if(screen->type_affichage){
 
-    sfSprite *sprite_temp = sfSprite_Create();
-
-
-    screen->x_cur = screen->espace+screen->x;
-    screen->y_cur = screen->espace+screen->y;
-
-    screen->y_max = 0;
-
-    if (screen->image != NULL)
-    {
-
-        for (int i = 0; i < screen->image->image_nombre; i++)
+        for (int i = 0; i < screen->animation_nombre; i++)
         {
-            sfSprite_Destroy(sprite_temp);
-            sprite_temp = sfSprite_Create();
-            sfSprite_SetImage(sprite_temp, screen->image->image_tab[i]);
 
-            if (screen->x_cur+sfSprite_GetWidth(sprite_temp) > screen->largeur)
-            {
-                screen->x_cur = screen->x+screen->espace;
-                screen->y_cur = screen->espace+screen->y_max;
+            if(screen->valeur != screen->gui->widget_slide[1]->valeur){
+                int co_move = (screen->valeur < screen->gui->widget_slide[1]->valeur) ? -(screen->hauteur-(2*screen->espace)) : screen->hauteur-(2*screen->espace);
+                sfSprite_Move(screen->animation[i]->sprite, 0, co_move);
             }
-
-            sfSprite_SetPosition(sprite_temp, screen->x_cur, screen->y_cur-(screen->gui->widget_slide[0]->valeur*(screen->hauteur-(2*screen->espace))));
-
-            screen->y_max = (screen->y_cur+sfSprite_GetHeight(sprite_temp) > screen->y_max) ? screen->y_cur+sfSprite_GetHeight(sprite_temp) : screen->y_max;
-            screen->x_cur += screen->espace+sfSprite_GetWidth(sprite_temp);
-
-            sfRenderWindow_DrawSprite(screen->Game, sprite_temp);
+            animation_Draw(screen->animation[i], screen->Game);
 
         }
+        screen->valeur = screen->gui->widget_slide[1]->valeur;
+
+        glDisable (GL_SCISSOR_TEST);
+
+        widget_slide_Draw(screen->Game, screen->gui->widget_slide[1]);
+
+    }else{
+        for (int i = 0; i < screen->sprite_nombre; i++)
+        {
+
+            if(screen->valeur != screen->gui->widget_slide[0]->valeur){
+                int co_move = (screen->valeur < screen->gui->widget_slide[0]->valeur) ? -(screen->hauteur-(2*screen->espace)) : screen->hauteur-(2*screen->espace);
+                sfSprite_Move(screen->sprite[i], 0, co_move);
+            }
+            sfRenderWindow_DrawSprite(screen->Game, screen->sprite[i]);
+
+        }
+        screen->valeur = screen->gui->widget_slide[0]->valeur;
+
+        glDisable (GL_SCISSOR_TEST);
+
+        widget_slide_Draw(screen->Game, screen->gui->widget_slide[0]);
     }
-    glDisable (GL_SCISSOR_TEST);
 
-    gui_Draw(screen->Game, screen->gui);
-
-    sfSprite_Destroy(sprite_temp);
 
 }
 
-int object_screen_Click(Object_Screen* screen, int mouse_x, int mouse_y)
+void object_screen_Click(Object_Screen* screen, int mouse_x, int mouse_y)
 {
 
     gui_Click(screen->gui, mouse_x, mouse_y);
@@ -168,41 +190,94 @@ int object_screen_Click(Object_Screen* screen, int mouse_x, int mouse_y)
 
     if (sfIntRect_Contains(&cadre_screen, mouse_x, mouse_y))
     {
-        sfSprite *sprite_temp = sfSprite_Create();
 
-        screen->x_cur = screen->espace + screen->x;
-        screen->y_cur = screen->espace + screen->y;
-
-        screen->y_max = 0;
-
-        if (screen->image != NULL)
-        {
-            for (int i = 0; i < screen->image->image_nombre; i++)
+        if(screen->type_affichage){
+            for (int i = 0; i < screen->animation_nombre; i++)
             {
-                sfSprite_Destroy(sprite_temp);
-                sprite_temp = sfSprite_Create();
-                sfSprite_SetImage(sprite_temp, screen->image->image_tab[i]);
 
-                if (screen->x_cur+sfSprite_GetWidth(sprite_temp) > screen->largeur)
-                {
-                    screen->x_cur = screen->x+screen->espace;
-                    screen->y_cur = screen->espace+screen->y_max;
+                sfIntRect cadre_screen = {screen->animation[i]->x_c, screen->animation[i]->y_c, screen->animation[i]->x_c+screen->animation[i]->image_largeur, screen->animation[i]->y_c+screen->animation[i]->image_hauteur};
+                if (sfIntRect_Contains(&cadre_screen, mouse_x, mouse_y)){
+
+                    animation_Destroy(screen->editor->selected_animation);
+                    screen->editor->selected_animation = animation_Create(
+                                                            sfSprite_GetImage(screen->animation[i]->sprite),
+                                                            screen->animation[i]->x,
+                                                            screen->animation[i]->y,
+                                                            screen->animation[i]->image_hauteur,
+                                                            screen->animation[i]->image_largeur,
+                                                            screen->animation[i]->nombre_image,
+                                                            0, BOUCLE,
+                                                            screen->animation[i]->fps);
+
+                    animation_SetPosition(screen->editor->selected_animation, mouse_x, mouse_y);
+
+                    screen->editor->selected_id = i;
+                    screen->editor->selected_type = 1;
+
+                    break;
                 }
+            }
+        }else{
+            for (int i = 0; i < screen->sprite_nombre; i++)
+            {
 
-                sfSprite_SetPosition(sprite_temp, screen->x_cur, screen->y_cur);
+                sfIntRect cadre_screen = {sfSprite_GetX(screen->sprite[i]), sfSprite_GetY(screen->sprite[i]), sfSprite_GetX(screen->sprite[i])+sfSprite_GetWidth(screen->sprite[i]), sfSprite_GetY(screen->sprite[i])+sfSprite_GetHeight(screen->sprite[i]),};
+                if (sfIntRect_Contains(&cadre_screen, mouse_x, mouse_y)){
+                    sfSprite_Destroy(screen->editor->selected_image);
+                    screen->editor->selected_image = sfSprite_Create();
 
-                sfIntRect cadre_screen = {screen->x_cur, screen->y_cur-(screen->gui->widget_slide[0]->valeur*(screen->hauteur-(2*screen->espace))), screen->x_cur+sfSprite_GetWidth(sprite_temp), screen->y_cur+sfSprite_GetHeight(sprite_temp)-(screen->gui->widget_slide[0]->valeur*(screen->hauteur-(2*screen->espace)))};
-                if (sfIntRect_Contains(&cadre_screen, mouse_x, mouse_y))
-                    return i;
+                    sfSprite_SetImage(screen->editor->selected_image, image_Get(screen->image, i));
+                    sfSprite_SetPosition(screen->editor->selected_image, mouse_x, mouse_y);
 
-                screen->y_max = (screen->y_cur+sfSprite_GetHeight(sprite_temp) > screen->y_max) ? screen->y_cur+sfSprite_GetHeight(sprite_temp) : screen->y_max;
-                screen->x_cur += screen->espace+sfSprite_GetWidth(sprite_temp);
+                    screen->editor->selected_id = i;
+                    screen->editor->selected_type = 0;
 
+                    break;
+                }
             }
         }
-        sfSprite_Destroy(sprite_temp);
-        return -1;
     }
-    else
-        return -1;
+}
+
+void object_screen_Add_Animation(Object_Screen* screen, Animation* animation)
+{
+
+    animation_Destroy(screen->editor->selected_animation);
+    screen->editor->selected_animation = animation_Create(sfSprite_GetImage(screen->editor->selected_image), animation->x, animation->y, animation->image_hauteur, animation->image_largeur, animation->nombre_image, 0, BOUCLE, animation->fps);
+    screen->editor->selected_type = 1;
+
+    screen->animation_nombre++;
+    assert(screen->animation = realloc(screen->animation, screen->animation_nombre*sizeof(Animation*)));
+
+    screen->animation[screen->animation_nombre-1] = animation_Create(sfSprite_GetImage(screen->editor->selected_image), animation->x, animation->y, animation->image_hauteur, animation->image_largeur, animation->nombre_image, 0, BOUCLE, animation->fps);
+
+    screen->x_cur = screen->espace+screen->x;
+    screen->y_cur = screen->espace+screen->y;
+
+    screen->y_max = 0;
+
+    for (int i = 0; i < screen->animation_nombre; i++)
+    {
+
+        if (screen->x_cur+screen->animation[i]->image_largeur > screen->largeur)
+        {
+            screen->x_cur = screen->x+screen->espace;
+            screen->y_cur = screen->espace+screen->y_max;
+        }
+
+        animation_SetPosition(screen->animation[i], screen->x_cur, screen->y_cur);
+
+        screen->y_max = (screen->y_cur+screen->animation[i]->image_hauteur > screen->y_max) ? screen->y_cur+screen->animation[i]->image_hauteur : screen->y_max;
+        screen->x_cur += screen->espace+screen->animation[i]->image_largeur;
+    }
+
+    widget_slide_SetNbrVal(screen->gui->widget_slide[1], (screen->y_max-screen->y)/(screen->hauteur-(2*screen->espace))+1);
+
+}
+
+void object_screen_Switch(Object_Screen* screen, void* rien)
+{
+
+    screen->type_affichage = !screen->type_affichage;
+
 }

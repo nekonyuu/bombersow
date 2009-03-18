@@ -1,7 +1,7 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
-#include "SFML/Graphics.h"
+#include <stdbool.h>
 #include "GraphicEngine/Image.h"
 #include "Objects/GameObjects.h"
 
@@ -23,8 +23,8 @@ typedef struct EDITOR
 
     Object** object;
     int nombre_object;
-    Object* object_create;
 
+    Object* object_create;
 
 } Editor;
 
@@ -32,5 +32,6 @@ Editor* editor_Create();
 void editor_Destroy(Editor*);
 void editor_Draw(sfRenderWindow*, Editor*);
 void editor_MouseMove(Editor*, int, int);
+void editor_Add_Animation(Editor*, Animation*);
 
 #endif

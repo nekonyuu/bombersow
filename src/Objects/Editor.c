@@ -4,6 +4,7 @@
 #include <string.h>
 #include "SFML/Graphics.h"
 #include "GraphicEngine/Image.h"
+#include "Objects/GameObjects.h"
 #include "Objects/Editor.h"
 
 
@@ -87,5 +88,14 @@ void editor_MouseMove(Editor* editor, int x, int y)
     }else{
         animation_SetPosition(editor->selected_animation, x, y);
     }
+
+}
+
+
+void editor_Add_Animation(Editor* editor, Animation* animation){
+
+    animation_Destroy(editor->selected_animation);
+    editor->selected_animation = animation_Create(sfSprite_GetImage(editor->selected_image), animation->x, animation->y, animation->image_hauteur, animation->image_largeur, animation->nombre_image, 0, BOUCLE, animation->fps);
+    editor->selected_type = 2;
 
 }
