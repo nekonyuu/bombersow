@@ -18,15 +18,16 @@ int main()
     Image *image_object = image_Create();
     dossier_Read_Image(image_object, "base/images/");
 
-    // Création de la fenêtre principale
-    Game = sfRenderWindow_Create(Mode, "BomberSowEditor", sfClose, Settings);
-    sfImage *fond_object = sfImage_CreateFromFile("base/fond_object.png");
-    Object_Screen* object_screen = object_screen_Create(Game, fond_object, 0, 600, 1100, 200);
-    object_screen_Load_Object(object_screen, image_object);
-
     Image *image_menu = image_Create();
     char *image_text[] = {"base/fond_menu.png", "base/textbox_back.png", "base/fond_menu_bouton.png", "base/slide_top.png", "base/slide_middle.png", "base/slide_bottom.png"};
     image_Loader(image_menu, image_text, 6);
+
+
+    // Création de la fenêtre principale
+    Game = sfRenderWindow_Create(Mode, "BomberSowEditor", sfClose, Settings);
+    sfImage *fond_object = sfImage_CreateFromFile("base/fond_object.png");
+    Object_Screen* object_screen = object_screen_Create(Game, fond_object, 0, 600, 1100, 200, image_menu);
+    object_screen_Load_Object(object_screen, image_object);
 
     Editor* editor = editor_Create();
     Object_Menu* menu_screen = menu_screen_Create(Game, image_menu, 0, 0, 200, 600, editor);
@@ -46,7 +47,7 @@ int main()
 
     editor->selected_id = 0;
     editor->selected_image = temp_sprite;
-    editor->selected_type = 1;
+    editor->selected_type = 0;
 
     while (sfRenderWindow_IsOpened(Game))
     {
@@ -77,7 +78,7 @@ int main()
                     sfSprite_SetPosition(temp_sprite, Event.MouseButton.X, Event.MouseButton.Y);
                     editor->selected_image = temp_sprite;
                     editor->selected_id = id_image;
-                    editor->selected_type = 1;
+                    editor->selected_type = 0;
                 }
                 menu_screen_Click(menu_screen, Event.MouseButton.X, Event.MouseButton.Y) ;
                 map_screen_Click(map_screen, Event.MouseButton.X, Event.MouseButton.Y) ;

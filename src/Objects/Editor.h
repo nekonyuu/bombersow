@@ -13,7 +13,7 @@ typedef struct EDITOR
 
     Animation* selected_animation;
     sfSprite* selected_image;
-    int selected_type;
+    _Bool selected_type;
     int selected_id;
 
     int current_plan;
