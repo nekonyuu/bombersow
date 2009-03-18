@@ -334,7 +334,8 @@
 
 1236472781 source:c:\projet\bombersow\src\game\settingsscreen.c
 
-1236472781 source:c:\projet\bombersow\src\graphicengine\draw.c
+1236776212 source:c:\projet\bombersow\src\graphicengine\draw.c
+	"GraphicEngine/Draw.h"
 
 1236472781 source:c:\projet\bombersow\src\inputscontrol\configparsing.c
 
@@ -1091,4 +1092,7 @@
 	"Objects/GameObjects.h"
 
 1237154960 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\physicsengine\particlesystem.c
+
+1237163035 c:\projet\bombersow\src\graphicengine\draw.h
+	"SFML/Graphics.h"
 

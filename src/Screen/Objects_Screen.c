@@ -1,5 +1,5 @@
 #include <assert.h>
-#include <SFML/Graphics.h>
+#include "SFML/Graphics.h"
 #include "Screen/Objects_Screen.h"
 
 Object_Screen* object_screen_Create(sfRenderWindow* Game, sfImage* image, int x, int y, int largeur, int hauteur)
@@ -12,6 +12,10 @@ Object_Screen* object_screen_Create(sfRenderWindow* Game, sfImage* image, int x,
 
     screen->image = NULL;
 
+    screen->animation = NULL;
+    screen->animation_nombre = 0;
+
+    screen->type_affichage = 0;
 
     screen->x = x;
     screen->y = y;
@@ -24,9 +28,7 @@ Object_Screen* object_screen_Create(sfRenderWindow* Game, sfImage* image, int x,
     screen->x_cur = screen->espace+x;
     screen->y_cur = screen->espace+y;
 
-    screen->page = 0;
-    screen->first_id = 0;
-    screen->last_id = 0;
+    screen->y_pos = 0;
 
 
     screen->background = sfSprite_Create();
@@ -44,8 +46,22 @@ void object_screen_Load_Object(Object_Screen* screen, Image* image)
 
 }
 
+void object_screen_Load_Animation(Object_Screen* screen, Animation** animation, int nombre)
+{
+
+    screen->animation = animation;
+    screen->animation_nombre = nombre;
+
+}
+
 void object_screen_Destroy(Object_Screen* screen)
 {
+
+    for(int i = 0; i < screen->animation_nombre; i++)
+        animation_Destroy(screen->animation[i]);
+
+    free(screen->animation);
+    screen->animation = NULL;
 
     sfSprite_Destroy(screen->background);
     free(screen);
@@ -67,9 +83,9 @@ void object_screen_Draw(Object_Screen* screen)
     if (screen->image != NULL)
     {
 
-        int page = 0;
         for (int i = 0; i < screen->image->image_nombre; i++)
         {
+            sfSprite_Destroy(sprite_temp);
             sprite_temp = sfSprite_Create();
             sfSprite_SetImage(sprite_temp, screen->image->image_tab[i]);
 
@@ -77,10 +93,6 @@ void object_screen_Draw(Object_Screen* screen)
             {
                 screen->x_cur = screen->x+screen->espace;
                 screen->y_cur = screen->espace+screen->y_max;
-                if (screen->y_cur > screen->y+160)
-                {
-                    screen->page++;
-                }
             }
 
             sfSprite_SetPosition(sprite_temp, screen->x_cur, screen->y_cur);
@@ -88,8 +100,7 @@ void object_screen_Draw(Object_Screen* screen)
             screen->y_max = (screen->y_cur+sfSprite_GetHeight(sprite_temp) > screen->y_max) ? screen->y_cur+sfSprite_GetHeight(sprite_temp) : screen->y_max;
             screen->x_cur += screen->espace+sfSprite_GetWidth(sprite_temp);
 
-            if (page == screen->page)
-                sfRenderWindow_DrawSprite(screen->Game, sprite_temp);
+            sfRenderWindow_DrawSprite(screen->Game, sprite_temp);
         }
     }
 
@@ -113,7 +124,6 @@ int object_screen_Click(Object_Screen* screen, int mouse_x, int mouse_y)
         if (screen->image != NULL)
         {
 
-            int page = 0;
             for (int i = 0; i < screen->image->image_nombre; i++)
             {
                 sprite_temp = sfSprite_Create();
@@ -123,16 +133,12 @@ int object_screen_Click(Object_Screen* screen, int mouse_x, int mouse_y)
                 {
                     screen->x_cur = screen->x+screen->espace;
                     screen->y_cur = screen->espace+screen->y_max;
-                    if (screen->y_cur > screen->y+160)
-                    {
-                        screen->page++;
-                    }
                 }
 
                 sfSprite_SetPosition(sprite_temp, screen->x_cur, screen->y_cur);
 
                 sfIntRect cadre_screen = {screen->x_cur, screen->y_cur, screen->x_cur+sfSprite_GetWidth(sprite_temp), screen->y_cur+sfSprite_GetHeight(sprite_temp)};
-                if (page == screen->page && sfIntRect_Contains(&cadre_screen, mouse_x, mouse_y))
+                if (sfIntRect_Contains(&cadre_screen, mouse_x, mouse_y))
                 {
                     return i;
                 }

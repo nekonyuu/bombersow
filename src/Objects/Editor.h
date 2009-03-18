@@ -1,11 +1,13 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
-#include <SFML/Graphics.h>
+#include "SFML/Graphics.h"
 #include "GraphicEngine/Image.h"
+#include "Objects/GameObjects.h"
 
 typedef struct EDITOR
 {
+
     int mouse_x;
     int mouse_y;
 
@@ -14,7 +16,15 @@ typedef struct EDITOR
     int selected_type;
     int selected_id;
 
+    int current_plan;
+
     Animation* animation_create;
+
+
+    Object** object;
+    int nombre_object;
+    Object* object_create;
+
 
 } Editor;
 
