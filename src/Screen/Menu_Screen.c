@@ -134,12 +134,7 @@ void menu_screen_Click(Object_Menu* menu, int mouse_x, int mouse_y)
 
     sfIntRect cadre_screen = {menu->x, menu->y, menu->x+menu->largeur, menu->y+menu->hauteur};
     if (sfIntRect_Contains(&cadre_screen, mouse_x, mouse_y))
-    {
-
         gui_Click(menu->gui, mouse_x, mouse_y);
-
-    }
-
 }
 
 void menu_screen_MouseOver(Object_Menu* menu, int mouse_x, int mouse_y)

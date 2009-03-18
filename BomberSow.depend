@@ -878,9 +878,10 @@
 	<SFML/Config.h>
 	<SFML/Graphics/Rect.h>
 
-1237305825 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\objects\screen.h
+1237390767 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\objects\screen.h
 	<SFML/Graphics.h>
 	<SFML/Audio.h>
+	<Gui/Gui.h>
 
 1237154958 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\sfml\audio.h
 	<SFML/System.h>
@@ -917,13 +918,14 @@
 	<SFML/Config.h>
 	<SFML/Audio/SoundBuffer.h>
 
-1237305825 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\graphicengine\draw.h
+1237382401 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\graphicengine\draw.h
 	<SFML/Graphics.h>
 
-1237307302 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\game\menuscreen.c
+1237399950 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\game\menuscreen.c
 	"BaseSystem/Logging.h"
 	"Game/MenuScreen.h"
 	"Game/PlayScreen.h"
+	"Game/SettingsScreen.h"
 	"Game/CreditsScreen.h"
 	"GraphicEngine/Draw.h"
 	"Objects/Screen.h"
@@ -974,7 +976,7 @@
 	<SFML/Network/Packet.h>
 	<SFML/Network/SocketStatus.h>
 
-1237308155 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\graphicengine\image.h
+1237382401 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\graphicengine\image.h
 	<SFML/Graphics.h>
 
 1237158482 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\game\playscreen.c
@@ -988,12 +990,17 @@
 
 1237154959 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\game\serverscreen.c
 
-1237154959 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\game\settingsscreen.c
-
-1237154959 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\graphicengine\draw.c
+1237401010 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\game\settingsscreen.c
+	<Gui/Gui.h>
+	"BaseSystem/Logging.h"
+	"Game/SettingsScreen.h"
+	"Objects/Screen.h"
 	"GraphicEngine/Draw.h"
 
-1237308126 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\graphicengine\image.c
+1237154955 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\graphicengine\draw.c
+	"GraphicEngine/Draw.h"
+
+1237230090 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\graphicengine\image.c
 	<assert.h>
 	"GraphicEngine/Image.h"
 
@@ -1011,7 +1018,7 @@
 	"GraphicEngine/Draw.h"
 	"Objects/GameObjects.h"
 
-1237158899 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\map\maploader.h
+1237384442 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\map\maploader.h
 	"GraphicEngine/Image.h"
 	"Objects/GameObjects.h"
 
@@ -1023,9 +1030,10 @@
 
 1237154959 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\map\maphandler.h
 
-1237154959 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\map\maploader.c
+1237384601 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\map\maploader.c
 	<stdio.h>
 	<string.h>
+	<dirent.h>
 	"BaseSystem/Logging.h"
 	"Map/MapLoader.h"
 
@@ -1068,7 +1076,7 @@
 	"GraphicEngine/Draw.h"
 	"Objects/GameObjects.h"
 
-1237154960 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\objects\screen.c
+1237400805 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\objects\screen.c
 	"BaseSystem/Logging.h"
 	"Objects/Screen.h"
 
@@ -1095,4 +1103,29 @@
 
 1237163035 c:\projet\bombersow\src\graphicengine\draw.h
 	"SFML/Graphics.h"
+
+1237388527 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\csfml-gui\gui\gui.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	"SFML/Graphics.h"
+
+1237158911 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\main-game.c
+	"BaseSystem/Logging.h"
+	"Game/MenuScreen.h"
+	"Objects/Screen.h"
+	"Map/MapLoader.h"
+	"GraphicEngine/Draw.h"
+	"Objects/GameObjects.h"
+
+1237390229 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\csfml-gui\gui\gui.c
+	<assert.h>
+	<string.h>
+	"SFML/Graphics.h"
+	"BaseSystem/Logging.h"
+	"Gui/Gui.h"
+
+1237389179 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\game\settingsscreen.h
+	<stdbool.h>
+	<SFML/Graphics.h>
 

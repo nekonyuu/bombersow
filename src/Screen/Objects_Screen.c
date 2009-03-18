@@ -57,7 +57,7 @@ void object_screen_Load_Animation(Object_Screen* screen, Animation** animation, 
 void object_screen_Destroy(Object_Screen* screen)
 {
 
-    for(int i = 0; i < screen->animation_nombre; i++)
+    for (int i = 0; i < screen->animation_nombre; i++)
         animation_Destroy(screen->animation[i]);
 
     free(screen->animation);
@@ -116,14 +116,13 @@ int object_screen_Click(Object_Screen* screen, int mouse_x, int mouse_y)
     {
         sfSprite *sprite_temp = sfSprite_Create();
 
-        screen->x_cur = screen->espace+screen->x;
-        screen->y_cur = screen->espace+screen->y;
+        screen->x_cur = screen->espace + screen->x;
+        screen->y_cur = screen->espace + screen->y;
 
         screen->y_max = 0;
 
         if (screen->image != NULL)
         {
-
             for (int i = 0; i < screen->image->image_nombre; i++)
             {
                 sprite_temp = sfSprite_Create();
@@ -139,22 +138,16 @@ int object_screen_Click(Object_Screen* screen, int mouse_x, int mouse_y)
 
                 sfIntRect cadre_screen = {screen->x_cur, screen->y_cur, screen->x_cur+sfSprite_GetWidth(sprite_temp), screen->y_cur+sfSprite_GetHeight(sprite_temp)};
                 if (sfIntRect_Contains(&cadre_screen, mouse_x, mouse_y))
-                {
                     return i;
-                }
+
                 screen->y_max = (screen->y_cur+sfSprite_GetHeight(sprite_temp) > screen->y_max) ? screen->y_cur+sfSprite_GetHeight(sprite_temp) : screen->y_max;
                 screen->x_cur += screen->espace+sfSprite_GetWidth(sprite_temp);
 
             }
         }
-            sfSprite_Destroy(sprite_temp);
-            return -1;
-
-
-    }
-    else
-    {
+        sfSprite_Destroy(sprite_temp);
         return -1;
     }
-
+    else
+        return -1;
 }

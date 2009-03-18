@@ -37,6 +37,7 @@ void screen_Destroy(Screen* screen2destroy)
 
     screen2destroy->font = NULL;
     sfMusic_Destroy(screen2destroy->music);
+    gui_Destroy(screen2destroy->gui);
     free(screen2destroy);
 }
 
@@ -126,7 +127,7 @@ void screen_AddTextbox(Screen* screen, int x, int y, int width, int height, int 
     gui_Add_Textbox(screen->gui, textbox);
 }
 
-void screen_DrawTextbox(Screen* screen)
+void screen_DrawGui(sfRenderWindow* Game, Screen* screen)
 {
-
+    gui_Draw(Game, screen->gui);
 }

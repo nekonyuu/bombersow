@@ -28,5 +28,6 @@ void screen_LoadMusic(Screen*, sfMusic*, sfBool);
 void screen_PlayMusic(Screen*);
 void screen_LoadImage(Screen*, sfImage*);
 void screen_AddTextbox(Screen*, int, int, int, int, int, sfImage*, sfColor, Widget_textbox_type, void*, char*, sfColor, sfFont*, int);
+void screen_DrawGui(sfRenderWindow*, Screen*);
 
 #endif

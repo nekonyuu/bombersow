@@ -1,6 +1,7 @@
 #include "BaseSystem/Logging.h"
 #include "Game/MenuScreen.h"
 #include "Game/PlayScreen.h"
+#include "Game/SettingsScreen.h"
 #include "Game/CreditsScreen.h"
 #include "GraphicEngine/Draw.h"
 #include "Objects/Screen.h"
@@ -47,50 +48,64 @@ void display_Menu(sfRenderWindow* Game)
 
         while (sfRenderWindow_GetEvent(Game, &Event))           // Surveillance des évènements
         {
-            // Fermer : Quitter le jeu
-            if (Event.Type == sfEvtClosed)
+            switch (Event.Type)
             {
+            case sfEvtClosed:                                   // Fermer : Quitter le jeu
                 screen_Destroy(Menu);                           // Fermeture du Menu et nettoyage des ressources
                 launched = false;
-            }
+                break;
 
-            if (Event.Type == sfEvtKeyPressed)
-            {
-                if (Event.Key.Code == sfKeyEscape)              // Echap : Quitte le jeu
+            case sfEvtKeyPressed:
+                switch (Event.Key.Code)
                 {
+                case sfKeyEscape:                               // Quitte le jeu
                     screen_Destroy(Menu);
                     launched = false;
-                }
-                else if (Event.Key.Code == sfKeyReturn)
-                {
+                    break;
+
+                case sfKeyReturn:
                     switch (menu_select)
                     {
-                    case 1:
+                    case 1:                                     // Affichage du menu de jeu
                         if (display_PlayMenu(Game, BG_image, menuFont))
                             launched = false;
                         break;
-                    case 2:
+                    case 2:                                     // Affichage du menu options
+                        if (display_Settings(Game, BG_image, menuFont))
+                            launched = false;
                         break;
-                    case 3:
+                    case 3:                                     // Affichage des credits
                         if (display_Credits(Game, BG_image, menuFont))
                             launched = false;
                         break;
-                    case 4:                                     // Sélection de l'option Quitter
+                    case 4:                                     // Quitter
                         screen_Destroy(Menu);
                         launched = false;
                         break;
                     }
+                    break;
+
+                case sfKeyUp:
+                    if (menu_select > 1)
+                    {
+                        sfString_SetColor(Menu->texts[menu_select], sfWhite);
+                        sfString_SetColor(Menu->texts[--menu_select], sfRed);
+                    }
+                    break;
+
+                case sfKeyDown:
+                    if (menu_select < 4)
+                    {
+                        sfString_SetColor(Menu->texts[menu_select], sfWhite);
+                        sfString_SetColor(Menu->texts[++menu_select], sfRed);
+                    }
+                    break;
+
+                default:
+                    break;
                 }
-                else if (Event.Key.Code == sfKeyUp && menu_select > 1)
-                {
-                    sfString_SetColor(Menu->texts[menu_select], sfWhite);
-                    sfString_SetColor(Menu->texts[--menu_select], sfRed);
-                }
-                else if (Event.Key.Code == sfKeyDown && menu_select < 4)
-                {
-                    sfString_SetColor(Menu->texts[menu_select], sfWhite);
-                    sfString_SetColor(Menu->texts[++menu_select], sfRed);
-                }
+            default:
+                break;
             }
         }
     }

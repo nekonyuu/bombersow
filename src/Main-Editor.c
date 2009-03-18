@@ -1,10 +1,11 @@
-#include "SFML/Graphics.h"
-#include "SFML/Audio.h"
+#include <Gui/Gui.h>
+#include <SFML/Graphics.h>
+#include <SFML/Audio.h>
 #include "Screen/Objects_Screen.h"
 #include "Screen/Menu_Screen.h"
 #include "Screen/Map_Screen.h"
 #include "Map/MapLoader.h"
-#include "Gui/Gui.h"
+
 
 int main()
 {
