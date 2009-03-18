@@ -41,19 +41,17 @@ _Bool display_Credits(sfRenderWindow* Game, sfImage* BG_image, sfFont* creditsFo
             // Fermer : Quitter le jeu
             if (Event.Type == sfEvtClosed)
             {
-                screen_Destroy(Credits);
                 close = true;                                   // Fermeture du Menu et nettoyage des ressources
                 launched = false;
             }
             // Reviens en arrière
             if (Event.Type == sfEvtKeyPressed && (Event.Key.Code == sfKeyEscape || Event.Key.Code == sfKeyReturn))
-            {
-                screen_Destroy(Credits);
                 launched = false;
-            }
         }
     }
     while (launched);
+
+    screen_Destroy(Credits);
 
     return close;
 }

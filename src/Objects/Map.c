@@ -27,7 +27,6 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players)
     new_map->nb_bullets = 0;
 
     new_map->game_packets2send = NULL;
-    new_map->chat_packets2send = NULL;
 
     new_map->chat_started = false;
     new_map->game_started = false;
@@ -143,4 +142,18 @@ void map_DelBullet(Map* map_, unsigned int bullet_id)
         map_->bullets_list[i] = map_->bullets_list[i + 1];
 
     assert(map_->bullets_list = (Bullet**) realloc(map_->bullets_list, --map_->nb_bullets * sizeof(Bullet*)));
+}
+
+void map_UpdateDisconnectedPlayers(void* UserData)
+{
+    Map* map = (Map*) UserData;
+
+    while(map->chat_started)
+    {
+        for(int i = 0; i < map->nb_players; i++)
+            if(!map->players_list[i]->connected)
+                map_DelPlayer(map, i);
+
+        sfSleep(1.0f);
+    }
 }

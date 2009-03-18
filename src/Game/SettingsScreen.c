@@ -35,7 +35,6 @@ _Bool display_Settings(sfRenderWindow* Game, sfImage* BG_image, sfFont* settings
             switch(Event.Type)
             {
                 case sfEvtClosed:
-                    screen_Destroy(Settings);
                     close = true;                               // Fermeture du Menu et nettoyage des ressources
                     launched = false;
                     break;
@@ -44,7 +43,6 @@ _Bool display_Settings(sfRenderWindow* Game, sfImage* BG_image, sfFont* settings
                     switch(Event.Key.Code)
                     {
                     case sfKeyEscape:                           // Retour en arrière
-                        screen_Destroy(Settings);
                         launched = false;
                         break;
 
@@ -58,7 +56,7 @@ _Bool display_Settings(sfRenderWindow* Game, sfImage* BG_image, sfFont* settings
                     break;
 
                 case sfEvtTextEntered:                          // Entrée de texte
-                    //gui_TextEntered(Settings->gui, Event.Text.Unicode);
+                    gui_TextEntered(Settings->gui, Event.Text.Unicode);
                     break;
 
                 default:
@@ -67,6 +65,8 @@ _Bool display_Settings(sfRenderWindow* Game, sfImage* BG_image, sfFont* settings
         }
     }
     while (launched);
+
+    screen_Destroy(Settings);
 
     return close;
 }
