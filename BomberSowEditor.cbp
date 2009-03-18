@@ -112,6 +112,9 @@
 			<Add directory="src\" />
 			<Add directory="dep\CSFML-GUI" />
 		</Compiler>
+		<Linker>
+			<Add option="-lopengl32" />
+		</Linker>
 		<Unit filename="dep\CSFML-GUI\Gui\Gui.c">
 			<Option compilerVar="CC" />
 		</Unit>
