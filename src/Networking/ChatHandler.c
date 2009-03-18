@@ -24,7 +24,7 @@ sfPacket* chat_CreatePacket(Player* player, const char* message)
     return new_packet;
 }
 
-// A REVOIR
+// Lit le paquet et renvoie le message
 char* chat_ReadPacket(sfPacket* packet)
 {
     char* recv_mess = NULL;
@@ -35,16 +35,21 @@ char* chat_ReadPacket(sfPacket* packet)
     return recv_mess;
 }
 
-void chat_AddChatPacket2Map(Map* map, sfPacket* packet)
+// Sert seulement à stocker map et id joueur pour envoi en thread
+ChatData* chat_CreatePlayerData(Map* map, unsigned int player_id)
 {
-    assert(map && packet);
-    if (map->chat_packets2send)
-        assert(map->chat_packets2send->packets = (sfPacket**) realloc(map->chat_packets2send->packets, ++map->chat_packets2send->nb_packets * sizeof(sfPacket*)));
-    else
-    {
-        assert(map->chat_packets2send = (PacketList*) malloc(sizeof(PacketList)));
-        assert(map->chat_packets2send->packets = (sfPacket**) malloc(++map->chat_packets2send->nb_packets * sizeof(sfPacket*)));
-    }
+    assert(map);
 
-    map->chat_packets2send->packets[map->chat_packets2send->nb_packets - 1] = packet;
+    ChatData* data = NULL;
+    assert(data = (ChatData*) malloc(sizeof(ChatData)));
+
+    data->map = map;
+    data->player_id = player_id;
+
+    return data;
+}
+
+void chat_DestroyPlayerData(ChatData* data)
+{
+    free(data);
 }

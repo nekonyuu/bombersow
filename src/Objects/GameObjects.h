@@ -134,7 +134,6 @@ typedef struct MAP
     unsigned int nb_bullets;        // Nombre de balles tirées
 
     PacketList* game_packets2send;  // Liste des paquets de jeu à envoyer
-    PacketList* chat_packets2send;  // Liste des paquets de conversation à envoyer
 
     _Bool chat_started;             // Salon de discussion démarré ?
     _Bool game_started;             // Partie démarrée ?
@@ -174,5 +173,6 @@ void map_AddPlayer(Map*, Player*);
 void map_DelPlayer(Map*, unsigned int);
 void map_AddBullet(Map*, Bullet*);
 void map_DelBullet(Map*, unsigned int);
+void map_UpdateDisconnectedPlayers(void*);
 
 #endif

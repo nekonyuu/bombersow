@@ -51,7 +51,6 @@ void display_Menu(sfRenderWindow* Game)
             switch (Event.Type)
             {
             case sfEvtClosed:                                   // Fermer : Quitter le jeu
-                screen_Destroy(Menu);                           // Fermeture du Menu et nettoyage des ressources
                 launched = false;
                 break;
 
@@ -59,7 +58,6 @@ void display_Menu(sfRenderWindow* Game)
                 switch (Event.Key.Code)
                 {
                 case sfKeyEscape:                               // Quitte le jeu
-                    screen_Destroy(Menu);
                     launched = false;
                     break;
 
@@ -79,7 +77,6 @@ void display_Menu(sfRenderWindow* Game)
                             launched = false;
                         break;
                     case 4:                                     // Quitter
-                        screen_Destroy(Menu);
                         launched = false;
                         break;
                     }
@@ -114,6 +111,7 @@ void display_Menu(sfRenderWindow* Game)
     sfFont_Destroy(menuFont);
     sfImage_Destroy(BG_image);
     sfImage_Destroy(image_animation);
+    screen_Destroy(Menu);
     animation_Destroy(animation);
 
     return;

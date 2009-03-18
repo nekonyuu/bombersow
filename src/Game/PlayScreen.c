@@ -39,8 +39,7 @@ _Bool display_PlayMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont
             // Fermer : Quitter le jeu
             if (Event.Type == sfEvtClosed)
             {
-                screen_Destroy(playMenu);
-                close = true;                                       // Fermeture du Menu et nettoyage des ressources
+                close = true;                                       // Fermeture du Menu
                 launched = false;
             }
 
@@ -48,7 +47,6 @@ _Bool display_PlayMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont
             {
                 if (Event.Key.Code == sfKeyEscape)                  // Echap : Reviens en arrière
                 {
-                    screen_Destroy(playMenu);
                     launched = false;
                 }
                 else if (Event.Key.Code == sfKeyReturn)
@@ -78,6 +76,8 @@ _Bool display_PlayMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont
         }
     }
     while (launched);
+
+    screen_Destroy(playMenu);
 
     return close;
 }
