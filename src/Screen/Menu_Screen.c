@@ -1,5 +1,5 @@
 #include <assert.h>
-#include "SFML/Graphics.h"
+#include <SFML/Graphics.h>
 #include "Gui/Gui.h"
 #include "GraphicEngine/Image.h"
 #include "Screen/Menu_Screen.h"

@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "SFML/Graphics.h"
+#include <SFML/Graphics.h>
 
 // Type de Widget
 typedef enum WIDGET_TYPE {BOUTON, TEXTBOX} Widget_Type;

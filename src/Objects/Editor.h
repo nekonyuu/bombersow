@@ -1,12 +1,11 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
-#include "SFML/Graphics.h"
+#include <SFML/Graphics.h>
 #include "GraphicEngine/Image.h"
 
 typedef struct EDITOR
 {
-
     int mouse_x;
     int mouse_y;
 
@@ -16,7 +15,6 @@ typedef struct EDITOR
     int selected_id;
 
     Animation* animation_create;
-
 
 } Editor;
 

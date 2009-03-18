@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "SFML/Graphics.h"
+#include <SFML/Graphics.h>
 #include "GraphicEngine/Image.h"
 #include "Objects/Editor.h"
 

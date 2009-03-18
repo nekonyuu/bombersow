@@ -20,6 +20,8 @@ Data* data_Create();
 void data_Destroy(Data*);
 Data* data_Parser(char*, char*);            // Parser qui recupere un char des champs correspondant a un type
 
+void dossier_Read_Image(Image* image, char* path);
+
 #endif
 
 // Structure des Fichier .MAP

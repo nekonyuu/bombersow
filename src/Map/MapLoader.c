@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <dirent.h>
 #include "BaseSystem/Logging.h"
 #include "Map/MapLoader.h"
 
@@ -141,4 +142,53 @@ void map_Loader_Image(Image* image_, char* path)
     }
 
     data_Destroy(liste);
+}
+
+void dossier_Read_Image(Image* image, char* path)
+{
+
+    DIR *rep = opendir(path);
+
+
+    int i = 0;
+
+    int nombre_image = 0;
+    char **image_path = NULL;
+
+    if (rep != NULL)
+    {
+        struct dirent *ent;
+
+        while ((ent = readdir(rep)) != NULL)
+        {
+            if (strcmp(ent->d_name, ".") && strcmp(ent->d_name,".."))
+            {
+                nombre_image++;
+            }
+        }
+
+        assert(image_path = (char**) malloc(nombre_image*sizeof(char*)));
+        for (i = 0; i < nombre_image; i++)
+            assert(image_path[i] = (char*) malloc(100*sizeof(char*)));
+
+        rewinddir(rep);
+        i = 0;
+        while ((ent = readdir (rep)) != NULL)
+        {
+            if (strcmp(ent->d_name, ".") && strcmp(ent->d_name,".."))
+            {
+                strcpy(image_path[i], path);
+                strcpy(image_path[i], strcat(image_path[i], ent->d_name));
+                i++;
+            }
+        }
+
+        closedir (rep);
+    }
+
+    image_Loader(image, image_path, nombre_image);
+
+    for (i = 0; i < nombre_image; i++)
+        free(image_path[i]);
+    free(image_path);
 }

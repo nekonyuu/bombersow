@@ -1,8 +1,8 @@
 #ifndef OBJECTSSCREEN_H
 #define OBJECTSSCREEN_H
 
-#include "SFML/Graphics.h"
-#include "Objects/Objects.h"
+#include <SFML/Graphics.h>
+#include "Objects/GameObjects.h"
 
 typedef struct OBJECT_SCREEN
 {

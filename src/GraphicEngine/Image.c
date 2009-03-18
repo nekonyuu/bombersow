@@ -37,6 +37,7 @@ void image_Loader(Image *image_, char **image_liste, int taille_liste)
     }
 
     image_->image_nombre = taille_liste;
+
 }
 
 // Acquisition d'une image suivant son id dans l'objet Image
@@ -82,11 +83,16 @@ Animation* animation_Create(sfImage *image, int x, int y, int hauteur, int large
     animation_->y = y;
     animation_->image_hauteur = hauteur;
     animation_->image_largeur = largeur;
-    animation_->nombre_image = nombre_image;
+    animation_->nombre_image = nombre_image-1;
     animation_->cur_image = cur_image;
     animation_->play = play;
     animation_->fps = fps;
     animation_->clock = sfClock_Create();
+
+    animation_->x_c = 0;
+    animation_->y_c = 0;
+
+    //printf("%f",animation_->fps);
 
     return animation_;
 }
@@ -94,9 +100,21 @@ Animation* animation_Create(sfImage *image, int x, int y, int hauteur, int large
 // Destructeur
 void animation_Destroy(Animation *animation_)
 {
-    sfSprite_Destroy(animation_->sprite);
-    sfClock_Destroy(animation_->clock);
-    free(animation_);
+    if(animation_ != NULL){
+        sfSprite_Destroy(animation_->sprite);
+        sfClock_Destroy(animation_->clock);
+        free(animation_);
+    }
+}
+
+//Set position
+void animation_SetPosition(Animation* animation, int x, int y)
+{
+
+    animation->x_c = x;
+    animation->y_c = y;
+    sfSprite_SetPosition(animation->sprite, x, y);
+
 }
 
 // Lecture
@@ -111,7 +129,7 @@ void animation_Play(Animation* animation_, int play)
 void animation_Draw(Animation* animation_, sfRenderWindow* App)
 {
 
-    int time = sfClock_GetTime(animation_->clock);
+    float time = sfClock_GetTime(animation_->clock);
 
     if (animation_->play != STOP && animation_->fps < time)
     {
@@ -120,16 +138,7 @@ void animation_Draw(Animation* animation_, sfRenderWindow* App)
         sfClock_Reset(animation_->clock);
     }
 
-    sfIntRect rect =
-    {
-        animation_->x + animation_->image_largeur*animation_->cur_image,
-        animation_->y,
-        animation_->x + animation_->image_largeur*animation_->cur_image+animation_->image_largeur,
-        animation_->y + animation_->image_hauteur
-    };
-
+    sfIntRect rect = {animation_->x + animation_->image_largeur*animation_->cur_image, animation_->y, animation_->x + animation_->image_largeur*animation_->cur_image+animation_->image_largeur, animation_->y + animation_->image_hauteur};
     sfSprite_SetSubRect(animation_->sprite, &rect);
     sfRenderWindow_DrawSprite(App, animation_->sprite);
 }
-
-

@@ -1,10 +1,10 @@
 #ifndef MENUSCREEN_H
 #define MENUSCREEN_H
 
-#include "SFML/Graphics.h"
+#include <SFML/Graphics.h>
 #include "Gui/Gui.h"
 #include "Objects/Editor.h"
-#include "Objects/Objects.h"
+#include "Objects/GameObjects.h"
 
 typedef enum MENU_IMAGE {MENU_BACKGROUND, MENU_TEXTBOX_BACKGROUND, MENU_BOUTON}Menu_image;
 typedef struct OBJECT_MENU

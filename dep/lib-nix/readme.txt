@@ -6,4 +6,5 @@ make install
 cd ../CSFML
 make install
 
-Ensuite avec CodeBlocks, compiler en Release Linux ou Debug Linux, et lancez l'executable ;)
+Ensuite vous devez installer les paquets d'openal-dev et libsndfile, puis avec CodeBlocks, 
+compiler en Release Linux ou Debug Linux, et lancez l'executable ;)

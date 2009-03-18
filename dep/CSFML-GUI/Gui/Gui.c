@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <string.h>
-#include "SFML/Graphics.h"
+#include <SFML/Graphics.h>
 #include "BaseSystem/Logging.h"
 #include "Gui/Gui.h"
 
@@ -8,7 +8,6 @@
 
 Widget_cadre* widget_cadre_Create(sfImage* image, sfColor couleur, int x, int y, int width, int height)
 {
-
     Widget_cadre* cadre = NULL;
     assert(cadre = (Widget_cadre*) malloc(sizeof(Widget_cadre)));
 
@@ -140,7 +139,6 @@ void widget_textbox_var_Get(Widget_textbox_var* textbox_var, Widget_textbox* tex
 
 void widget_textbox_var_Set(Widget_textbox_var* textbox_var, Widget_textbox* textbox)
 {
-
     switch (textbox_var->type)
     {
     case INT:
@@ -287,8 +285,7 @@ void widget_textbox_Draw(sfRenderWindow* Game, Widget_textbox* textbox)
 }
 
 
-//Widget bouton
-
+// Widget bouton
 Widget_bouton* widget_bouton_Create(sfIntRect rect, void (*f)(void*, void*), void* arg, void* arg2, sfImage* image_OnOver, sfImage* image_OnClick, sfImage* image_OnNothing)
 {
     Widget_bouton *bouton = NULL;
@@ -362,9 +359,7 @@ void widget_bouton_Draw(sfRenderWindow* Game, Widget_bouton* bouton)
     }
 }
 
-
-
-//Widget slide
+// Widget slide
 Widget_slide* widget_slide_Create(int x, int y, int l, int h, int nbr_valeur, sfColor couleur, sfImage* s_top, sfImage* s_bottom, sfImage* s_middle)
 {
     Widget_slide* slide = NULL;
@@ -447,7 +442,6 @@ void widget_slide_Click(Widget_slide* slide, int x, int y)
     }
 }
 
-
 //Gui
 Gui* gui_Create()
 {
@@ -524,19 +518,13 @@ void gui_Click(Gui* gui, int x, int y)
 
 void gui_MouseOver(Gui* gui, int x, int y)
 {
-
     for (int i = 0; i < gui->widget_bouton_nombre; i++)
         widget_bouton_Over(gui->widget_bouton[i], x, y);
-
 }
 
 void gui_TextEntered(Gui* gui, sfUint32 unicode)
 {
     for (int i = 0; i < gui->widget_textbox_nombre; i++)
-    {
         if (widget_textbox_Check(gui->widget_textbox[i]))
-        {
             widget_textbox_Write(gui->widget_textbox[i], unicode);
-        }
-    }
 }

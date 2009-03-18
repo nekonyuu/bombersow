@@ -1,5 +1,5 @@
 #include <assert.h>
-#include "SFML/Graphics.h"
+#include <SFML/Graphics.h>
 #include "Screen/Objects_Screen.h"
 
 Object_Screen* object_screen_Create(sfRenderWindow* Game, sfImage* image, int x, int y, int largeur, int hauteur)

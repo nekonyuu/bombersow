@@ -6,19 +6,6 @@
 #define BOUCLE -1
 #define STOP 0
 
-//Struct du gestionnaire d'image
-typedef struct IMAGE
-{
-    sfImage **image_tab;        // Tableau stockant les images d'une map
-    int image_nombre;           // Nombre d'images du tableau
-}Image;
-
-Image* image_Create();
-void image_Destroy(Image*);
-
-void image_Loader(Image*, char**, int);     //Loader d'image
-sfImage* image_Get(Image*, int);            //Recuprer une sfImage a partir de son ID
-
 //Struct pour les anumation
 typedef struct ANIMATION
 {
@@ -26,6 +13,11 @@ typedef struct ANIMATION
     //Coordonnée de la premiere case
     int x;
     int y;
+
+    //Coordonnée de dessin
+    int x_c;
+    int y_c;
+
     //Taille d'une case
     int image_hauteur;
     int image_largeur;
@@ -33,7 +25,7 @@ typedef struct ANIMATION
     int nombre_image;
     int cur_image;              // Position dans l'animation
     int play;                   // Nombre de lectures à effectuer
-    float fps;                  // Temps d'attente entre chaque image (en ms)
+    float fps;                    // Temps d'attente entre chaque image (en s)
 
     sfClock *clock;             // Timer
 } Animation;
@@ -44,5 +36,23 @@ void animation_Destroy(Animation*);
 
 void animation_Play(Animation*, int);
 void animation_Draw(Animation*, sfRenderWindow*);
+void animation_SetPosition(Animation*, int, int);
+
+
+//Struct du gestionnaire d'image
+typedef struct IMAGE
+{
+    sfImage **image_tab;        // Tableau stockant les images d'une map
+    int image_nombre;           // Nombre d'images du tableau
+
+
+}Image;
+
+Image* image_Create();
+void image_Destroy(Image*);
+
+void image_Loader(Image*, char**, int);     //Loader d'image
+sfImage* image_Get(Image*, int);            //Recuprer une sfImage a partir de son ID
+
 #endif
 
