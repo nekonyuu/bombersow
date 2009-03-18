@@ -6,6 +6,7 @@
 #include "GraphicEngine/Image.h"
 #include "Objects/Editor.h"
 
+
 Editor* editor_Create()
 {
 
@@ -21,8 +22,11 @@ Editor* editor_Create()
 
     editor->animation_create = animation_Create(NULL, 0, 0, 0, 0, 0, 0, 0, 0);
 
-    editor->object = NULL;
-    editor->nombre_object = 0;
+    editor->nombre_object = 200;
+    assert(editor->object = (Object**) malloc(editor->nombre_object*sizeof(Object)));
+    for(int i = 0; i < editor->nombre_object; i++)
+        editor->object[i] = NULL;
+
     editor->object_create = object_Create();
 
 
@@ -52,9 +56,9 @@ void editor_Destroy(Editor* editor)
 void editor_Draw(sfRenderWindow* Game, Editor* editor)
 {
 
-    if(editor->selected_type == 1)
+    if(editor->selected_type == 0)
         sfRenderWindow_DrawSprite(Game, editor->selected_image);
-    else if(editor->selected_type == 2)
+    else if(editor->selected_type == 1)
         animation_Draw(editor->selected_animation, Game);
 
 }
@@ -62,7 +66,7 @@ void editor_Draw(sfRenderWindow* Game, Editor* editor)
 void editor_MouseMove(Editor* editor, int x, int y)
 {
 
-    if(editor->selected_type == 1){
+    if(editor->selected_type == 0){
         if(sfSprite_GetWidth(editor->selected_image)+x < 1100){
             sfSprite_SetPosition(editor->selected_image, x, y);
         }else{

@@ -13,19 +13,15 @@ typedef struct MAP_SCREEN
 
     sfSprite* background;
 
-    Object** object_0;
-    int nombre_object_0;
-
-    Object** object_1;
-    int nombre_object_1;
-
-    Object** object_2;
-    int nombre_object_2;
+    Object*** object;
+    int nombre_object[3];
 
     int x;
     int y;
     int largeur;
     int hauteur;
+
+    Editor* editor;
 
 }Map_screen;
 
@@ -34,5 +30,7 @@ void map_screen_Destroy(Map_screen*);
 void map_screen_Draw(Map_screen*);
 
 void map_screen_Click(Map_screen*, int, int);
+
+void map_screen_AddObj(Map_screen*, int, Object*);
 
 #endif

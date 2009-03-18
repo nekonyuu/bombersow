@@ -400,6 +400,20 @@ Widget_slide* widget_slide_Create(int x, int y, int l, int h, int nbr_valeur, sf
     return slide;
 }
 
+void widget_slide_SetNbrVal(Widget_slide* slide, int nbr_valeur)
+{
+
+    slide->valeur = 0;
+    sfSprite_SetPosition(slide->sprite_middle, slide->x, slide->y+sfSprite_GetHeight(slide->sprite_top));
+    sfSprite_Resize(slide->sprite_middle, slide->largeur, (slide->hauteur-sfSprite_GetHeight(slide->sprite_bottom)-sfSprite_GetHeight(slide->sprite_top))/nbr_valeur);
+
+    slide->hauteur_step = (slide->hauteur-sfSprite_GetHeight(slide->sprite_bottom)-sfSprite_GetHeight(slide->sprite_top))/nbr_valeur;
+
+    slide->nombre_valeur = nbr_valeur;
+
+}
+
+
 void widget_slide_Destroy(Widget_slide* slide)
 {
     sfSprite_Destroy(slide->sprite_top);

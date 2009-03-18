@@ -118,7 +118,7 @@ typedef struct WIDGET_SLIDE
     int largeur;
     int hauteur;
 
-    int hauteur_step;
+    float hauteur_step;
     int nombre_valeur;
     int valeur;
 
@@ -128,6 +128,7 @@ Widget_slide* widget_slide_Create(int, int, int, int, int, sfColor, sfImage*, sf
 void widget_slide_Destroy(Widget_slide*);
 void widget_slide_Draw(sfRenderWindow*, Widget_slide*);
 void widget_slide_Click(Widget_slide*, int, int);
+void widget_slide_SetNbrVal(Widget_slide*, int);
 
 
 //Gui
