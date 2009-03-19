@@ -6,7 +6,6 @@
 #include "Screen/Map_Screen.h"
 #include "Map/MapLoader.h"
 
-
 int main()
 {
     sfWindowSettings Settings = {24, 8, 0};
@@ -107,7 +106,6 @@ int main()
 
     //Destroy de l'objet editor
     editor_Destroy(editor);
-
 
     return EXIT_SUCCESS;
 

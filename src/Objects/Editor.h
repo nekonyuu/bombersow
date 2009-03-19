@@ -16,6 +16,9 @@ typedef struct EDITOR
     _Bool selected_type;
     int selected_id;
 
+    int bool_dynamic;
+    int dynamic_step;
+
     int current_plan;
 
     Animation* animation_create;
@@ -25,6 +28,7 @@ typedef struct EDITOR
     int nombre_object;
 
     Object* object_create;
+    Object* object_create_dynamic;
 
 } Editor;
 

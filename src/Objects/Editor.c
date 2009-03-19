@@ -21,6 +21,9 @@ Editor* editor_Create()
 
     editor->current_plan = 1;
 
+    editor->bool_dynamic = 0;
+    editor->dynamic_step = 0;
+
     editor->animation_create = animation_Create(NULL, 0, 0, 0, 0, 0, 0, 0, 0);
 
     editor->nombre_object = 200;
@@ -29,6 +32,8 @@ Editor* editor_Create()
         editor->object[i] = NULL;
 
     editor->object_create = object_Create();
+
+    editor->object_create_dynamic = NULL;
 
 
     return editor;
@@ -47,6 +52,7 @@ void editor_Destroy(Editor* editor)
 
     object_Destroy(editor->object_create);
 
+    object_Destroy(editor->object_create_dynamic);
 
 
     free(editor);
@@ -57,10 +63,19 @@ void editor_Destroy(Editor* editor)
 void editor_Draw(sfRenderWindow* Game, Editor* editor)
 {
 
-    if(editor->selected_type == 0)
+    if(editor->selected_type == 0){
+        if(editor->dynamic_step == 1)
+            sfSprite_SetColor(editor->selected_image, sfColor_FromRGBA(255,255,255,120));
+        else
+            sfSprite_SetColor(editor->selected_image, sfColor_FromRGBA(255,255,255,255));
         sfRenderWindow_DrawSprite(Game, editor->selected_image);
-    else if(editor->selected_type == 1)
+    }else if(editor->selected_type == 1){
+        if(editor->dynamic_step == 1)
+            sfSprite_SetColor(editor->selected_animation->sprite, sfColor_FromRGBA(255,255,255,120));
+        else
+            sfSprite_SetColor(editor->selected_animation->sprite, sfColor_FromRGBA(255,255,255,255));
         animation_Draw(editor->selected_animation, Game);
+    }
 
 }
 
@@ -96,6 +111,6 @@ void editor_Add_Animation(Editor* editor, Animation* animation){
 
     animation_Destroy(editor->selected_animation);
     editor->selected_animation = animation_Create(sfSprite_GetImage(editor->selected_image), animation->x, animation->y, animation->image_hauteur, animation->image_largeur, animation->nombre_image, 0, BOUCLE, animation->fps);
-    editor->selected_type = 2;
+    editor->selected_type = 1;
 
 }

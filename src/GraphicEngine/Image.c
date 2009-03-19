@@ -101,7 +101,8 @@ Animation* animation_Create(sfImage *image, int x, int y, int hauteur, int large
 void animation_Destroy(Animation *animation_)
 {
     if(animation_ != NULL){
-        sfSprite_Destroy(animation_->sprite);
+        if(animation_->sprite != NULL)
+            sfSprite_Destroy(animation_->sprite);
         sfClock_Destroy(animation_->clock);
         free(animation_);
     }

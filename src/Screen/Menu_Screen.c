@@ -98,7 +98,7 @@ Object_Menu* menu_screen_Create(sfRenderWindow* Game, Image* image, int x, int y
     textbox = widget_textbox_Create(70, 175, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &editor->object_create->type, "Type :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox);
 
-    textbox = widget_textbox_Create(10, 195, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &editor->object_create->type, "Dynamique :", sfBlack, NULL, 12);
+    textbox = widget_textbox_Create(10, 195, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &editor->bool_dynamic, "Dynamique :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox);
 
     textbox = widget_textbox_Create(110, 195, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &editor->object_create->speed, "Speed :", sfBlack, NULL, 12);

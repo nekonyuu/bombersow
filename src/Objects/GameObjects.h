@@ -39,6 +39,7 @@ typedef struct OBJECT
     float dest_coord_y;
 
     unsigned int speed;             // Vitesse de mouvement (Plate-forme mobile & Pièges)
+    sfClock* clock_mouvement;        // Clock pour les mouvements.
 
     unsigned int weapon_id;         // ID de l'arme liée au dessin (si type <= 2)
     unsigned int nb_ammo;           // Nombre de munitions ajoutées par le pack
@@ -147,6 +148,8 @@ Weapon armory[NB_MAX_WEAPONS];      // Armes du jeu en accès global
 
 Object* object_Create();
 void object_Destroy(Object*);
+void object_LoadImg(Object*, sfImage*, Animation*);
+void object_Draw(sfRenderWindow*, Object*);
 
 Weapon* weapon_Create(int);
 void weapon_Destroy(Weapon*);
