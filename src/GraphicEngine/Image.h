@@ -38,6 +38,28 @@ void animation_Play(Animation*, int);
 void animation_Draw(Animation*, sfRenderWindow*);
 void animation_SetPosition(Animation*, int, int);
 
+//Struct des drawables
+typedef struct SPRITE
+{
+
+    sfSprite* sprite;
+    Animation* animation;
+
+    int type;           //Sprite/Animation
+
+    int x;
+    int y;
+    int largeur;
+    int hauteur;
+
+}Sprite;
+
+Sprite* sprite_Create(int, int, sfSprite*, Animation*);
+void sprite_Destroy(Sprite*);
+void sprite_SetPosition(Sprite*, int, int);
+void sprite_Draw(sfRenderWindow*, Sprite*);
+void sprite_SetColor(Sprite*, sfColor);
+
 
 //Struct du gestionnaire d'image
 typedef struct IMAGE

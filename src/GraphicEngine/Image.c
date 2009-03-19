@@ -143,3 +143,86 @@ void animation_Draw(Animation* animation_, sfRenderWindow* App)
     sfSprite_SetSubRect(animation_->sprite, &rect);
     sfRenderWindow_DrawSprite(App, animation_->sprite);
 }
+
+
+
+
+
+//Sprite
+Sprite* sprite_Create(int x, int y, sfSprite* sfsprite, Animation* animation)
+{
+
+    Sprite* sprite;
+    assert(sprite = (Sprite*) malloc(sizeof(Sprite)));
+
+    sprite->x = x;
+    sprite->y = y;
+
+    if(sfsprite != NULL){
+        sprite->sprite = sfsprite;
+        sprite->type = 0;
+
+        sprite->hauteur = sfSprite_GetHeight(sfsprite);
+        sprite->largeur = sfSprite_GetWidth(sfsprite);
+    }else{
+        sprite->animation = animation;
+        sprite->type = 1;
+
+        sprite->hauteur = animation->image_hauteur;
+        sprite->largeur = animation->image_largeur;
+    }
+
+    return sprite;
+}
+
+void sprite_Destroy(Sprite* sprite)
+{
+
+    if(sprite != NULL){
+        if(sprite->sprite != NULL)
+            sfSprite_Destroy(sprite->sprite);
+
+        if(sprite->animation != NULL)
+            animation_Destroy(sprite->animation);
+
+        free(sprite);
+        sprite = NULL;
+    }
+
+}
+
+void sprite_SetPosition(Sprite* sprite, int x, int y)
+{
+
+    sprite->x = x;
+    sprite->y = y;
+
+    if(sprite->type){
+        animation_SetPosition(sprite->animation, x , y);
+    }else{
+        sfSprite_SetPosition(sprite->sprite, (float)x, (float)y);
+    }
+
+}
+
+void sprite_Draw(sfRenderWindow* Game, Sprite* sprite)
+{
+
+    if(sprite->type){
+        animation_Draw(sprite->animation, Game);
+    }else{
+        sfRenderWindow_DrawSprite(Game, sprite->sprite);
+    }
+
+}
+
+void sprite_SetColor(Sprite* sprite, sfColor color)
+{
+
+    if(sprite->type){
+        sfSprite_SetColor(sprite->animation->sprite, color);
+    }else{
+        sfSprite_SetColor(sprite->sprite, color);
+    }
+
+}
