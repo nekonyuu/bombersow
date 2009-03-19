@@ -28,6 +28,7 @@ typedef struct MAP_SCREEN
 Map_screen* map_screen_Create(sfRenderWindow*, sfImage*, Editor*, int, int, int, int);
 void map_screen_Destroy(Map_screen*);
 void map_screen_Draw(Map_screen*);
+void map_screen_DrawPlan(Map_screen*, int);
 
 void map_screen_Click(Map_screen*, int, int);
 

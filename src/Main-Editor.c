@@ -15,40 +15,38 @@ int main()
 
     sfEvent Event;
 
+    //Chargement des images des objets
     Image *image_object = image_Create();
     dossier_Read_Image(image_object, "base/images/");
 
+    //Chargement des images des menu
     Image *image_menu = image_Create();
-    char *image_text[] = {"base/fond_menu.png", "base/textbox_back.png", "base/fond_menu_bouton.png", "base/slide_top.png", "base/slide_middle.png", "base/slide_bottom.png"};
-    image_Loader(image_menu, image_text, 6);
+    char *image_text[] = {"base/fond_menu.png", "base/textbox_back.png", "base/fond_menu_bouton.png", "base/slide_top.png", "base/slide_middle.png", "base/slide_bottom.png", "base/fond_object.png", "base/blank_map.png", "base/fond_menu_bouton2.png"};
+    image_Loader(image_menu, image_text, 9);
 
+
+    Editor* editor = editor_Create();   //Création de l'objet editor
 
     // Création de la fenêtre principale
     Game = sfRenderWindow_Create(Mode, "BomberSowEditor", sfClose, Settings);
-    sfImage *fond_object = sfImage_CreateFromFile("base/fond_object.png");
-    Object_Screen* object_screen = object_screen_Create(Game, fond_object, 0, 600, 1100, 200, image_menu);
-    object_screen_Load_Object(object_screen, image_object);
 
-    Editor* editor = editor_Create();
-    Object_Menu* menu_screen = menu_screen_Create(Game, image_menu, 0, 0, 200, 600, editor);
+    //Création du screen object
+    Object_Screen* object_screen = object_screen_Create(Game, image_Get(image_menu, 6), 0, 600, 1100, 200, image_menu, editor);
+    object_screen_Load_Object(object_screen, image_object); //Load des image
 
-    Map_screen* map_screen = map_screen_Create(Game, NULL, editor, 200, 0, 900, 600);
+
+    Object_Menu* menu_screen = menu_screen_Create(Game, image_menu, 0, 0, 200, 600, editor, object_screen); // Création du screen menu
+
+    Map_screen* map_screen = map_screen_Create(Game, image_Get(image_menu, 7), editor, 200, 0, 900, 600);   // Création du screen map
 
 
     if (!Game)
         return EXIT_FAILURE;
 
+    //Set des option de la fenetre
     sfRenderWindow_SetFramerateLimit(Game, 60);
+
     // Démarrage du jeu
-
-    int id_image = 0;
-    sfSprite* temp_sprite = sfSprite_Create();
-    sfSprite_SetImage(temp_sprite, image_Get(image_object, id_image));
-
-    editor->selected_id = 0;
-    editor->selected_image = temp_sprite;
-    editor->selected_type = 0;
-
     while (sfRenderWindow_IsOpened(Game))
     {
         while (sfRenderWindow_GetEvent(Game, &Event))           // Surveillance des évènements
@@ -68,18 +66,7 @@ int main()
             if (Event.Type == sfEvtMouseButtonPressed)
             {
 
-                int id_temp = object_screen_Click(object_screen, Event.MouseButton.X, Event.MouseButton.Y) ;
-                if (id_temp != -1)
-                {
-                    id_image = id_temp;
-                    sfSprite_Destroy(temp_sprite);
-                    temp_sprite = sfSprite_Create();
-                    sfSprite_SetImage(temp_sprite, image_Get(image_object, id_image));
-                    sfSprite_SetPosition(temp_sprite, Event.MouseButton.X, Event.MouseButton.Y);
-                    editor->selected_image = temp_sprite;
-                    editor->selected_id = id_image;
-                    editor->selected_type = 0;
-                }
+                object_screen_Click(object_screen, Event.MouseButton.X, Event.MouseButton.Y);
                 menu_screen_Click(menu_screen, Event.MouseButton.X, Event.MouseButton.Y) ;
                 map_screen_Click(map_screen, Event.MouseButton.X, Event.MouseButton.Y) ;
             }
@@ -97,9 +84,12 @@ int main()
 
         object_screen_Draw(object_screen);
         menu_screen_Draw(menu_screen);
-        map_screen_Draw(map_screen);
 
-        editor_Draw(Game, editor);
+        for(int i = 0; i < 3; i++){
+            map_screen_DrawPlan(map_screen, i);
+            if(i == editor->current_plan)
+                editor_Draw(Game, editor);
+        }
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
     }
@@ -107,18 +97,16 @@ int main()
     // Nettoyage des ressources
     sfRenderWindow_Destroy(Game);
 
+    //Destroy des screen
     object_screen_Destroy(object_screen);
     menu_screen_Destroy(menu_screen);
+    map_screen_Destroy(map_screen);
 
+    //Destroy du gestionnaire d'image des objet
     image_Destroy(image_object);
 
-    sfImage_Destroy(fond_object);
-
-    sfSprite_Destroy(temp_sprite);
-
+    //Destroy de l'objet editor
     editor_Destroy(editor);
-
-    map_screen_Destroy(map_screen);
 
 
     return EXIT_SUCCESS;

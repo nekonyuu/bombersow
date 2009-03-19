@@ -175,5 +175,4 @@ void map_AddBullet(Map*, Bullet*);
 void map_DelBullet(Map*, unsigned int);
 void map_UpdateDisconnectedPlayers(void*);
 
-
 #endif

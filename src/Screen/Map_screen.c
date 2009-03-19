@@ -78,6 +78,20 @@ void map_screen_Draw(Map_screen* map)
 
 }
 
+void map_screen_DrawPlan(Map_screen* map, int plan)
+{
+    if(plan == 0)
+        sfRenderWindow_DrawSprite(map->Game, map->background);
+
+    for(int i = 0; i < map->nombre_object[plan]; i++){
+        if(map->object[plan][i]->draw_animation != NULL){
+            animation_Draw(map->object[plan][i]->draw_animation, map->Game);
+        }else
+            sfRenderWindow_DrawSprite(map->Game, map->object[plan][i]->draw_img);
+    }
+
+}
+
 
 void map_screen_Click(Map_screen* map, int mouse_x, int mouse_y)
 {
@@ -90,21 +104,42 @@ void map_screen_Click(Map_screen* map, int mouse_x, int mouse_y)
 
         int hash_object = hash(temp_char)%200;
         if(map->editor->object[hash_object] != NULL){
-
-        }else{
-            map->editor->object[hash_object] = object_Create();
-            map->editor->object[hash_object]->type = map->editor->object_create->type;
-            map->editor->object[hash_object]->bool_animation = map->editor->selected_type;
-            sfSprite_SetImage(map->editor->object[hash_object]->draw_img, sfSprite_GetImage(map->editor->selected_image));
-            map->editor->object[hash_object]->draw_animation = map->editor->selected_animation;
+            if(sfSprite_GetImage(map->editor->selected_image) != sfSprite_GetImage(map->editor->object[hash_object]->draw_img) || map->editor->object[hash_object]->draw_animation != map->editor->selected_animation){
+                for(int i = 0; i < 200; i++){
+                    if( (sfSprite_GetImage(map->editor->selected_image) == sfSprite_GetImage(map->editor->object[hash_object]->draw_img) || map->editor->object[hash_object]->draw_animation == map->editor->selected_animation) || map->editor->object[i] == NULL){
+                        hash_object = i;
+                    }
+                }
+            }
         }
+
+        map->editor->object[hash_object] = object_Create();
+        map->editor->object[hash_object]->type = map->editor->object_create->type;
+        map->editor->object[hash_object]->bool_animation = map->editor->selected_type;
+        sfSprite_SetImage(map->editor->object[hash_object]->draw_img, sfSprite_GetImage(map->editor->selected_image));
+        map->editor->object[hash_object]->draw_animation = map->editor->selected_animation;
 
         Object* obj = object_Create();
         obj->type = map->editor->object_create->type;
         obj->bool_animation = map->editor->selected_type;
         sfSprite_SetImage(obj->draw_img, sfSprite_GetImage(map->editor->selected_image));
-        sfSprite_SetPosition(obj->draw_img, mouse_x, mouse_y);
-        obj->draw_animation = map->editor->selected_animation;
+
+        sfSprite_SetPosition(obj->draw_img, sfSprite_GetX(map->editor->selected_image), sfSprite_GetY(map->editor->selected_image));
+
+        if(obj->bool_animation){
+            obj->draw_animation = animation_Create(
+                                        sfSprite_GetImage(map->editor->selected_animation->sprite),
+                                        map->editor->selected_animation->x,
+                                        map->editor->selected_animation->y,
+                                        map->editor->selected_animation->image_hauteur,
+                                        map->editor->selected_animation->image_largeur,
+                                        map->editor->selected_animation->nombre_image,
+                                        0, BOUCLE,
+                                        map->editor->selected_animation->fps);;
+            animation_SetPosition(obj->draw_animation, map->editor->selected_animation->x_c, map->editor->selected_animation->y_c);
+        }
+
+        obj->objectID = hash_object;
 
         map_screen_AddObj(map, map->editor->current_plan, obj);
     }
