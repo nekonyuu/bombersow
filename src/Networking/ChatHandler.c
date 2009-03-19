@@ -5,12 +5,12 @@
 
 sfPacket* chat_CreatePacket(Player* player, const char* message)
 {
-    if(!player)
+    if (!player)
     {
         logging_Warning("chat_CreatePacket", "Player object sent NULL, aborting packet creation");
         return NULL;
     }
-    if(!message)
+    if (!message)
     {
         logging_Warning("chat_CreatePacket", "message sent NULL, aborting packet creation");
         return NULL;

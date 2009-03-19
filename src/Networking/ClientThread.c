@@ -14,7 +14,7 @@ void client_Main(Map* map, sfIPAddress ip, char* name)
 
 sfPacket* client_CreateConnectPacket(char* name)
 {
-    if(!name)
+    if (!name)
     {
         logging_Warning("player_CreateConnectPacket", "No name sent, aborting packet creation");
         return NULL;
@@ -29,7 +29,7 @@ sfPacket* client_CreateConnectPacket(char* name)
 
 sfPacket* client_CreateDisconnectPacket(unsigned int player_id)
 {
-    if(!player_id)
+    if (!player_id)
     {
         logging_Warning("player_CreateDisconnectPacket", "No player_id sent, aborting packet creation");
         return NULL;

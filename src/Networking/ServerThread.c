@@ -143,10 +143,6 @@ void server_Listen_TCP(void* UserData)
 
         case DISCONNECT:
         {
-            for (int i = 0; i < map->nb_bullets; i++) // A revoir suivant calcul Bullets
-                if (map->bullets_list[i]->owner == *index)
-                    map_DelBullet(map, i);
-
             map->players_list[*index]->connected = false;
             break;
         }

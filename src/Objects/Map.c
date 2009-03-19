@@ -148,10 +148,10 @@ void map_UpdateDisconnectedPlayers(void* UserData)
 {
     Map* map = (Map*) UserData;
 
-    while(map->chat_started)
+    while (map->chat_started)
     {
-        for(int i = 0; i < map->nb_players; i++)
-            if(!map->players_list[i]->connected)
+        for (int i = 0; i < map->nb_players; i++)
+            if (!map->players_list[i]->connected)
                 map_DelPlayer(map, i);
 
         sfSleep(1.0f);

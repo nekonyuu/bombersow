@@ -69,8 +69,8 @@ void player_Destroy(Player* player2destroy)
 Player* player_GetPlayerFromID(Map* map, unsigned int player_id)
 {
     int i = 0;
-    for(i = 0; i < map->nb_players; i++)
-        if(player_id == map->players_list[i]->player_id)
+    for (i = 0; i < map->nb_players; i++)
+        if (player_id == map->players_list[i]->player_id)
             break;
 
     return map->players_list[i];
