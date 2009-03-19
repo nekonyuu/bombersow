@@ -149,7 +149,7 @@ void animation_Draw(Animation* animation_, sfRenderWindow* App)
 
 
 //Sprite
-Sprite* sprite_Create(int x, int y, sfSprite* sfsprite, Animation* animation)
+Sprite* sprite_Create(int x, int y, sfImage* image, Animation* animation)
 {
 
     Sprite* sprite;
@@ -158,19 +158,26 @@ Sprite* sprite_Create(int x, int y, sfSprite* sfsprite, Animation* animation)
     sprite->x = x;
     sprite->y = y;
 
-    if(sfsprite != NULL){
-        sprite->sprite = sfsprite;
-        sprite->type = 0;
+    sprite->sprite = NULL;
+    sprite->animation = NULL;
 
-        sprite->hauteur = sfSprite_GetHeight(sfsprite);
-        sprite->largeur = sfSprite_GetWidth(sfsprite);
-    }else{
+    if (animation != NULL){
         sprite->animation = animation;
         sprite->type = 1;
 
         sprite->hauteur = animation->image_hauteur;
         sprite->largeur = animation->image_largeur;
+
+    }else if(image != NULL){
+        sprite->sprite = sfSprite_Create();
+        sfSprite_SetImage(sprite->sprite, image);
+        sprite->type = 0;
+
+        sprite->hauteur = sfImage_GetHeight(image);
+        sprite->largeur = sfImage_GetWidth(image);
     }
+
+    sprite_SetPosition(sprite, x, y);
 
     return sprite;
 }
@@ -223,6 +230,17 @@ void sprite_SetColor(Sprite* sprite, sfColor color)
         sfSprite_SetColor(sprite->animation->sprite, color);
     }else{
         sfSprite_SetColor(sprite->sprite, color);
+    }
+
+}
+
+sfImage* sprite_GetImage(Sprite* sprite)
+{
+
+    if(sprite->type){
+        return sfSprite_GetImage(sprite->animation->sprite);
+    }else{
+        return sfSprite_GetImage(sprite->sprite);
     }
 
 }

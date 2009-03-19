@@ -74,7 +74,7 @@ void map_screen_Draw(Map_screen* map)
 
     for(int j = 0; j < 3; j++)
         for(int i = 0; i < map->nombre_object[j]; i++)
-            sfRenderWindow_DrawSprite(map->Game, map->object[j][i]->draw_img);
+            object_Draw(map->Game, map->object[j][i]);
 
 }
 
@@ -88,19 +88,11 @@ void map_screen_DrawPlan(Map_screen* map, int plan)
         object_Draw(map->Game, map->object[plan][i]);
 
         if(map->object[plan][i]->speed != 0){
-            if(map->object[plan][i]->draw_animation != NULL){
-                sfSprite_SetColor(map->object[plan][i]->draw_animation->sprite, sfColor_FromRGBA(255,255,255,120));
-                animation_SetPosition(map->object[plan][i]->draw_animation, map->object[plan][i]->dest_coord_x,map->object[plan][i]->dest_coord_y);
-                animation_Draw(map->object[plan][i]->draw_animation, map->Game);
-                sfSprite_SetColor(map->object[plan][i]->draw_animation->sprite, sfColor_FromRGBA(255,255,255,255));
-                animation_SetPosition(map->object[plan][i]->draw_animation, map->object[plan][i]->curr_coord_x, map->object[plan][i]->curr_coord_y);
-            }else{
-                sfSprite_SetColor(map->object[plan][i]->draw_img, sfColor_FromRGBA(255,255,255,120));
-                sfSprite_SetPosition(map->object[plan][i]->draw_img, map->object[plan][i]->dest_coord_x,map->object[plan][i]->dest_coord_y);
-                sfRenderWindow_DrawSprite(map->Game, map->object[plan][i]->draw_img);
-                sfSprite_SetColor(map->object[plan][i]->draw_img, sfColor_FromRGBA(255,255,255,255));
-                sfSprite_SetPosition(map->object[plan][i]->draw_img, map->object[plan][i]->curr_coord_x, map->object[plan][i]->curr_coord_y);
-            }
+            sprite_SetColor(map->object[plan][i]->sprite, sfColor_FromRGBA(255,255,255,120));
+            sprite_SetPosition(map->object[plan][i]->sprite, map->object[plan][i]->dest_coord_x,map->object[plan][i]->dest_coord_y);
+            sprite_Draw(map->Game, map->object[plan][i]->sprite);
+            sprite_SetColor(map->object[plan][i]->sprite, sfColor_FromRGBA(255,255,255,255));
+            sprite_SetPosition(map->object[plan][i]->sprite, map->object[plan][i]->curr_coord_x, map->object[plan][i]->curr_coord_y);
         }
     }
 
@@ -116,13 +108,9 @@ void map_screen_Click(Map_screen* map, int mouse_x, int mouse_y)
 
         if(map->editor->dynamic_step == 1){
 
-            if(map->editor->selected_type){
-                map->editor->object_create_dynamic->dest_coord_x = map->editor->selected_animation->x_c;
-                map->editor->object_create_dynamic->dest_coord_y = map->editor->selected_animation->y_c;
-            }else{
-                map->editor->object_create_dynamic->dest_coord_x = sfSprite_GetX(map->editor->selected_image);
-                map->editor->object_create_dynamic->dest_coord_y = sfSprite_GetY(map->editor->selected_image);
-            }
+            map->editor->object_create_dynamic->dest_coord_x = map->editor->selected_sprite->x;
+            map->editor->object_create_dynamic->dest_coord_y = map->editor->selected_sprite->y;
+
             map->editor->object_create_dynamic->speed = map->editor->object_create->speed;
 
             sfClock_Reset(map->editor->object_create_dynamic->clock_mouvement);
@@ -132,63 +120,64 @@ void map_screen_Click(Map_screen* map, int mouse_x, int mouse_y)
         }else{
 
             char temp_char[100];
-            sprintf(temp_char, "%d%d%p%p", map->editor->object_create->type, map->editor->selected_type, sfSprite_GetImage(map->editor->selected_image), map->editor->selected_animation);
+            sprintf(temp_char, "%d%d%p", map->editor->object_create->type, map->editor->selected_type, sprite_GetImage(map->editor->selected_sprite));
 
             int hash_object = hash(temp_char)%200;
             if(map->editor->object[hash_object] != NULL){
-                if(sfSprite_GetImage(map->editor->selected_image) != sfSprite_GetImage(map->editor->object[hash_object]->draw_img) || map->editor->object[hash_object]->draw_animation != map->editor->selected_animation){
+                if(sprite_GetImage(map->editor->selected_sprite) != sprite_GetImage(map->editor->object[hash_object]->sprite)){
                     for(int i = 0; i < 200; i++){
-                        if( (sfSprite_GetImage(map->editor->selected_image) == sfSprite_GetImage(map->editor->object[hash_object]->draw_img) || map->editor->object[hash_object]->draw_animation == map->editor->selected_animation) || map->editor->object[i] == NULL){
+                        if( sprite_GetImage(map->editor->selected_sprite) == sprite_GetImage(map->editor->object[hash_object]->sprite) ){
                             hash_object = i;
                         }
                     }
                 }
 
-            }
-
-            if(map->editor->object[hash_object] == NULL){
-
+            }else{
                 map->editor->object[hash_object] = object_Create();
                 map->editor->object[hash_object]->type = map->editor->object_create->type;
-                map->editor->object[hash_object]->bool_animation = map->editor->selected_type;
-                sfSprite_SetImage(map->editor->object[hash_object]->draw_img, sfSprite_GetImage(map->editor->selected_image));
-
-                map->editor->object[hash_object]->draw_animation = map->editor->selected_animation;
+                Animation* temp_anim = NULL;
+                if(map->editor->selected_sprite->type)
+                    temp_anim = animation_Create(
+                            sprite_GetImage(map->editor->selected_sprite),
+                            map->editor->selected_sprite->animation->x,
+                            map->editor->selected_sprite->animation->y,
+                            map->editor->selected_sprite->animation->image_hauteur,
+                            map->editor->selected_sprite->animation->image_largeur,
+                            map->editor->selected_sprite->animation->nombre_image,
+                            0, BOUCLE,
+                            map->editor->selected_sprite->animation->fps);
+                map->editor->object[hash_object]->sprite = sprite_Create(map->editor->selected_sprite->x,map->editor->selected_sprite->y, sprite_GetImage(map->editor->selected_sprite), temp_anim);
             }
 
             Object* obj = object_Create();
             obj->type = map->editor->object_create->type;
-            obj->bool_animation = map->editor->selected_type;
             obj->speed = 0;
             obj->weapon_id = map->editor->object_create->weapon_id;
             obj->nb_ammo = map->editor->object_create->nb_ammo;
 
-            obj->start_coord_x = sfSprite_GetX(map->editor->selected_image);
-            obj->start_coord_y = sfSprite_GetY(map->editor->selected_image);
+            obj->start_coord_x = map->editor->selected_sprite->x;
+            obj->start_coord_y = map->editor->selected_sprite->y;
 
             obj->curr_coord_x = obj->start_coord_x;
             obj->curr_coord_y = obj->start_coord_y;
 
-            if(obj->bool_animation == 1){
-                obj->draw_animation = animation_Create(
-                                            sfSprite_GetImage(map->editor->selected_animation->sprite),
-                                            map->editor->selected_animation->x,
-                                            map->editor->selected_animation->y,
-                                            map->editor->selected_animation->image_hauteur,
-                                            map->editor->selected_animation->image_largeur,
-                                            map->editor->selected_animation->nombre_image,
+
+            if(map->editor->selected_sprite->type){
+                Animation* temp_anim = NULL;
+                temp_anim = animation_Create(
+                                            sprite_GetImage(map->editor->selected_sprite),
+                                            map->editor->selected_sprite->animation->x,
+                                            map->editor->selected_sprite->animation->y,
+                                            map->editor->selected_sprite->animation->image_hauteur,
+                                            map->editor->selected_sprite->animation->image_largeur,
+                                            map->editor->selected_sprite->animation->nombre_image,
                                             0, BOUCLE,
-                                            map->editor->selected_animation->fps);
+                                            map->editor->selected_sprite->animation->fps);
 
-                obj->curr_coord_x = map->editor->selected_animation->x_c;
-                obj->curr_coord_y = map->editor->selected_animation->y_c;
+                object_LoadImg(obj, NULL, temp_anim);
 
-                obj->start_coord_x = map->editor->selected_animation->x_c;
-                obj->start_coord_y = map->editor->selected_animation->y_c;
-
-                object_LoadImg(obj, NULL, obj->draw_animation);
             }else{
-                object_LoadImg(obj, sfSprite_GetImage(map->editor->selected_image), NULL);
+                object_LoadImg(obj, sprite_GetImage(map->editor->selected_sprite), NULL);
             }
 
             obj->objectID = hash_object;
