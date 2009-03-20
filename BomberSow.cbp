@@ -9,36 +9,32 @@
 		<Build>
 			<Target title="Debug">
 				<Option platforms="Windows;" />
-				<Option output="bin\Debug\BomberSow" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin\Debug\" />
-				<Option object_output="obj\BomberSow\Debug\" />
+				<Option output="bin/Debug/BomberSow" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Debug/" />
+				<Option object_output="obj/BomberSow/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-pg" />
-					<Add option="-g" />
 					<Add option="-std=c99" />
-					<Add option="-DDEBUG_MODE" />
 				</Compiler>
 				<Linker>
-					<Add option="-pg -lgmon" />
-					<Add option="-lcsfml-audio-d" />
-					<Add option="-lcsfml-graphics-d" />
-					<Add option="-lcsfml-window-d" />
-					<Add option="-lcsfml-network-d" />
-					<Add option="-lcsfml-system-d" />
-					<Add directory="dep\lib-win" />
+					<Add option="-lcsfml-audio" />
+					<Add option="-lcsfml-graphics" />
+					<Add option="-lcsfml-window" />
+					<Add option="-lcsfml-network" />
+					<Add option="-lcsfml-system" />
+					<Add directory="dep/lib-nix" />
 				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option platforms="Windows;" />
-				<Option output="bin\Release\BomberSow" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin\Release\" />
-				<Option object_output="obj\BomberSow\Release\" />
+				<Option output="bin/Release/BomberSow" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Release/" />
+				<Option object_output="obj/BomberSow/Release/" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-march=prescott" />
+					<Add option="-march=pentium4" />
 					<Add option="-fexpensive-optimizations" />
 					<Add option="-O3" />
 					<Add option="-O2" />
@@ -53,44 +49,39 @@
 					<Add option="-lcsfml-window" />
 					<Add option="-lcsfml-network" />
 					<Add option="-lcsfml-system" />
-					<Add directory="dep\lib-win" />
+					<Add directory="dep/lib-nix" />
 				</Linker>
 			</Target>
 			<Target title="Linux Debug">
 				<Option platforms="Unix;" />
-				<Option output="bin\Debug\BomberSow" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin\Debug" />
-				<Option object_output="obj\BomberSow\Debug" />
+				<Option output="bin/Debug/BomberSow" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Debug" />
+				<Option object_output="obj/BomberSow/Debug" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-march=prescott" />
-					<Add option="-fexpensive-optimizations" />
-					<Add option="-O3" />
-					<Add option="-O2" />
-					<Add option="-O1" />
-					<Add option="-O" />
+					<Add option="-pg" />
 					<Add option="-std=c99" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
+					<Add option="-pg" />
 					<Add option="-lcsfml-audio" />
 					<Add option="-lcsfml-graphics" />
 					<Add option="-lcsfml-window" />
 					<Add option="-lcsfml-network" />
 					<Add option="-lcsfml-system" />
-					<Add directory="dep\lib-nix" />
+					<Add directory="dep/lib-nix" />
 				</Linker>
 			</Target>
 			<Target title="Linux Release">
 				<Option platforms="Unix;" />
-				<Option output="bin\Release\BomberSow" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin\Release\" />
-				<Option object_output="obj\BomberSow\Release\" />
+				<Option output="bin/Release/BomberSow" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Release/" />
+				<Option object_output="obj/BomberSow/Release/" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-march=prescott" />
+					<Add option="-march=pentium4" />
 					<Add option="-fexpensive-optimizations" />
 					<Add option="-O3" />
 					<Add option="-O2" />
@@ -105,7 +96,7 @@
 					<Add option="-lcsfml-window" />
 					<Add option="-lcsfml-network" />
 					<Add option="-lcsfml-system" />
-					<Add directory="dep\lib-nix" />
+					<Add directory="dep/lib-nix" />
 				</Linker>
 			</Target>
 		</Build>
@@ -113,118 +104,118 @@
 			<Add option="-Wall" />
 			<Add option="-DCSFML_DYNAMIC" />
 			<Add directory="src" />
-			<Add directory="dep\include" />
-			<Add directory="dep\CSFML-GUI" />
+			<Add directory="dep/include" />
+			<Add directory="dep/CSFML-GUI" />
 		</Compiler>
-		<Unit filename="dep\CSFML-GUI\Gui\Gui.c">
+		<Unit filename="dep/CSFML-GUI/Gui/Gui.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="dep\CSFML-GUI\Gui\Gui.h" />
-		<Unit filename="src\AudioEngine.c">
+		<Unit filename="dep/CSFML-GUI/Gui/Gui.h" />
+		<Unit filename="src/AudioEngine.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\AudioEngine.h" />
-		<Unit filename="src\BaseSystem\Config.c">
+		<Unit filename="src/AudioEngine.h" />
+		<Unit filename="src/BaseSystem/Config.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\BaseSystem\Config.h" />
-		<Unit filename="src\BaseSystem\Logging.c">
+		<Unit filename="src/BaseSystem/Config.h" />
+		<Unit filename="src/BaseSystem/Logging.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\BaseSystem\Logging.h" />
-		<Unit filename="src\Game\ClientScreen.c">
+		<Unit filename="src/BaseSystem/Logging.h" />
+		<Unit filename="src/Game/ClientScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Game\CreditsScreen.c">
+		<Unit filename="src/Game/CreditsScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Game\CreditsScreen.h" />
-		<Unit filename="src\Game\MenuScreen.c">
+		<Unit filename="src/Game/CreditsScreen.h" />
+		<Unit filename="src/Game/MenuScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Game\MenuScreen.h" />
-		<Unit filename="src\Game\PlayScreen.c">
+		<Unit filename="src/Game/MenuScreen.h" />
+		<Unit filename="src/Game/PlayScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Game\PlayScreen.h" />
-		<Unit filename="src\Game\ServerScreen.c">
+		<Unit filename="src/Game/PlayScreen.h" />
+		<Unit filename="src/Game/ServerScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Game\SettingsScreen.c">
+		<Unit filename="src/Game/SettingsScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Game\SettingsScreen.h" />
-		<Unit filename="src\GraphicEngine\Draw.c">
+		<Unit filename="src/Game/SettingsScreen.h" />
+		<Unit filename="src/GraphicEngine/Draw.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\GraphicEngine\Draw.h" />
-		<Unit filename="src\GraphicEngine\Image.c">
+		<Unit filename="src/GraphicEngine/Draw.h" />
+		<Unit filename="src/GraphicEngine/Image.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\GraphicEngine\Image.h" />
-		<Unit filename="src\InputsControl\ConfigParsing.c">
+		<Unit filename="src/GraphicEngine/Image.h" />
+		<Unit filename="src/InputsControl/ConfigParsing.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\InputsControl\PlayerControl.c">
+		<Unit filename="src/InputsControl/PlayerControl.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Main-Game.c">
+		<Unit filename="src/Main-Game.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Map\MapHandler.c">
+		<Unit filename="src/Map/MapHandler.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Map\MapHandler.h" />
-		<Unit filename="src\Map\MapLoader.c">
+		<Unit filename="src/Map/MapHandler.h" />
+		<Unit filename="src/Map/MapLoader.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Map\MapLoader.h" />
-		<Unit filename="src\Networking\ChatHandler.c">
+		<Unit filename="src/Map/MapLoader.h" />
+		<Unit filename="src/Networking/ChatHandler.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Networking\ClientThread.c">
+		<Unit filename="src/Networking/ClientThread.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Networking\DataHandler.c">
+		<Unit filename="src/Networking/DataHandler.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Networking\Networking.h" />
-		<Unit filename="src\Networking\PacketDefines.h" />
-		<Unit filename="src\Networking\ServerThread.c">
+		<Unit filename="src/Networking/Networking.h" />
+		<Unit filename="src/Networking/PacketDefines.h" />
+		<Unit filename="src/Networking/ServerThread.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Objects\Bullet.c">
+		<Unit filename="src/Objects/Bullet.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Objects\GameObjects.h" />
-		<Unit filename="src\Objects\Map.c">
+		<Unit filename="src/Objects/GameObjects.h" />
+		<Unit filename="src/Objects/Map.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Objects\Objects.c">
+		<Unit filename="src/Objects/Objects.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Objects\Player.c">
+		<Unit filename="src/Objects/Player.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Objects\Screen.c">
+		<Unit filename="src/Objects/Screen.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Objects\Screen.h" />
-		<Unit filename="src\Objects\Weapon.c">
+		<Unit filename="src/Objects/Screen.h" />
+		<Unit filename="src/Objects/Weapon.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\PhysicsEngine\CollisionSystem.c">
+		<Unit filename="src/PhysicsEngine/CollisionSystem.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\PhysicsEngine\CollisionSystem.h" />
-		<Unit filename="src\PhysicsEngine\GravitySystem.c">
+		<Unit filename="src/PhysicsEngine/CollisionSystem.h" />
+		<Unit filename="src/PhysicsEngine/GravitySystem.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\PhysicsEngine\GravitySystem.h" />
-		<Unit filename="src\PhysicsEngine\ParticleSystem.c">
+		<Unit filename="src/PhysicsEngine/GravitySystem.h" />
+		<Unit filename="src/PhysicsEngine/ParticleSystem.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\PhysicsEngine\ParticleSystem.h" />
+		<Unit filename="src/PhysicsEngine/ParticleSystem.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
