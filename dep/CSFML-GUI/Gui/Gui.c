@@ -193,7 +193,7 @@ Widget_textbox* widget_textbox_Create(int x, int y, int width, int height, int t
 
     textbox->taille = taille;
 
-    textbox->x = (int)rect->Right;
+    textbox->x = (int) rect->Right;
     textbox->y = y;
     textbox->width = width;
     textbox->height = height;
