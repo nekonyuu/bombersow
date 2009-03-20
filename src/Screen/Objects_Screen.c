@@ -92,12 +92,8 @@ void object_screen_Load_Object(Object_Screen* screen, Image* image)
             screen->x_cur += screen->espace+sfSprite_GetWidth(screen->sprite[i]);
         }
 
-        sfSprite_Destroy(screen->editor->selected_image);
-        screen->editor->selected_image = sfSprite_Create();
-
-        sfSprite_SetImage(screen->editor->selected_image, image_Get(screen->image, 0));
-        sfSprite_SetPosition(screen->editor->selected_image, 0, 0);
-
+        sprite_Destroy(screen->editor->selected_sprite);
+        screen->editor->selected_sprite = sprite_Create(0, 0, image_Get(screen->image, 0), NULL);
         screen->editor->selected_id = 0;
         screen->editor->selected_type = 0;
     }
@@ -198,18 +194,18 @@ void object_screen_Click(Object_Screen* screen, int mouse_x, int mouse_y)
                 sfIntRect cadre_screen = {screen->animation[i]->x_c, screen->animation[i]->y_c, screen->animation[i]->x_c+screen->animation[i]->image_largeur, screen->animation[i]->y_c+screen->animation[i]->image_hauteur};
                 if (sfIntRect_Contains(&cadre_screen, mouse_x, mouse_y)){
 
-                    animation_Destroy(screen->editor->selected_animation);
-                    screen->editor->selected_animation = animation_Create(
-                                                            sfSprite_GetImage(screen->animation[i]->sprite),
-                                                            screen->animation[i]->x,
-                                                            screen->animation[i]->y,
-                                                            screen->animation[i]->image_hauteur,
-                                                            screen->animation[i]->image_largeur,
-                                                            screen->animation[i]->nombre_image,
-                                                            0, BOUCLE,
-                                                            screen->animation[i]->fps);
+                    sprite_Destroy(screen->editor->selected_sprite);
+                    Animation* temp_anim = animation_Create(
+                                                    sfSprite_GetImage(screen->animation[i]->sprite),
+                                                    screen->animation[i]->x,
+                                                    screen->animation[i]->y,
+                                                    screen->animation[i]->image_hauteur,
+                                                    screen->animation[i]->image_largeur,
+                                                    screen->animation[i]->nombre_image,
+                                                    0, BOUCLE,
+                                                    screen->animation[i]->fps);
 
-                    animation_SetPosition(screen->editor->selected_animation, mouse_x, mouse_y);
+                    screen->editor->selected_sprite = sprite_Create(mouse_x, mouse_y, NULL, temp_anim);
 
                     screen->editor->selected_id = i;
                     screen->editor->selected_type = 1;
@@ -223,11 +219,9 @@ void object_screen_Click(Object_Screen* screen, int mouse_x, int mouse_y)
 
                 sfIntRect cadre_screen = {sfSprite_GetX(screen->sprite[i]), sfSprite_GetY(screen->sprite[i]), sfSprite_GetX(screen->sprite[i])+sfSprite_GetWidth(screen->sprite[i]), sfSprite_GetY(screen->sprite[i])+sfSprite_GetHeight(screen->sprite[i]),};
                 if (sfIntRect_Contains(&cadre_screen, mouse_x, mouse_y)){
-                    sfSprite_Destroy(screen->editor->selected_image);
-                    screen->editor->selected_image = sfSprite_Create();
 
-                    sfSprite_SetImage(screen->editor->selected_image, image_Get(screen->image, i));
-                    sfSprite_SetPosition(screen->editor->selected_image, mouse_x, mouse_y);
+                    sprite_Destroy(screen->editor->selected_sprite);
+                    screen->editor->selected_sprite = sprite_Create(mouse_x, mouse_y, image_Get(screen->image, i), NULL);
 
                     screen->editor->selected_id = i;
                     screen->editor->selected_type = 0;
@@ -242,14 +236,15 @@ void object_screen_Click(Object_Screen* screen, int mouse_x, int mouse_y)
 void object_screen_Add_Animation(Object_Screen* screen, Animation* animation)
 {
 
-    animation_Destroy(screen->editor->selected_animation);
-    screen->editor->selected_animation = animation_Create(sfSprite_GetImage(screen->editor->selected_image), animation->x, animation->y, animation->image_hauteur, animation->image_largeur, animation->nombre_image, 0, BOUCLE, animation->fps);
+    Animation* temp_anim = animation_Create(sprite_GetImage(screen->editor->selected_sprite), animation->x, animation->y, animation->image_hauteur, animation->image_largeur, animation->nombre_image, 0, BOUCLE, animation->fps);
+    sprite_Destroy(screen->editor->selected_sprite);
+    screen->editor->selected_sprite = sprite_Create(0, 0, NULL, temp_anim);
     screen->editor->selected_type = 1;
 
     screen->animation_nombre++;
     assert(screen->animation = realloc(screen->animation, screen->animation_nombre*sizeof(Animation*)));
 
-    screen->animation[screen->animation_nombre-1] = animation_Create(sfSprite_GetImage(screen->editor->selected_image), animation->x, animation->y, animation->image_hauteur, animation->image_largeur, animation->nombre_image, 0, BOUCLE, animation->fps);
+    screen->animation[screen->animation_nombre-1] = animation_Create(sprite_GetImage(screen->editor->selected_sprite), animation->x, animation->y, animation->image_hauteur, animation->image_largeur, animation->nombre_image, 0, BOUCLE, animation->fps);
 
     screen->x_cur = screen->espace+screen->x;
     screen->y_cur = screen->espace+screen->y;

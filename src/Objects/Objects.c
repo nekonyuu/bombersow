@@ -9,9 +9,7 @@ Object* object_Create()
     new_object->objectID = 0;
     new_object->type = 0;
 
-    new_object->draw_img = sfSprite_Create();
-    new_object->draw_animation = NULL;
-    new_object->bool_animation = 0;
+    new_object->sprite = NULL;
 
     new_object->start_coord_x = 0;
     new_object->start_coord_y = 0;
@@ -38,10 +36,8 @@ void object_Destroy(Object* object2destroy)
     if(object2destroy != NULL){
         sfClock_Destroy(object2destroy->clock_mouvement);
 
-        if(object2destroy->draw_img != NULL)
-            sfSprite_Destroy(object2destroy->draw_img);
+        sprite_Destroy(object2destroy->sprite);
 
-        animation_Destroy(object2destroy->draw_animation);
         free(object2destroy);
     }
 }
@@ -49,15 +45,8 @@ void object_Destroy(Object* object2destroy)
 void object_LoadImg(Object* object, sfImage* image, Animation* animation)
 {
 
-    if(image == NULL){
-        object->bool_animation = 1;
-        object->draw_animation = animation;
-        animation_SetPosition(object->draw_animation, (int)object->curr_coord_x, (int)object->curr_coord_y);
-    }else{
-        object->bool_animation = 0;
-        sfSprite_SetImage(object->draw_img, image);
-        sfSprite_SetPosition(object->draw_img, (int)object->curr_coord_x, (int)object->curr_coord_y);
-    }
+    sprite_Destroy(object->sprite);
+    object->sprite = sprite_Create((int)object->curr_coord_x, (int)object->curr_coord_y, image, animation);
 
 }
 
@@ -94,17 +83,9 @@ void object_Draw(sfRenderWindow* Game, Object* object)
         }
         sfClock_Reset(object->clock_mouvement);
 
-        if(object->bool_animation){
-            animation_SetPosition(object->draw_animation, (int)object->curr_coord_x, (int)object->curr_coord_y);
-        }else{
-            sfSprite_SetPosition(object->draw_img, (int)object->curr_coord_x, (int)object->curr_coord_y);
-        }
+        sprite_SetPosition(object->sprite, (int)object->curr_coord_x, (int)object->curr_coord_y);
     }
 
-    if(object->bool_animation){
-        animation_Draw(object->draw_animation, Game);
-    }else{
-        sfRenderWindow_DrawSprite(Game, object->draw_img);
-    }
+    sprite_Draw(Game, object->sprite);
 
 }

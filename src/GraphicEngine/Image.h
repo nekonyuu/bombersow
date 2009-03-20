@@ -54,11 +54,12 @@ typedef struct SPRITE
 
 }Sprite;
 
-Sprite* sprite_Create(int, int, sfSprite*, Animation*);
+Sprite* sprite_Create(int, int, sfImage*, Animation*);
 void sprite_Destroy(Sprite*);
 void sprite_SetPosition(Sprite*, int, int);
 void sprite_Draw(sfRenderWindow*, Sprite*);
 void sprite_SetColor(Sprite*, sfColor);
+sfImage* sprite_GetImage(Sprite*);
 
 
 //Struct du gestionnaire d'image
