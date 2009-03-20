@@ -2,10 +2,10 @@
 #include "SFML/Graphics.h"
 #include "Gui/Gui.h"
 #include "GraphicEngine/Image.h"
-#include "Screen/Map_Screen.h"
+#include "Screen/Map_screen.h"
 #include "Objects/Editor.h"
 
-unsigned long hash(unsigned char *str)
+unsigned long hash(char *str)
 {
 	unsigned long hash = 5381;
 	while(*str!='\0') {

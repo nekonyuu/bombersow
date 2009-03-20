@@ -3,6 +3,8 @@
 	"SFML/Graphics.h"
 	"SFML/Audio.h"
 
+1236631982 o.h"
+
 1236472780 c:\projet\bombersow\dep\include\\sfml\graphics.h
 	<SFML/Window.h>
 	<SFML/Graphics/Color.h>
@@ -14,6 +16,8 @@
 	<SFML/Graphics/String.h>
 	<SFML/Graphics/View.h>
 
+1237154958 hics/View.h>
+
 1236472780 c:\projet\bombersow\dep\include\\sfml\window.h
 	<SFML/System.h>
 	<SFML/Window/Context.h>
@@ -21,6 +25,8 @@
 	<SFML/Window/Input.h>
 	<SFML/Window/VideoMode.h>
 	<SFML/Window/Window.h>
+
+1237154958 ow/Window.h>
 
 1236472780 c:\projet\bombersow\dep\include\\sfml\system.h
 	<SFML/Config.h>
@@ -30,12 +36,18 @@
 	<SFML/System/Sleep.h>
 	<SFML/System/Thread.h>
 
+1237154958 em/Thread.h>
+
 1236472780 c:\projet\bombersow\dep\include\\sfml\config.h
 	<stdlib.h>
 	<limits.h>
 
+1237405394 
+
 1236472780 c:\projet\bombersow\dep\include\\sfml\system\clock.h
 	<SFML/Config.h>
+
+1236472780 ig.h>
 
 1236472780 c:\projet\bombersow\dep\include\\sfml\system\mutex.h
 	<SFML/Config.h>
@@ -59,6 +71,8 @@
 	<SFML/Config.h>
 	<SFML/Window/Event.h>
 
+1237154958 ow/Event.h>
+
 1236472780 c:\projet\bombersow\dep\include\\sfml\window\videomode.h
 	<SFML/Config.h>
 
@@ -68,6 +82,8 @@
 	<SFML/Window/Input.h>
 	<SFML/Window/VideoMode.h>
 	<SFML/Window/WindowHandle.h>
+
+1237154958 ow/WindowHandle.h>
 
 1236472780 c:\projet\bombersow\dep\include\\sfml\window\windowhandle.h
 	<SFML/Config.h>
@@ -80,12 +96,16 @@
 	<SFML/Graphics/Color.h>
 	<SFML/Graphics/Rect.h>
 
+1237154958 hics/Rect.h>
+
 1236472780 c:\projet\bombersow\dep\include\\sfml\graphics\rect.h
 	<SFML/Config.h>
 
 1236472780 c:\projet\bombersow\dep\include\\sfml\graphics\postfx.h
 	<SFML/Config.h>
 	<SFML/Graphics/Image.h>
+
+1237154958 hics/Image.h>
 
 1236472780 c:\projet\bombersow\dep\include\\sfml\graphics\renderwindow.h
 	<SFML/Config.h>
@@ -108,6 +128,8 @@
 	<SFML/Graphics/BlendMode.h>
 	<SFML/Graphics/Color.h>
 
+1237154958 hics/Color.h>
+
 1236472780 c:\projet\bombersow\dep\include\\sfml\graphics\blendmode.h
 	<SFML/Config.h>
 
@@ -128,6 +150,8 @@
 1236472780 c:\projet\bombersow\dep\include\\sfml\graphics\font.h
 	<SFML/Graphics/Glyph.h>
 
+1237154958 hics/Glyph.h>
+
 1236472780 c:\projet\bombersow\dep\include\\sfml\graphics\glyph.h
 	<SFML/Graphics/Rect.h>
 
@@ -144,12 +168,16 @@
 	<SFML/Audio/SoundBufferRecorder.h>
 	<SFML/Audio/SoundRecorder.h>
 
+1237154958 o/SoundRecorder.h>
+
 1236472780 c:\projet\bombersow\dep\include\\sfml\audio\listener.h
 	<SFML/Config.h>
 
 1236472780 c:\projet\bombersow\dep\include\\sfml\audio\music.h
 	<SFML/Config.h>
 	<SFML/Audio/SoundStatus.h>
+
+1237154958 o/SoundStatus.h>
 
 1236472780 c:\projet\bombersow\dep\include\\sfml\audio\soundstatus.h
 	<SFML/Config.h>
@@ -166,6 +194,8 @@
 	<SFML/Config.h>
 	<SFML/Audio/SoundBuffer.h>
 
+1237154958 o/SoundBuffer.h>
+
 1236472780 c:\projet\bombersow\dep\include\\sfml\audio\soundrecorder.h
 	<SFML/Config.h>
 	<SFML/Audio/SoundBuffer.h>
@@ -178,21 +208,31 @@
 	"File/file.h"
 	"Gui/Gui.h"
 
+1237408522 "
+
 1236776212 source:c:\projet\bombersow\bombersoweditor\src\graphicengine\draw.c
 	"GraphicEngine/Draw.h"
+
+1236776212 gine/Draw.h"
 
 1237156863 source:c:\projet\bombersow\bombersoweditor\src\graphicengine\image.c
 	<assert.h>
 	"GraphicEngine/Image.h"
 
+1237499882 gine/Image.h"
+
 1237156674 c:\projet\bombersow\bombersoweditor\src\\graphicengine\image.h
 	"SFML/Graphics.h"
+
+1237400247 hics.h"
 
 1236472781 source:c:\projet\bombersow\bombersoweditor\src\map\maploader.c
 
 1236629177 source:c:\projet\bombersow\bombersoweditor\src\objects\objects.c
 	<assert.h>
 	"Objects/Objects.h"
+
+1237382402 bjects.h"
 
 1236629177 c:\projet\bombersow\bombersoweditor\src\\objects\objects.h
 	"SFML/Graphics.h"
@@ -206,6 +246,8 @@
 	"Objects/Objects.h"
 	"Objects/Map.h"
 	"file/file.h"
+
+1237154955 .h"
 
 1237139131 c:\projet\bombersow\bombersoweditor\src\\objects\map.h
 	"SFML/Graphics.h"
@@ -234,6 +276,8 @@
 	"Screen/Menu_Screen.h"
 	"Objects/Editor.h"
 
+1237417934 ditor.h"
+
 1237071503 c:\projet\bombersow\bombersoweditor\src\screen\objects_screen.h
 	"SFML/Graphics.h"
 	"Objects/Objects.h"
@@ -242,6 +286,8 @@
 	<assert.h>
 	"SFML/Graphics.h"
 	"Screen/Objects_Screen.h"
+
+1237503166 jects_Screen.h"
 
 1237071503 c:\projet\bombersow\bombersoweditor\src\\screen\objects_screen.h
 	"SFML/Graphics.h"
@@ -509,6 +555,8 @@
 	"Objects/Bullet.h"
 	"Objects/Weapon.h"
 
+1237154955 eapon.h"
+
 1236897404 c:\projet\bombersow\bombersoweditor\src\\objects\bullet.h
 	"SFML/Graphics.h"
 
@@ -517,6 +565,8 @@
 	"SFML/Graphics.h"
 	"Objects/Objects.h"
 	"Objects/Bullet.h"
+
+1237382401 ullet.h"
 
 1236897404 source:c:\projet\bombersow\bombersoweditor\src\objects\player.c
 	"BaseSystem/Logging.h"
@@ -562,6 +612,8 @@
 1236879755 source:d:\docs\fac\projets\projet i41\bombersow\bombersow\bombersoweditor\src\basesystem\logging.c
 	<stdio.h>
 	"BaseSystem/Logging.h"
+
+1236897404 m/Logging.h"
 
 1236863849 d:\docs\fac\projets\projet i41\bombersow\bombersow\bombersoweditor\src\\basesystem\logging.h
 	<assert.h>
@@ -790,6 +842,8 @@
 1237382401 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\\graphicengine\image.h
 	<SFML/Graphics.h>
 
+1237502033 hics.h>
+
 1237154955 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\bombersoweditor\src\graphicengine\draw.c
 	"GraphicEngine/Draw.h"
 
@@ -999,12 +1053,16 @@
 	"GraphicEngine/Image.h"
 	"Map/MapLoader.h"
 
+1237387779 ader.h"
+
 1237382401 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\\graphicengine\image.h
 	<SFML/Graphics.h>
 
 1237384442 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\\map\maploader.h
 	"GraphicEngine/Image.h"
 	"Objects/GameObjects.h"
+
+1237405394 ameObjects.h"
 
 1237305825 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\\objects\gameobjects.h
 	<stdbool.h>
@@ -1018,6 +1076,8 @@
 	<SFML/Network/Selector.h>
 	<SFML/Network/SocketTCP.h>
 	<SFML/Network/SocketUDP.h>
+
+1236472780 ork/SocketUDP.h>
 
 1237154958 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\network\ipaddress.h
 	<SFML/Config.h>
@@ -1035,6 +1095,8 @@
 	<SFML/Network/IPAddress.h>
 	<SFML/Network/Packet.h>
 	<SFML/Network/SocketStatus.h>
+
+1236472780 ork/SocketStatus.h>
 
 1237154958 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\include\\sfml\network\socketstatus.h
 
@@ -1397,4 +1459,373 @@
 	<stdlib.h>
 	<string.h>
 	<new>
+
+1237506622 source:/home/nekolover/DEV/bombersow-project/dep/CSFML-GUI/Gui/Gui.c
+	<assert.h>
+	<string.h>
+	"SFML/Graphics.h"
+	"BaseSystem/Logging.h"
+	"Gui/Gui.h"
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Graphics.h
+	<SFML/Window.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Image.h>
+	<SFML/Graphics/PostFX.h>
+	<SFML/Graphics/Rect.h>
+	<SFML/Graphics/RenderWindow.h>
+	<SFML/Graphics/Sprite.h>
+	<SFML/Graphics/String.h>
+	<SFML/Graphics/View.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Window.h
+	<SFML/System.h>
+	<SFML/Window/Context.h>
+	<SFML/Window/Event.h>
+	<SFML/Window/Input.h>
+	<SFML/Window/VideoMode.h>
+	<SFML/Window/Window.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/System.h
+	<SFML/Config.h>
+	<SFML/System/Clock.h>
+	<SFML/System/Mutex.h>
+	<SFML/System/Randomizer.h>
+	<SFML/System/Sleep.h>
+	<SFML/System/Thread.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Config.h
+	<stdlib.h>
+	<limits.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/System/Clock.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/System/Mutex.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/System/Randomizer.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/System/Sleep.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/System/Thread.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Window/Context.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Window/Event.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Window/Input.h
+	<SFML/Config.h>
+	<SFML/Window/Event.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Window/VideoMode.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Window/Window.h
+	<SFML/Config.h>
+	<SFML/Window/Event.h>
+	<SFML/Window/Input.h>
+	<SFML/Window/VideoMode.h>
+	<SFML/Window/WindowHandle.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Window/WindowHandle.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Graphics/Color.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Graphics/Image.h
+	<SFML/Config.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Rect.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Graphics/Rect.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Graphics/PostFX.h
+	<SFML/Config.h>
+	<SFML/Graphics/Image.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Graphics/RenderWindow.h
+	<SFML/Config.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Image.h>
+	<SFML/Graphics/PostFX.h>
+	<SFML/Graphics/Rect.h>
+	<SFML/Graphics/Shape.h>
+	<SFML/Graphics/Sprite.h>
+	<SFML/Graphics/String.h>
+	<SFML/Graphics/View.h>
+	<SFML/Window/Event.h>
+	<SFML/Window/Input.h>
+	<SFML/Window/VideoMode.h>
+	<SFML/Window/Window.h>
+	<SFML/Window/WindowHandle.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Graphics/Shape.h
+	<SFML/Config.h>
+	<SFML/Graphics/BlendMode.h>
+	<SFML/Graphics/Color.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Graphics/BlendMode.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Graphics/Sprite.h
+	<SFML/Config.h>
+	<SFML/Graphics/BlendMode.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Image.h>
+	<SFML/Graphics/Rect.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Graphics/String.h
+	<SFML/Config.h>
+	<SFML/Graphics/BlendMode.h>
+	<SFML/Graphics/Color.h>
+	<SFML/Graphics/Font.h>
+	<SFML/Graphics/Rect.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Graphics/Font.h
+	<SFML/Graphics/Glyph.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Graphics/Glyph.h
+	<SFML/Graphics/Rect.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Graphics/View.h
+	<SFML/Config.h>
+	<SFML/Graphics/Rect.h>
+
+1237502117 /home/nekolover/DEV/bombersow-project/src//BaseSystem/Logging.h
+	<assert.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/CSFML-GUI/Gui/Gui.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	"SFML/Graphics.h"
+
+1237502117 source:/home/nekolover/DEV/bombersow-project/src/BaseSystem/Logging.c
+	<stdio.h>
+	"BaseSystem/Logging.h"
+
+1237502117 source:/home/nekolover/DEV/bombersow-project/src/GraphicEngine/Draw.c
+	"GraphicEngine/Draw.h"
+
+1237502117 /home/nekolover/DEV/bombersow-project/src//GraphicEngine/Draw.h
+	<SFML/Graphics.h>
+
+1237507656 source:/home/nekolover/DEV/bombersow-project/src/GraphicEngine/Image.c
+	<assert.h>
+	"GraphicEngine/Image.h"
+
+1237507656 /home/nekolover/DEV/bombersow-project/src//GraphicEngine/Image.h
+	<SFML/Graphics.h>
+
+1237540803 source:/home/nekolover/DEV/bombersow-project/src/Main-Editor.c
+	<Gui/Gui.h>
+	<SFML/Graphics.h>
+	<SFML/Audio.h>
+	"Screen/Objects_Screen.h"
+	"Screen/Menu_Screen.h"
+	"Screen/Map_screen.h"
+	"Map/MapLoader.h"
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Audio.h
+	<SFML/System.h>
+	<SFML/Audio/Listener.h>
+	<SFML/Audio/Music.h>
+	<SFML/Audio/Sound.h>
+	<SFML/Audio/SoundBuffer.h>
+	<SFML/Audio/SoundBufferRecorder.h>
+	<SFML/Audio/SoundRecorder.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Audio/Listener.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Audio/Music.h
+	<SFML/Config.h>
+	<SFML/Audio/SoundStatus.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Audio/SoundStatus.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Audio/Sound.h
+	<SFML/Config.h>
+	<SFML/Audio/SoundBuffer.h>
+	<SFML/Audio/SoundStatus.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Audio/SoundBuffer.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Audio/SoundBufferRecorder.h
+	<SFML/Config.h>
+	<SFML/Audio/SoundBuffer.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Audio/SoundRecorder.h
+	<SFML/Config.h>
+	<SFML/Audio/SoundBuffer.h>
+
+1237502117 /home/nekolover/DEV/bombersow-project/src/Screen/Objects_Screen.h
+	"SFML/Graphics.h"
+	"Gui/Gui.h"
+	"Objects/GameObjects.h"
+	"Objects/Editor.h"
+
+1237507656 /home/nekolover/DEV/bombersow-project/src//Objects/GameObjects.h
+	<stdbool.h>
+	<SFML/Network.h>
+	"GraphicEngine/Image.h"
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Network.h
+	<SFML/System.h>
+	<SFML/Network/IPAddress.h>
+	<SFML/Network/Packet.h>
+	<SFML/Network/Selector.h>
+	<SFML/Network/SocketTCP.h>
+	<SFML/Network/SocketUDP.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Network/IPAddress.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Network/Packet.h
+	<SFML/Config.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Network/Selector.h
+	<SFML/Config.h>
+	<SFML/Network/SocketTCP.h>
+	<SFML/Network/SocketUDP.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Network/SocketTCP.h
+	<SFML/Config.h>
+	<SFML/Network/IPAddress.h>
+	<SFML/Network/Packet.h>
+	<SFML/Network/SocketStatus.h>
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Network/SocketStatus.h
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//SFML/Network/SocketUDP.h
+	<SFML/Config.h>
+	<SFML/Network/IPAddress.h>
+	<SFML/Network/Packet.h>
+	<SFML/Network/SocketStatus.h>
+
+1237507656 /home/nekolover/DEV/bombersow-project/src//Objects/Editor.h
+	<stdbool.h>
+	"GraphicEngine/Image.h"
+	"Objects/GameObjects.h"
+
+1237502117 /home/nekolover/DEV/bombersow-project/src/Screen/Menu_Screen.h
+	<SFML/Graphics.h>
+	"Gui/Gui.h"
+	"Objects/Editor.h"
+	"Objects/GameObjects.h"
+	"Screen/Objects_Screen.h"
+
+1237502117 /home/nekolover/DEV/bombersow-project/src//Screen/Objects_Screen.h
+	"SFML/Graphics.h"
+	"Gui/Gui.h"
+	"Objects/GameObjects.h"
+	"Objects/Editor.h"
+
+1237502117 /home/nekolover/DEV/bombersow-project/src/Screen/Map_screen.h
+	"SFML/Graphics.h"
+	"Gui/Gui.h"
+	"Objects/Editor.h"
+	"Objects/GameObjects.h"
+
+1237502117 /home/nekolover/DEV/bombersow-project/src/Map/MapLoader.h
+	"GraphicEngine/Image.h"
+	"Objects/GameObjects.h"
+
+1237502117 source:/home/nekolover/DEV/bombersow-project/src/Map/MapLoader.c
+	<stdio.h>
+	<string.h>
+	<dirent.h>
+	"BaseSystem/Logging.h"
+	"Map/MapLoader.h"
+
+1237502117 /home/nekolover/DEV/bombersow-project/src//Map/MapLoader.h
+	"GraphicEngine/Image.h"
+	"Objects/GameObjects.h"
+
+1237502117 source:/home/nekolover/DEV/bombersow-project/src/Objects/Bullet.c
+	"BaseSystem/Logging.h"
+	"Objects/GameObjects.h"
+
+1237507656 source:/home/nekolover/DEV/bombersow-project/src/Objects/Editor.c
+	<assert.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"SFML/Graphics.h"
+	"GraphicEngine/Image.h"
+	"Objects/GameObjects.h"
+	"Objects/Editor.h"
+
+1237502117 source:/home/nekolover/DEV/bombersow-project/src/Objects/Map.c
+	"BaseSystem/Logging.h"
+	"Objects/GameObjects.h"
+
+1237507656 source:/home/nekolover/DEV/bombersow-project/src/Objects/Objects.c
+	"BaseSystem/Logging.h"
+	"Objects/GameObjects.h"
+
+1237502117 source:/home/nekolover/DEV/bombersow-project/src/Objects/Player.c
+	<string.h>
+	"BaseSystem/Logging.h"
+	"GraphicEngine/Draw.h"
+	"Objects/GameObjects.h"
+
+1237506434 source:/home/nekolover/DEV/bombersow-project/src/Objects/Weapon.c
+	"BaseSystem/Logging.h"
+	"Objects/GameObjects.h"
+
+1237502117 source:/home/nekolover/DEV/bombersow-project/src/Screen/Menu_Screen.c
+	<assert.h>
+	"SFML/Graphics.h"
+	"Gui/Gui.h"
+	"GraphicEngine/Image.h"
+	"Screen/Menu_Screen.h"
+	"Screen/Objects_Screen.h"
+	"Objects/Editor.h"
+
+1237502117 /home/nekolover/DEV/bombersow-project/src//Screen/Menu_Screen.h
+	<SFML/Graphics.h>
+	"Gui/Gui.h"
+	"Objects/Editor.h"
+	"Objects/GameObjects.h"
+	"Screen/Objects_Screen.h"
+
+1237507656 source:/home/nekolover/DEV/bombersow-project/src/Screen/Objects_Screen.c
+	<assert.h>
+	"OpenGL/gl.h"
+	"OpenGL/glu.h"
+	"SFML/Graphics.h"
+	"Gui/Gui.h"
+	"Objects/Editor.h"
+	"Screen/Objects_Screen.h"
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//OpenGL/gl.h
+
+1237502116 /home/nekolover/DEV/bombersow-project/dep/include//OpenGL/glu.h
+	<stddef.h>
+	<GL/gl.h>
+
+1237540931 source:/home/nekolover/DEV/bombersow-project/src/Screen/Map_screen.c
+	<assert.h>
+	"SFML/Graphics.h"
+	"Gui/Gui.h"
+	"GraphicEngine/Image.h"
+	"Screen/Map_screen.h"
+	"Objects/Editor.h"
+
+1237502117 /home/nekolover/DEV/bombersow-project/src//Screen/Map_screen.h
+	"SFML/Graphics.h"
+	"Gui/Gui.h"
+	"Objects/Editor.h"
+	"Objects/GameObjects.h"
 
