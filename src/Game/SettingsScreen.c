@@ -9,7 +9,7 @@ _Bool display_Settings(sfRenderWindow* Game, sfImage* BG_image, sfFont* settings
     Screen* Settings = screen_Create();
     sfEvent Event;
     sfImage* bg_textbox = sfImage_CreateFromFile("base/textbox_back.png");
-    char* player_name;
+    char player_name[50];
     _Bool launched = true, close = false;
 
     screen_LoadImage(Settings, BG_image);                        // Chargement de l'arrière-plan
@@ -26,7 +26,7 @@ _Bool display_Settings(sfRenderWindow* Game, sfImage* BG_image, sfFont* settings
         sfRenderWindow_DrawSprite(Game, Settings->images[0]);   // Dessin du BG
         for (int i = 0; i < Settings->nb_text; i++)
             screen_DrawText(Game, Settings, i);                 // Dessin des textes
-        screen_DrawGui(Game, Settings);                         // Dessin de la GUI
+        //screen_DrawGui(Game, Settings);                         // Dessin de la GUI
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 

@@ -3,7 +3,7 @@
 #include <SFML/Audio.h>
 #include "Screen/Objects_Screen.h"
 #include "Screen/Menu_Screen.h"
-#include "Screen/Map_Screen.h"
+#include "Screen/Map_screen.h"
 #include "Map/MapLoader.h"
 
 int main()

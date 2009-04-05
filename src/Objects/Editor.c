@@ -14,8 +14,7 @@ Editor* editor_Create()
     Editor* editor = NULL;
     assert(editor = (Editor*)malloc(sizeof(Editor)));
 
-    editor->selected_animation = NULL;
-    editor->selected_image = NULL;
+    editor->selected_sprite = NULL;
     editor->selected_type = 0;
     editor->selected_id = -1;
 
@@ -44,7 +43,8 @@ void editor_Destroy(Editor* editor)
 {
 
     animation_Destroy(editor->animation_create);
-    animation_Destroy(editor->selected_animation);
+
+    sprite_Destroy(editor->selected_sprite);
 
     for(int i = 0; i < editor->nombre_object; i++)
         object_Destroy(editor->object[i]);
@@ -63,54 +63,45 @@ void editor_Destroy(Editor* editor)
 void editor_Draw(sfRenderWindow* Game, Editor* editor)
 {
 
-    if(editor->selected_type == 0){
-        if(editor->dynamic_step == 1)
-            sfSprite_SetColor(editor->selected_image, sfColor_FromRGBA(255,255,255,120));
-        else
-            sfSprite_SetColor(editor->selected_image, sfColor_FromRGBA(255,255,255,255));
-        sfRenderWindow_DrawSprite(Game, editor->selected_image);
-    }else if(editor->selected_type == 1){
-        if(editor->dynamic_step == 1)
-            sfSprite_SetColor(editor->selected_animation->sprite, sfColor_FromRGBA(255,255,255,120));
-        else
-            sfSprite_SetColor(editor->selected_animation->sprite, sfColor_FromRGBA(255,255,255,255));
-        animation_Draw(editor->selected_animation, Game);
-    }
+    if(editor->dynamic_step == 1)
+        sprite_SetColor(editor->selected_sprite, sfColor_FromRGBA(255,255,255,120));
+    else
+        sprite_SetColor(editor->selected_sprite, sfColor_FromRGBA(255,255,255,255));
+
+    sprite_Draw(Game, editor->selected_sprite);
 
 }
 
 void editor_MouseMove(Editor* editor, int x, int y)
 {
 
-    if(editor->selected_type == 0){
-        if(sfSprite_GetWidth(editor->selected_image)+x < 1100){
-            sfSprite_SetPosition(editor->selected_image, x, y);
-        }else{
-            sfSprite_SetPosition(editor->selected_image, 1100-sfSprite_GetWidth(editor->selected_image), y);
-        }
-
-        if(x > 200){
-            sfSprite_SetPosition(editor->selected_image, sfSprite_GetX(editor->selected_image), y);
-        }else{
-            sfSprite_SetPosition(editor->selected_image, 200, y);
-        }
-
-        if(sfSprite_GetHeight(editor->selected_image)+y < 600){
-            sfSprite_SetPosition(editor->selected_image, sfSprite_GetX(editor->selected_image), y);
-        }else{
-            sfSprite_SetPosition(editor->selected_image, sfSprite_GetX(editor->selected_image), 600-sfSprite_GetHeight(editor->selected_image));
-        }
+    if(editor->selected_sprite->largeur+x < 1100){
+        sprite_SetPosition(editor->selected_sprite, x, y);
     }else{
-        animation_SetPosition(editor->selected_animation, x, y);
+        sprite_SetPosition(editor->selected_sprite, 1100-editor->selected_sprite->largeur, y);
     }
+
+    if(x > 200){
+        sprite_SetPosition(editor->selected_sprite, editor->selected_sprite->x, y);
+    }else{
+        sprite_SetPosition(editor->selected_sprite, 200, y);
+    }
+
+    if(editor->selected_sprite->hauteur+y < 600){
+        sprite_SetPosition(editor->selected_sprite, editor->selected_sprite->x, y);
+    }else{
+        sprite_SetPosition(editor->selected_sprite, editor->selected_sprite->x, 600-editor->selected_sprite->hauteur);
+    }
+
 
 }
 
 
 void editor_Add_Animation(Editor* editor, Animation* animation){
 
-    animation_Destroy(editor->selected_animation);
-    editor->selected_animation = animation_Create(sfSprite_GetImage(editor->selected_image), animation->x, animation->y, animation->image_hauteur, animation->image_largeur, animation->nombre_image, 0, BOUCLE, animation->fps);
+    Animation* a_ = animation_Create(sprite_GetImage(editor->selected_sprite), animation->x, animation->y, animation->image_hauteur, animation->image_largeur, animation->nombre_image, 0, BOUCLE, animation->fps);
+    sprite_Destroy(editor->selected_sprite);
+    editor->selected_sprite = sprite_Create(0, 0, NULL, a_);
     editor->selected_type = 1;
 
 }

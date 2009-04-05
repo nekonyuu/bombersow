@@ -26,9 +26,7 @@ typedef struct OBJECT
     unsigned int type;              // Type d'objet (0 = Plate-forme, 1 = Piège, 2 = Arme, 3 = Ammo)
 
     /*Voir pour inclusion dans une struct*/
-    sfSprite *draw_img;             // Image de l'objet
-    Animation *draw_animation;
-    int bool_animation;
+    Sprite* sprite;
     /*************************************/
 
     float start_coord_x;            // Coordonnées de l'objet

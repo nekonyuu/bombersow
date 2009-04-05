@@ -11,8 +11,7 @@ typedef struct EDITOR
     int mouse_x;
     int mouse_y;
 
-    Animation* selected_animation;
-    sfSprite* selected_image;
+    Sprite* selected_sprite;
     _Bool selected_type;
     int selected_id;
 

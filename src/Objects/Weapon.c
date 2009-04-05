@@ -254,5 +254,4 @@ void armory_Destroy(Weapon* armory2destroy)
             sfSprite_Destroy(armory2destroy[i].bullet_img);
         }
     }
-    free(armory2destroy);
 }
