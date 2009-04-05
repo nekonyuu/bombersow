@@ -35,7 +35,7 @@ Player* player_CreateFromPacket(sfPacket* packet)
 sfPacket* object_CreatePacket(Object* object_)
 {
     if (!object_)
-        logging_Error("object_Create", "Object object sent NULL, can't continue networking");
+        logging_Error("object_CreatePacket", "Object object sent NULL, can't continue networking");
 
     sfPacket* new_packet = sfPacket_Create();
 

@@ -18,6 +18,8 @@ typedef struct PACKET_LIST
 
 } PacketList;
 
+enum { PLATFORM, TRAP, WEAPON, AMMO };
+
 typedef struct OBJECT
 {
     unsigned int objectID;          // ID de l'object (transmission réseau)
@@ -146,7 +148,7 @@ typedef struct MAP
 
 Weapon armory[NB_MAX_WEAPONS];      // Armes du jeu en accès global
 
-Object* object_Create();
+Object* object_Create(unsigned int);
 void object_Destroy(Object*);
 void object_LoadImg(Object*, sfImage*, Animation*);
 void object_Draw(sfRenderWindow*, Object*);

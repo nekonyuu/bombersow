@@ -1,13 +1,13 @@
 #include "BaseSystem/Logging.h"
 #include "Objects/GameObjects.h"
 
-Object* object_Create()
+Object* object_Create(unsigned int type)
 {
     Object* new_object = NULL;
     assert(new_object = (Object*) malloc(sizeof(Object)));
 
     new_object->objectID = 0;
-    new_object->type = 0;
+    new_object->type = type;
 
     new_object->draw_img = sfSprite_Create();
     new_object->draw_animation = NULL;
