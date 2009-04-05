@@ -101,8 +101,8 @@ typedef struct PLAYER
     unsigned int frags;             // Nombre de tués
     unsigned int killed;            // Nombre de morts
 
-    sfThread* player_thread;        // Thread du player (d'écoute si serveur, de transmission si client)
-    sfSocketTCP* chat_socket;       // Socket d'écoute de discussion
+    sfThread* player_thread;        // Thread du player
+    sfSocketTCP* listen_socket;     // Socket d'écoute
     sfBool connected;               // Booléen de présence sur le serveur
     sfBool ready;                   // Prêt à jouer
 } Player;

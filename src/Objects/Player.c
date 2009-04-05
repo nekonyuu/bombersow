@@ -43,6 +43,7 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->killed = 0;
 
     new_player->player_thread = NULL;
+    new_player->listen_socket = NULL;
 
     new_player->connected = sfTrue;
     new_player->ready = sfFalse;

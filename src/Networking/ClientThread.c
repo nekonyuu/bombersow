@@ -6,10 +6,23 @@ void client_Main(Map* map, sfIPAddress ip, char* name)
 {
     sfPacket* connect_request = client_CreateConnectPacket(name);
     sfSocketTCP* client_socket = sfSocketTCP_Create();
+    sfPacket *response = NULL;
+    unsigned int code = REFUSED;
     sfSocketTCP_Connect(client_socket, map->game_port, ip, 30.0f);
     sfSocketTCP_SendPacket(client_socket, connect_request);
     sfPacket_Destroy(connect_request);
 
+    sfSocketTCP_ReceivePacket(client_socket, response);
+    code = (unsigned int) sfPacket_ReadUint8(response);
+
+    if(code != ACCEPTED)
+    {
+
+    }
+    else
+    {
+
+    }
 }
 
 sfPacket* client_CreateConnectPacket(char* name)
