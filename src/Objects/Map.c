@@ -148,10 +148,7 @@ void map_DelBullet(Map* map_, unsigned int bullet_id)
 
 void map_UpdateDisconnectedPlayers(void* UserData)
 {
-
     Map* map = (Map*) UserData;
-
-    sfMutex_Lock(Network_ServerMutex);
 
     while (map->chat_started)
     {
@@ -161,6 +158,4 @@ void map_UpdateDisconnectedPlayers(void* UserData)
 
         sfSleep(1.0f);
     }
-
-    sfMutex_Unlock(Network_ServerMutex);
 }

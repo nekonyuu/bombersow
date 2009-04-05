@@ -50,7 +50,6 @@ sfPacket* client_CreateDisconnectPacket(unsigned int player_id)
 
     sfPacket* new_packet = sfPacket_Create();
     sfPacket_WriteUint8(new_packet, DISCONNECT);
-    sfPacket_WriteUint8(new_packet, (sfUint8) player_id);
 
     return new_packet;
 }

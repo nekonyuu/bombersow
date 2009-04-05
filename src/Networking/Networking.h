@@ -18,6 +18,7 @@ void server_Listen_Connections(void* UserData);
 void server_Listen_TCP(void* UserData);
 void server_Listen_Game(void* UserData);
 sfPacket* server_CreateResponsePacket(unsigned int player_id, unsigned int response);
+void server_ReadUDPPacket(sfPacket* packet, Map* map);
 
 // ClientThread.c
 sfPacket* client_CreateConnectPacket(char* name);
@@ -31,9 +32,11 @@ ChatData* chat_CreatePlayerData(Map*, unsigned int);
 // DataHandler.c
 sfPacket* player_CreatePacket(Player*);
 Player* player_CreateFromPacket(sfPacket*);
+void player_ReadPacket(Map* map, sfPacket* packet);
 sfPacket* object_CreatePacket(Object*);
 Object* object_CreateFromPacket(sfPacket*);
-void map_CreateClientPackets(Map*);
+sfPacket* bullet_CreatePacket(Bullet*);
+void map_CreateGamePackets(Map*);
 void map_DestroyAllPackets(Map*);
 
 #endif

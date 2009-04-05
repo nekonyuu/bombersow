@@ -113,6 +113,10 @@ typedef struct BULLET
     unsigned int bullet_type;       // Type de balles
     unsigned int damage;            // Dommages infligés
     unsigned int trajectory;        // Type de trajectoire (0 = Rectiligne, 1 = Parabole (Grenade), 2 = Spread (Shotgun)
+
+    float coord_x;                  // Coordonnées
+    float coord_y;
+
     sfSprite* draw_image;           // Image de la balle (Peut être NULL, balle invisible)
 } Bullet;
 
@@ -145,6 +149,7 @@ typedef struct MAP
 } Map;
 
 Weapon armory[NB_MAX_WEAPONS];      // Armes du jeu en accès global
+sfMutex* Network_ServerMutex;       // Mutex Serveur
 
 Object* object_Create(unsigned int);
 void object_Destroy(Object*);
