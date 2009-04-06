@@ -28,6 +28,8 @@ Object* object_Create(unsigned int type)
 
     new_object->spawned = true;
 
+    new_object->quad_node = NULL;
+
     return new_object;
 }
 

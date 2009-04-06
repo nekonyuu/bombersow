@@ -380,11 +380,11 @@
 
 1236891889 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\map\maphandler.h
 
-1236472781 source:c:\projet\bombersow\src\audioengine.c
+1236476381 source:c:\projet\bombersow\src\audioengine.c
 
-1236472781 source:c:\projet\bombersow\src\game\clientscreen.c
+1236476381 source:c:\projet\bombersow\src\game\clientscreen.c
 
-1237163035 source:c:\projet\bombersow\src\game\playscreen.c
+1237424096 source:c:\projet\bombersow\src\game\playscreen.c
 	"BaseSystem/Logging.h"
 	"Game/MenuScreen.h"
 	"Game/CreditsScreen.h"
@@ -395,25 +395,25 @@
 
 1237163036 ameObjects.h"
 
-1236472781 source:c:\projet\bombersow\src\game\serverscreen.c
+1236476381 source:c:\projet\bombersow\src\game\serverscreen.c
 
-1237408121 source:c:\projet\bombersow\src\game\settingsscreen.c
+1238961101 source:c:\projet\bombersow\src\game\settingsscreen.c
 	<Gui/Gui.h>
 	"BaseSystem/Logging.h"
 	"Game/SettingsScreen.h"
 	"Objects/Screen.h"
 	"GraphicEngine/Draw.h"
 
-1236776212 source:c:\projet\bombersow\src\graphicengine\draw.c
+1236779812 source:c:\projet\bombersow\src\graphicengine\draw.c
 	"GraphicEngine/Draw.h"
 
-1236472781 source:c:\projet\bombersow\src\inputscontrol\configparsing.c
+1236476381 source:c:\projet\bombersow\src\inputscontrol\configparsing.c
 
-1237332400 source:c:\projet\bombersow\src\inputscontrol\playercontrol.c
+1237336000 source:c:\projet\bombersow\src\inputscontrol\playercontrol.c
 	<SFML/Graphics.h>
 	"Objects/GameObjects.h"
 
-1237387779 source:c:\projet\bombersow\src\map\maploader.c
+1237391379 source:c:\projet\bombersow\src\map\maploader.c
 	<stdio.h>
 	<string.h>
 	<dirent.h>
@@ -422,21 +422,27 @@
 
 1236472781 source:c:\projet\bombersow\src\networking\dataconstructor.c
 
-1237332400 source:c:\projet\bombersow\src\networking\serverthread.c
+1238969267 source:c:\projet\bombersow\src\networking\serverthread.c
 	"BaseSystem/Logging.h"
 	"GraphicEngine/Draw.h"
 	"Networking/Networking.h"
 	"Networking/PacketDefines.h"
+	"BaseSystem/Config.h"
 
-1236472781 source:c:\projet\bombersow\src\physicsengine\collisionsystem.c
+1239049605 source:c:\projet\bombersow\src\physicsengine\collisionsystem.c
+	"PhysicsEngine/PhysicsEngine.h"
+	"PhysicsEngine/CollisionSystem.h"
+	"Objects/GameObjects.h"
+	<assert.h>
+	<stdio.h>
 
-1237163036 source:c:\projet\bombersow\src\physicsengine\gravitysystem.c
+1237166636 source:c:\projet\bombersow\src\physicsengine\gravitysystem.c
 	"PhysicsEngine/GravitySystem.h"
 	"Objects/GameObjects.h"
 
-1236472781 source:c:\projet\bombersow\src\physicsengine\particlesystem.c
+1236476381 source:c:\projet\bombersow\src\physicsengine\particlesystem.c
 
-1237408005 source:c:\projet\bombersow\src\game\menuscreen.c
+1239050152 source:c:\projet\bombersow\src\game\menuscreen.c
 	"BaseSystem/Logging.h"
 	"Game/MenuScreen.h"
 	"Game/PlayScreen.h"
@@ -445,11 +451,13 @@
 	"GraphicEngine/Draw.h"
 	"Objects/Screen.h"
 	"Objects/GameObjects.h"
+	"PhysicsEngine/PhysicsEngine.h"
+	"PhysicsEngine/CollisionSystem.h"
 
-1237332400 c:\projet\bombersow\src\game\menuscreen.h
+1237336000 c:\projet\bombersow\src\game\menuscreen.h
 	<SFML/Graphics.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\graphics.h
+1236476380 c:\projet\bombersow\dep\include\sfml\graphics.h
 	<SFML/Window.h>
 	<SFML/Graphics/Color.h>
 	<SFML/Graphics/Image.h>
@@ -460,7 +468,7 @@
 	<SFML/Graphics/String.h>
 	<SFML/Graphics/View.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\window.h
+1236476380 c:\projet\bombersow\dep\include\sfml\window.h
 	<SFML/System.h>
 	<SFML/Window/Context.h>
 	<SFML/Window/Event.h>
@@ -468,7 +476,7 @@
 	<SFML/Window/VideoMode.h>
 	<SFML/Window/Window.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\system.h
+1236476380 c:\projet\bombersow\dep\include\sfml\system.h
 	<SFML/Config.h>
 	<SFML/System/Clock.h>
 	<SFML/System/Mutex.h>
@@ -476,64 +484,64 @@
 	<SFML/System/Sleep.h>
 	<SFML/System/Thread.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\config.h
+1236476380 c:\projet\bombersow\dep\include\sfml\config.h
 	<stdlib.h>
 	<limits.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\system\clock.h
+1236476380 c:\projet\bombersow\dep\include\sfml\system\clock.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\system\mutex.h
+1236476380 c:\projet\bombersow\dep\include\sfml\system\mutex.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\system\randomizer.h
+1236476380 c:\projet\bombersow\dep\include\sfml\system\randomizer.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\system\sleep.h
+1236476380 c:\projet\bombersow\dep\include\sfml\system\sleep.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\system\thread.h
+1236476380 c:\projet\bombersow\dep\include\sfml\system\thread.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\window\context.h
+1236476380 c:\projet\bombersow\dep\include\sfml\window\context.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\window\event.h
+1236476380 c:\projet\bombersow\dep\include\sfml\window\event.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\window\input.h
+1236476380 c:\projet\bombersow\dep\include\sfml\window\input.h
 	<SFML/Config.h>
 	<SFML/Window/Event.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\window\videomode.h
+1236476380 c:\projet\bombersow\dep\include\sfml\window\videomode.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\window\window.h
+1236476380 c:\projet\bombersow\dep\include\sfml\window\window.h
 	<SFML/Config.h>
 	<SFML/Window/Event.h>
 	<SFML/Window/Input.h>
 	<SFML/Window/VideoMode.h>
 	<SFML/Window/WindowHandle.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\window\windowhandle.h
+1236476380 c:\projet\bombersow\dep\include\sfml\window\windowhandle.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\graphics\color.h
+1236476380 c:\projet\bombersow\dep\include\sfml\graphics\color.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\graphics\image.h
+1236476380 c:\projet\bombersow\dep\include\sfml\graphics\image.h
 	<SFML/Config.h>
 	<SFML/Graphics/Color.h>
 	<SFML/Graphics/Rect.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\graphics\rect.h
+1236476380 c:\projet\bombersow\dep\include\sfml\graphics\rect.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\graphics\postfx.h
+1236476380 c:\projet\bombersow\dep\include\sfml\graphics\postfx.h
 	<SFML/Config.h>
 	<SFML/Graphics/Image.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\graphics\renderwindow.h
+1236476380 c:\projet\bombersow\dep\include\sfml\graphics\renderwindow.h
 	<SFML/Config.h>
 	<SFML/Graphics/Color.h>
 	<SFML/Graphics/Image.h>
@@ -549,46 +557,46 @@
 	<SFML/Window/Window.h>
 	<SFML/Window/WindowHandle.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\graphics\shape.h
+1236476380 c:\projet\bombersow\dep\include\sfml\graphics\shape.h
 	<SFML/Config.h>
 	<SFML/Graphics/BlendMode.h>
 	<SFML/Graphics/Color.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\graphics\blendmode.h
+1236476380 c:\projet\bombersow\dep\include\sfml\graphics\blendmode.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\graphics\sprite.h
+1236476380 c:\projet\bombersow\dep\include\sfml\graphics\sprite.h
 	<SFML/Config.h>
 	<SFML/Graphics/BlendMode.h>
 	<SFML/Graphics/Color.h>
 	<SFML/Graphics/Image.h>
 	<SFML/Graphics/Rect.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\graphics\string.h
+1236476380 c:\projet\bombersow\dep\include\sfml\graphics\string.h
 	<SFML/Config.h>
 	<SFML/Graphics/BlendMode.h>
 	<SFML/Graphics/Color.h>
 	<SFML/Graphics/Font.h>
 	<SFML/Graphics/Rect.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\graphics\font.h
+1236476380 c:\projet\bombersow\dep\include\sfml\graphics\font.h
 	<SFML/Graphics/Glyph.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\graphics\glyph.h
+1236476380 c:\projet\bombersow\dep\include\sfml\graphics\glyph.h
 	<SFML/Graphics/Rect.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\graphics\view.h
+1236476380 c:\projet\bombersow\dep\include\sfml\graphics\view.h
 	<SFML/Config.h>
 	<SFML/Graphics/Rect.h>
 
-1237408005 c:\projet\bombersow\src\objects\screen.h
+1237411605 c:\projet\bombersow\src\objects\screen.h
 	<SFML/Graphics.h>
 	<SFML/Audio.h>
 	<Gui/Gui.h>
 
 1237390767 >
 
-1236472780 c:\projet\bombersow\dep\include\sfml\audio.h
+1236476380 c:\projet\bombersow\dep\include\sfml\audio.h
 	<SFML/System.h>
 	<SFML/Audio/Listener.h>
 	<SFML/Audio/Music.h>
@@ -597,29 +605,29 @@
 	<SFML/Audio/SoundBufferRecorder.h>
 	<SFML/Audio/SoundRecorder.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\audio\listener.h
+1236476380 c:\projet\bombersow\dep\include\sfml\audio\listener.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\audio\music.h
+1236476380 c:\projet\bombersow\dep\include\sfml\audio\music.h
 	<SFML/Config.h>
 	<SFML/Audio/SoundStatus.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\audio\soundstatus.h
+1236476380 c:\projet\bombersow\dep\include\sfml\audio\soundstatus.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\audio\sound.h
+1236476380 c:\projet\bombersow\dep\include\sfml\audio\sound.h
 	<SFML/Config.h>
 	<SFML/Audio/SoundBuffer.h>
 	<SFML/Audio/SoundStatus.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\audio\soundbuffer.h
+1236476380 c:\projet\bombersow\dep\include\sfml\audio\soundbuffer.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\audio\soundbufferrecorder.h
+1236476380 c:\projet\bombersow\dep\include\sfml\audio\soundbufferrecorder.h
 	<SFML/Config.h>
 	<SFML/Audio/SoundBuffer.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\audio\soundrecorder.h
+1236476380 c:\projet\bombersow\dep\include\sfml\audio\soundrecorder.h
 	<SFML/Config.h>
 	<SFML/Audio/SoundBuffer.h>
 
@@ -632,7 +640,7 @@
 	"GraphicEngine/Image.h"
 	"Objects/Map.h"
 
-1237163035 source:c:\projet\bombersow\src\map\maphandler.c
+1237166635 source:c:\projet\bombersow\src\map\maphandler.c
 	<assert.h>
 	"Objects/GameObjects.h"
 	"Map/MapLoader.h"
@@ -661,43 +669,44 @@
 1236644128 c:\projet\bombersow\src\objects\bullet.h
 	"SFML/Graphics.h"
 
-1237387779 c:\projet\bombersow\src\map\maploader.h
+1237391379 c:\projet\bombersow\src\map\maploader.h
 	"GraphicEngine/Image.h"
 	"Objects/GameObjects.h"
 
-1236897404 c:\projet\bombersow\src\map\maphandler.h
+1236901004 c:\projet\bombersow\src\map\maphandler.h
 
-1237163035 source:c:\projet\bombersow\src\objects\bullet.c
+1239049208 source:c:\projet\bombersow\src\objects\bullet.c
 	"BaseSystem/Logging.h"
 	"Objects/GameObjects.h"
 
-1237332400 source:c:\projet\bombersow\src\objects\map.c
+1238969267 source:c:\projet\bombersow\src\objects\map.c
+	"BaseSystem/Config.h"
 	"BaseSystem/Logging.h"
 	"Objects/GameObjects.h"
 
-1237400869 source:c:\projet\bombersow\src\objects\objects.c
+1239046198 source:c:\projet\bombersow\src\objects\objects.c
 	"BaseSystem/Logging.h"
 	"Objects/GameObjects.h"
 
-1237245077 source:c:\projet\bombersow\src\objects\player.c
+1239049217 source:c:\projet\bombersow\src\objects\player.c
 	<string.h>
 	"BaseSystem/Logging.h"
 	"GraphicEngine/Draw.h"
 	"Objects/GameObjects.h"
 
-1237408005 source:c:\projet\bombersow\src\objects\screen.c
+1237411605 source:c:\projet\bombersow\src\objects\screen.c
 	"BaseSystem/Logging.h"
 	"Objects/Screen.h"
 
-1237163036 source:c:\projet\bombersow\src\objects\weapon.c
+1239048935 source:c:\projet\bombersow\src\objects\weapon.c
 	"BaseSystem/Logging.h"
 	"Objects/GameObjects.h"
 
-1237387779 source:c:\projet\bombersow\src\graphicengine\image.c
+1239048170 source:c:\projet\bombersow\src\graphicengine\image.c
 	<assert.h>
 	"GraphicEngine/Image.h"
 
-1237387779 c:\projet\bombersow\src\graphicengine\image.h
+1239048177 c:\projet\bombersow\src\graphicengine\image.h
 	<SFML/Graphics.h>
 
 1236646413 d:\docs\fac\projets\projet i41\bombersow\bombersow\src\graphicengine\image.h
@@ -1201,7 +1210,7 @@
 
 1237158560 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\physicsengine\particlesystem.c
 
-1237387779 c:\projet\bombersow\src\graphicengine\draw.h
+1237391379 c:\projet\bombersow\src\graphicengine\draw.h
 	<SFML/Graphics.h>
 
 1237408994 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\csfml-gui\gui\gui.h
@@ -1231,37 +1240,37 @@
 	<stdbool.h>
 	<SFML/Graphics.h>
 
-1236866836 source:c:\projet\bombersow\src\basesystem\config.c
+1236870436 source:c:\projet\bombersow\src\basesystem\config.c
 
-1236897404 source:c:\projet\bombersow\src\basesystem\logging.c
+1236901004 source:c:\projet\bombersow\src\basesystem\logging.c
 	<stdio.h>
 	"BaseSystem/Logging.h"
 
-1236866836 c:\projet\bombersow\src\basesystem\logging.h
+1236870436 c:\projet\bombersow\src\basesystem\logging.h
 	<assert.h>
 
-1236897404 source:c:\projet\bombersow\src\game\creditsscreen.c
+1237424096 source:c:\projet\bombersow\src\game\creditsscreen.c
 	"BaseSystem/Logging.h"
 	"Game/CreditsScreen.h"
 	"Objects/Screen.h"
 	"GraphicEngine/Draw.h"
 
-1237332400 c:\projet\bombersow\src\game\creditsscreen.h
+1237336000 c:\projet\bombersow\src\game\creditsscreen.h
 	<stdbool.h>
 	<SFML/Graphics.h>
 
-1237400247 c:\projet\bombersow\dep\csfml-gui\gui\gui.h
+1237403847 c:\projet\bombersow\dep\csfml-gui\gui\gui.h
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
 	"SFML/Graphics.h"
 
-1237332400 c:\projet\bombersow\src\objects\gameobjects.h
+1239049193 c:\projet\bombersow\src\objects\gameobjects.h
 	<stdbool.h>
 	<SFML/Network.h>
 	"GraphicEngine/Image.h"
 
-1236472780 c:\projet\bombersow\dep\include\sfml\network.h
+1236476380 c:\projet\bombersow\dep\include\sfml\network.h
 	<SFML/System.h>
 	<SFML/Network/IPAddress.h>
 	<SFML/Network/Packet.h>
@@ -1269,47 +1278,47 @@
 	<SFML/Network/SocketTCP.h>
 	<SFML/Network/SocketUDP.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\network\ipaddress.h
+1236476380 c:\projet\bombersow\dep\include\sfml\network\ipaddress.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\network\packet.h
+1236476380 c:\projet\bombersow\dep\include\sfml\network\packet.h
 	<SFML/Config.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\network\selector.h
+1236476380 c:\projet\bombersow\dep\include\sfml\network\selector.h
 	<SFML/Config.h>
 	<SFML/Network/SocketTCP.h>
 	<SFML/Network/SocketUDP.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\network\sockettcp.h
+1236476380 c:\projet\bombersow\dep\include\sfml\network\sockettcp.h
 	<SFML/Config.h>
 	<SFML/Network/IPAddress.h>
 	<SFML/Network/Packet.h>
 	<SFML/Network/SocketStatus.h>
 
-1236472780 c:\projet\bombersow\dep\include\sfml\network\socketstatus.h
+1236476380 c:\projet\bombersow\dep\include\sfml\network\socketstatus.h
 
-1236472780 c:\projet\bombersow\dep\include\sfml\network\socketudp.h
+1236476380 c:\projet\bombersow\dep\include\sfml\network\socketudp.h
 	<SFML/Config.h>
 	<SFML/Network/IPAddress.h>
 	<SFML/Network/Packet.h>
 	<SFML/Network/SocketStatus.h>
 
-1237408522 source:c:\projet\bombersow\dep\csfml-gui\gui\gui.c
+1238961101 source:c:\projet\bombersow\dep\csfml-gui\gui\gui.c
 	<assert.h>
 	<string.h>
 	"SFML/Graphics.h"
 	"BaseSystem/Logging.h"
 	"Gui/Gui.h"
 
-1237332400 c:\projet\bombersow\src\game\playscreen.h
+1237336000 c:\projet\bombersow\src\game\playscreen.h
 	<stdbool.h>
 	<SFML/Graphics.h>
 
-1237408005 c:\projet\bombersow\src\game\settingsscreen.h
+1237411605 c:\projet\bombersow\src\game\settingsscreen.h
 	<stdbool.h>
 	<SFML/Graphics.h>
 
-1237387779 source:c:\projet\bombersow\src\main-game.c
+1239040147 source:c:\projet\bombersow\src\main-game.c
 	"BaseSystem/Logging.h"
 	"Game/MenuScreen.h"
 	"Objects/Screen.h"
@@ -1317,28 +1326,28 @@
 	"GraphicEngine/Draw.h"
 	"Objects/GameObjects.h"
 
-1237332400 source:c:\projet\bombersow\src\networking\chathandler.c
+1237489290 source:c:\projet\bombersow\src\networking\chathandler.c
 	<string.h>
 	"BaseSystem/Logging.h"
 	"Networking/Networking.h"
 	"Networking/PacketDefines.h"
 
-1237332400 c:\projet\bombersow\src\networking\networking.h
+1238969267 c:\projet\bombersow\src\networking\networking.h
 	"Objects/GameObjects.h"
 
-1237332400 c:\projet\bombersow\src\networking\packetdefines.h
+1237336000 c:\projet\bombersow\src\networking\packetdefines.h
 
-1237332400 source:c:\projet\bombersow\src\networking\clientthread.c
+1238969267 source:c:\projet\bombersow\src\networking\clientthread.c
 	"BaseSystem/Logging.h"
 	"Networking/Networking.h"
 	"Networking/PacketDefines.h"
 
-1237332400 source:c:\projet\bombersow\src\networking\datahandler.c
+1238969267 source:c:\projet\bombersow\src\networking\datahandler.c
 	"BaseSystem/Logging.h"
 	"Networking/Networking.h"
 	"Networking/PacketDefines.h"
 
-1237163036 c:\projet\bombersow\src\physicsengine\gravitysystem.h
+1237166636 c:\projet\bombersow\src\physicsengine\gravitysystem.h
 	"Objects/GameObjects.h"
 
 1237506622 source:/home/nekolover/DEV/bombersow-project/dep/CSFML-GUI/Gui/Gui.c
@@ -1737,4 +1746,19 @@
 	"GraphicEngine/Draw.h"
 
 1238962060 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\basesystem\config.h
+
+1239050225 source:c:\projet\bombersow\src\physicsengine\physicsengine.c
+	"PhysicsEngine/PhysicsEngine.h"
+	"Objects/GameObjects.h"
+	<assert.h>
+	<stdio.h>
+
+1238969267 c:\projet\bombersow\src\basesystem\config.h
+
+1239050079 c:\projet\bombersow\src\physicsengine\physicsengine.h
+	"Objects/GameObjects.h"
+
+1239049808 c:\projet\bombersow\src\physicsengine\collisionsystem.h
+	"Objects/GameObjects.h"
+	"PhysicsEngine/PhysicsEngine.h"
 

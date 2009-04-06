@@ -45,6 +45,8 @@ typedef struct OBJECT
     unsigned int nb_ammo;           // Nombre de munitions ajoutées par le pack
 
     _Bool spawned;                  // Affiché ou pas
+
+    struct QUAD_TREE* quad_node;
 } Object;
 
 // Liste des armes
@@ -57,7 +59,7 @@ typedef struct WEAPON
     int type;                       // ID de l'arme
 
     sfSprite *weapon_img;           // Image de l'arme
-    sfSprite *bullet_img;           // Projectile
+    Sprite *bullet_img;             // Projectile
 
     int nb_max_bullets;             // Nombre de munitions max (-1 si infini)
     int nb_curr_bullets;            // Nombre de munitions restantes (-1 si infini)
@@ -105,6 +107,11 @@ typedef struct PLAYER
     sfSocketTCP* listen_socket;     // Socket d'écoute
     sfBool connected;               // Booléen de présence sur le serveur
     sfBool ready;                   // Prêt à jouer
+
+    Sprite* sprite;
+
+    struct QUAD_TREE* quad_node;
+
 } Player;
 
 typedef struct BULLET
@@ -113,11 +120,15 @@ typedef struct BULLET
     unsigned int bullet_type;       // Type de balles
     unsigned int damage;            // Dommages infligés
     unsigned int trajectory;        // Type de trajectoire (0 = Rectiligne, 1 = Parabole (Grenade), 2 = Spread (Shotgun)
+    unsigned int range;
 
     float coord_x;                  // Coordonnées
     float coord_y;
 
-    sfSprite* draw_image;           // Image de la balle (Peut être NULL, balle invisible)
+    Sprite* draw_image;           // Image de la balle (Peut être NULL, balle invisible)
+
+    struct QUAD_TREE* quad_node;
+
 } Bullet;
 
 typedef struct MAP

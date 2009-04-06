@@ -6,6 +6,8 @@
 #include "GraphicEngine/Draw.h"
 #include "Objects/Screen.h"
 #include "Objects/GameObjects.h"
+#include "PhysicsEngine/PhysicsEngine.h"
+#include "PhysicsEngine/CollisionSystem.h"
 
 void display_Menu(sfRenderWindow* Game)
 {
@@ -15,6 +17,7 @@ void display_Menu(sfRenderWindow* Game)
     sfImage *image_animation = sfImage_CreateFromFile("base/images/animation.png"); // Test
     sfFont *menuFont = sfFont_CreateFromFile("base/fonts/ITCKRIST.TTF", 50, NULL);
     Animation *animation = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
+    Animation *animation2 = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
     sfEvent Event;
     _Bool launched = true;
     int menu_select = 1;
@@ -28,10 +31,34 @@ void display_Menu(sfRenderWindow* Game)
     screen_LoadText(Menu, "Credits", sfWhite, 35, sfStringItalic, 450.0f, 240.0f);
     screen_LoadText(Menu, "Quitter", sfWhite, 35, sfStringItalic, 450.0f, 290.0f);
     screen_LoadMusic(Menu, menuMusic, sfTrue);                  // Chargement de la musique
-    if (Menu->music)
-        screen_PlayMusic(Menu);                                 // Lecture
+    /*if (Menu->music)
+        screen_PlayMusic(Menu);                                 // Lecture-*/
 
     logging_Info("display_Menu", "Started without error");
+
+
+
+    Object* obj_temp = object_Create(0);
+    object_LoadImg(obj_temp, NULL, animation);
+
+    Object* obj_temp2 = object_Create(0);
+    object_LoadImg(obj_temp2, NULL, animation2);
+    sprite_SetPosition(obj_temp2->sprite, 20, 20);
+
+    Quad_tree* quad = quad_tree_Create();
+    quad->rect.Left = 0;
+    quad->rect.Top = 0;
+    quad->rect.Bottom = 480;
+    quad->rect.Right = 640;
+
+    quad_tree_Add(quad, obj_temp, OBJECT);
+    quad_tree_Add(quad, obj_temp2, OBJECT);
+
+    Collision* collision = collision_Detection_Object(obj_temp, 0);
+    if(collision != NULL){
+        printf("%d", collision->type);
+        collision_Destroy(collision);
+    }
 
     do
     {
@@ -43,6 +70,9 @@ void display_Menu(sfRenderWindow* Game)
             screen_DrawText(Game, Menu, i);                     // Dessin des textes
 
         animation_Draw(animation, Game);                        // Dessin animation test
+        animation_Draw(animation2, Game);
+
+        quad_tree_Draw(Game, quad);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 
@@ -105,14 +135,19 @@ void display_Menu(sfRenderWindow* Game)
                 break;
             }
         }
+
     }
     while (launched);
+
+
+    object_Destroy(obj_temp);
+    object_Destroy(obj_temp2);
+    quad_tree_Destroy(quad);
 
     sfFont_Destroy(menuFont);
     sfImage_Destroy(BG_image);
     sfImage_Destroy(image_animation);
     screen_Destroy(Menu);
-    animation_Destroy(animation);
 
     return;
 }

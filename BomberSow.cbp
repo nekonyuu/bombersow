@@ -217,6 +217,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\PhysicsEngine\ParticleSystem.h" />
+		<Unit filename="src\PhysicsEngine\PhysicsEngine.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\PhysicsEngine\PhysicsEngine.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

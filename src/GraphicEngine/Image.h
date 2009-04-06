@@ -59,6 +59,7 @@ void sprite_Destroy(Sprite*);
 void sprite_SetPosition(Sprite*, int, int);
 void sprite_Draw(sfRenderWindow*, Sprite*);
 void sprite_SetColor(Sprite*, sfColor);
+sfIntRect sprite_GetRect(Sprite*);
 sfImage* sprite_GetImage(Sprite*);
 
 

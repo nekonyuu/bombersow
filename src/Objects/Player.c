@@ -48,6 +48,10 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->connected = sfTrue;
     new_player->ready = sfFalse;
 
+    new_player->sprite = NULL;
+
+    new_player->quad_node = NULL;
+
     return new_player;
 }
 

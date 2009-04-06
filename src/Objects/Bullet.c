@@ -10,7 +10,10 @@ Bullet* bullet_Create(unsigned int player_id, unsigned int type)
     new_bullet->bullet_type = type;
     new_bullet->damage = armory[type].damage;
     new_bullet->trajectory = armory[type].trajectory;
+    new_bullet->range = armory[type].range;
     new_bullet->draw_image = armory[type].bullet_img;
+
+    new_bullet->quad_node = NULL;
 
     return new_bullet;
 }

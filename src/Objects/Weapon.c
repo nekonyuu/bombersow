@@ -251,7 +251,7 @@ void armory_Destroy(Weapon* armory2destroy)
         {
             sfString_Destroy(armory2destroy[i].name);
             sfSprite_Destroy(armory2destroy[i].weapon_img);
-            sfSprite_Destroy(armory2destroy[i].bullet_img);
+            sprite_Destroy(armory2destroy[i].bullet_img);
         }
     }
 }

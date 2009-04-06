@@ -244,3 +244,9 @@ sfImage* sprite_GetImage(Sprite* sprite)
     }
 
 }
+
+sfIntRect sprite_GetRect(Sprite* sprite)
+{
+   sfIntRect rect = {sprite->x, sprite->y, sprite->x+sprite->largeur, sprite->y+sprite->hauteur};
+   return rect;
+}
