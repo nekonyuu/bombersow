@@ -4,7 +4,30 @@
 
 // Le destructeur de paquet utilisé sera sfPacket_Destroy(sfPacket*)
 
-sfPacket* player_CreatePacket(Player* player_)
+Packet* packet_Create(unsigned int code, sfPacket* packet)
+{
+    Packet* new_packet = NULL;
+    assert(new_packet = (Packet*) malloc(sizeof(Packet)));
+
+    new_packet->code = code;
+    new_packet->packet = packet;
+
+    return new_packet;
+}
+
+void packet_Destroy(Packet* packet)
+{
+    if(!packet)
+    {
+        logging_Warning("packet_Destroy", "Packet object sent NULL, abort");
+        return;
+    }
+
+    sfPacket_Destroy(packet->packet);
+    free(packet);
+}
+
+Packet* player_CreatePacket(Player* player_)
 {
     if (!player_)
         logging_Error("player_PacketCreate", "Player object sent NULL, can't continue networking");
@@ -17,7 +40,7 @@ sfPacket* player_CreatePacket(Player* player_)
     sfPacket_WriteFloat(new_packet, player_->coord_x);
     sfPacket_WriteFloat(new_packet, player_->coord_y);
 
-    return new_packet;
+    return packet_Create(PLAYER, new_packet);
 }
 
 Player* player_CreateFromPacket(sfPacket* packet)
@@ -40,7 +63,7 @@ void player_ReadPacket(Map* map, sfPacket* packet)
     map->players_list[player_id]->coord_y = sfPacket_ReadFloat(packet);
 }
 
-sfPacket* object_CreatePacket(Object* object_)
+Packet* object_CreatePacket(Object* object_)
 {
     if (!object_)
         logging_Error("object_CreatePacket", "Object object sent NULL, can't continue networking");
@@ -48,23 +71,76 @@ sfPacket* object_CreatePacket(Object* object_)
     sfPacket* new_packet = sfPacket_Create();
 
     sfPacket_WriteUint8(new_packet, OBJECT);
+    sfPacket_WriteUint8(new_packet, object_->type);
     sfPacket_WriteUint8(new_packet, object_->objectID);
-    sfPacket_WriteFloat(new_packet, object_->curr_coord_x);
-    sfPacket_WriteFloat(new_packet, object_->curr_coord_y);
-    sfPacket_WriteUint8(new_packet, object_->speed);
 
-    return new_packet;
+    switch(object_->type)
+    {
+    case PLATFORM_DYNA:
+    case TRAP:
+        sfPacket_WriteFloat(new_packet, object_->curr_coord_x);
+        sfPacket_WriteFloat(new_packet, object_->curr_coord_y);
+        break;
+
+    case WEAPON:
+    case AMMO:
+        sfPacket_WriteBool(new_packet, object_->spawned);
+        break;
+
+    default:
+        break;
+    }
+
+    return packet_Create(OBJECT, new_packet);
 }
 
-Object* object_CreateFromPacket(sfPacket* packet)
+void object_ReadPacket(Map* map, sfPacket* packet)
 {
-    assert(packet);
-    Object* new_object = NULL;
+    if(!packet)
+    {
+        logging_Warning("object_ReadPacket", "sfPacket sent NULL, abort");
+        return;
+    }
 
-    return new_object;
+    unsigned int type = (unsigned int) sfPacket_ReadUint8(packet);
+    unsigned int id = (unsigned int) sfPacket_ReadUint8(packet);
+
+    switch(type)
+    {
+    case PLATFORM_DYNA:
+    case TRAP:
+        map->objects_list[id]->curr_coord_x = sfPacket_ReadFloat(packet);
+        map->objects_list[id]->curr_coord_y = sfPacket_ReadFloat(packet);
+        break;
+
+    case WEAPON:
+    case AMMO:
+        map->objects_list[id]->spawned = sfPacket_ReadBool(packet);
+        break;
+    }
+
+    return;
 }
 
-sfPacket* bullet_CreatePacket(Bullet* bullet)
+Packet* bullet_CreatePacket(Bullet* bullet)
+{
+    if (!object_)
+        logging_Error("bullet_CreatePacket", "Bullet object sent NULL, can't continue networking");
+
+    sfPacket* packet = sfPacket_Create();
+
+    sfPacket_WriteUint8(packet, (sfUint8) BULLET);
+    sfPacket_WriteUint8(packet, (sfUint8) bullet->owner);
+    sfPacket_WriteUint8(packet, (sfUint8) bullet->type);
+    sfPacket_WriteUint8(packet, (sfUint8) bullet->trajectory);
+    sfPacket_WriteUint8(packet, (sfUint8) bullet->range);
+    sfPacket_WriteUint8(packet, (sfUint8) bullet->coord_x);
+    sfPacket_WriteUint8(packet, (sfUint8) bullet->coord_y);
+
+    return packet_Create(BULLET, packet);
+}
+
+void bullet_ReadPacket(Map* map, sfPacket* packet)
 {
 
 }
@@ -80,12 +156,14 @@ void map_CreateGamePackets(Map* map_)
 
     map_->game_packets2send->nb_packets = map_->nb_players + map_->nb_bullets;
 
+    // Compte le nombre de paquets à créer
     for (int i = 0; i < map_->nb_objects; i++)
         if (map_->objects_list[i]->type > 0)
             map_->game_packets2send->nb_packets++;
 
-    assert(map_->game_packets2send->packets = (sfPacket**) malloc(map_->game_packets2send->nb_packets * sizeof(sfPacket*)));
+    assert(map_->game_packets2send->packets = (Packet**) malloc(map_->game_packets2send->nb_packets * sizeof(Packet*)));
 
+    // Création des paquets
     for (int i = 0; i < map_->nb_players; i++)
         map_->game_packets2send->packets[i] = player_CreatePacket(map_->players_list[i]);
 
@@ -102,7 +180,7 @@ void map_CreateGamePackets(Map* map_)
 void map_DestroyAllPackets(Map* map_)
 {
     for (int i = 0; i < map_->game_packets2send->nb_packets; i++)
-        sfPacket_Destroy(map_->game_packets2send->packets[i]);
+        packet_Destroy(map_->game_packets2send->packets[i]);
     free(map_->game_packets2send->packets);
     free(map_->game_packets2send);
 }

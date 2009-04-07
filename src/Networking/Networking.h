@@ -30,12 +30,13 @@ char* chat_ReadPacket(sfPacket* packet);
 ChatData* chat_CreatePlayerData(Map*, unsigned int);
 
 // DataHandler.c
-sfPacket* player_CreatePacket(Player*);
+Packet* player_CreatePacket(Player*);
 Player* player_CreateFromPacket(sfPacket*);
-void player_ReadPacket(Map* map, sfPacket* packet);
-sfPacket* object_CreatePacket(Object*);
-Object* object_CreateFromPacket(sfPacket*);
-sfPacket* bullet_CreatePacket(Bullet*);
+void player_ReadPacket(Map*, sfPacket*);
+Packet* object_CreatePacket(Object*);
+void object_ReadPacket(Map*, sfPacket*);
+Packet* bullet_CreatePacket(Bullet*);
+void bullet_ReadPacket(Map*, sfPacket*);
 void map_CreateGamePackets(Map*);
 void map_DestroyAllPackets(Map*);
 

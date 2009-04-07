@@ -11,19 +11,27 @@
 
 typedef enum JUMP_TYPE {NO_JUMP, SIMPLE_JUMP} jump_t;
 
+// Structure stockant le paquet + son type
+typedef struct PACKET
+{
+    unsigned int code;
+    sfPacket* packet;
+} Packet;
+
+// Structure sotockant un tableau de paquets
 typedef struct PACKET_LIST
 {
-    sfPacket** packets;             // Paquets à envoyer
+    Packet** packets;               // Paquets à envoyer
     unsigned int nb_packets;        // Nombre de paquets
 
 } PacketList;
 
-enum { PLATFORM, TRAP, WEAPON, AMMO };
+enum { PLATFORM, DYNA_PLATFORM, TRAP, WEAPON, AMMO };
 
 typedef struct OBJECT
 {
     unsigned int objectID;          // ID de l'object (transmission réseau)
-    unsigned int type;              // Type d'objet (0 = Plate-forme, 1 = Piège, 2 = Arme, 3 = Ammo)
+    unsigned int type;              // Type d'objet (0 = Plate-forme fixe, 1 = Plate-forme dyna, 2 = Piège, 3 = Arme, 4 = Ammo)
 
     /*Voir pour inclusion dans une struct*/
     Sprite* sprite;
@@ -39,12 +47,12 @@ typedef struct OBJECT
     float dest_coord_y;
 
     unsigned int speed;             // Vitesse de mouvement (Plate-forme mobile & Pièges)
-    sfClock* clock_mouvement;        // Clock pour les mouvements.
+    sfClock* clock_mouvement;       // Clock pour les mouvements.
 
     unsigned int weapon_id;         // ID de l'arme liée au dessin (si type <= 2)
     unsigned int nb_ammo;           // Nombre de munitions ajoutées par le pack
 
-    _Bool spawned;                  // Affiché ou pas
+    sfBool spawned;                  // Affiché ou pas
 
     struct QUAD_TREE* quad_node;
 } Object;
@@ -125,7 +133,7 @@ typedef struct BULLET
     float coord_x;                  // Coordonnées
     float coord_y;
 
-    Sprite* draw_image;           // Image de la balle (Peut être NULL, balle invisible)
+    Sprite* draw_image;             // Image de la balle (Si Balle invisible, Sprite Transparent)
 
     struct QUAD_TREE* quad_node;
 

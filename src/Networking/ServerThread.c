@@ -178,8 +178,12 @@ void server_Listen_Game(void* UserData)
         map_CreateGamePackets(map);
 
         for(int i = 0; i < map->game_packets2send->nb_packets; i++)
-            for(int j = 0; j < map->nb_players; j++)
-                sfSocketUDP_SendPacket(map->game_socket, map->game_packets2send->packets[i], *map->players_list[j]->player_ip, map->game_port);
+            if(map->game_packets2send->packets[i]->code != WEAPON && map->game_packets2send->packets[i]->code != AMMO)
+                for(int j = 0; j < map->nb_players; j++)
+                    sfSocketUDP_SendPacket(map->game_socket, map->game_packets2send->packets[i]->packet, *map->players_list[j]->player_ip, map->game_port);
+            else
+                for(int j = 0; j < map->nb_players; j++)
+                    sfSocketTCP_SendPacket(map->players_list[j]->listen_socket, map->game_packets2send->packets[i]->packet);
 
         // Nettoyage
         map_DestroyAllPackets(map);
@@ -210,6 +214,11 @@ void server_ReadUDPPacket(sfPacket* packet, Map* map)
         break;
 
     case OBJECT:
+        object_ReadPacket(map, packet);
+        break;
+
+    case BULLET:
+        bullet_ReadPacket(map, packet);
         break;
 
     default:
