@@ -14,6 +14,10 @@ Bullet* bullet_Create(unsigned int player_id, unsigned int type)
     new_bullet->draw_image = armory[type].bullet_img;
 
     new_bullet->quad_node = NULL;
+    new_bullet->list_node = NULL;
+
+    new_bullet->gravity = 0;
+    new_bullet->acceleration = 0;
 
     return new_bullet;
 }

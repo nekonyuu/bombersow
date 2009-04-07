@@ -44,7 +44,7 @@ Collision* collision_Detection_Object(void* obj_, int type){
     }
 
 
-    List* list_temp = node->object;
+    List_element* list_temp = node->object->first;
 
     Object* object_temp = NULL;
     Player* player_temp = NULL;
@@ -53,7 +53,8 @@ Collision* collision_Detection_Object(void* obj_, int type){
     Collision* collision = collision_Create();
 
     while(node != NULL){
-        list_temp = node->object;
+
+        list_temp = (node->object != NULL) ? node->object->first : NULL;
         while(list_temp != NULL && list_temp->elt != NULL){
             object_temp = list_temp->elt;
             sfIntRect rect_obj2 = sprite_GetRect(object_temp->sprite);
@@ -66,7 +67,8 @@ Collision* collision_Detection_Object(void* obj_, int type){
             list_temp = list_temp->next;
         }
 
-        list_temp = node->bullet;
+
+        list_temp = (node->bullet != NULL) ? node->bullet->first : NULL;
         while(list_temp != NULL && list_temp->elt != NULL){
             bullet_temp = list_temp->elt;
             sfIntRect rect_obj2 = sprite_GetRect(bullet_temp->draw_image);
@@ -79,7 +81,7 @@ Collision* collision_Detection_Object(void* obj_, int type){
             list_temp = list_temp->next;
         }
 
-        list_temp = node->player;
+        list_temp = (node->player != NULL) ? node->player->first : NULL;
         while(list_temp != NULL && list_temp->elt != NULL){
             player_temp = list_temp->elt;
             sfIntRect rect_obj2 = sprite_GetRect(player_temp->sprite);
@@ -94,6 +96,7 @@ Collision* collision_Detection_Object(void* obj_, int type){
         node = node->parent;
     }
 
+    collision_Destroy(collision);
     return NULL;
 
 }

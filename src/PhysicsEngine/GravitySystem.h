@@ -10,6 +10,6 @@ typedef struct VECTOR2D
 
 typedef enum DIRECTION {UP, DOWN, LEFT, RIGHT} Direction;
 
-void gravitysystem_WorldUpdate(Map*);
+void gravitysystem_WorldUpdate(Map*, float);
 
 #endif

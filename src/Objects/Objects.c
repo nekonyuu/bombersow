@@ -29,6 +29,9 @@ Object* object_Create(unsigned int type)
     new_object->spawned = true;
 
     new_object->quad_node = NULL;
+    new_object->list_node = NULL;
+
+    new_object->gravity = 0;
 
     return new_object;
 }
@@ -89,5 +92,14 @@ void object_Draw(sfRenderWindow* Game, Object* object)
     }
 
     sprite_Draw(Game, object->sprite);
+
+}
+
+void object_SetPosition(Object* obj, float x, float y)
+{
+    obj->curr_coord_x = x;
+    obj->curr_coord_y = y;
+
+    sprite_SetPosition(obj->sprite, obj->curr_coord_x, obj->curr_coord_y);
 
 }

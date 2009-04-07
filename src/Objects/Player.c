@@ -51,6 +51,9 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->sprite = NULL;
 
     new_player->quad_node = NULL;
+    new_player->list_node = NULL;
+
+    new_player->gravity = 0;
 
     return new_player;
 }
