@@ -159,7 +159,7 @@ void server_Listen_TCP(void* UserData)
     while (server_started && map->players_list[*index]->connected);
 
 
-    free(player_data);
+    free_secure(player_data);
 }
 
 void server_Listen_Game(void* UserData)
@@ -189,7 +189,7 @@ void server_Listen_Game(void* UserData)
         // Nettoyage
         map_DestroyAllPackets(map);
         sfPacket_Destroy(packet);
-        free(packet_ip);
+        free_secure(packet_ip);
 
         // Environ 50 actualisations par seconde
         sfSleep(0.02f);

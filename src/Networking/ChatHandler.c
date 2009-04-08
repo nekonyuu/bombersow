@@ -54,5 +54,5 @@ ChatData* chat_CreatePlayerData(Map* map, unsigned int player_id)
 
 void chat_DestroyPlayerData(ChatData* data)
 {
-    free(data);
+    free_secure(data);
 }

@@ -27,5 +27,5 @@ void bullet_Destroy(Bullet* bullet2destroy)
     if (!bullet2destroy)
         logging_Error("bullet_Destroy", "Bullet object sent NULL");
     bullet2destroy->draw_image = NULL;
-    free(bullet2destroy);
+    free_secure(bullet2destroy);
 }

@@ -18,12 +18,14 @@ Data* data_Create()
 void data_Destroy(Data *data_)
 {
     for (int i = 0; i < data_->taille; i++)
-        free(data_->data[i]);
+    {
+        free_secure(data_->data[i]);
+    }
 
-    free(data_->data);
+    free_secure(data_->data);
     data_->data = NULL;
 
-    free(data_);
+    free_secure(data_);
     data_ = NULL;
 }
 
@@ -136,9 +138,9 @@ void map_Loader_Image(Image* image_, char* path)
     {
         for (int i = 0; i < image_list_taille; i++)
         {
-            free(image_list[i]);
+            free_secure(image_list[i]);
         }
-        free(image_list);
+        free_secure(image_list);
     }
 
     data_Destroy(liste);
@@ -189,6 +191,6 @@ void dossier_Read_Image(Image* image, char* path)
     image_Loader(image, image_path, nombre_image);
 
     for (i = 0; i < nombre_image; i++)
-        free(image_path[i]);
-    free(image_path);
+        free_secure(image_path[i]);
+    free_secure(image_path);
 }

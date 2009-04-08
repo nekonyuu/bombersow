@@ -39,7 +39,7 @@ void widget_cadre_Destroy(Widget_cadre* cadre)
     sfShape_Destroy(cadre->shape);
     sfSprite_Destroy(cadre->background);
 
-    free(cadre);
+    free_secure(cadre);
     cadre = NULL;
 }
 
@@ -105,12 +105,12 @@ void widget_textbox_var_Destroy(Widget_textbox_var* textbox_var)
     }
 
     /*if(textbox_var->var_char)
-        free(textbox_var->var_char);
+        free_secure(textbox_var->var_char);
     if(textbox_var->var_int)
-        free(textbox_var->var_int);
+        free_secure(textbox_var->var_int);
     if(textbox_var->var_string)
         sfString_Destroy(textbox_var->var_string);*/
-    free(textbox_var);
+    free_secure(textbox_var);
     textbox_var = NULL;
 }
 
@@ -219,10 +219,10 @@ void widget_textbox_Destroy(Widget_textbox* textbox)
 
     widget_cadre_Destroy(textbox->cadre);
 
-    free(textbox->text_char);
+    free_secure(textbox->text_char);
     textbox->text_char = NULL;
 
-    free(textbox);
+    free_secure(textbox);
     textbox = NULL;
 }
 
@@ -328,7 +328,7 @@ void widget_bouton_Destroy(Widget_bouton* bouton)
     sfSprite_Destroy(bouton->sprite_OnNothing);
     sfSprite_Destroy(bouton->sprite_OnOver);
 
-    free(bouton);
+    free_secure(bouton);
     bouton = NULL;
 }
 
@@ -423,7 +423,7 @@ void widget_slide_Destroy(Widget_slide* slide)
     sfSprite_Destroy(slide->sprite_bottom);
     sfSprite_Destroy(slide->sprite_middle);
 
-    free(slide);
+    free_secure(slide);
     slide = NULL;
 }
 
@@ -538,16 +538,16 @@ void gui_Destroy(Gui* gui)
     for (int i = 0; i < gui->widget_slide_nombre; i++)
         widget_slide_Destroy(gui->widget_slide[i]);
 
-    free(gui->widget_textbox);
+    free_secure(gui->widget_textbox);
     gui->widget_textbox = NULL;
 
-    free(gui->widget_bouton);
+    free_secure(gui->widget_bouton);
     gui->widget_bouton = NULL;
 
-    free(gui->widget_slide);
+    free_secure(gui->widget_slide);
     gui->widget_slide = NULL;
 
-    free(gui);
+    free_secure(gui);
     gui = NULL;
 }
 

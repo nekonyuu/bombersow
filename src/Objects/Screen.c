@@ -29,16 +29,16 @@ void screen_Destroy(Screen* screen2destroy)
 
     for (int i = 0; i < screen2destroy->nb_text; i++)
         sfString_Destroy(screen2destroy->texts[i]);
-    free(screen2destroy->texts);
+    free_secure(screen2destroy->texts);
 
     for (int i = 0; i < screen2destroy->nb_img; i++)
         sfSprite_Destroy(screen2destroy->images[i]);
-    free(screen2destroy->images);
+    free_secure(screen2destroy->images);
 
     screen2destroy->font = NULL;
     sfMusic_Destroy(screen2destroy->music);
     gui_Destroy(screen2destroy->gui);
-    free(screen2destroy);
+    free_secure(screen2destroy);
 }
 
 // Charge une police

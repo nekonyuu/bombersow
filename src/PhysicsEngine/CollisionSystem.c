@@ -1,3 +1,4 @@
+#include "BaseSystem/Logging.h"
 #include "PhysicsEngine/PhysicsEngine.h"
 #include "PhysicsEngine/CollisionSystem.h"
 #include "Objects/GameObjects.h"
@@ -19,7 +20,7 @@ Collision* collision_Create(){
 
 void collision_Destroy(Collision* collision){
 
-    free(collision);
+    free_secure(collision);
     collision = NULL;
 
 }

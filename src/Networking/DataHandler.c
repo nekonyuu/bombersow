@@ -24,7 +24,7 @@ void packet_Destroy(Packet* packet)
     }
 
     sfPacket_Destroy(packet->packet);
-    free(packet);
+    free_secure(packet);
 }
 
 Packet* player_CreatePacket(Player* player_)
@@ -200,6 +200,6 @@ void map_DestroyAllPackets(Map* map_)
 {
     for (int i = 0; i < map_->game_packets2send->nb_packets; i++)
         packet_Destroy(map_->game_packets2send->packets[i]);
-    free(map_->game_packets2send->packets);
-    free(map_->game_packets2send);
+    free_secure(map_->game_packets2send->packets);
+    free_secure(map_->game_packets2send);
 }

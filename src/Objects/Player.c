@@ -69,8 +69,8 @@ void player_Destroy(Player* player2destroy)
         for (int i = 0; i < NB_MAX_WEAPONS; i++)
             weapon_Destroy(player2destroy->weapons[i]);
 
-        free(player2destroy->weapons);
-        free(player2destroy);
+        free_secure(player2destroy->weapons);
+        free_secure(player2destroy);
     }
 }
 

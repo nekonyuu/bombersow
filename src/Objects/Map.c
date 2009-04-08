@@ -1,7 +1,6 @@
 #include "BaseSystem/Config.h"
 #include "BaseSystem/Logging.h"
-#include "Objects/GameObjects.h"
-
+#include "Networking/Networking.h"
 
 // Constructeur
 Map* map_Create(unsigned int map_id, unsigned int nb_players)
@@ -74,7 +73,9 @@ void map_Destroy(Map* map2destroy)
 
         sfClock_Destroy(map2destroy->clock);
 
-        free(map2destroy);
+        free_secure(map2destroy);
+
+        map2destroy = NULL;
     }
 }
 

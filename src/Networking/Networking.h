@@ -31,6 +31,8 @@ char* chat_ReadPacket(Map* map, sfPacket* packet);
 ChatData* chat_CreatePlayerData(Map*, unsigned int);
 
 // DataHandler.c
+Packet* packet_Create(unsigned int code, sfPacket* packet);
+void packet_Destroy(Packet* packet);
 Packet* player_CreatePacket(Player*);
 Packet* player_CreateStartPacket(Player*);
 Player* player_CreateFromPacket(Map*, sfPacket*);

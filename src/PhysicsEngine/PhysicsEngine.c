@@ -1,8 +1,10 @@
+#include "BaseSystem/Logging.h"
 #include "PhysicsEngine/PhysicsEngine.h"
 #include "Objects/GameObjects.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+
 List_element* list_element_Create()
 {
 
@@ -19,7 +21,7 @@ List_element* list_element_Create()
 void list_element_Destroy(List_element* list)
 {
 
-    free(list);
+    free_secure(list);
     list = NULL;
 
 }
@@ -107,7 +109,7 @@ void list_Destroy(List* list)
 
     if(list != NULL){
         list_element_Destroy(list->first);
-        free(list);
+        free_secure(list);
         list = NULL;
     }
 
@@ -164,7 +166,7 @@ void quad_tree_Destroy(Quad_tree* quad)
         list_Destroy(quad->player);
         quad->player = NULL;
 
-        free(quad);
+        free_secure(quad);
         quad = NULL;
     }
 

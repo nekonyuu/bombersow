@@ -43,7 +43,7 @@ void weapon_Destroy(Weapon* weapon2destroy)
         weapon2destroy->name = NULL;
         weapon2destroy->weapon_img = NULL;
         weapon2destroy->bullet_img = NULL;
-        free(weapon2destroy);
+        free_secure(weapon2destroy);
     }
 }
 
