@@ -36,6 +36,8 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players)
     new_map->game_socket = NULL;
     new_map->game_port = 0;
 
+    new_map->clock = sfClock_Create();
+
     return new_map;
 }
 
@@ -64,7 +66,7 @@ void map_AddObject(Map* map_, Object* object_)
     if (!map_->objects_list && !map_->objects_list[map_->nb_objects - 1])
         logging_Error("map_AddObject", "Memory allocation error");
 
-    map_->objects_list[map_->nb_bullets - 1] = object_;
+    map_->objects_list[map_->nb_objects - 1] = object_;
 }
 
 void map_DelObject(Map* map_, unsigned int object_id)

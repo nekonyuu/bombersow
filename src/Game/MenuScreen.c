@@ -8,6 +8,7 @@
 #include "Objects/GameObjects.h"
 #include "PhysicsEngine/PhysicsEngine.h"
 #include "PhysicsEngine/CollisionSystem.h"
+#include "PhysicsEngine/GravitySystem.h"
 
 void display_Menu(sfRenderWindow* Game)
 {
@@ -36,14 +37,17 @@ void display_Menu(sfRenderWindow* Game)
 
     logging_Info("display_Menu", "Started without error");
 
-
-
     Object* obj_temp = object_Create(0);
     object_LoadImg(obj_temp, NULL, animation);
 
     Object* obj_temp2 = object_Create(0);
     object_LoadImg(obj_temp2, NULL, animation2);
-    sprite_SetPosition(obj_temp2->sprite, 20, 20);
+    object_SetPosition(obj_temp2, 0, 200);
+
+    Map* map = map_Create(0, 0);
+    map_AddObject(map, obj_temp);
+    map_AddObject(map, obj_temp2);
+
 
     Quad_tree* quad = quad_tree_Create();
     quad->rect.Left = 0;
@@ -51,14 +55,10 @@ void display_Menu(sfRenderWindow* Game)
     quad->rect.Bottom = 480;
     quad->rect.Right = 640;
 
+    quad->first = quad;
+
     quad_tree_Add(quad, obj_temp, OBJECT);
     quad_tree_Add(quad, obj_temp2, OBJECT);
-
-    Collision* collision = collision_Detection_Object(obj_temp, 0);
-    if(collision != NULL){
-        printf("%d", collision->type);
-        collision_Destroy(collision);
-    }
 
     do
     {
@@ -69,8 +69,9 @@ void display_Menu(sfRenderWindow* Game)
         for (int i = 0; i < Menu->nb_text; i++)
             screen_DrawText(Game, Menu, i);                     // Dessin des textes
 
-        animation_Draw(animation, Game);                        // Dessin animation test
-        animation_Draw(animation2, Game);
+        gravitysystem_WorldUpdate(map, 17);
+        object_Draw(Game, obj_temp);
+        object_Draw(Game, obj_temp2);
 
         quad_tree_Draw(Game, quad);
 
@@ -139,7 +140,7 @@ void display_Menu(sfRenderWindow* Game)
     }
     while (launched);
 
-
+    map_Destroy(map);
     object_Destroy(obj_temp);
     object_Destroy(obj_temp2);
     quad_tree_Destroy(quad);

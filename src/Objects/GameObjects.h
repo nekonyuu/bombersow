@@ -54,7 +54,11 @@ typedef struct OBJECT
 
     sfBool spawned;                  // Affiché ou pas
 
+    _Bool gravity;
+
     struct QUAD_TREE* quad_node;
+    struct LIST_ELEMENT* list_node;
+
 } Object;
 
 // Liste des armes
@@ -119,6 +123,9 @@ typedef struct PLAYER
     Sprite* sprite;
 
     struct QUAD_TREE* quad_node;
+    struct LIST_ELEMENT* list_node;
+
+    _Bool gravity;
 
 } Player;
 
@@ -136,6 +143,10 @@ typedef struct BULLET
     Sprite* draw_image;             // Image de la balle (Si Balle invisible, Sprite Transparent)
 
     struct QUAD_TREE* quad_node;
+    struct LIST_ELEMENT* list_node;
+
+    _Bool gravity;
+    float acceleration;
 
 } Bullet;
 
@@ -165,6 +176,8 @@ typedef struct MAP
     sfSocketUDP* game_socket;       // Socket de jeu
     unsigned short game_port;       // Port de jeu
 
+    sfClock* clock;
+
 } Map;
 
 Weapon armory[NB_MAX_WEAPONS];      // Armes du jeu en accès global
@@ -174,6 +187,7 @@ Object* object_Create(unsigned int);
 void object_Destroy(Object*);
 void object_LoadImg(Object*, sfImage*, Animation*);
 void object_Draw(sfRenderWindow*, Object*);
+void object_SetPosition(Object*, float, float);
 
 Weapon* weapon_Create(int);
 void weapon_Destroy(Weapon*);
