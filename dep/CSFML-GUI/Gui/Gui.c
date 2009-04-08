@@ -187,6 +187,8 @@ Widget_textbox* widget_textbox_Create(int x, int y, int width, int height, int t
     sfString_SetPosition(textbox->text, rect->Right, y-2);
     sfString_SetColor(textbox->text, sfBlack);
     sfString_SetSize(textbox->text, height-2);
+    if (font)
+        sfString_SetFont(textbox->text, font);
 
     textbox->text_char = NULL;
     assert(textbox->text_char = (char*) malloc(taille*sizeof(char)));

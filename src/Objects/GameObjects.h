@@ -18,7 +18,7 @@ typedef struct PACKET
     sfPacket* packet;
 } Packet;
 
-// Structure sotockant un tableau de paquets
+// Structure stockant un tableau de paquets
 typedef struct PACKET_LIST
 {
     Packet** packets;               // Paquets à envoyer
@@ -26,7 +26,7 @@ typedef struct PACKET_LIST
 
 } PacketList;
 
-enum { PLATFORM, DYNA_PLATFORM, TRAP, WEAPON, AMMO };
+enum { PLATFORM, PLATFORM_DYNA, TRAP, WEAPON, AMMO };
 
 typedef struct OBJECT
 {

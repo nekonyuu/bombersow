@@ -73,9 +73,9 @@ void server_Listen_Connections(void* UserData)
                 player_packet = server_CreateResponsePacket(map->players_list[map->nb_players - 1]->player_id, ACCEPTED);
                 // Envoyer les players présents au nouveau client
                 for(int i = 0; i < map->nb_players - 1; i++)
-                    sfSocketTCP_SendPacket(new_player, player_CreatePacket(map->players_list[i]));
+                    sfSocketTCP_SendPacket(new_player, player_CreatePacket(map->players_list[i])->packet);
                 // Avertir les autres clients
-                player_packet = player_CreatePacket(map->players_list[map->nb_players - 1]);
+                player_packet = player_CreatePacket(map->players_list[map->nb_players - 1])->packet;
                 for(int i = 0; i < map->nb_players - 2; i++)
                     sfSocketTCP_SendPacket(map->players_list[i]->listen_socket, response_packet);
                 // Nettoyage

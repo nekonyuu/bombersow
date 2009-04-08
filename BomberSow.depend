@@ -841,7 +841,13 @@
 1237158559 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\basesystem\logging.h
 	<assert.h>
 
-1237158559 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\game\clientscreen.c
+1239151278 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\game\clientscreen.c
+	"BaseSystem/Logging.h"
+	"Objects/Screen.h"
+	"GraphicEngine/Draw.h"
+	"GraphicEngine/Image.h"
+	"Gui/Gui.h"
+	"Objects/GameObjects.h"
 
 1237412415 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\game\creditsscreen.c
 	"BaseSystem/Logging.h"
@@ -1028,7 +1034,7 @@
 1237386001 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\graphicengine\draw.h
 	<SFML/Graphics.h>
 
-1239057008 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\game\menuscreen.c
+1239110518 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\game\menuscreen.c
 	"BaseSystem/Logging.h"
 	"Game/MenuScreen.h"
 	"Game/PlayScreen.h"
@@ -1047,7 +1053,7 @@
 	<stdbool.h>
 	<SFML/Graphics.h>
 
-1239057008 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\objects\gameobjects.h
+1239122536 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\objects\gameobjects.h
 	<stdbool.h>
 	<SFML/Network.h>
 	"GraphicEngine/Image.h"
@@ -1088,9 +1094,10 @@
 1239057008 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\graphicengine\image.h
 	<SFML/Graphics.h>
 
-1237412443 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\game\playscreen.c
+1239150476 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\game\playscreen.c
 	"BaseSystem/Logging.h"
 	"Game/MenuScreen.h"
+	"Game/ClientScreen.h"
 	"Game/CreditsScreen.h"
 	"Objects/Screen.h"
 	"GraphicEngine/Draw.h"
@@ -1152,17 +1159,17 @@
 	"Networking/Networking.h"
 	"Networking/PacketDefines.h"
 
-1238966921 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\networking\networking.h
+1239117105 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\networking\networking.h
 	"Objects/GameObjects.h"
 
-1237240392 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\networking\packetdefines.h
+1239111058 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\networking\packetdefines.h
 
-1238966339 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\networking\clientthread.c
+1239146878 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\networking\clientthread.c
 	"BaseSystem/Logging.h"
 	"Networking/Networking.h"
 	"Networking/PacketDefines.h"
 
-1238966942 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\networking\datahandler.c
+1239122586 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\networking\datahandler.c
 	"BaseSystem/Logging.h"
 	"Networking/Networking.h"
 	"Networking/PacketDefines.h"
@@ -1176,7 +1183,7 @@
 	"BaseSystem/Logging.h"
 	"Objects/GameObjects.h"
 
-1239057008 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\objects\objects.c
+1239122508 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\objects\objects.c
 	"BaseSystem/Logging.h"
 	"Objects/GameObjects.h"
 
@@ -1201,7 +1208,7 @@
 	<assert.h>
 	<stdio.h>
 
-1238966649 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\networking\serverthread.c
+1239122657 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\networking\serverthread.c
 	"BaseSystem/Logging.h"
 	"GraphicEngine/Draw.h"
 	"Networking/Networking.h"
@@ -1220,7 +1227,7 @@
 1237391379 c:\projet\bombersow\src\graphicengine\draw.h
 	<SFML/Graphics.h>
 
-1237408994 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\csfml-gui\gui\gui.h
+1239150176 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\csfml-gui\gui\gui.h
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -1234,7 +1241,7 @@
 	"GraphicEngine/Draw.h"
 	"Objects/GameObjects.h"
 
-1238937083 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\csfml-gui\gui\gui.c
+1239151555 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\dep\csfml-gui\gui\gui.c
 	<assert.h>
 	<string.h>
 	"SFML/Graphics.h"
@@ -1781,4 +1788,8 @@
 	"Objects/GameObjects.h"
 	<assert.h>
 	<stdio.h>
+
+1237158559 source:d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\game\lobbyscreen.c
+
+1239147180 d:\docs\fac\projets\projet i41\bombersow\sources\bombersow\src\game\clientscreen.h
 

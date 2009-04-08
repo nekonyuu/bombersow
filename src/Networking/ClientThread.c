@@ -15,11 +15,7 @@ void client_Main(Map* map, sfIPAddress ip, char* name)
     sfSocketTCP_ReceivePacket(client_socket, response);
     code = (unsigned int) sfPacket_ReadUint8(response);
 
-    if(code != ACCEPTED)
-    {
-
-    }
-    else
+    if(code == ACCEPTED)
     {
 
     }

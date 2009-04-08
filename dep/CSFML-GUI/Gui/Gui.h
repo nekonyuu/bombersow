@@ -62,7 +62,7 @@ typedef struct WIDGET_TEXTBOX
 
     sfString *alt;                  // Annotation de la textbox
 
-    _Bool active;                   // Booléen de seleciton
+    _Bool active;                   // Booléen de sélection
 
 }Widget_textbox;
 

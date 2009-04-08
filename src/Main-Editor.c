@@ -20,7 +20,7 @@ int main()
 
     //Chargement des images des menu
     Image *image_menu = image_Create();
-    char *image_text[] = {"base/fond_menu.png", "base/textbox_back.png", "base/fond_menu_bouton.png", "base/slide_top.png", "base/slide_middle.png", "base/slide_bottom.png", "base/fond_object.png", "base/blank_map.png", "base/fond_menu_bouton2.png"};
+    char *image_text[] = {"base/fond_menu.png", "base/images/gui/textbox_back.png", "base/fond_menu_bouton.png", "base/slide_top.png", "base/slide_middle.png", "base/slide_bottom.png", "base/fond_object.png", "base/blank_map.png", "base/fond_menu_bouton2.png"};
     image_Loader(image_menu, image_text, 9);
 
 

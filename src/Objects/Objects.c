@@ -26,7 +26,7 @@ Object* object_Create(unsigned int type)
 
     new_object->clock_mouvement = sfClock_Create();
 
-    new_object->spawned = true;
+    new_object->spawned = sfTrue;
 
     new_object->quad_node = NULL;
 

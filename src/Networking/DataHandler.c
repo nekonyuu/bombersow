@@ -124,14 +124,14 @@ void object_ReadPacket(Map* map, sfPacket* packet)
 
 Packet* bullet_CreatePacket(Bullet* bullet)
 {
-    if (!object_)
+    if (!bullet)
         logging_Error("bullet_CreatePacket", "Bullet object sent NULL, can't continue networking");
 
     sfPacket* packet = sfPacket_Create();
 
     sfPacket_WriteUint8(packet, (sfUint8) BULLET);
     sfPacket_WriteUint8(packet, (sfUint8) bullet->owner);
-    sfPacket_WriteUint8(packet, (sfUint8) bullet->type);
+    sfPacket_WriteUint8(packet, (sfUint8) bullet->bullet_type);
     sfPacket_WriteUint8(packet, (sfUint8) bullet->trajectory);
     sfPacket_WriteUint8(packet, (sfUint8) bullet->range);
     sfPacket_WriteUint8(packet, (sfUint8) bullet->coord_x);

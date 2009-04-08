@@ -1,5 +1,6 @@
 #include "BaseSystem/Logging.h"
 #include "Game/MenuScreen.h"
+#include "Game/ClientScreen.h"
 #include "Game/CreditsScreen.h"
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
@@ -53,7 +54,12 @@ _Bool display_PlayMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont
                 {
                     switch (menu_select)
                     {
-                    case 1:
+                    case 1:                                         // Ecran de connexion à un serveur
+                        if (display_ClientMenu(Game, BG_image, playFont))
+                        {
+                            launched = false;
+                            close = true;
+                        }
                         break;
                     case 2:
                         break;
