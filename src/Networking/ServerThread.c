@@ -61,7 +61,7 @@ void server_Listen_Connections(void* UserData)
         // Paquet de connexion
         case CONNECT:
             // S'il reste de la place sur le serveur on accepte
-            if (map->nb_players < NB_MAX_PLAYERS)
+            if (map->nb_players < map->max_players)
             {
                 ChatData* player_data = NULL;
                 sfPacket_ReadString(new_player_packet, name);
@@ -70,14 +70,15 @@ void server_Listen_Connections(void* UserData)
                 map->players_list[map->nb_players - 1]->player_ip = new_player_ip;
                 map->players_list[map->nb_players - 1]->listen_socket = new_player;
                 // Réponse du serveur
-                player_packet = server_CreateResponsePacket(map->players_list[map->nb_players - 1]->player_id, ACCEPTED);
+                player_packet = server_CreateResponsePacket(map, ACCEPTED);
+                sfSocketTCP_SendPacket(new_player, player_packet);
                 // Envoyer les players présents au nouveau client
-                for(int i = 0; i < map->nb_players - 1; i++)
-                    sfSocketTCP_SendPacket(new_player, player_CreatePacket(map->players_list[i])->packet);
+                for(int i = 0; i < map->nb_players; i++)
+                    sfSocketTCP_SendPacket(new_player, player_CreateStartPacket(map->players_list[i])->packet);
                 // Avertir les autres clients
                 player_packet = player_CreatePacket(map->players_list[map->nb_players - 1])->packet;
-                for(int i = 0; i < map->nb_players - 2; i++)
-                    sfSocketTCP_SendPacket(map->players_list[i]->listen_socket, response_packet);
+                for(int i = 0; i < map->nb_players - 1; i++)
+                    sfSocketTCP_SendPacket(map->players_list[i]->listen_socket, player_packet);
                 // Nettoyage
                 sfPacket_Destroy(new_player_packet);
                 sfPacket_Destroy(response_packet);
@@ -91,7 +92,7 @@ void server_Listen_Connections(void* UserData)
             else  // Sinon on refuse
             {
                 sfPacket_Destroy(new_player_packet);
-                response_packet = server_CreateResponsePacket(0, REFUSED);                  // Création du paquet de réponse
+                response_packet = server_CreateResponsePacket(NULL, REFUSED);                  // Création du paquet de réponse
                 sfSocketTCP_SendPacket(new_player, response_packet);                        // Envoi
                 // Nettoyage
                 sfPacket_Destroy(response_packet);
@@ -196,11 +197,16 @@ void server_Listen_Game(void* UserData)
 }
 
 // Paquet de réponse (ACCEPTED || REFUSED)
-sfPacket* server_CreateResponsePacket(unsigned int player_id, unsigned int response)
+sfPacket* server_CreateResponsePacket(Map* map, unsigned int response)
 {
     sfPacket* new_packet = sfPacket_Create();
-    sfPacket_WriteUint8(new_packet, (sfUint8) response);
-    sfPacket_WriteUint8(new_packet, (sfUint8) player_id);
+    sfPacket_WriteUint8(new_packet, (sfUint8) response);            // Réponse du serveur
+    if(response == ACCEPTED)
+    {
+        sfPacket_WriteUint8(new_packet, (sfUint8) map->mapId);
+        sfPacket_WriteUint8(new_packet, (sfUint8) map->max_players);
+        sfPacket_WriteUint8(new_packet, (sfUint8) map->nb_players);
+    }
     return new_packet;
 }
 

@@ -17,7 +17,7 @@ Packet* packet_Create(unsigned int code, sfPacket* packet)
 
 void packet_Destroy(Packet* packet)
 {
-    if(!packet)
+    if (!packet)
     {
         logging_Warning("packet_Destroy", "Packet object sent NULL, abort");
         return;
@@ -43,14 +43,33 @@ Packet* player_CreatePacket(Player* player_)
     return packet_Create(PLAYER, new_packet);
 }
 
-Player* player_CreateFromPacket(sfPacket* packet)
+Packet* player_CreateStartPacket(Player* player_)
+{
+    if (!player_)
+        logging_Error("player_PacketCreate", "Player object sent NULL, can't continue networking");
+
+    sfPacket* new_packet = sfPacket_Create();
+
+    sfPacket_WriteUint8(new_packet, PLAYER);
+    sfPacket_WriteString(new_packet, player_->char_name);
+    sfPacket_WriteUint8(new_packet, player_->current_weapon);
+    sfPacket_WriteFloat(new_packet, player_->coord_x);
+    sfPacket_WriteFloat(new_packet, player_->coord_y);
+
+    return packet_Create(PLAYER, new_packet);
+}
+
+Player* player_CreateFromPacket(Map* map, sfPacket* packet)
 {
     assert(packet);
 
     Player* new_player;
-    assert(new_player = (Player*) malloc(sizeof(Player)));
+    char* name = NULL;
 
-    // TODO : Lecture du paquet, brainstorming sur la gestion des players
+    sfPacket_ReadString(packet, name);
+    new_player = player_Create(name, (unsigned int) sfPacket_ReadUint8(packet));
+    new_player->coord_x = sfPacket_ReadFloat(packet);
+    new_player->coord_y = sfPacket_ReadFloat(packet);
 
     return new_player;
 }
@@ -74,7 +93,7 @@ Packet* object_CreatePacket(Object* object_)
     sfPacket_WriteUint8(new_packet, object_->type);
     sfPacket_WriteUint8(new_packet, object_->objectID);
 
-    switch(object_->type)
+    switch (object_->type)
     {
     case PLATFORM_DYNA:
     case TRAP:
@@ -96,7 +115,7 @@ Packet* object_CreatePacket(Object* object_)
 
 void object_ReadPacket(Map* map, sfPacket* packet)
 {
-    if(!packet)
+    if (!packet)
     {
         logging_Warning("object_ReadPacket", "sfPacket sent NULL, abort");
         return;
@@ -105,7 +124,7 @@ void object_ReadPacket(Map* map, sfPacket* packet)
     unsigned int type = (unsigned int) sfPacket_ReadUint8(packet);
     unsigned int id = (unsigned int) sfPacket_ReadUint8(packet);
 
-    switch(type)
+    switch (type)
     {
     case PLATFORM_DYNA:
     case TRAP:

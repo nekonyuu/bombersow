@@ -1,4 +1,5 @@
 #include <assert.h>
+#include "BaseSystem/Logging.h"
 #include "GraphicEngine/Image.h"
 
 // Constructeur
@@ -17,13 +18,18 @@ Image* image_Create()
 void image_Destroy(Image *image_)
 {
     int i = 0;
-    assert(image_ != NULL);
-    for (i = 0; i < image_->image_nombre; i++)
+    if (!image_)
     {
-        sfImage_Destroy(image_->image_tab[i]);
+        logging_Warning("image_Destroy", "Image object sent NULL");
     }
-    free(image_->image_tab);
-    free(image_);
+    else
+    {
+        for (i = 0; i < image_->image_nombre; i++)
+            sfImage_Destroy(image_->image_tab[i]);
+
+        free(image_->image_tab);
+        free(image_);
+    }
 }
 
 // Chargement d'une liste d'images dans un "objet" Image
@@ -100,8 +106,9 @@ Animation* animation_Create(sfImage *image, int x, int y, int hauteur, int large
 // Destructeur
 void animation_Destroy(Animation *animation_)
 {
-    if(animation_ != NULL){
-        if(animation_->sprite != NULL)
+    if (animation_ != NULL)
+    {
+        if (animation_->sprite != NULL)
             sfSprite_Destroy(animation_->sprite);
         sfClock_Destroy(animation_->clock);
         free(animation_);
@@ -144,10 +151,6 @@ void animation_Draw(Animation* animation_, sfRenderWindow* App)
     sfRenderWindow_DrawSprite(App, animation_->sprite);
 }
 
-
-
-
-
 //Sprite
 Sprite* sprite_Create(int x, int y, sfImage* image, Animation* animation)
 {
@@ -161,17 +164,20 @@ Sprite* sprite_Create(int x, int y, sfImage* image, Animation* animation)
     sprite->sprite = NULL;
     sprite->animation = NULL;
 
-    if (animation != NULL){
+    if (animation != NULL)
+    {
         sprite->animation = animation;
-        sprite->type = 1;
+        sprite->type = ANIMATION;
 
         sprite->hauteur = animation->image_hauteur;
         sprite->largeur = animation->image_largeur;
 
-    }else if(image != NULL){
+    }
+    else if (image != NULL)
+    {
         sprite->sprite = sfSprite_Create();
         sfSprite_SetImage(sprite->sprite, image);
-        sprite->type = 0;
+        sprite->type = SPRITE;
 
         sprite->hauteur = sfImage_GetHeight(image);
         sprite->largeur = sfImage_GetWidth(image);
@@ -184,18 +190,25 @@ Sprite* sprite_Create(int x, int y, sfImage* image, Animation* animation)
 
 void sprite_Destroy(Sprite* sprite)
 {
-
-    if(sprite != NULL){
-        if(sprite->sprite != NULL)
-            sfSprite_Destroy(sprite->sprite);
-
-        if(sprite->animation != NULL)
-            animation_Destroy(sprite->animation);
-
-        free(sprite);
-        sprite = NULL;
+    if (!sprite)
+    {
+        logging_Warning("sprite_Destroy", "Sprite object sent NULL");
+        return;
     }
 
+    switch (sprite->type)
+    {
+    case SPRITE:
+        sfSprite_Destroy(sprite->sprite);
+        break;
+
+    case ANIMATION:
+        animation_Destroy(sprite->animation);
+        break;
+    }
+
+    free(sprite);
+    sprite = NULL;
 }
 
 void sprite_SetPosition(Sprite* sprite, int x, int y)
@@ -204,9 +217,12 @@ void sprite_SetPosition(Sprite* sprite, int x, int y)
     sprite->x = x;
     sprite->y = y;
 
-    if(sprite->type){
+    if (sprite->type)
+    {
         animation_SetPosition(sprite->animation, x , y);
-    }else{
+    }
+    else
+    {
         sfSprite_SetPosition(sprite->sprite, (float)x, (float)y);
     }
 
@@ -215,9 +231,12 @@ void sprite_SetPosition(Sprite* sprite, int x, int y)
 void sprite_Draw(sfRenderWindow* Game, Sprite* sprite)
 {
 
-    if(sprite->type){
+    if (sprite->type)
+    {
         animation_Draw(sprite->animation, Game);
-    }else{
+    }
+    else
+    {
         sfRenderWindow_DrawSprite(Game, sprite->sprite);
     }
 
@@ -226,9 +245,12 @@ void sprite_Draw(sfRenderWindow* Game, Sprite* sprite)
 void sprite_SetColor(Sprite* sprite, sfColor color)
 {
 
-    if(sprite->type){
+    if (sprite->type)
+    {
         sfSprite_SetColor(sprite->animation->sprite, color);
-    }else{
+    }
+    else
+    {
         sfSprite_SetColor(sprite->sprite, color);
     }
 
@@ -237,9 +259,12 @@ void sprite_SetColor(Sprite* sprite, sfColor color)
 sfImage* sprite_GetImage(Sprite* sprite)
 {
 
-    if(sprite->type){
+    if (sprite->type)
+    {
         return sfSprite_GetImage(sprite->animation->sprite);
-    }else{
+    }
+    else
+    {
         return sfSprite_GetImage(sprite->sprite);
     }
 
@@ -247,6 +272,6 @@ sfImage* sprite_GetImage(Sprite* sprite)
 
 sfIntRect sprite_GetRect(Sprite* sprite)
 {
-   sfIntRect rect = {sprite->x, sprite->y, sprite->x+sprite->largeur, sprite->y+sprite->hauteur};
-   return rect;
+    sfIntRect rect = {sprite->x, sprite->y, sprite->x+sprite->largeur, sprite->y+sprite->hauteur};
+    return rect;
 }

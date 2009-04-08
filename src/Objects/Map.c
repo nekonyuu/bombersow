@@ -10,6 +10,7 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players)
     assert(new_map = (Map*) malloc(sizeof(Map)));
 
     new_map->mapId = map_id;
+    new_map->max_players = nb_players;
     new_map->background = NULL;
 
     new_map->images = NULL;
@@ -49,8 +50,29 @@ void map_Destroy(Map* map2destroy)
     else
     {
         sfSprite_Destroy(map2destroy->background);
+
+        for (int i = 0; i < map2destroy->nb_anim; i++)
+            animation_Destroy(map2destroy->animations[i]);
+
+        image_Destroy(map2destroy->images);
+
         for (int i = 0; i < map2destroy->nb_objects; i++)
             object_Destroy(map2destroy->objects_list[i]);
+
+        for (int i = 0; i < map2destroy->nb_players; i++)
+            player_Destroy(map2destroy->players_list[i]);
+
+        for (int i = 0; i < map2destroy->nb_bullets; i++)
+            bullet_Destroy(map2destroy->bullets_list[i]);
+
+        if(map2destroy->game_packets2send)
+            for (int i = 0; i < map2destroy->game_packets2send->nb_packets; i++)
+                packet_Destroy(map2destroy->game_packets2send->packets[i]);
+
+        if(map2destroy->game_socket)
+            sfSocketUDP_Destroy(map2destroy->game_socket);
+
+        sfClock_Destroy(map2destroy->clock);
 
         free(map2destroy);
     }

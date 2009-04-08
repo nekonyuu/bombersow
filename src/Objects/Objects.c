@@ -38,37 +38,35 @@ Object* object_Create(unsigned int type)
 
 void object_Destroy(Object* object2destroy)
 {
-    if(object2destroy != NULL){
-        sfClock_Destroy(object2destroy->clock_mouvement);
+    if (!object2destroy)
+        logging_Error("object_Destroy", "Object object sent NULL");
 
-        sprite_Destroy(object2destroy->sprite);
-
-        free(object2destroy);
-    }
+    sfClock_Destroy(object2destroy->clock_mouvement);
+    sprite_Destroy(object2destroy->sprite);
+    free(object2destroy);
 }
 
 void object_LoadImg(Object* object, sfImage* image, Animation* animation)
 {
-
     sprite_Destroy(object->sprite);
     object->sprite = sprite_Create((int)object->curr_coord_x, (int)object->curr_coord_y, image, animation);
-
 }
 
 void object_Draw(sfRenderWindow* Game, Object* object)
 {
 
-    if(object->speed != 0){
-        if(object->start_coord_x < object->dest_coord_x && object->curr_coord_x < object->dest_coord_x)
+    if (object->speed != 0)
+    {
+        if (object->start_coord_x < object->dest_coord_x && object->curr_coord_x < object->dest_coord_x)
             object->curr_coord_x += (float)object->speed*sfClock_GetTime(object->clock_mouvement);
 
-        if(object->start_coord_x > object->dest_coord_x && object->curr_coord_x > object->dest_coord_x)
+        if (object->start_coord_x > object->dest_coord_x && object->curr_coord_x > object->dest_coord_x)
             object->curr_coord_x -= (float)object->speed*sfClock_GetTime(object->clock_mouvement);
 
-        if(object->start_coord_y < object->dest_coord_y && object->curr_coord_y < object->dest_coord_y)
+        if (object->start_coord_y < object->dest_coord_y && object->curr_coord_y < object->dest_coord_y)
             object->curr_coord_y += (float)object->speed*sfClock_GetTime(object->clock_mouvement);
 
-        if(object->start_coord_y > object->dest_coord_y && object->curr_coord_y > object->dest_coord_y)
+        if (object->start_coord_y > object->dest_coord_y && object->curr_coord_y > object->dest_coord_y)
             object->curr_coord_y -= (float)object->speed*sfClock_GetTime(object->clock_mouvement);
 
         float start_x = abs(object->dest_coord_x - object->start_coord_x);
@@ -77,7 +75,8 @@ void object_Draw(sfRenderWindow* Game, Object* object)
         float start_y = abs(object->dest_coord_y - object->start_coord_y);
         float curr_y = abs(object->curr_coord_y - object->start_coord_y);
 
-        if(curr_x >= start_x && curr_y >= start_y){
+        if (curr_x >= start_x && curr_y >= start_y)
+        {
             start_x = object->start_coord_x;
             object->start_coord_x = object->dest_coord_x;
             object->dest_coord_x = start_x;

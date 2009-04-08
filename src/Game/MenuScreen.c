@@ -141,8 +141,6 @@ void display_Menu(sfRenderWindow* Game)
     while (launched);
 
     map_Destroy(map);
-    object_Destroy(obj_temp);
-    object_Destroy(obj_temp2);
     quad_tree_Destroy(quad);
 
     sfFont_Destroy(menuFont);

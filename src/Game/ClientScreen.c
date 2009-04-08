@@ -3,7 +3,7 @@
 #include "GraphicEngine/Draw.h"
 #include "GraphicEngine/Image.h"
 #include "Gui/Gui.h"
-#include "Objects/GameObjects.h"
+#include "Networking/Networking.h"
 
 _Bool display_ClientMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont)
 {
@@ -66,15 +66,7 @@ _Bool display_ClientMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFo
                 }
                 else if (Event.Key.Code == sfKeyReturn)
                 {
-                    switch (menu_select)
-                    {
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    }
+                    client_Main(pseudo, sfIPAddress_FromString(ip), port);
                 }
                 else if (Event.Key.Code == sfKeyUp && menu_select > 1)
                 {

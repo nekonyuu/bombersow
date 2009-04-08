@@ -38,21 +38,22 @@ void animation_Play(Animation*, int);
 void animation_Draw(Animation*, sfRenderWindow*);
 void animation_SetPosition(Animation*, int, int);
 
-//Struct des drawables
+// Struct des drawables
+enum { SPRITE, ANIMATION };
 typedef struct SPRITE
 {
 
     sfSprite* sprite;
     Animation* animation;
 
-    int type;           //Sprite/Animation
+    int type;           // Sprite/Animation
 
     int x;
     int y;
     int largeur;
     int hauteur;
 
-}Sprite;
+} Sprite;
 
 Sprite* sprite_Create(int, int, sfImage*, Animation*);
 void sprite_Destroy(Sprite*);

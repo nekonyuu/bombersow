@@ -2,22 +2,48 @@
 #include "Networking/Networking.h"
 #include "Networking/PacketDefines.h"
 
-void client_Main(Map* map, sfIPAddress ip, char* name)
+void client_Main(char* name, sfIPAddress ip, int port)
 {
-    sfPacket* connect_request = client_CreateConnectPacket(name);
+    Map* map = NULL;
+    sfPacket* connect_request = client_CreateConnectPacket(name), *response = NULL;
     sfSocketTCP* client_socket = sfSocketTCP_Create();
-    sfPacket *response = NULL;
     unsigned int code = REFUSED;
-    sfSocketTCP_Connect(client_socket, map->game_port, ip, 30.0f);
-    sfSocketTCP_SendPacket(client_socket, connect_request);
-    sfPacket_Destroy(connect_request);
-
-    sfSocketTCP_ReceivePacket(client_socket, response);
-    code = (unsigned int) sfPacket_ReadUint8(response);
-
-    if(code == ACCEPTED)
+    if (sfSocketTCP_Connect(client_socket, port, ip, 30.0f))
     {
+        sfSocketTCP_SendPacket(client_socket, connect_request);
+        sfPacket_Destroy(connect_request);
 
+        sfSocketTCP_ReceivePacket(client_socket, response);
+
+        code = (unsigned int) sfPacket_ReadUint8(response);
+
+        if (code == ACCEPTED)
+        {
+            unsigned int map_id = (unsigned int) sfPacket_ReadUint8(response);
+            unsigned int max_players = (unsigned int) sfPacket_ReadUint8(response);
+            unsigned int curr_players = (unsigned int) sfPacket_ReadUint8(response);
+
+            sfPacket_Clear(response);
+            map = map_Create(map_id, max_players);
+            map->game_port = (unsigned short) port;
+
+            for (int i = 0; i < curr_players; i++)
+            {
+                unsigned int code = 0;
+                sfSocketTCP_ReceivePacket(client_socket, response);
+                code = sfPacket_ReadUint8(response);
+                if (code == PLAYER)
+                    map_AddPlayer(map, player_CreateFromPacket(map, response));
+
+                sfPacket_Clear(response);
+            }
+
+            // Ecran de lobby
+        }
+    }
+    else
+    {
+        // Serveur Down ou mauvaise ip
     }
 }
 

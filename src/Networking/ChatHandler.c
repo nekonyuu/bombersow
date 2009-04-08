@@ -24,15 +24,18 @@ sfPacket* chat_CreatePacket(Player* player, const char* message)
     return new_packet;
 }
 
-// Lit le paquet et renvoie le message
-char* chat_ReadPacket(sfPacket* packet)
+// Lit le paquet et renvoie le message construit
+char* chat_ReadPacket(Map* map, sfPacket* packet)
 {
-    char* recv_mess = NULL;
+    char* text = NULL, *recv_mess = NULL;
     unsigned int player_id = (unsigned int) sfPacket_ReadUint8(packet);
 
     sfPacket_ReadString(packet, recv_mess);
     sfPacket_Destroy(packet);
-    return recv_mess;
+    strcpy(text, map->players_list[player_id]->char_name);
+    strcat(text, ": ");
+    strcat(text, recv_mess);
+    return text;
 }
 
 // Sert seulement à stocker map et id joueur pour envoi en thread

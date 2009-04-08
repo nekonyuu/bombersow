@@ -5,7 +5,6 @@
 #include <SFML/Network.h>
 #include "GraphicEngine/Image.h"
 
-#define NB_MAX_PLAYERS 4
 #define NB_MAX_WEAPONS 7
 #define SHOTGUN_SHRAPNELS 7
 
@@ -153,6 +152,7 @@ typedef struct BULLET
 typedef struct MAP
 {
     unsigned int mapId;             // ID de la map (transmission réseau)
+    unsigned int max_players;       // Nombre maxi de joueurs
     sfSprite* background;           // Arrière-plan
 
     Image* images;                  // Images de la map
@@ -176,7 +176,7 @@ typedef struct MAP
     sfSocketUDP* game_socket;       // Socket de jeu
     unsigned short game_port;       // Port de jeu
 
-    sfClock* clock;
+    sfClock* clock;                 // Timer d'actualisation
 
 } Map;
 
