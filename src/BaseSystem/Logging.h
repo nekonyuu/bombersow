@@ -6,6 +6,10 @@
 // Sécurisation du free() (Evite les crash sur un free déjà effectué)
 #define free_secure(pointer) free(pointer); pointer = NULL
 
+#ifdef DEBUG_MODE
+#include "Memleak/halloc.h"
+#endif
+
 void logging_Warning(char*, char*);
 void logging_Error(char*, char*);
 void logging_Info(char*, char*);

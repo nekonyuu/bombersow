@@ -2,7 +2,6 @@
 #include "BaseSystem/Logging.h"
 #include "GraphicEngine/Draw.h"
 #include "Objects/GameObjects.h"
-#include "Memleak/halloc.h"
 
 // Constructeur
 Player* player_Create(char* name, unsigned int current_weapon)

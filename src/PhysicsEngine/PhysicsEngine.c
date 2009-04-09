@@ -1,10 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "BaseSystem/Logging.h"
 #include "PhysicsEngine/PhysicsEngine.h"
 #include "Objects/GameObjects.h"
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "Memleak/halloc.h"
 
 List_element* list_element_Create()
 {

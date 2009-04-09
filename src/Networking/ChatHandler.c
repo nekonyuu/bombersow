@@ -2,7 +2,6 @@
 #include "BaseSystem/Logging.h"
 #include "Networking/Networking.h"
 #include "Networking/PacketDefines.h"
-#include "Memleak/halloc.h"
 
 sfPacket* chat_CreatePacket(Player* player, const char* message)
 {

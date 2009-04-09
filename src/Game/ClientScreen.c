@@ -4,7 +4,6 @@
 #include "GraphicEngine/Image.h"
 #include "Gui/Gui.h"
 #include "Networking/Networking.h"
-#include "Memleak/halloc.h"
 
 _Bool display_ClientMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont)
 {

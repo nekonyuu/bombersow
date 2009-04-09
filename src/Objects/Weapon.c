@@ -1,6 +1,5 @@
 #include "BaseSystem/Logging.h"
 #include "Objects/GameObjects.h"
-#include "Memleak/halloc.h"
 
 // Constructeur
 Weapon* weapon_Create(int type)

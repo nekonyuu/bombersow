@@ -1,6 +1,6 @@
 #include <SFML/Graphics.h>
+#include "BaseSystem/Logging.h"
 #include "Objects/GameObjects.h"
-#include "Memleak/halloc.h"
 
 void control_Playercontrols(sfRenderWindow* App, Player* player_ )            //Fonction qui gère les touches pour les mouvements/tirs des joueurs
 {

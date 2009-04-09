@@ -1,10 +1,8 @@
+#include <stdio.h>
 #include "BaseSystem/Logging.h"
 #include "PhysicsEngine/PhysicsEngine.h"
 #include "PhysicsEngine/CollisionSystem.h"
 #include "Objects/GameObjects.h"
-#include <assert.h>
-#include <stdio.h>
-#include "Memleak/halloc.h"
 
 Collision* collision_Create(){
 

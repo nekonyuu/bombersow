@@ -1,7 +1,5 @@
-#include <assert.h>
 #include "BaseSystem/Logging.h"
 #include "GraphicEngine/Image.h"
-#include "Memleak/halloc.h"
 
 // Constructeur
 Image* image_Create()

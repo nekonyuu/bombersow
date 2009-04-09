@@ -1,6 +1,5 @@
 #include "BaseSystem/Logging.h"
 #include "Objects/Screen.h"
-#include "Memleak/halloc.h"
 
 // Constructeur
 Screen* screen_Create()

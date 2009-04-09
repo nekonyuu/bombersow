@@ -1,7 +1,6 @@
 #include "BaseSystem/Logging.h"
 #include "Networking/Networking.h"
 #include "Networking/PacketDefines.h"
-#include "Memleak/halloc.h"
 
 void client_Main(char* name, sfIPAddress ip, int port)
 {

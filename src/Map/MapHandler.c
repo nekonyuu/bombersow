@@ -1,5 +1,4 @@
-#include <assert.h>
+#include "BaseSystem/Logging.h"
 #include "Objects/GameObjects.h"
 #include "Map/MapLoader.h"
 #include "Map/MapHandler.h"
-#include "Memleak/halloc.h"

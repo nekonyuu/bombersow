@@ -1,7 +1,6 @@
 #include "BaseSystem/Config.h"
 #include "BaseSystem/Logging.h"
 #include "Networking/Networking.h"
-#include "Memleak/halloc.h"
 
 // Constructeur
 Map* map_Create(unsigned int map_id, unsigned int nb_players)

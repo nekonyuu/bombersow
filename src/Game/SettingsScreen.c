@@ -3,19 +3,18 @@
 #include "Game/SettingsScreen.h"
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
-#include "Memleak/halloc.h"
 
 _Bool display_Settings(sfRenderWindow* Game, sfImage* BG_image, sfFont* settingsFont)
 {
     Screen* Settings = screen_Create();
     sfEvent Event;
-    sfImage* bg_textbox = sfImage_CreateFromFile("base/textbox_back.png");
+    sfImage* bg_textbox = sfImage_CreateFromFile("base/images/gui/textbox_back.png");
     char player_name[50];
     _Bool launched = true, close = false;
 
-    screen_LoadImage(Settings, BG_image);                        // Chargement de l'arrière-plan
-    screen_LoadFont(Settings, settingsFont);                      // Chargement de la police d'écriture
-    screen_AddTextbox(Settings, 450, 140, 125, 20, 25, bg_textbox, sfRed, CHAR, player_name, "Pseudo :  ", sfRed, settingsFont, 25);
+    screen_LoadImage(Settings, BG_image);                       // Chargement de l'arrière-plan
+    screen_LoadFont(Settings, settingsFont);                    // Chargement de la police d'écriture
+    //screen_AddTextbox(Settings, 450, 140, 125, 20, 25, bg_textbox, sfRed, CHAR, player_name, "Pseudo :  ", sfRed, settingsFont, 25);
     screen_LoadText(Settings, GAME_NAME, sfRed, 60, sfStringRegular, 450.0f, 40.0f);
 
     logging_Info("display_Settings", "Started without error");
