@@ -3,6 +3,7 @@
 #include "Game/SettingsScreen.h"
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
+#include "Memleak/halloc.h"
 
 _Bool display_Settings(sfRenderWindow* Game, sfImage* BG_image, sfFont* settingsFont)
 {

@@ -1,6 +1,7 @@
 #include "BaseSystem/Logging.h"
 #include "Networking/Networking.h"
 #include "Networking/PacketDefines.h"
+#include "Memleak/halloc.h"
 
 // Le destructeur de paquet utilisé sera sfPacket_Destroy(sfPacket*)
 

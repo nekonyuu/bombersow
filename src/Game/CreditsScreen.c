@@ -2,6 +2,7 @@
 #include "Game/CreditsScreen.h"
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
+#include "Memleak/halloc.h"
 
 _Bool display_Credits(sfRenderWindow* Game, sfImage* BG_image, sfFont* creditsFont)
 {

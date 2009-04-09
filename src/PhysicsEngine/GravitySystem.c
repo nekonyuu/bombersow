@@ -1,6 +1,7 @@
 #include "PhysicsEngine/PhysicsEngine.h"
 #include "PhysicsEngine/GravitySystem.h"
 #include "Objects/GameObjects.h"
+#include "Memleak/halloc.h"
 
 void gravitysystem_WorldUpdate(Map* map_, float gravity)
 {

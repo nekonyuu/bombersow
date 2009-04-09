@@ -1,5 +1,6 @@
 #include "BaseSystem/Logging.h"
 #include "Objects/GameObjects.h"
+#include "Memleak/halloc.h"
 
 Object* object_Create(unsigned int type)
 {

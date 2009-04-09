@@ -6,6 +6,7 @@
 #include "GraphicEngine/Draw.h"
 #include "GraphicEngine/Image.h"
 #include "Objects/GameObjects.h"
+#include "Memleak/halloc.h"
 
 _Bool display_PlayMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont)
 {

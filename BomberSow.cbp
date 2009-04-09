@@ -112,6 +112,15 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="dep\CSFML-GUI\Gui\Gui.h" />
+		<Unit filename="dep\include\Memleak\halloc.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Linux Debug" />
+		</Unit>
+		<Unit filename="dep\include\Memleak\halloc.h">
+			<Option target="Debug" />
+			<Option target="Linux Debug" />
+		</Unit>
 		<Unit filename="src\AudioEngine.c">
 			<Option compilerVar="CC" />
 		</Unit>

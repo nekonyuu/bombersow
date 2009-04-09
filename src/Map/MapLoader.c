@@ -3,6 +3,7 @@
 #include <dirent.h>
 #include "BaseSystem/Logging.h"
 #include "Map/MapLoader.h"
+#include "Memleak/halloc.h"
 
 Data* data_Create()
 {
@@ -19,13 +20,13 @@ void data_Destroy(Data *data_)
 {
     for (int i = 0; i < data_->taille; i++)
     {
-        free_secure(data_->data[i]);
+        free(data_->data[i]);
     }
 
-    free_secure(data_->data);
+    free(data_->data);
     data_->data = NULL;
 
-    free_secure(data_);
+    free(data_);
     data_ = NULL;
 }
 
@@ -117,33 +118,34 @@ void map_Loader_Image(Image* image_, char* path)
     char **image_list = NULL;
     int image_list_taille = 0;
     sscanf(liste->data[liste->taille-1], "%d", &image_list_taille);
-    if(image_list_taille < 1)
-        return;
-    assert(image_list = (char**) malloc(image_list_taille * sizeof(char*))); //Allocation de la mémoire
-    for (int i = 0; i < image_list_taille; i++)
+    if(image_list_taille > 0)
     {
-        assert(image_list[i] = (char*) malloc(sizeof(char)));
-    }
-
-    for (int i = 0; i < liste->taille; i++)
-    {
-        int id;
-        char path[100];
-        sscanf(liste->data[i], "%d %s", &id, path);
-        image_list[id] = path;
-    }
-
-    image_Loader(image_, image_list, image_list_taille);
-
-    if (image_list != NULL)
-    {
+        assert(image_list = (char**) malloc(image_list_taille * sizeof(char*))); //Allocation de la mémoire
         for (int i = 0; i < image_list_taille; i++)
         {
-            free_secure(image_list[i]);
+            assert(image_list[i] = (char*) malloc(sizeof(char)));
         }
-        free_secure(image_list);
-    }
 
+        for (int i = 0; i < liste->taille; i++)
+        {
+            int id;
+            char path[100];
+            sscanf(liste->data[i], "%d %s", &id, path);
+            image_list[id] = path;
+        }
+
+        image_Loader(image_, image_list, image_list_taille);
+
+        if (image_list != NULL)
+        {
+            for (int i = 0; i < image_list_taille; i++)
+            {
+                free(image_list[i]);
+            }
+            free(image_list);
+        }
+
+    }
     data_Destroy(liste);
 }
 

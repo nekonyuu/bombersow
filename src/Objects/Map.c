@@ -1,6 +1,7 @@
 #include "BaseSystem/Config.h"
 #include "BaseSystem/Logging.h"
 #include "Networking/Networking.h"
+#include "Memleak/halloc.h"
 
 // Constructeur
 Map* map_Create(unsigned int map_id, unsigned int nb_players)
@@ -19,9 +20,16 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players)
     new_map->objects_list = NULL;
     new_map->nb_objects = 0;
 
-    new_map->players_list = (Player**) malloc(nb_players * sizeof(Player*));
-    for (int i = 0; i < nb_players; i++)
-        new_map->players_list[i] = NULL;
+    if(nb_players > 0)
+    {
+        new_map->players_list = (Player**) malloc(nb_players * sizeof(Player*));
+        for (int i = 0; i < nb_players; i++)
+            new_map->players_list[i] = NULL;
+    }
+    else
+    {
+        new_map->players_list = NULL;
+    }
 
     new_map->nb_players = 0;
 
@@ -57,12 +65,15 @@ void map_Destroy(Map* map2destroy)
 
         for (int i = 0; i < map2destroy->nb_objects; i++)
             object_Destroy(map2destroy->objects_list[i]);
+        free(map2destroy->objects_list);
 
         for (int i = 0; i < map2destroy->nb_players; i++)
             player_Destroy(map2destroy->players_list[i]);
+        free(map2destroy->players_list);
 
         for (int i = 0; i < map2destroy->nb_bullets; i++)
             bullet_Destroy(map2destroy->bullets_list[i]);
+        free(map2destroy->bullets_list);
 
         if(map2destroy->game_packets2send)
             for (int i = 0; i < map2destroy->game_packets2send->nb_packets; i++)

@@ -4,6 +4,7 @@
 #include "Map/MapLoader.h"
 #include "GraphicEngine/Draw.h"
 #include "Objects/GameObjects.h"
+#include "Memleak/halloc.h"
 
 int main()
 {
@@ -31,5 +32,6 @@ int main()
     sfRenderWindow_Destroy(Game);
     armory_Destroy(armory);         // Destruction de l'armurerie
 
+    ConteneurMalloc_Affiche (true);
     return EXIT_SUCCESS;
 }

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "BaseSystem/Logging.h"
+#include "Memleak/halloc.h"
 
 void logging_Warning(char* fct_name, char* text)
 {
