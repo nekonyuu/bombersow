@@ -26,10 +26,8 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players)
         for (int i = 0; i < nb_players; i++)
             new_map->players_list[i] = NULL;
     }
-    else
-    {
+    else // Ce cas ne doit pas arriver en pratique, implémenté pour tests
         new_map->players_list = NULL;
-    }
 
     new_map->nb_players = 0;
 
@@ -65,15 +63,15 @@ void map_Destroy(Map* map2destroy)
 
         for (int i = 0; i < map2destroy->nb_objects; i++)
             object_Destroy(map2destroy->objects_list[i]);
-        free(map2destroy->objects_list);
+        free_secure(map2destroy->objects_list);
 
         for (int i = 0; i < map2destroy->nb_players; i++)
             player_Destroy(map2destroy->players_list[i]);
-        free(map2destroy->players_list);
+        free_secure(map2destroy->players_list);
 
         for (int i = 0; i < map2destroy->nb_bullets; i++)
             bullet_Destroy(map2destroy->bullets_list[i]);
-        free(map2destroy->bullets_list);
+        free_secure(map2destroy->bullets_list);
 
         if(map2destroy->game_packets2send)
             for (int i = 0; i < map2destroy->game_packets2send->nb_packets; i++)
@@ -133,7 +131,6 @@ void map_AddPlayer(Map* map_, Player* player_)
     map_->players_list[map_->nb_players - 1]->player_id = map_->nb_players;
 }
 
-// A voir suivant la gestion des player/signaux envoyés lors de la déco
 void map_DelPlayer(Map* map_, unsigned int player_id)
 {
     if (!map_->players_list[player_id])
