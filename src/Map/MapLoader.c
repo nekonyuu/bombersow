@@ -117,7 +117,8 @@ void map_Loader_Image(Image* image_, char* path)
     char **image_list = NULL;
     int image_list_taille = 0;
     sscanf(liste->data[liste->taille-1], "%d", &image_list_taille);
-
+    if(image_list_taille < 1)
+        return;
     assert(image_list = (char**) malloc(image_list_taille * sizeof(char*))); //Allocation de la mémoire
     for (int i = 0; i < image_list_taille; i++)
     {

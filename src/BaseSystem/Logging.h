@@ -4,7 +4,7 @@
 #include <assert.h>
 
 // Sécurisation du free()
-#define free_secure(pointer) free(pointer); pointer = NULL;
+#define free_secure(pointer) free(pointer); pointer = NULL
 
 void logging_Warning(char*, char*);
 void logging_Error(char*, char*);

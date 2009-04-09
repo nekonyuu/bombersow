@@ -131,7 +131,7 @@ void server_Listen_TCP(void* UserData)
         case CHAT:
         {
             sfPacket* resend = sfPacket_Create();                                       // Paquet de renvoi
-            char* mess;
+            char* mess = NULL;
             sfPacket_ReadString(packet, mess);                                          // Lecture message
             sfPacket_WriteUint8(resend, (sfUint8) CHAT);                                // Création paquet
             sfPacket_WriteString(resend, mess);
