@@ -147,3 +147,16 @@ void player_Jump(Player* player_)
         player_->jump = NO_JUMP;
     }
 }
+
+void player_SetPosition(Player* player, float x, float y)
+{
+    player->coord_x = x;
+    player->coord_y = y;
+    sprite_SetPosition(player->sprite, x, y);
+
+}
+
+void player_Draw(sfRenderWindow* Game, Player* player)
+{
+    sprite_Draw(Game, player->sprite);
+}
