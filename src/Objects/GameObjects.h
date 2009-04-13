@@ -106,7 +106,7 @@ typedef struct PLAYER
     float coord_x, coord_y;         // Emplacement sur la map
     float m_coord_x, m_coord_y;     // Coordonnées souris
 
-    unsigned int speed_x, speed_y;  // Vitesse
+    float speed_x, speed_y;  // Vitesse
 
     jump_t jump;                    // Type de saut en cours
     _Bool jetpack_mode;             // Mode JetPack ?
@@ -178,6 +178,8 @@ typedef struct MAP
 
     sfClock* clock;                 // Timer d'actualisation
 
+    struct QUAD_TREE* quad_tree;
+
 } Map;
 
 Weapon armory[NB_MAX_WEAPONS];      // Armes du jeu en accès global
@@ -202,9 +204,12 @@ void player_SwitchWeapon(Player*, int);
 void player_CollectWeapon(Player*, int);
 void player_WeaponShoot(Map*, Player*);
 void player_Jump(Player*);
+void player_SetPosition(Player*, float, float);
+void player_Draw(sfRenderWindow*, Player*);
 
 Bullet* bullet_Create(unsigned int, unsigned int);
 void bullet_Destroy(Bullet*);
+void bullet_Draw(sfRenderWindow*, Bullet*);
 
 Map* map_Create();
 void map_Destroy();
@@ -215,5 +220,6 @@ void map_DelPlayer(Map*, unsigned int);
 void map_AddBullet(Map*, Bullet*);
 void map_DelBullet(Map*, unsigned int);
 void map_UpdateDisconnectedPlayers(void*);
+void map_Draw(sfRenderWindow*, Map*);
 
 #endif

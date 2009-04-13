@@ -72,7 +72,7 @@ Collision* collision_Detection_Object(void* obj_, int type){
         while(list_temp != NULL && list_temp->elt != NULL){
             bullet_temp = list_temp->elt;
             sfIntRect rect_obj2 = sprite_GetRect(bullet_temp->draw_image);
-            if( sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) ){
+            if( bullet_temp != obj_ && sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) ){
                 collision->type = BULLET;
                 collision->bullet = bullet_temp;
                 return collision;
@@ -85,7 +85,7 @@ Collision* collision_Detection_Object(void* obj_, int type){
         while(list_temp != NULL && list_temp->elt != NULL){
             player_temp = list_temp->elt;
             sfIntRect rect_obj2 = sprite_GetRect(player_temp->sprite);
-            if( sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) ){
+            if( player_temp != obj_  && sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) ){
                 collision->type = PLAYER;
                 collision->player = player_temp;
                 return collision;

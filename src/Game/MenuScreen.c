@@ -39,26 +39,20 @@ void display_Menu(sfRenderWindow* Game)
 
     Object* obj_temp = object_Create(0);
     object_LoadImg(obj_temp, NULL, animation);
+    object_SetPosition(obj_temp, 0, 560);
 
     Object* obj_temp2 = object_Create(0);
     object_LoadImg(obj_temp2, NULL, animation2);
-    object_SetPosition(obj_temp2, 0, 200);
+    object_SetPosition(obj_temp2, 0, 230);
 
     Map* map = map_Create(0, 0);
     map_AddObject(map, obj_temp);
-    map_AddObject(map, obj_temp2);
 
+    Player* player_temp = player_Create(0, 0);
+    player_temp->sprite = obj_temp2->sprite;
+    player_SetPosition(player_temp, 0, 460);
+    map_AddPlayer(map, player_temp);
 
-    Quad_tree* quad = quad_tree_Create();
-    quad->rect.Left = 0;
-    quad->rect.Top = 0;
-    quad->rect.Bottom = 480;
-    quad->rect.Right = 640;
-
-    quad->first = quad;
-
-    quad_tree_Add(quad, obj_temp, OBJECT);
-    quad_tree_Add(quad, obj_temp2, OBJECT);
 
     do
     {
@@ -69,11 +63,10 @@ void display_Menu(sfRenderWindow* Game)
         for (int i = 0; i < Menu->nb_text; i++)
             screen_DrawText(Game, Menu, i);                     // Dessin des textes
 
-        gravitysystem_WorldUpdate(map, 17);
-        object_Draw(Game, obj_temp);
-        object_Draw(Game, obj_temp2);
+        gravitysystem_WorldUpdate(map, 9.81);
+        map_Draw(Game, map);
 
-        quad_tree_Draw(Game, quad);
+        quad_tree_Draw(Game, map->quad_tree);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 
@@ -119,6 +112,7 @@ void display_Menu(sfRenderWindow* Game)
                         sfString_SetColor(Menu->texts[menu_select], sfWhite);
                         sfString_SetColor(Menu->texts[--menu_select], sfRed);
                     }
+                    player_temp->speed_y = -3;
                     break;
 
                 case sfKeyDown:
@@ -141,7 +135,6 @@ void display_Menu(sfRenderWindow* Game)
     while (launched);
 
     map_Destroy(map);
-    quad_tree_Destroy(quad);
 
     sfFont_Destroy(menuFont);
     sfImage_Destroy(BG_image);

@@ -29,3 +29,8 @@ void bullet_Destroy(Bullet* bullet2destroy)
     bullet2destroy->draw_image = NULL;
     free_secure(bullet2destroy);
 }
+
+void bullet_Draw(sfRenderWindow* Game, Bullet* bullet)
+{
+    sprite_Draw(Game, bullet->draw_image);
+}

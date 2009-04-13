@@ -59,4 +59,6 @@ void quad_tree_Update(void*, int);
 void quad_tree_Print(Quad_tree*);
 void quad_tree_Draw(sfRenderWindow*, Quad_tree*);
 
+_Bool IntRect_Contains(sfIntRect*, sfIntRect*);
+
 #endif

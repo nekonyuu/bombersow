@@ -186,16 +186,17 @@ void quad_tree_Add(Quad_tree* quad, void* obj_, int type)
         rect_obj = sprite_GetRect(obj->draw_image);
     }
 
+    if(quad->object == NULL)
+        quad->object = list_Create();
+
+    if(quad->player == NULL)
+        quad->player = list_Create();
+
+    if(quad->bullet == NULL)
+        quad->bullet = list_Create();
+
+
     if( sfIntRect_Intersects(&quad->rect, &rect_obj, NULL) ){
-
-        if(quad->object == NULL)
-            quad->object = list_Create();
-
-        if(quad->bullet == NULL)
-            quad->bullet = list_Create();
-
-        if(quad->player == NULL)
-            quad->player = list_Create();
 
         if(quad->noeuds[NW] == NULL){
             sfIntRect rectNW = {quad->rect.Left, quad->rect.Top, (quad->rect.Right+quad->rect.Left)/2, (quad->rect.Bottom+quad->rect.Top)/2};
@@ -237,27 +238,15 @@ void quad_tree_Add(Quad_tree* quad, void* obj_, int type)
 
             if(type == OBJECT){
                 Object* obj = obj_;
-
-                if(quad->object == NULL)
-                    quad->object = list_Create();
-
                 list_Add(quad->object, obj, type);
                 obj->quad_node = quad;
             }else if(type == PLAYER){
                 Player* obj = obj_;
-
-                if(quad->player == NULL)
-                    quad->player = list_Create();
-
                 list_Add(quad->player, obj, type);
                 obj->quad_node = quad;
 
             }else{
                 Bullet* obj = obj_;
-
-                if(quad->bullet == NULL)
-                    quad->bullet = list_Create();
-
                 list_Add(quad->bullet, obj, type);
                 obj->quad_node = quad;
             }
@@ -279,7 +268,15 @@ void quad_tree_Print(Quad_tree* quad)
 void quad_tree_Draw(sfRenderWindow* Game, Quad_tree* quad)
 {
     if(quad != NULL){
-        sfShape* test = sfShape_CreateRectangle(quad->rect.Left+1, quad->rect.Top+1, quad->rect.Right-1, quad->rect.Bottom-1, sfColor_FromRGBA(255,255,255,0), 1, sfWhite);
+        sfShape* test = NULL;
+        if(quad->player != NULL && quad->player->taille > 0)
+        {
+            test = sfShape_CreateRectangle(quad->rect.Left+1, quad->rect.Top+1, quad->rect.Right-1, quad->rect.Bottom-1, sfColor_FromRGBA(255,255,255,0), 1, sfRed);
+        }
+        else
+        {
+            test = sfShape_CreateRectangle(quad->rect.Left+1, quad->rect.Top+1, quad->rect.Right-1, quad->rect.Bottom-1, sfColor_FromRGBA(255,255,255,0), 1, sfWhite);
+        }
         sfRenderWindow_DrawShape(Game, test);
         sfShape_Destroy(test);
 
@@ -384,6 +381,24 @@ void quad_tree_Update(void* obj_, int type)
         rect_obj = sprite_GetRect(obj->draw_image);
     }
 
-    quad_tree_Delete_Elt(obj_, type);
-    quad_tree_Add(quad->first, obj_, type);
+    if(!IntRect_Contains(&quad->rect, &rect_obj))
+    {
+        quad_tree_Delete_Elt(obj_, type);
+        quad_tree_Add(quad->first, obj_, type);
+    }
+
+}
+
+
+_Bool IntRect_Contains(sfIntRect* rect, sfIntRect* rect2)
+{
+
+    if(sfIntRect_Intersects(rect, rect2, NULL))
+        if(rect->Top >= rect2->Top && rect->Bottom <= rect2->Bottom && rect->Left >= rect2->Left && rect->Right <= rect2->Right)
+            return true;
+        else
+            return false;
+    else
+        return false;
+
 }

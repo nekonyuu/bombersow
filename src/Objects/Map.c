@@ -1,6 +1,8 @@
 #include "BaseSystem/Config.h"
 #include "BaseSystem/Logging.h"
 #include "Networking/Networking.h"
+#include "PhysicsEngine/PhysicsEngine.h"
+#include "GraphicEngine/Draw.h"
 
 // Constructeur
 Map* map_Create(unsigned int map_id, unsigned int nb_players)
@@ -43,6 +45,14 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players)
 
     new_map->clock = sfClock_Create();
 
+    new_map->quad_tree = quad_tree_Create();
+    new_map->quad_tree->rect.Left = 0;
+    new_map->quad_tree->rect.Top = 0;
+    new_map->quad_tree->rect.Bottom = SCREEN_HEIGHT;
+    new_map->quad_tree->rect.Right = SCREEN_WIDTH;
+
+    new_map->quad_tree->first = new_map->quad_tree;
+
     return new_map;
 }
 
@@ -81,6 +91,8 @@ void map_Destroy(Map* map2destroy)
 
         sfClock_Destroy(map2destroy->clock);
 
+        quad_tree_Destroy(map2destroy->quad_tree);
+
         free_secure(map2destroy);
 
         map2destroy = NULL;
@@ -98,6 +110,8 @@ void map_AddObject(Map* map_, Object* object_)
         logging_Error("map_AddObject", "Memory allocation error");
 
     map_->objects_list[map_->nb_objects - 1] = object_;
+
+    quad_tree_Add(map_->quad_tree, object_, OBJECT);
 }
 
 void map_DelObject(Map* map_, unsigned int object_id)
@@ -113,7 +127,10 @@ void map_DelObject(Map* map_, unsigned int object_id)
     for (int i = object_id; i < map_->nb_objects - 1; i++)
         map_->objects_list[i] = map_->objects_list[i + 1];
 
+    quad_tree_Delete_Elt(map_->objects_list[object_id], OBJECT);
+
     assert(map_->objects_list = (Object**) realloc(map_->objects_list, --map_->nb_objects * sizeof(Object*)));
+
 }
 
 void map_AddPlayer(Map* map_, Player* player_)
@@ -128,6 +145,8 @@ void map_AddPlayer(Map* map_, Player* player_)
 
     map_->players_list[map_->nb_players - 1] = player_;
     map_->players_list[map_->nb_players - 1]->player_id = map_->nb_players;
+
+    quad_tree_Add(map_->quad_tree, player_, PLAYER);
 }
 
 void map_DelPlayer(Map* map_, unsigned int player_id)
@@ -146,6 +165,8 @@ void map_DelPlayer(Map* map_, unsigned int player_id)
         map_->players_list[i]->player_id = i + 1;
     }
 
+    quad_tree_Delete_Elt(map_->players_list[player_id], PLAYER);
+
     assert(map_->players_list = (Player**) realloc(map_->players_list, --map_->nb_players * sizeof(Player*)));
 }
 
@@ -160,6 +181,8 @@ void map_AddBullet(Map* map_, Bullet* bullet_)
         logging_Error("map_AddBullet", "Memory allocation error");
 
     map_->bullets_list[map_->nb_bullets - 1] = bullet_;
+
+    quad_tree_Add(map_->quad_tree, bullet_, BULLET);
 }
 
 void map_DelBullet(Map* map_, unsigned int bullet_id)
@@ -174,6 +197,8 @@ void map_DelBullet(Map* map_, unsigned int bullet_id)
 
     for (int i = bullet_id; i < map_->nb_bullets - 1; i++)
         map_->bullets_list[i] = map_->bullets_list[i + 1];
+
+    quad_tree_Delete_Elt(map_->bullets_list[bullet_id], BULLET);
 
     assert(map_->bullets_list = (Bullet**) realloc(map_->bullets_list, --map_->nb_bullets * sizeof(Bullet*)));
 }
@@ -190,4 +215,24 @@ void map_UpdateDisconnectedPlayers(void* UserData)
 
         sfSleep(1.0f);
     }
+}
+
+void map_Draw(sfRenderWindow* Game, Map* map)
+{
+
+    for (int i = 0; i < map->nb_players; i++)
+    {
+        player_Draw(Game, map->players_list[i]);
+    }
+
+    for (int i = 0; i < map->nb_objects; i++)
+    {
+        object_Draw(Game, map->objects_list[i]);
+    }
+
+    for (int i = 0; i < map->nb_bullets; i++)
+    {
+        bullet_Draw(Game, map->bullets_list[i]);
+    }
+
 }
