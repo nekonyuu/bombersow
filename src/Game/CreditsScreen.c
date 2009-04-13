@@ -16,9 +16,9 @@ _Bool display_Credits(sfRenderWindow* Game, sfImage* BG_image, sfFont* creditsFo
     screen_LoadText(Credits, "Auteurs :", sfWhite, 20, sfStringRegular, 450.0f, 140.0f);
     screen_LoadText(Credits, "Raffre Jonathan (Loven x Kotonoha)", sfWhite, 20, sfStringRegular, 450.0f, 190.0f);
     screen_LoadText(Credits, "Netcode, Gestion Objects", sfWhite, 20, sfStringRegular, 450.0f, 220.0f);
-    screen_LoadText(Credits, "Brieulle Ludovic", sfWhite, 20, sfStringRegular, 450.0f, 260.0f);
-    screen_LoadText(Credits, "Graphisme, Détection clavier", sfWhite, 20, sfStringRegular, 450.0f, 290.0f);
-    screen_LoadText(Credits, "Norindr Ananda (kastor)", sfWhite, 20, sfStringRegular, 450.0f, 330.0f);
+    screen_LoadText(Credits, "Brieulle Ludovic (Klice)", sfWhite, 20, sfStringRegular, 450.0f, 260.0f);
+    screen_LoadText(Credits, "Graphisme, Gestion clavier, Gameplay", sfWhite, 20, sfStringRegular, 450.0f, 290.0f);
+    screen_LoadText(Credits, "Norindr Ananda (Kastor)", sfWhite, 20, sfStringRegular, 450.0f, 330.0f);
     screen_LoadText(Credits, "Moteur graphique, physique", sfWhite, 20, sfStringRegular, 450.0f, 360.0f);
     screen_LoadText(Credits, "Ce jeu a été codé en C \"POO\" avec la SFML", sfWhite, 20, sfStringRegular, 450.0f, 430.0f);
     screen_LoadText(Credits, "http://www.sfml-dev.org/", sfWhite, 20, sfStringItalic, 450.0f, 460.0f);
