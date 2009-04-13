@@ -32,8 +32,8 @@ void display_Menu(sfRenderWindow* Game)
     screen_LoadText(Menu, "Credits", sfWhite, 35, sfStringItalic, 450.0f, 240.0f);
     screen_LoadText(Menu, "Quitter", sfWhite, 35, sfStringItalic, 450.0f, 290.0f);
     screen_LoadMusic(Menu, menuMusic, sfTrue);                  // Chargement de la musique
-    /*if (Menu->music)
-        screen_PlayMusic(Menu);                                 // Lecture-*/
+    if (Menu->music)
+        screen_PlayMusic(Menu);                                 // Lecture
 
     logging_Info("display_Menu", "Started without error");
 
