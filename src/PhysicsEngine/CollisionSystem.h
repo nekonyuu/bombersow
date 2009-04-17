@@ -17,5 +17,6 @@ typedef struct COLLISION {
 Collision* collision_Create();
 void collision_Destroy(Collision*);
 Collision* collision_Detection_Object(void*, int);
+void collision_Detection_ObjectArb(void*, int, Quad_tree*, Collision*);
 
 #endif

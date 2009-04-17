@@ -87,7 +87,8 @@ void list_Delete(List* list, List_element* list_element)
         {
             list->first = list_element->next;
         }
-        else if(list->last == list_element)
+
+        if(list->last == list_element)
         {
             list->last = list_element->previous;
         }

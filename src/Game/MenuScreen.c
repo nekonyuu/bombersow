@@ -48,11 +48,20 @@ void display_Menu(sfRenderWindow* Game)
     Map* map = map_Create(0, 0);
     map_AddObject(map, obj_temp);
 
-    Player* player_temp = player_Create(0, 0);
-    player_temp->sprite = obj_temp2->sprite;
-    player_SetPosition(player_temp, 0, 460);
-    map_AddPlayer(map, player_temp);
+    Player* player_tab[100];
 
+    Animation* animation3 = NULL;
+    Sprite* spr = NULL;
+    for(int i = 0; i < 6; i++)
+    {
+
+        spr = sprite_Create(0, 0, image_animation, NULL);
+
+        player_tab[i] = player_Create("a", 0);
+        player_tab[i]->sprite = spr;
+        player_SetPosition(player_tab[i], i*130, 0);
+        map_AddPlayer(map, player_tab[i]);
+    }
 
     do
     {
@@ -112,7 +121,7 @@ void display_Menu(sfRenderWindow* Game)
                         sfString_SetColor(Menu->texts[menu_select], sfWhite);
                         sfString_SetColor(Menu->texts[--menu_select], sfRed);
                     }
-                    player_temp->speed_y = -3;
+                    player_tab[0]->speed_y = -5;
                     break;
 
                 case sfKeyDown:
@@ -121,6 +130,10 @@ void display_Menu(sfRenderWindow* Game)
                         sfString_SetColor(Menu->texts[menu_select], sfWhite);
                         sfString_SetColor(Menu->texts[++menu_select], sfRed);
                     }
+                    break;
+
+                case sfKeyRight:
+                    player_tab[0]->coord_x += 5;
                     break;
 
                 default:
