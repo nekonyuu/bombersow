@@ -24,7 +24,6 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->weapons[current_weapon]->collected = true;      // Arme active
     new_player->nb_weapons = 1;
 
-
     /* TODO : Fonction donnant les coordonnées de spawn
     new_player->coord_x = ;                                     // Coordonnées de spawn
     new_player->coord_y = ;

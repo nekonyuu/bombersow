@@ -45,19 +45,19 @@ void display_Menu(sfRenderWindow* Game)
     object_LoadImg(obj_temp2, NULL, animation2);
     object_SetPosition(obj_temp2, 0, 230);
 
-    Map* map = map_Create(0, 0);
+    Map* map = map_Create(0, 6);
     map_AddObject(map, obj_temp);
+    map_AddObject(map, obj_temp2);
 
     Player* player_tab[100];
 
     Animation* animation3 = NULL;
-    Sprite* spr = NULL;
-    for(int i = 0; i < 6; i++)
+
+    for (int i = 0; i < 1; i++)
     {
+        Sprite* spr = sprite_Create(0, 0, image_animation, NULL);
 
-        spr = sprite_Create(0, 0, image_animation, NULL);
-
-        player_tab[i] = player_Create("a", 0);
+        player_tab[i] = player_Create("HAHA", CROWBAR);
         player_tab[i]->sprite = spr;
         player_SetPosition(player_tab[i], i*130, 0);
         map_AddPlayer(map, player_tab[i]);
@@ -74,7 +74,6 @@ void display_Menu(sfRenderWindow* Game)
 
         gravitysystem_WorldUpdate(map, 9.81);
         map_Draw(Game, map);
-
         quad_tree_Draw(Game, map->quad_tree);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre

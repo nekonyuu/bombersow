@@ -28,7 +28,7 @@ void list_element_Destroy(List_element* list)
 void list_element_Print(List_element* list)
 {
 
-    if(list != NULL)
+    if (list != NULL)
     {
         printf("%p=>", list->elt);
         list_element_Print(list->next);
@@ -60,19 +60,24 @@ void list_Add(List* list, void* elt, int type)
     list_element->previous = NULL;
 
     list->first = list_element;
-    if(list->taille == 0)
+    if (list->taille == 0)
         list->last = list_element;
     else
         list_element->next->previous = list_element;
     list->taille++;
 
-    if(type == OBJECT){
+    if (type == OBJECT)
+    {
         Object* obj = elt;
         obj->list_node = list_element;
-    }else if(type == PLAYER){
+    }
+    else if (type == PLAYER)
+    {
         Player* obj = elt;
         obj->list_node = list_element;
-    }else{
+    }
+    else
+    {
         Bullet* obj = elt;
         obj->list_node = list_element;
     }
@@ -82,21 +87,22 @@ void list_Add(List* list, void* elt, int type)
 void list_Delete(List* list, List_element* list_element)
 {
 
-    if(list != NULL && list_element != NULL){
-        if(list->first == list_element)
+    if (list != NULL && list_element != NULL)
+    {
+        if (list->first == list_element)
         {
             list->first = list_element->next;
         }
 
-        if(list->last == list_element)
+        if (list->last == list_element)
         {
             list->last = list_element->previous;
         }
 
         list->taille--;
-        if(list_element->previous != NULL)
+        if (list_element->previous != NULL)
             list_element->previous->next = list_element->next;
-        if(list_element->next != NULL)
+        if (list_element->next != NULL)
             list_element->next->previous = list_element->previous;
 
         list_element_Destroy(list_element);
@@ -107,7 +113,8 @@ void list_Delete(List* list, List_element* list_element)
 void list_Destroy(List* list)
 {
 
-    if(list != NULL){
+    if (list != NULL)
+    {
         list_element_Destroy(list->first);
         free_secure(list);
         list = NULL;
@@ -118,7 +125,8 @@ void list_Destroy(List* list)
 void list_Print(List* list)
 {
 
-    if(list != NULL){
+    if (list != NULL)
+    {
         printf("DEBUT=>");
         list_element_Print(list->first);
         printf("FIN\n");
@@ -154,9 +162,9 @@ Quad_tree* quad_tree_Create()
 void quad_tree_Destroy(Quad_tree* quad)
 {
 
-    if(quad != NULL)
+    if (quad != NULL)
     {
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
             quad_tree_Destroy(quad->noeuds[i]);
 
         list_Destroy(quad->object);
@@ -176,30 +184,36 @@ void quad_tree_Add(Quad_tree* quad, void* obj_, int type)
 {
 
     sfIntRect rect_obj;
-    if(type == OBJECT){
+    if (type == OBJECT)
+    {
         Object* obj = obj_;
         rect_obj = sprite_GetRect(obj->sprite);
-    }else if(type == PLAYER){
+    }
+    else if (type == PLAYER)
+    {
         Player* obj = obj_;
         rect_obj = sprite_GetRect(obj->sprite);
-    }else{
+    }
+    else
+    {
         Bullet* obj = obj_;
         rect_obj = sprite_GetRect(obj->draw_image);
     }
 
-    if(quad->object == NULL)
+    if (quad->object == NULL)
         quad->object = list_Create();
 
-    if(quad->player == NULL)
+    if (quad->player == NULL)
         quad->player = list_Create();
 
-    if(quad->bullet == NULL)
+    if (quad->bullet == NULL)
         quad->bullet = list_Create();
 
+    if ( sfIntRect_Intersects(&quad->rect, &rect_obj, NULL) )
+    {
 
-    if( sfIntRect_Intersects(&quad->rect, &rect_obj, NULL) ){
-
-        if(quad->noeuds[NW] == NULL){
+        if (quad->noeuds[NW] == NULL)
+        {
             sfIntRect rectNW = {quad->rect.Left, quad->rect.Top, (quad->rect.Right+quad->rect.Left)/2, (quad->rect.Bottom+quad->rect.Top)/2};
             quad->noeuds[NW] = quad_tree_Create();
             quad->noeuds[NW]->rect = rectNW;
@@ -226,51 +240,61 @@ void quad_tree_Add(Quad_tree* quad, void* obj_, int type)
         }
 
         int nombre_noeuds = 0;
-        for(int i = 0; i < 4; i++){
-            if( sfIntRect_Intersects(&quad->noeuds[i]->rect, &rect_obj, NULL) ){
+        for (int i = 0; i < 4; i++)
+        {
+            if ( sfIntRect_Intersects(&quad->noeuds[i]->rect, &rect_obj, NULL) )
+            {
                 nombre_noeuds++;
             }
         }
 
-        if(nombre_noeuds == 1){
-            for(int i = 0; i < 4; i++)
+        if (nombre_noeuds == 1)
+        {
+            for (int i = 0; i < 4; i++)
                 quad_tree_Add(quad->noeuds[i], obj_, type);
-        }else{
+        }
+        else
+        {
 
-            if(type == OBJECT){
+            if (type == OBJECT)
+            {
                 Object* obj = obj_;
                 list_Add(quad->object, obj, type);
                 obj->quad_node = quad;
-            }else if(type == PLAYER){
+            }
+            else if (type == PLAYER)
+            {
                 Player* obj = obj_;
                 list_Add(quad->player, obj, type);
                 obj->quad_node = quad;
-
-            }else{
+            }
+            else
+            {
                 Bullet* obj = obj_;
                 list_Add(quad->bullet, obj, type);
                 obj->quad_node = quad;
             }
-
         }
     }
-
 }
 
 void quad_tree_Print(Quad_tree* quad)
 {
-    if(quad != NULL){
+    if (quad != NULL)
+    {
         printf("%d %d %d %d\n", quad->rect.Left, quad->rect.Top, quad->rect.Right, quad->rect.Bottom);
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
             quad_tree_Print(quad->noeuds[i]);
     }
 }
 
 void quad_tree_Draw(sfRenderWindow* Game, Quad_tree* quad)
 {
-    if(quad != NULL){
+    if (quad != NULL)
+    {
         sfShape* test = NULL;
-        if(quad->player != NULL && quad->player->taille > 0)
+        // Bug ici, voir quad_tree_Add
+        if (quad->player != NULL && quad->player->taille > 0)
         {
             test = sfShape_CreateRectangle(quad->rect.Left+1, quad->rect.Top+1, quad->rect.Right-1, quad->rect.Bottom-1, sfColor_FromRGBA(255,255,255,0), 1, sfRed);
         }
@@ -280,8 +304,7 @@ void quad_tree_Draw(sfRenderWindow* Game, Quad_tree* quad)
         }
         sfRenderWindow_DrawShape(Game, test);
         sfShape_Destroy(test);
-
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
             quad_tree_Draw(Game, quad->noeuds[i]);
     }
 }
@@ -289,30 +312,38 @@ void quad_tree_Draw(sfRenderWindow* Game, Quad_tree* quad)
 void quad_tree_Generate(Quad_tree* quad, Map* map)
 {
 
-    for(int i = 0; i < map->nb_objects; i++){
+    for (int i = 0; i < map->nb_objects; i++)
+    {
         quad_tree_Add(quad, map->objects_list[i], OBJECT);
     }
 
-    for(int i = 0; i < map->nb_players; i++){
+    for (int i = 0; i < map->nb_players; i++)
+    {
         quad_tree_Add(quad, map->players_list[i], PLAYER);
     }
 
-    for(int i = 0; i < map->nb_bullets; i++){
+    for (int i = 0; i < map->nb_bullets; i++)
+    {
         quad_tree_Add(quad, map->bullets_list[i], BULLET);
     }
 }
 
 void quad_tree_Delete_Elt(void* obj_, int type)
 {
-    if(type == OBJECT){
+    if (type == OBJECT)
+    {
         Object* obj = obj_;
         list_Delete(obj->quad_node->object, obj->list_node);
         quad_tree_Delete_Node(obj->quad_node);
-    }else if(type == PLAYER){
+    }
+    else if (type == PLAYER)
+    {
         Player* obj = obj_;
         list_Delete(obj->quad_node->player, obj->list_node);
         quad_tree_Delete_Node(obj->quad_node);
-    }else{
+    }
+    else
+    {
         Bullet* obj = obj_;
         list_Delete(obj->quad_node->bullet, obj->list_node);
         quad_tree_Delete_Node(obj->quad_node);
@@ -323,14 +354,14 @@ void quad_tree_Delete_Elt(void* obj_, int type)
 void quad_tree_Check_Node(Quad_tree* quad, _Bool* check)
 {
 
-    if(*check == 0)
+    if (*check == 0)
         return;
 
-    if(quad != NULL && quad->bullet != NULL && quad->player != NULL && quad->object != NULL)
+    if (quad != NULL && quad->bullet != NULL && quad->player != NULL && quad->object != NULL)
     {
-        if(quad->object->taille == 0 && quad->player->taille == 0 && quad->bullet->taille == 0)
+        if (quad->object->taille == 0 && quad->player->taille == 0 && quad->bullet->taille == 0)
         {
-            for(int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++)
                 quad_tree_Check_Node(quad->noeuds[i], check);
         }
         else
@@ -346,9 +377,9 @@ void quad_tree_Delete_Node(Quad_tree* quad)
     _Bool test;
     test = 1;
     quad_tree_Check_Node(quad, &test);
-    if(test)
+    if (test)
     {
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
             quad_tree_Destroy(quad->noeuds[i]);
             quad->noeuds[i] = NULL;
@@ -363,13 +394,13 @@ void quad_tree_Update(void* obj_, int type)
 
     sfIntRect rect_obj;
     Quad_tree* quad = NULL;
-    if(type == OBJECT)
+    if (type == OBJECT)
     {
         Object* obj = obj_;
         quad = obj->quad_node;
         rect_obj = sprite_GetRect(obj->sprite);
     }
-    else if(type == PLAYER)
+    else if (type == PLAYER)
     {
         Player* obj = obj_;
         quad = obj->quad_node;
@@ -382,7 +413,7 @@ void quad_tree_Update(void* obj_, int type)
         rect_obj = sprite_GetRect(obj->draw_image);
     }
 
-    if(!IntRect_Contains(&quad->rect, &rect_obj))
+    if (!IntRect_Contains(&quad->rect, &rect_obj))
     {
         quad_tree_Delete_Elt(obj_, type);
         quad_tree_Add(quad->first, obj_, type);
@@ -394,8 +425,8 @@ void quad_tree_Update(void* obj_, int type)
 _Bool IntRect_Contains(sfIntRect* rect, sfIntRect* rect2)
 {
 
-    if(sfIntRect_Intersects(rect, rect2, NULL))
-        if(rect->Top >= rect2->Top && rect->Bottom <= rect2->Bottom && rect->Left >= rect2->Left && rect->Right <= rect2->Right)
+    if (sfIntRect_Intersects(rect, rect2, NULL))
+        if (rect->Top >= rect2->Top && rect->Bottom <= rect2->Bottom && rect->Left >= rect2->Left && rect->Right <= rect2->Right)
             return true;
         else
             return false;

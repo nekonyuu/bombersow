@@ -135,18 +135,14 @@ void map_DelObject(Map* map_, unsigned int object_id)
 
 void map_AddPlayer(Map* map_, Player* player_)
 {
-    if (!map_->players_list)
-        map_->players_list = (Player**) malloc(++map_->nb_players * sizeof(Player*));
-    else
-        map_->players_list = (Player**) realloc(map_->players_list, ++map_->nb_players * sizeof(Player*));
+    if(map_->max_players >= map_->nb_players + 1)
+    {
+        map_->nb_players++;
+        map_->players_list[map_->nb_players - 1] = player_;
+        map_->players_list[map_->nb_players - 1]->player_id = map_->nb_players;
 
-    if (!map_->players_list && !map_->players_list[map_->nb_players - 1])
-        logging_Error("map_AddPlayer", "Memory allocation error");
-
-    map_->players_list[map_->nb_players - 1] = player_;
-    map_->players_list[map_->nb_players - 1]->player_id = map_->nb_players;
-
-    quad_tree_Add(map_->quad_tree, player_, PLAYER);
+        quad_tree_Add(map_->quad_tree, player_, PLAYER);
+    }
 }
 
 void map_DelPlayer(Map* map_, unsigned int player_id)
@@ -157,6 +153,8 @@ void map_DelPlayer(Map* map_, unsigned int player_id)
         return;
     }
 
+    quad_tree_Delete_Elt(map_->players_list[player_id], PLAYER);
+
     player_Destroy(map_->players_list[player_id]);
 
     for (int i = player_id; i < map_->nb_players - 1; i++)
@@ -165,9 +163,7 @@ void map_DelPlayer(Map* map_, unsigned int player_id)
         map_->players_list[i]->player_id = i + 1;
     }
 
-    quad_tree_Delete_Elt(map_->players_list[player_id], PLAYER);
-
-    assert(map_->players_list = (Player**) realloc(map_->players_list, --map_->nb_players * sizeof(Player*)));
+    map_->players_list[map_->nb_players - 1] = NULL;
 }
 
 void map_AddBullet(Map* map_, Bullet* bullet_)
