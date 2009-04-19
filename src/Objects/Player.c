@@ -16,7 +16,7 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->player_id = 0;
     new_player->life = 100;
 
-    assert(new_player->weapons = (Weapon **) malloc(sizeof(Weapon*)));
+    assert(new_player->weapons = (Weapon **) malloc(NB_MAX_WEAPONS * sizeof(Weapon*)));
     for (int i = 0; i < NB_MAX_WEAPONS; i++)
         new_player->weapons[i] = weapon_Create(i);
 
@@ -68,6 +68,7 @@ void player_Destroy(Player* player2destroy)
         for (int i = 0; i < NB_MAX_WEAPONS; i++)
             weapon_Destroy(player2destroy->weapons[i]);
 
+        sprite_Destroy(player2destroy->sprite);
         free_secure(player2destroy->weapons);
         free_secure(player2destroy);
     }

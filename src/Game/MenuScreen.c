@@ -53,7 +53,7 @@ void display_Menu(sfRenderWindow* Game)
 
     Animation* animation3 = NULL;
 
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < 3; i++)
     {
         Sprite* spr = sprite_Create(0, 0, image_animation, NULL);
 
