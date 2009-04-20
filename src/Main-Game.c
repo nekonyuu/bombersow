@@ -1,5 +1,5 @@
 #include "BaseSystem/Logging.h"
-#include "Game/MenuScreen.h"
+#include "Game/GameScreens.h"
 #include "Objects/Screen.h"
 #include "Map/MapLoader.h"
 #include "GraphicEngine/Draw.h"

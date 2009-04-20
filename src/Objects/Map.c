@@ -94,8 +94,6 @@ void map_Destroy(Map* map2destroy)
         quad_tree_Destroy(map2destroy->quad_tree);
 
         free_secure(map2destroy);
-
-        map2destroy = NULL;
     }
 }
 

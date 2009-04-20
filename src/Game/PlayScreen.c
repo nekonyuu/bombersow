@@ -1,7 +1,5 @@
 #include "BaseSystem/Logging.h"
-#include "Game/MenuScreen.h"
-#include "Game/ClientScreen.h"
-#include "Game/CreditsScreen.h"
+#include "Game/GameScreens.h"
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
 #include "GraphicEngine/Image.h"
@@ -62,6 +60,11 @@ _Bool display_PlayMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont
                         }
                         break;
                     case 2:
+                        if (display_ServerMenu(Game, BG_image, playFont))
+                        {
+                            launched = false;
+                            close = true;
+                        }
                         break;
                     case 3:
                         launched = false;

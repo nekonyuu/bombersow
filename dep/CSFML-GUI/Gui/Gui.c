@@ -40,7 +40,6 @@ void widget_cadre_Destroy(Widget_cadre* cadre)
     sfSprite_Destroy(cadre->background);
 
     free_secure(cadre);
-    cadre = NULL;
 }
 
 void widget_cadre_Draw(sfRenderWindow* Game, Widget_cadre* cadre)
@@ -111,7 +110,6 @@ void widget_textbox_var_Destroy(Widget_textbox_var* textbox_var)
     if(textbox_var->var_string)
         sfString_Destroy(textbox_var->var_string);*/
     free_secure(textbox_var);
-    textbox_var = NULL;
 }
 
 // Récupère la valeur active de la Widget_textbox_var
@@ -140,7 +138,6 @@ void widget_textbox_var_Get(Widget_textbox_var* textbox_var, Widget_textbox* tex
 
 void widget_textbox_var_Set(Widget_textbox_var* textbox_var, Widget_textbox* textbox)
 {
-
     switch (textbox_var->type)
     {
     case INT:
@@ -152,7 +149,6 @@ void widget_textbox_var_Set(Widget_textbox_var* textbox_var, Widget_textbox* tex
         break;
 
     case STRING:
-        // textbox_var->var_string détruit dans widget_textbox_var_Destroy, utilisé par widget_textbox_Destroy
         textbox_var->var_string = textbox->text;
         break;
 
@@ -177,11 +173,10 @@ Widget_textbox* widget_textbox_Create(int x, int y, int width, int height, int t
         sfString_SetFont(textbox->alt, font);
 
     sfFloatRect* rect = sfString_GetRect(textbox->alt);
-    sfString_SetPosition(textbox->alt, x, y+ ((height-(rect->Bottom-rect->Top))/2) - 2 );
+    sfString_SetPosition(textbox->alt, x, y + ((height - (rect->Bottom - rect->Top)) / 2) - 2);
 
     rect = sfString_GetRect(textbox->alt);
     rect->Right += 2;
-
 
     textbox->text = sfString_Create();
     sfString_SetPosition(textbox->text, rect->Right, y-2);
@@ -191,7 +186,7 @@ Widget_textbox* widget_textbox_Create(int x, int y, int width, int height, int t
         sfString_SetFont(textbox->text, font);
 
     textbox->text_char = NULL;
-    assert(textbox->text_char = (char*) malloc(taille*sizeof(char)));
+    assert(textbox->text_char = (char*) malloc((taille + 1) * sizeof(char)));
 
     textbox->taille = taille;
 
@@ -220,10 +215,7 @@ void widget_textbox_Destroy(Widget_textbox* textbox)
     widget_cadre_Destroy(textbox->cadre);
 
     free_secure(textbox->text_char);
-    textbox->text_char = NULL;
-
     free_secure(textbox);
-    textbox = NULL;
 }
 
 void widget_textbox_Click(Widget_textbox* textbox, int x, int y)
@@ -290,8 +282,7 @@ void widget_textbox_Draw(sfRenderWindow* Game, Widget_textbox* textbox)
 }
 
 
-//Widget bouton
-
+// Widget bouton
 Widget_bouton* widget_bouton_Create(sfIntRect rect, void (*f)(void*, void*), void* arg, void* arg2, sfImage* image_OnOver, sfImage* image_OnClick, sfImage* image_OnNothing)
 {
     Widget_bouton *bouton = NULL;
@@ -329,7 +320,6 @@ void widget_bouton_Destroy(Widget_bouton* bouton)
     sfSprite_Destroy(bouton->sprite_OnOver);
 
     free_secure(bouton);
-    bouton = NULL;
 }
 
 void widget_bouton_Click(Widget_bouton* bouton, int x, int y)
@@ -366,8 +356,7 @@ void widget_bouton_Draw(sfRenderWindow* Game, Widget_bouton* bouton)
 }
 
 
-
-//Widget slide
+// Widget slide
 Widget_slide* widget_slide_Create(int x, int y, int l, int h, int nbr_valeur, sfColor couleur, sfImage* s_top, sfImage* s_bottom, sfImage* s_middle)
 {
     Widget_slide* slide = NULL;
@@ -416,7 +405,6 @@ void widget_slide_SetNbrVal(Widget_slide* slide, int nbr_valeur)
 
 }
 
-
 void widget_slide_Destroy(Widget_slide* slide)
 {
     sfSprite_Destroy(slide->sprite_top);
@@ -424,7 +412,6 @@ void widget_slide_Destroy(Widget_slide* slide)
     sfSprite_Destroy(slide->sprite_middle);
 
     free_secure(slide);
-    slide = NULL;
 }
 
 void widget_slide_Draw(sfRenderWindow* Game, Widget_slide* slide)
@@ -465,7 +452,7 @@ void widget_slide_Click(Widget_slide* slide, int x, int y)
 }
 
 
-//Gui
+// Gui
 Gui* gui_Create()
 {
     Gui* gui = NULL;
@@ -491,9 +478,8 @@ void gui_Load_Textbox(Gui* gui, Widget_textbox** widget, int taille)
 
 void gui_Add_Textbox(Gui* gui, Widget_textbox* widget)
 {
-    gui->widget_textbox_nombre = gui->widget_textbox_nombre+1;
-    assert(gui->widget_textbox = realloc(gui->widget_textbox, gui->widget_textbox_nombre*sizeof(Widget_textbox*)));
-    gui->widget_textbox[gui->widget_textbox_nombre-1] = widget;
+    assert(gui->widget_textbox = realloc(gui->widget_textbox, ++gui->widget_textbox_nombre * sizeof(Widget_textbox*)));
+    gui->widget_textbox[gui->widget_textbox_nombre - 1] = widget;
 }
 
 void gui_Load_Bouton(Gui* gui, Widget_bouton** widget, int taille)
@@ -521,11 +507,9 @@ void gui_Load_Slide(Gui* gui, Widget_slide** widget, int taille)
 
 void gui_Add_Slide(Gui* gui, Widget_slide* widget)
 {
-    gui->widget_slide_nombre = gui->widget_slide_nombre+1;
-    assert(gui->widget_slide = realloc(gui->widget_slide, gui->widget_slide_nombre*sizeof(Widget_slide*)));
-    gui->widget_slide[gui->widget_slide_nombre-1] = widget;
+    assert(gui->widget_slide = realloc(gui->widget_slide, ++gui->widget_slide_nombre * sizeof(Widget_slide*)));
+    gui->widget_slide[gui->widget_slide_nombre - 1] = widget;
 }
-
 
 void gui_Destroy(Gui* gui)
 {
@@ -539,16 +523,12 @@ void gui_Destroy(Gui* gui)
         widget_slide_Destroy(gui->widget_slide[i]);
 
     free_secure(gui->widget_textbox);
-    gui->widget_textbox = NULL;
 
     free_secure(gui->widget_bouton);
-    gui->widget_bouton = NULL;
 
     free_secure(gui->widget_slide);
-    gui->widget_slide = NULL;
 
     free_secure(gui);
-    gui = NULL;
 }
 
 void gui_Draw(sfRenderWindow* Game, Gui* gui)

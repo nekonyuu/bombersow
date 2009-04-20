@@ -1,6 +1,6 @@
 #include <Gui/Gui.h>
 #include "BaseSystem/Logging.h"
-#include "Game/SettingsScreen.h"
+#include "Game/GameScreens.h"
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
 

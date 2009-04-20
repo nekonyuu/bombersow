@@ -1,5 +1,5 @@
 #include "BaseSystem/Logging.h"
-#include "Game/CreditsScreen.h"
+#include "Game/GameScreens.h"
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
 

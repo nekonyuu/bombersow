@@ -1,8 +1,5 @@
 #include "BaseSystem/Logging.h"
-#include "Game/MenuScreen.h"
-#include "Game/PlayScreen.h"
-#include "Game/SettingsScreen.h"
-#include "Game/CreditsScreen.h"
+#include "Game/GameScreens.h"
 #include "GraphicEngine/Draw.h"
 #include "Objects/Screen.h"
 #include "Objects/GameObjects.h"
@@ -133,6 +130,10 @@ void display_Menu(sfRenderWindow* Game)
 
                 case sfKeyRight:
                     player_tab[0]->coord_x += 5;
+                    break;
+
+                case sfKeyLeft:
+                    player_tab[0]->coord_x -= 5;
                     break;
 
                 default:

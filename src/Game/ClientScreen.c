@@ -11,7 +11,7 @@ _Bool display_ClientMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFo
     sfImage* textbox_bg = sfImage_CreateFromFile("base/images/gui/textbox_back.png");
     sfEvent Event;
     _Bool launched = true, close = false;
-    int menu_select = 1, port = 0;
+    int menu_select = 1, port = DEFAULT_PORT;
     char pseudo[20] = "Player", ip[20] = "127.0.0.1";
 
     screen_LoadImage(clientMenu, BG_image);                             // Chargement de l'arrière-plan
@@ -24,6 +24,7 @@ _Bool display_ClientMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFo
     gui_Add_Textbox(clientMenu->gui, widget_textbox_Create(600, 150, 200, 25, 20, textbox_bg, sfBlack, CHAR, pseudo, "", sfBlack, playFont, 10));
     gui_Add_Textbox(clientMenu->gui, widget_textbox_Create(600, 200, 200, 25, 20, textbox_bg, sfBlack, CHAR, ip, "", sfBlack, playFont, 10));
     gui_Add_Textbox(clientMenu->gui, widget_textbox_Create(600, 250, 100, 25, 5, textbox_bg, sfBlack, INT, &port, "", sfBlack, playFont, 10));
+    clientMenu->gui->widget_textbox[0]->active = true;
 
     logging_Info("display_ClientMenu", "Started without error");
 
@@ -60,27 +61,38 @@ _Bool display_ClientMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFo
 
             if (Event.Type == sfEvtKeyPressed)
             {
-                if (Event.Key.Code == sfKeyEscape)                      // Echap : Reviens en arrière
+                switch (Event.Key.Code)
                 {
+                case sfKeyEscape:
                     launched = false;
-                }
-                else if (Event.Key.Code == sfKeyReturn)
-                {
+                    break;
+
+                case sfKeyReturn:
                     client_Main(pseudo, sfIPAddress_FromString(ip), port);
-                }
-                else if (Event.Key.Code == sfKeyUp && menu_select > 1)
-                {
-                    sfString_SetColor(clientMenu->texts[menu_select], sfWhite);
-                    clientMenu->gui->widget_textbox[menu_select - 1]->active = false;
-                    sfString_SetColor(clientMenu->texts[--menu_select], sfRed);
-                    clientMenu->gui->widget_textbox[menu_select - 1]->active = true;
-                }
-                else if (Event.Key.Code == sfKeyDown && menu_select < 3)
-                {
-                    sfString_SetColor(clientMenu->texts[menu_select], sfWhite);
-                    clientMenu->gui->widget_textbox[menu_select - 1]->active = false;
-                    sfString_SetColor(clientMenu->texts[++menu_select], sfRed);
-                    clientMenu->gui->widget_textbox[menu_select - 1]->active = true;
+                    break;
+
+                case sfKeyUp:
+                    if (menu_select > 1)
+                    {
+                        sfString_SetColor(clientMenu->texts[menu_select], sfWhite);
+                        clientMenu->gui->widget_textbox[menu_select - 1]->active = false;
+                        sfString_SetColor(clientMenu->texts[--menu_select], sfRed);
+                        clientMenu->gui->widget_textbox[menu_select - 1]->active = true;
+                    }
+                    break;
+
+                case sfKeyDown:
+                    if (menu_select < 3)
+                    {
+                        sfString_SetColor(clientMenu->texts[menu_select], sfWhite);
+                        clientMenu->gui->widget_textbox[menu_select - 1]->active = false;
+                        sfString_SetColor(clientMenu->texts[++menu_select], sfRed);
+                        clientMenu->gui->widget_textbox[menu_select - 1]->active = true;
+                    }
+                    break;
+
+                default:
+                    break;
                 }
             }
         }

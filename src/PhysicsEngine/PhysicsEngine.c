@@ -8,7 +8,7 @@ List_element* list_element_Create()
 {
 
     List_element* list = NULL;
-    assert(list = (List_element*)malloc(sizeof(List_element)));
+    assert(list = (List_element*) malloc(sizeof(List_element)));
 
     list->previous = NULL;
     list->elt = NULL;
@@ -19,21 +19,16 @@ List_element* list_element_Create()
 
 void list_element_Destroy(List_element* list)
 {
-
     free_secure(list);
-    list = NULL;
-
 }
 
 void list_element_Print(List_element* list)
 {
-
     if (list != NULL)
     {
         printf("%p=>", list->elt);
         list_element_Print(list->next);
     }
-
 }
 
 
@@ -86,7 +81,6 @@ void list_Add(List* list, void* elt, int type)
 
 void list_Delete(List* list, List_element* list_element)
 {
-
     if (list != NULL && list_element != NULL)
     {
         if (list->first == list_element)
@@ -107,31 +101,26 @@ void list_Delete(List* list, List_element* list_element)
 
         list_element_Destroy(list_element);
     }
-
 }
 
+// A vérifier
 void list_Destroy(List* list)
 {
-
     if (list != NULL)
     {
         list_element_Destroy(list->first);
         free_secure(list);
-        list = NULL;
     }
-
 }
 
 void list_Print(List* list)
 {
-
     if (list != NULL)
     {
         printf("DEBUT=>");
         list_element_Print(list->first);
         printf("FIN\n");
     }
-
 }
 
 Quad_tree* quad_tree_Create()
@@ -161,23 +150,16 @@ Quad_tree* quad_tree_Create()
 }
 void quad_tree_Destroy(Quad_tree* quad)
 {
-
     if (quad != NULL)
     {
         for (int i = 0; i < 4; i++)
             quad_tree_Destroy(quad->noeuds[i]);
 
         list_Destroy(quad->object);
-        quad->object = NULL;
         list_Destroy(quad->bullet);
-        quad->bullet = NULL;
         list_Destroy(quad->player);
-        quad->player = NULL;
-
         free_secure(quad);
-        quad = NULL;
     }
-
 }
 
 void quad_tree_Add(Quad_tree* quad, void* obj_, int type)
@@ -293,7 +275,6 @@ void quad_tree_Draw(sfRenderWindow* Game, Quad_tree* quad)
     if (quad != NULL)
     {
         sfShape* test = NULL;
-        // Bug ici, voir quad_tree_Add
         if (quad->player != NULL && quad->player->taille > 0)
         {
             test = sfShape_CreateRectangle(quad->rect.Left+1, quad->rect.Top+1, quad->rect.Right-1, quad->rect.Bottom-1, sfColor_FromRGBA(255,255,255,0), 1, sfRed);
@@ -420,7 +401,6 @@ void quad_tree_Update(void* obj_, int type)
     }
 
 }
-
 
 _Bool IntRect_Contains(sfIntRect* rect, sfIntRect* rect2)
 {
