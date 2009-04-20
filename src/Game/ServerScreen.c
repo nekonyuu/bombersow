@@ -9,6 +9,7 @@ _Bool display_ServerMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFo
 {
     Screen* serverMenu = screen_Create();
     sfImage* textbox_bg = sfImage_CreateFromFile("base/images/gui/textbox_back.png");
+    sfFont* textbox_font = sfFont_CreateFromFile("base/fonts/friday13v12.ttf", 50, NULL);
     sfEvent Event;
     _Bool launched = true, close = false;
     int menu_select = 1, port = DEFAULT_PORT;
@@ -18,12 +19,13 @@ _Bool display_ServerMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFo
     screen_LoadFont(serverMenu, playFont);                              // Chargement de la police d'écriture
     // Préparation des textes
     screen_LoadText(serverMenu, GAME_NAME, sfRed, 60, sfStringRegular, 450.0f, 40.0f);
-    screen_LoadText(serverMenu, "Nom du serveur", sfRed, 15, sfStringRegular, 450.0f, 140.0f);
-    screen_LoadText(serverMenu, "Pseudo", sfWhite, 35, sfStringRegular, 450.0f, 190.0f);
-    screen_LoadText(serverMenu, "Port", sfWhite, 35, sfStringRegular, 450.0f, 240.0f);
-    gui_Add_Textbox(serverMenu->gui, widget_textbox_Create(600, 150, 200, 25, 20, textbox_bg, sfBlack, CHAR, servername, "", sfBlack, playFont, 10));
-    gui_Add_Textbox(serverMenu->gui, widget_textbox_Create(600, 200, 200, 25, 20, textbox_bg, sfBlack, CHAR, pseudo, "", sfBlack, playFont, 10));
-    gui_Add_Textbox(serverMenu->gui, widget_textbox_Create(600, 250, 100, 25, 5, textbox_bg, sfBlack, INT, &port, "", sfBlack, playFont, 10));
+    screen_LoadText(serverMenu, "Nom du serveur", sfRed, 20, sfStringRegular, 450.0f, 250.0f);
+    screen_LoadText(serverMenu, "Pseudo", sfWhite, 20, sfStringRegular, 450.0f, 300.0f);
+    screen_LoadText(serverMenu, "Port", sfWhite, 20, sfStringRegular, 450.0f, 350.0f);
+    screen_LoadText(serverMenu, "Création du serveur", sfWhite, 40, sfStringRegular, 420.0f, 120.0f);
+    gui_Add_Textbox(serverMenu->gui, widget_textbox_Create(630, 250, 175, 20, 20, textbox_bg, sfBlack, CHAR, servername, "", sfBlack, textbox_font, 10));
+    gui_Add_Textbox(serverMenu->gui, widget_textbox_Create(630, 300, 175, 20, 20, textbox_bg, sfBlack, CHAR, pseudo, "", sfBlack, textbox_font, 10));
+    gui_Add_Textbox(serverMenu->gui, widget_textbox_Create(630, 350, 75, 20, 5, textbox_bg, sfBlack, INT, &port, "", sfBlack, playFont, 10));
     serverMenu->gui->widget_textbox[0]->active = true;
 
     logging_Info("display_ServerMenu", "Started without error");
@@ -90,6 +92,7 @@ _Bool display_ServerMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFo
 
     screen_Destroy(serverMenu);
     sfImage_Destroy(textbox_bg);
+    sfFont_Destroy(textbox_font);
 
     return close;
 }

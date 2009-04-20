@@ -242,9 +242,9 @@ void widget_textbox_Write(Widget_textbox* textbox, sfUint32 lettre)
         }
         else if ((lettre > 31 && lettre < 128))
         {
-            if (strlen(textbox->text_char)+1 < textbox->taille)
+            if (strlen(textbox->text_char) < textbox->taille)
             {
-                int taille = strlen( textbox->text_char);
+                int taille = strlen(textbox->text_char);
                 if (textbox->var->type == INT && lettre > 47 && lettre < 58)
                 {
                     textbox->text_char[taille] = lettre;
