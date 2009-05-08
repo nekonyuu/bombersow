@@ -8,8 +8,8 @@ _Bool display_Settings(sfRenderWindow* Game, sfImage* BG_image, sfFont* settings
 {
     Screen* Settings = screen_Create();
     sfEvent Event;
-    sfImage* bg_textbox = sfImage_CreateFromFile("base/images/gui/textbox_back.png");
-    char player_name[50];
+    //sfImage* bg_textbox = sfImage_CreateFromFile("base/images/gui/textbox_back.png");
+    //char player_name[50];
     _Bool launched = true, close = false;
 
     screen_LoadImage(Settings, BG_image);                       // Chargement de l'arrière-plan

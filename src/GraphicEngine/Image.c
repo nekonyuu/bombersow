@@ -18,9 +18,7 @@ void image_Destroy(Image *image_)
 {
     int i = 0;
     if (!image_)
-    {
         logging_Warning("image_Destroy", "Image object sent NULL");
-    }
     else
     {
         for (i = 0; i < image_->image_nombre; i++)
@@ -34,15 +32,11 @@ void image_Destroy(Image *image_)
 // Chargement d'une liste d'images dans un "objet" Image
 void image_Loader(Image *image_, char **image_liste, int taille_liste)
 {
-
-    assert(image_->image_tab = (sfImage**) malloc(taille_liste*sizeof(sfImage*)));
+    assert(image_->image_tab = (sfImage**) malloc(taille_liste * sizeof(sfImage*)));
     for (int i = 0; i < taille_liste; i++)
-    {
         image_->image_tab[i] = sfImage_CreateFromFile(image_liste[i]);
-    }
 
     image_->image_nombre = taille_liste;
-
 }
 
 // Acquisition d'une image suivant son id dans l'objet Image

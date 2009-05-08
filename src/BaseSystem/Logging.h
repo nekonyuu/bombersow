@@ -4,7 +4,7 @@
 #include <assert.h>
 
 // Sécurisation du free() (Evite les crash sur un free déjà effectué)
-#define free_secure(pointer) free(pointer); pointer = NULL
+#define free_secure(pointer) { free(pointer); pointer = NULL; }
 
 #ifdef DEBUG_MODE
 #include "Memleak/halloc.h"

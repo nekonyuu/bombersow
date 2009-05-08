@@ -1,6 +1,5 @@
 #include <assert.h>
-#include "OpenGL/gl.h"
-#include "OpenGL/glu.h"
+#include <GL/glew.h>
 #include "SFML/Graphics.h"
 #include "Gui/Gui.h"
 #include "Objects/Editor.h"

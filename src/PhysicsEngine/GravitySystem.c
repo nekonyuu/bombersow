@@ -9,7 +9,7 @@ void gravitysystem_PlayerUpdate(Map* map_, float gravity, Player* player)
 {
 
     float speed_y = player->speed_y+gravity*sfClock_GetTime(map_->clock);
-    if(player->sprite->hauteur+player->coord_y+speed_y <= SCREEN_HEIGHT && player->coord_y+speed_y > 0)
+    if(player->sprite->hauteur + player->coord_y + speed_y <= SCREEN_HEIGHT && player->coord_y + speed_y > 0)
     {
         player_SetPosition(player, player->coord_x, player->coord_y+player->speed_y);
         quad_tree_Update(player, PLAYER);

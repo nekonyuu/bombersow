@@ -43,7 +43,7 @@ int main()
         return EXIT_FAILURE;
 
     //Set des option de la fenetre
-    sfRenderWindow_SetFramerateLimit(Game, 60);
+    //sfRenderWindow_SetFramerateLimit(Game, 60);
 
     // Démarrage du jeu
     while (sfRenderWindow_IsOpened(Game))

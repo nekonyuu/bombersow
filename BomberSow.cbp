@@ -24,7 +24,7 @@
 					<Add option="-lcsfml-window-d" />
 					<Add option="-lcsfml-network-d" />
 					<Add option="-lcsfml-system-d" />
-					<Add directory="dep\lib-nix" />
+					<Add directory="dep\lib-win" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -50,7 +50,7 @@
 					<Add option="-lcsfml-window" />
 					<Add option="-lcsfml-network" />
 					<Add option="-lcsfml-system" />
-					<Add directory="dep\lib-nix" />
+					<Add directory="dep\lib-win" />
 				</Linker>
 			</Target>
 			<Target title="Linux Debug">
@@ -137,31 +137,25 @@
 		<Unit filename="src\Game\ClientScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Game\ClientScreen.h" />
 		<Unit filename="src\Game\CreditsScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Game\CreditsScreen.h" />
+		<Unit filename="src\Game\GameScreens.h" />
 		<Unit filename="src\Game\LobbyScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Game\LobbyScreen.h" />
 		<Unit filename="src\Game\MenuScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Game\MenuScreen.h" />
 		<Unit filename="src\Game\PlayScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Game\PlayScreen.h" />
 		<Unit filename="src\Game\ServerScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Game\ServerScreen.h" />
 		<Unit filename="src\Game\SettingsScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Game\SettingsScreen.h" />
 		<Unit filename="src\GraphicEngine\Draw.c">
 			<Option compilerVar="CC" />
 		</Unit>

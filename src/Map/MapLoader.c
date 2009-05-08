@@ -117,7 +117,7 @@ void map_Loader_Image(Image* image_, char* path)
     char **image_list = NULL;
     int image_list_taille = 0;
     sscanf(liste->data[liste->taille-1], "%d", &image_list_taille);
-    if(image_list_taille > 0)
+    if (image_list_taille > 0)
     {
         assert(image_list = (char**) malloc(image_list_taille * sizeof(char*))); //Allocation de la mémoire
         for (int i = 0; i < image_list_taille; i++)
@@ -150,12 +150,8 @@ void map_Loader_Image(Image* image_, char* path)
 
 void dossier_Read_Image(Image* image, char* path)
 {
-
     DIR *rep = opendir(path);
-
-
     int i = 0;
-
     int nombre_image = 0;
     char **image_path = NULL;
 
@@ -164,35 +160,31 @@ void dossier_Read_Image(Image* image, char* path)
         struct dirent *ent;
 
         while ((ent = readdir(rep)) != NULL)
-        {
             if (strcmp(ent->d_name, ".") && strcmp(ent->d_name,".."))
-            {
                 nombre_image++;
-            }
-        }
 
-        assert(image_path = (char**) malloc(nombre_image*sizeof(char*)));
-        for (i = 0; i < nombre_image; i++)
-            assert(image_path[i] = (char*) malloc(100*sizeof(char*)));
-
-        rewinddir(rep);
-        i = 0;
-        while ((ent = readdir (rep)) != NULL)
+        if (nombre_image > 0)
         {
-            if (strcmp(ent->d_name, ".") && strcmp(ent->d_name,".."))
-            {
-                strcpy(image_path[i], path);
-                strcpy(image_path[i], strcat(image_path[i], ent->d_name));
-                i++;
-            }
-        }
+            assert(image_path = (char**) malloc(nombre_image * sizeof(char*)));
+            for (i = 0; i < nombre_image; i++)
+                assert(image_path[i] = (char*) malloc(255 * sizeof(char*)));
 
-        closedir (rep);
+            rewinddir(rep);
+            i = 0;
+            while (i < nombre_image && (ent = readdir (rep)) != NULL)
+                if (strcmp(ent->d_name, ".") && strcmp(ent->d_name,".."))
+                {
+                    strcpy(image_path[i], path);
+                    strcpy(image_path[i], strcat(image_path[i], ent->d_name));
+                    i++;
+                }
+        }
+        image_Loader(image, image_path, nombre_image);
+
+        for (i = 0; i < nombre_image; i++)
+            free_secure(image_path[i]);
+        free_secure(image_path);
     }
 
-    image_Loader(image, image_path, nombre_image);
-
-    for (i = 0; i < nombre_image; i++)
-        free_secure(image_path[i]);
-    free_secure(image_path);
+    closedir (rep);
 }

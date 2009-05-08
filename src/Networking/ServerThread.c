@@ -42,7 +42,7 @@ void server_Main(Map* map)
 // Ecoute les connexions, et attend le paquet de connexion du client
 void server_Listen_Connections(void* UserData)
 {
-    Map* map = (Map*) UserData;                                                             // Cast des données, inhérent  SFML
+    Map* map = (Map*) UserData;                                                             // Cast des données, inhérent à SFML
 
     sfSocketTCP* connect_socket = sfSocketTCP_Create();
     sfSocketTCP_Listen(connect_socket, map->game_port);

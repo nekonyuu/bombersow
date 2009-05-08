@@ -39,11 +39,13 @@ Object* object_Create(unsigned int type)
 void object_Destroy(Object* object2destroy)
 {
     if (!object2destroy)
-        logging_Error("object_Destroy", "Object object sent NULL");
-
-    sfClock_Destroy(object2destroy->clock_mouvement);
-    sprite_Destroy(object2destroy->sprite);
-    free_secure(object2destroy);
+        logging_Warning("object_Destroy", "Object object sent NULL");
+    else
+    {
+        sfClock_Destroy(object2destroy->clock_mouvement);
+        sprite_Destroy(object2destroy->sprite);
+        free_secure(object2destroy);
+    }
 }
 
 void object_LoadImg(Object* object, sfImage* image, Animation* animation)

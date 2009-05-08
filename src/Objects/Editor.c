@@ -30,7 +30,7 @@ Editor* editor_Create()
     for(int i = 0; i < editor->nombre_object; i++)
         editor->object[i] = NULL;
 
-    editor->object_create = object_Create();
+    editor->object_create = object_Create(PLATFORM);
 
     editor->object_create_dynamic = NULL;
 
@@ -45,13 +45,12 @@ void editor_Destroy(Editor* editor)
     animation_Destroy(editor->animation_create);
 
     sprite_Destroy(editor->selected_sprite);
-
+    puts("CONNARD 1");
     for(int i = 0; i < editor->nombre_object; i++)
         object_Destroy(editor->object[i]);
+
     editor->object = NULL;
-
     object_Destroy(editor->object_create);
-
     object_Destroy(editor->object_create_dynamic);
 
 
