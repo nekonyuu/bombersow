@@ -9,9 +9,9 @@
 		<Build>
 			<Target title="Debug">
 				<Option platforms="Windows;" />
-				<Option output="bin/Debug/BomberSowEditor" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/Debug" />
-				<Option object_output="obj/BomberSowEditor/Debug/" />
+				<Option output="bin\Debug\BomberSowEditor" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin\Debug" />
+				<Option object_output="obj\BomberSowEditor\Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -27,14 +27,15 @@
 					<Add option="-lcsfml-network-d" />
 					<Add option="-lcsfml-system-d" />
 					<Add option="-lmingw32" />
-					<Add directory="dep/lib-win" />
+					<Add option="-lopengl32" />
+					<Add directory="dep\lib-win" />
 				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option platforms="Windows;" />
-				<Option output="bin/Release/BomberSowEditor" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/Release" />
-				<Option object_output="obj/BomberSowEditor/Release/" />
+				<Option output="bin\Release\BomberSowEditor" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin\Release" />
+				<Option object_output="obj\BomberSowEditor\Release\" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -53,14 +54,14 @@
 					<Add option="-lcsfml-network" />
 					<Add option="-lcsfml-system" />
 					<Add option="-lmingw32" />
-					<Add directory="dep/lib-win" />
+					<Add directory="dep\lib-win" />
 				</Linker>
 			</Target>
 			<Target title="Linux Debug">
 				<Option platforms="Unix;" />
-				<Option output="bin/Debug/BomberSowEditor" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/Debug" />
-				<Option object_output="obj/BomberSowEditor/Debug/" />
+				<Option output="bin\Debug\BomberSowEditor" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin\Debug" />
+				<Option object_output="obj\BomberSowEditor\Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -75,14 +76,14 @@
 					<Add option="-lcsfml-window" />
 					<Add option="-lcsfml-network" />
 					<Add option="-lcsfml-system" />
-					<Add directory="dep/lib-nix" />
+					<Add directory="dep\lib-nix" />
 				</Linker>
 			</Target>
 			<Target title="Linux Release">
 				<Option platforms="Unix;" />
-				<Option output="bin/Release/BomberSowEditor" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/Release" />
-				<Option object_output="obj/BomberSowEditor/Release/" />
+				<Option output="bin\Release\BomberSowEditor" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin\Release" />
+				<Option object_output="obj\BomberSowEditor\Release\" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -100,72 +101,110 @@
 					<Add option="-lcsfml-window" />
 					<Add option="-lcsfml-network" />
 					<Add option="-lcsfml-system" />
-					<Add directory="dep/lib-nix" />
+					<Add directory="dep\lib-nix" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-std=c99" />
-			<Add directory="dep/include/" />
-			<Add directory="src/" />
-			<Add directory="dep/CSFML-GUI" />
+			<Add option="-DGLEW_STATIC" />
+			<Add directory="dep\include\" />
+			<Add directory="src\" />
+			<Add directory="dep\CSFML-GUI" />
 		</Compiler>
-		<Unit filename="dep/CSFML-GUI/Gui/Gui.c">
+		<Unit filename="dep\CSFML-GUI\Gui\Gui.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="dep/CSFML-GUI/Gui/Gui.h" />
-		<Unit filename="src/BaseSystem/Logging.c">
+		<Unit filename="dep\CSFML-GUI\Gui\Gui.h" />
+		<Unit filename="dep\GLEW\glew.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/BaseSystem/Logging.h" />
-		<Unit filename="src/GraphicEngine/Draw.c">
+		<Unit filename="dep\include\Memleak\halloc.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/GraphicEngine/Draw.h" />
-		<Unit filename="src/GraphicEngine/Image.c">
+		<Unit filename="dep\include\Memleak\halloc.h" />
+		<Unit filename="src\BaseSystem\Logging.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/GraphicEngine/Image.h" />
-		<Unit filename="src/Main-Editor.c">
+		<Unit filename="src\BaseSystem\Logging.h" />
+		<Unit filename="src\GraphicEngine\Draw.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Map/MapLoader.c">
+		<Unit filename="src\GraphicEngine\Draw.h" />
+		<Unit filename="src\GraphicEngine\Image.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Map/MapLoader.h" />
-		<Unit filename="src/Objects/Bullet.c">
+		<Unit filename="src\GraphicEngine\Image.h" />
+		<Unit filename="src\Main-Editor.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Objects/Editor.c">
+		<Unit filename="src\Map\MapLoader.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Objects/Editor.h" />
-		<Unit filename="src/Objects/GameObjects.h" />
-		<Unit filename="src/Objects/Map.c">
+		<Unit filename="src\Map\MapLoader.h" />
+		<Unit filename="src\Networking\ChatHandler.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Objects/Objects.c">
+		<Unit filename="src\Networking\ClientThread.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Objects/Player.c">
+		<Unit filename="src\Networking\DataHandler.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Objects/Weapon.c">
+		<Unit filename="src\Networking\Networking.h" />
+		<Unit filename="src\Networking\PacketDefines.h" />
+		<Unit filename="src\Networking\ServerThread.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Screen/Map_screen.c">
+		<Unit filename="src\Objects\Bullet.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Screen/Map_screen.h" />
-		<Unit filename="src/Screen/Menu_Screen.c">
+		<Unit filename="src\Objects\Editor.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Screen/Menu_Screen.h" />
-		<Unit filename="src/Screen/Objects_Screen.c">
+		<Unit filename="src\Objects\Editor.h" />
+		<Unit filename="src\Objects\GameObjects.h" />
+		<Unit filename="src\Objects\Map.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/Screen/Objects_Screen.h" />
+		<Unit filename="src\Objects\Objects.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\Objects\Player.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\Objects\Weapon.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\PhysicsEngine\CollisionSystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\PhysicsEngine\CollisionSystem.h" />
+		<Unit filename="src\PhysicsEngine\GravitySystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\PhysicsEngine\GravitySystem.h" />
+		<Unit filename="src\PhysicsEngine\ParticleSystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\PhysicsEngine\ParticleSystem.h" />
+		<Unit filename="src\PhysicsEngine\PhysicsEngine.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\PhysicsEngine\PhysicsEngine.h" />
+		<Unit filename="src\Screen\Map_screen.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\Screen\Map_screen.h" />
+		<Unit filename="src\Screen\Menu_Screen.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\Screen\Menu_Screen.h" />
+		<Unit filename="src\Screen\Objects_Screen.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\Screen\Objects_Screen.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
