@@ -17,6 +17,7 @@ typedef struct LIST_ELEMENT{
 
 List_element* list_element_Create();
 void list_element_Destroy(List_element*);
+void list_element_Destroy_All(List_element*);
 void list_element_Print(List_element*);
 
 typedef struct LIST
@@ -25,6 +26,8 @@ typedef struct LIST
     int taille;
     List_element* first;
     List_element* last;
+
+    List_element* pointeur;
 
 }List;
 
@@ -41,6 +44,10 @@ typedef struct QUAD_TREE {
     List* player;
 
     sfIntRect rect;
+
+    int max_object;
+    int max_depth;
+    int depth;
 
     struct QUAD_TREE* noeuds[4];
     struct QUAD_TREE* parent;
@@ -59,6 +66,6 @@ void quad_tree_Update(void*, int);
 void quad_tree_Print(Quad_tree*);
 void quad_tree_Draw(sfRenderWindow*, Quad_tree*);
 
-_Bool IntRect_Contains(sfIntRect*, sfIntRect*);
+int IntRect_Contains(sfIntRect*, sfIntRect*);
 
 #endif
