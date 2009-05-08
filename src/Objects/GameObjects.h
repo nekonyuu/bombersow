@@ -177,6 +177,7 @@ typedef struct MAP
     unsigned short game_port;       // Port de jeu
 
     sfClock* clock;                 // Timer d'actualisation
+    float clock_time;               // Temps clock
 
     struct QUAD_TREE* quad_tree;
 

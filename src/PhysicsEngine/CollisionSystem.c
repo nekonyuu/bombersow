@@ -54,6 +54,8 @@ Collision* collision_Detection_Object(void* obj_, int type){
 
     Collision* collision = collision_Create();
 
+    int nbr = 0;
+
     while(node != NULL){
 
         list_temp = (node->object != NULL) ? node->object->first : NULL;
@@ -83,6 +85,7 @@ Collision* collision_Detection_Object(void* obj_, int type){
             list_temp = list_temp->next;
         }
 
+        nbr = 0;
         list_temp = (node->player != NULL) ? node->player->first : NULL;
         while(list_temp != NULL && list_temp->elt != NULL){
             player_temp = list_temp->elt;
@@ -94,6 +97,7 @@ Collision* collision_Detection_Object(void* obj_, int type){
             }
 
             list_temp = list_temp->next;
+            nbr++;
         }
         node = node->parent;
     }

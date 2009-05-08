@@ -12,7 +12,7 @@ void display_Menu(sfRenderWindow* Game)
     Screen* Menu = screen_Create();
     sfMusic *menuMusic = sfMusic_CreateFromFile("sounds/music/ParagonX9 - Metropolis [8-Bit].ogg");
     sfImage *BG_image = sfImage_CreateFromFile("base/images/Menu/menu_bg.png");
-    sfImage *image_animation = sfImage_CreateFromFile("base/images/animation.png"); // Test
+    sfImage *image_animation = sfImage_CreateFromFile("base/images/animation2.png"); // Test
     sfFont *menuFont = sfFont_CreateFromFile("base/fonts/ITCKRIST.TTF", 50, NULL);
     Animation *animation = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
     Animation *animation2 = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
@@ -29,8 +29,8 @@ void display_Menu(sfRenderWindow* Game)
     screen_LoadText(Menu, "Credits", sfWhite, 35, sfStringItalic, 450.0f, 240.0f);
     screen_LoadText(Menu, "Quitter", sfWhite, 35, sfStringItalic, 450.0f, 290.0f);
     screen_LoadMusic(Menu, menuMusic, sfTrue);                  // Chargement de la musique
-    if (Menu->music)
-        screen_PlayMusic(Menu);                                 // Lecture
+    /*if (Menu->music)
+        screen_PlayMusic(Menu);*/                                 // Lecture
 
     logging_Info("display_Menu", "Started without error");
 
@@ -42,26 +42,36 @@ void display_Menu(sfRenderWindow* Game)
     object_LoadImg(obj_temp2, NULL, animation2);
     object_SetPosition(obj_temp2, 0, 230);
 
-    Map* map = map_Create(0, 6);
+    Map* map = map_Create(0, 400);
     map_AddObject(map, obj_temp);
     map_AddObject(map, obj_temp2);
 
-    Player* player_tab[100];
+    Player* player_tab[400];
 
     Animation* animation3 = NULL;
 
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 100; i++)
     {
         Sprite* spr = sprite_Create(0, 0, image_animation, NULL);
 
         player_tab[i] = player_Create("HAHA", CROWBAR);
         player_tab[i]->sprite = spr;
-        player_SetPosition(player_tab[i], i*130, 0);
+        player_SetPosition(player_tab[i], (i-i%10)*5, (i%10)*50);
         map_AddPlayer(map, player_tab[i]);
     }
 
+    sfClock* clock = sfClock_Create();
+    int fps = 0;
+
     do
     {
+        if(sfClock_GetTime(clock) > 1)
+        {
+            printf("%d\n", fps);
+            sfClock_Reset(clock);
+            fps = 0;
+        }
+        fps++;
         sfRenderWindow_Clear(Game, sfBlack);                    // Vidage de l'écran
 
         sfRenderWindow_DrawSprite(Game, Menu->images[0]);       // Dessin du BG
@@ -69,9 +79,9 @@ void display_Menu(sfRenderWindow* Game)
         for (int i = 0; i < Menu->nb_text; i++)
             screen_DrawText(Game, Menu, i);                     // Dessin des textes
 
-        gravitysystem_WorldUpdate(map, 9.81);
+        gravitysystem_WorldUpdate(map, 9.1);
         map_Draw(Game, map);
-        quad_tree_Draw(Game, map->quad_tree);
+        //quad_tree_Draw(Game, map->quad_tree);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 
@@ -117,7 +127,7 @@ void display_Menu(sfRenderWindow* Game)
                         sfString_SetColor(Menu->texts[menu_select], sfWhite);
                         sfString_SetColor(Menu->texts[--menu_select], sfRed);
                     }
-                    player_tab[0]->speed_y = -5;
+                    player_tab[0]->speed_y = -100;
                     break;
 
                 case sfKeyDown:
