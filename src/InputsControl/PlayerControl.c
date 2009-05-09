@@ -25,50 +25,60 @@
 #include "BaseSystem/Logging.h"
 #include "Objects/GameObjects.h"
 
-void control_Playercontrols(sfRenderWindow* App, Map* map, Player* player_, Config* config)            // Fonction qui gère les touches pour les mouvements/tirs des joueurs
+// Fonction qui gère les touches pour les mouvements/tirs des joueurs
+// TODO : Bug détection inputs + events....
+void control_PlayerControl(void* UserData)
 {
-    _Bool ingame = true;
+    ControlData* ctrl_player = (ControlData*) UserData;
+    sfInput* keys_input;
     sfEvent Event;
-    sfInput* KeysInput;
+    sfClock* timer = sfClock_Create();
+    float elapsed_time;
 
-    while (ingame)                                                                      // Tant qu'on est dans une partie
+    do
     {
-        KeysInput = sfRenderWindow_GetInput(App);                                       // Récupération des entrées temps réel
+        elapsed_time = sfClock_GetTime(timer);
+        sfClock_Reset(timer);
 
-        if (sfInput_IsKeyDown(KeysInput, sfKeyD))                                       // Touche D appuyée
-            player_Displace(player_, RIGHT, sfRenderWindow_GetFrameTime(App), config);
-        if (sfInput_IsKeyDown(KeysInput, sfKeyQ))                                       // Touche Q appuyée
-            player_Displace(player_, LEFT, sfRenderWindow_GetFrameTime(App), config);
+        keys_input = sfRenderWindow_GetInput(ctrl_player->App);
 
-        while (sfRenderWindow_GetEvent(App, &Event))                                    // Tant qu'il se passe quelque chose sur les entrées
+        if (sfInput_IsKeyDown(keys_input, sfKeyD))                   // Touche D appuyée
+        {
+            player_Displace(ctrl_player->player, RIGHT, elapsed_time, ctrl_player->config);
+        }
+        if (sfInput_IsKeyDown(keys_input, sfKeyQ))                   // Touche Q appuyée
+        {
+            player_Displace(ctrl_player->player, LEFT, elapsed_time, ctrl_player->config);
+        }
+
+        while (sfRenderWindow_GetEvent(ctrl_player->App, &Event))   // Tant qu'il se passe quelque chose sur les entrées
         {
             if (Event.Type == sfEvtKeyPressed)
             {
-                switch (Event.Key.Code)
-                {
                 // Saut
-                case sfKeyZ:
-                    player_Displace(player_, UP, sfRenderWindow_GetFrameTime(App), config);
-                    break;
+                if (Event.Key.Code == sfKeyZ)
+                    player_Displace(ctrl_player->player, UP, 0, ctrl_player->config);
 
                 // Descente rapide
-                case sfKeyS:
-                    player_Displace(player_, DOWN, sfRenderWindow_GetFrameTime(App), config);
-                    break;
+                if (Event.Key.Code == sfKeyS)
+                    player_Displace(ctrl_player->player, DOWN, 0, ctrl_player->config);
 
                 // Menu
-                case sfKeyEscape:
+                if (Event.Key.Code == sfKeyEscape)
+                {
                     // TODO : Boite de dialogue quitte y/n, ou bien sur le menu
-                    break;
-
-                // Autres appuis ignorés
-                default:
-                    break;
+                    ctrl_player->ingame = false;
                 }
             }
+
+            if(Event.Type == sfEvtClosed)
+                ctrl_player->ingame = false;
+
             // Tir
-            if (Event.Type == sfEvtMouseButtonPressed && Event.MouseButton.Button == sfButtonLeft)
-                player_WeaponShoot(map, player_);
+            /*if (Event.Type == sfEvtMouseButtonPressed && Event.MouseButton.Button == sfButtonLeft)
+                player_WeaponShoot(ctrl_player->map, ctrl_player->player);*/
         }
+        //sfSleep(1.f/1000.f);
     }
+    while (ctrl_player->ingame);                                    // Tant qu'on est dans une partie
 }

@@ -30,7 +30,7 @@
 
 void gravitysystem_PlayerUpdate(Map* map_, Player* player, Config* config)
 {
-
+    sfMutex_Lock(Control_DrawMutex);
     float speed_y = player->speed_y + config->gravity_speed * config->gravity_speed * map_->clock_time;
     float y = speed_y * map_->clock_time;
     if(player->sprite->hauteur + player->coord_y + y <= config->height && player->coord_y + y > 0)
@@ -56,9 +56,9 @@ void gravitysystem_PlayerUpdate(Map* map_, Player* player, Config* config)
         player->jump = NO_JUMP;
     }
     else
-    {
         player->speed_y = speed_y;
-    }
+
+    sfMutex_Unlock(Control_DrawMutex);
 }
 
 void gravitysystem_BulletUpdate(Map* map_, Bullet* bullet_, Config* config)
@@ -69,15 +69,14 @@ void gravitysystem_BulletUpdate(Map* map_, Bullet* bullet_, Config* config)
 void gravitysystem_WorldUpdate(Map* map_, Config* config)
 {
     map_->clock_time = (sfClock_GetTime(map_->clock) > 0) ? sfClock_GetTime(map_->clock) : 0;
+    sfClock_Reset(map_->clock);
     for (int i = 0; i < map_->nb_players; i++)
     {
         gravitysystem_PlayerUpdate(map_,map_->players_list[i], config);
     }
 
-    for (int i = 0; i < map_->nb_objects; i++)
+    /*for (int i = 0; i < map_->nb_objects; i++)
     {
 
-    }
-
-    sfClock_Reset(map_->clock);
+    }*/
 }

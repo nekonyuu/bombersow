@@ -236,7 +236,6 @@ void map_UpdateDisconnectedPlayers(void* UserData)
 
 void map_Draw(sfRenderWindow* Game, Map* map)
 {
-
     for (int i = 0; i < map->nb_players; i++)
     {
         player_Draw(Game, map->players_list[i]);
@@ -251,5 +250,4 @@ void map_Draw(sfRenderWindow* Game, Map* map)
     {
         bullet_Draw(Game, map->bullets_list[i]);
     }
-
 }

@@ -34,5 +34,6 @@ _Bool display_ServerMenu(sfRenderWindow*, sfImage*, sfFont*);
 _Bool display_ClientMenu(sfRenderWindow*, sfImage*, sfFont*, Config*);
 _Bool display_Credits(sfRenderWindow*, sfImage*, sfFont*);
 _Bool display_Settings(sfRenderWindow*, sfImage*, sfFont*);
+_Bool display_Playing(sfRenderWindow*, Config*);
 
 #endif

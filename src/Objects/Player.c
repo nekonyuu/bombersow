@@ -113,38 +113,41 @@ void player_Displace(Player* player_, Direction move, float time, Config* config
 {
     float temp_x, temp_y;
 
-    if(!player_->jetpack_mode)
+    if (!player_->jetpack_mode)
     {
-        if(move == UP)
+        if (move == UP)
         {
             player_Jump(player_, config);
             return;
         }
-        if(move == DOWN)
+
+        if (move == DOWN && !(player_->jump == FALLING))
         {
             player_->speed_y = config->force_fall_speed;
+            player_->jump = FALLING;
             return;
         }
+
+        sfMutex_Lock(Control_DrawMutex);
+
         temp_x = player_->coord_x + ((move == LEFT) ? -config->move_speed * time : (move == RIGHT) ? config->move_speed * time : 0);
+        if (temp_x + player_->sprite->largeur <= config->width)
+        {
+            if (temp_x < 0)
+                player_->coord_x = 0;
+            else
+                player_->coord_x = temp_x;
+        }
+        else
+            player_->coord_x = config->width - player_->sprite->largeur;
+
+        sfMutex_Unlock(Control_DrawMutex);
     }
     else
     {
+        sfMutex_Lock(Control_DrawMutex);
         temp_x = player_->coord_x + ((move == LEFT) ? -config->fly_speed * time : (move == RIGHT) ? config->fly_speed * time : 0);
         temp_y = player_->coord_y + ((move == UP) ? -config->fly_speed * time : (move == DOWN) ? config->fly_speed * time : 0);
-    }
-
-    if (temp_x + player_->sprite->largeur <= config->width)
-    {
-        if (temp_x < 0)
-            player_->coord_x = 0;
-        else
-            player_->coord_x = temp_x;
-    }
-    else
-        player_->coord_x = config->width - player_->sprite->largeur;
-
-    if(player_->jetpack_mode)
-    {
         if (temp_y + player_->sprite->hauteur <= config->height)
         {
             if (temp_y < 0)
@@ -154,7 +157,10 @@ void player_Displace(Player* player_, Direction move, float time, Config* config
         }
         else
             player_->coord_y = config->height - player_->sprite->hauteur;
+
+        sfMutex_Unlock(Control_DrawMutex);
     }
+    return;
 }
 
 // Changement d'arme

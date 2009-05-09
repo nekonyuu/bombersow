@@ -32,7 +32,7 @@
 #define NB_MAX_WEAPONS 7
 #define SHOTGUN_SHRAPNELS 7
 
-typedef enum JUMP_TYPE {NO_JUMP, SIMPLE_JUMP, DOUBLE_JUMP} jump_t;
+typedef enum JUMP_TYPE {FALLING, NO_JUMP, SIMPLE_JUMP, DOUBLE_JUMP} jump_t;
 typedef enum DIRECTION {UP, DOWN, LEFT, RIGHT} Direction;
 
 // Structure stockant le paquet + son type
@@ -208,20 +208,35 @@ typedef struct MAP
 
 } Map;
 
+// Structure d'encapsulation Thread control_PlayerControl
+typedef struct PLAYER_CONTROL_CAPT
+{
+    sfRenderWindow* App;
+    Map* map;
+    Player* player;
+    Config* config;
+    _Bool ingame;
+} ControlData;
+
+// Variables Globales
 Weapon armory[NB_MAX_WEAPONS];      // Armes du jeu en accès global
+sfMutex* Control_DrawMutex;
 sfMutex* Network_ServerMutex;       // Mutex Serveur
 
+// Objects.c
 Object* object_Create(unsigned int);
 void object_Destroy(Object*);
 void object_LoadImg(Object*, sfImage*, Animation*);
 void object_Draw(sfRenderWindow*, Object*);
 void object_SetPosition(Object*, float, float);
 
+// Weapon.c
 Weapon* weapon_Create(int);
 void weapon_Destroy(Weapon*);
 void armory_Create(Weapon*);
 void armory_Destroy(Weapon*);
 
+// Player.c
 Player* player_Create(char*, unsigned int);
 void player_Destroy(Player*);
 Player* player_GetPlayerFromID(Map*, unsigned int);
@@ -233,10 +248,12 @@ void player_Jump(Player*, Config*);
 void player_SetPosition(Player*, float, float);
 void player_Draw(sfRenderWindow*, Player*);
 
+// Bullet.c
 Bullet* bullet_Create(unsigned int, unsigned int);
 void bullet_Destroy(Bullet*);
 void bullet_Draw(sfRenderWindow*, Bullet*);
 
+// Map.c
 Map* map_Create(unsigned int, unsigned int, Config*);
 void map_Destroy();
 void map_AddObject(Map*, Object*);
@@ -247,5 +264,8 @@ void map_AddBullet(Map*, Bullet*);
 void map_DelBullet(Map*, unsigned int);
 void map_UpdateDisconnectedPlayers(void*);
 void map_Draw(sfRenderWindow*, Map*);
+
+// PlayerControl.c
+void control_PlayerControl(void*);
 
 #endif

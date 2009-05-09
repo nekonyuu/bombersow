@@ -35,14 +35,10 @@ void display_Menu(sfRenderWindow* Game, Config* config)
     Screen* Menu = screen_Create();
     sfMusic *menuMusic = sfMusic_CreateFromFile("sounds/music/ParagonX9 - Metropolis [8-Bit].ogg");
     sfImage *BG_image = sfImage_CreateFromFile("base/images/Menu/menu_bg.png");
-    sfImage *image_animation = sfImage_CreateFromFile("base/images/animation2.png"); // Test
     sfFont *menuFont = sfFont_CreateFromFile("base/fonts/ITCKRIST.TTF", 50, NULL);
-    //Animation *animation = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
-    //Animation *animation2 = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
     sfEvent Event;
-    sfInput* Key_Input;
     _Bool launched = true;
-    int menu_select = 1, player_width = sfImage_GetWidth(image_animation);
+    int menu_select = 1;
 
     screen_LoadImage(Menu, BG_image);                           // Chargement de l'arrière-plan
     screen_LoadFont(Menu, menuFont);                            // Chargement de la police d'écriture
@@ -52,50 +48,15 @@ void display_Menu(sfRenderWindow* Game, Config* config)
     screen_LoadText(Menu, "Options", sfWhite, 35, sfStringItalic, 450.0f, 190.0f);
     screen_LoadText(Menu, "Credits", sfWhite, 35, sfStringItalic, 450.0f, 240.0f);
     screen_LoadText(Menu, "Quitter", sfWhite, 35, sfStringItalic, 450.0f, 290.0f);
+    screen_LoadText(Menu, "Test Screen", sfWhite, 35, sfStringItalic, 450.0f, 340.0f);
     screen_LoadMusic(Menu, menuMusic, sfTrue);                  // Chargement de la musique
     /*if (Menu->music)
         screen_PlayMusic(Menu);*/                                 // Lecture
 
     logging_Info("display_Menu", "Started without error");
 
-    /*Object* obj_temp = object_Create(0);
-    object_LoadImg(obj_temp, NULL, animation);
-    object_SetPosition(obj_temp, 0, 560);
-
-    Object* obj_temp2 = object_Create(0);
-    object_LoadImg(obj_temp2, NULL, animation2);
-    object_SetPosition(obj_temp2, 0, 230);
-*/
-    Map* map = map_Create(0, 100, config);
-   /* map_AddObject(map, obj_temp);
-    map_AddObject(map, obj_temp2);*/
-
-    Player* player_tab[100];
-
-    Animation* animation3 = NULL;
-
-    for (int i = 0; i < 100; i++)
-    {
-        Sprite* spr = sprite_Create(0, 0, image_animation, NULL);
-
-        player_tab[i] = player_Create("HAHA", CROWBAR);
-        player_tab[i]->sprite = spr;
-        player_SetPosition(player_tab[i], (i-i%10)*5, (i%10)*50);
-        map_AddPlayer(map, player_tab[i]);
-    }
-
-    sfClock* clock = sfClock_Create();
-    int fps = 0;
-
     do
     {
-        if(sfClock_GetTime(clock) > 1)
-        {
-            printf("%d\n", fps);
-            sfClock_Reset(clock);
-            fps = 0;
-        }
-        fps++;
         sfRenderWindow_Clear(Game, sfBlack);                    // Vidage de l'écran
 
         sfRenderWindow_DrawSprite(Game, Menu->images[0]);       // Dessin du BG
@@ -103,17 +64,12 @@ void display_Menu(sfRenderWindow* Game, Config* config)
         for (int i = 0; i < Menu->nb_text; i++)
             screen_DrawText(Game, Menu, i);                     // Dessin des textes
 
-        gravitysystem_WorldUpdate(map, config);
-        map_Draw(Game, map);
-        //quad_tree_Draw(Game, map->quad_tree);
-
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 
-        Key_Input = sfRenderWindow_GetInput(Game);
-        if (sfInput_IsKeyDown(Key_Input, sfKeyRight))
-            player_Displace(player_tab[0], RIGHT, sfRenderWindow_GetFrameTime(Game), config);
-        if (sfInput_IsKeyDown(Key_Input, sfKeyLeft))
-            player_Displace(player_tab[0], LEFT, sfRenderWindow_GetFrameTime(Game), config);
+        sfInput* inputs;
+        inputs = sfRenderWindow_GetInput(Game);
+        if(sfInput_IsKeyDown(inputs, sfKeyD))
+            puts("D PRESSED");
 
         while (sfRenderWindow_GetEvent(Game, &Event))           // Surveillance des évènements
         {
@@ -148,6 +104,10 @@ void display_Menu(sfRenderWindow* Game, Config* config)
                     case 4:                                     // Quitter
                         launched = false;
                         break;
+                    case 5:
+                        if(display_Playing(Game, config))
+                            launched = false;
+                        break;
                     }
                     break;
 
@@ -157,16 +117,14 @@ void display_Menu(sfRenderWindow* Game, Config* config)
                         sfString_SetColor(Menu->texts[menu_select], sfWhite);
                         sfString_SetColor(Menu->texts[--menu_select], sfRed);
                     }
-                    player_Displace(player_tab[0], UP, 0, config);
                     break;
 
                 case sfKeyDown:
-                    if (menu_select < 4)
+                    if (menu_select < 5)
                     {
                         sfString_SetColor(Menu->texts[menu_select], sfWhite);
                         sfString_SetColor(Menu->texts[++menu_select], sfRed);
                     }
-                    player_Displace(player_tab[0], DOWN, 0, config);
                     break;
 
                 default:
@@ -176,15 +134,11 @@ void display_Menu(sfRenderWindow* Game, Config* config)
                 break;
             }
         }
-
     }
     while (launched);
 
-    map_Destroy(map);
-
     sfFont_Destroy(menuFont);
     sfImage_Destroy(BG_image);
-    sfImage_Destroy(image_animation);
     screen_Destroy(Menu);
 
     return;
