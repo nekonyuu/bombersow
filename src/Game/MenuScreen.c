@@ -37,9 +37,10 @@ void display_Menu(sfRenderWindow* Game)
     sfImage *BG_image = sfImage_CreateFromFile("base/images/Menu/menu_bg.png");
     sfImage *image_animation = sfImage_CreateFromFile("base/images/animation2.png"); // Test
     sfFont *menuFont = sfFont_CreateFromFile("base/fonts/ITCKRIST.TTF", 50, NULL);
-    Animation *animation = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
-    Animation *animation2 = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
+    //Animation *animation = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
+    //Animation *animation2 = animation_Create(image_animation, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
     sfEvent Event;
+    sfInput* Key_Input;
     _Bool launched = true;
     int menu_select = 1;
 
@@ -57,17 +58,17 @@ void display_Menu(sfRenderWindow* Game)
 
     logging_Info("display_Menu", "Started without error");
 
-    Object* obj_temp = object_Create(0);
+    /*Object* obj_temp = object_Create(0);
     object_LoadImg(obj_temp, NULL, animation);
     object_SetPosition(obj_temp, 0, 560);
 
     Object* obj_temp2 = object_Create(0);
     object_LoadImg(obj_temp2, NULL, animation2);
     object_SetPosition(obj_temp2, 0, 230);
-
+*/
     Map* map = map_Create(0, 400);
-    map_AddObject(map, obj_temp);
-    map_AddObject(map, obj_temp2);
+   /* map_AddObject(map, obj_temp);
+    map_AddObject(map, obj_temp2);*/
 
     Player* player_tab[400];
 
@@ -107,6 +108,10 @@ void display_Menu(sfRenderWindow* Game)
         //quad_tree_Draw(Game, map->quad_tree);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
+
+        Key_Input = sfRenderWindow_GetInput(Game);
+        if (sfInput_IsKeyDown(Key_Input, sfKeyRight)) player_tab[0]->coord_x += 5;
+        if (sfInput_IsKeyDown(Key_Input, sfKeyLeft)) player_tab[0]->coord_x -= 5;
 
         while (sfRenderWindow_GetEvent(Game, &Event))           // Surveillance des évènements
         {
@@ -159,14 +164,6 @@ void display_Menu(sfRenderWindow* Game)
                         sfString_SetColor(Menu->texts[menu_select], sfWhite);
                         sfString_SetColor(Menu->texts[++menu_select], sfRed);
                     }
-                    break;
-
-                case sfKeyRight:
-                    player_tab[0]->coord_x += 5;
-                    break;
-
-                case sfKeyLeft:
-                    player_tab[0]->coord_x -= 5;
                     break;
 
                 default:
