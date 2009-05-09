@@ -30,7 +30,7 @@
 #include "PhysicsEngine/CollisionSystem.h"
 #include "PhysicsEngine/GravitySystem.h"
 
-void display_Menu(sfRenderWindow* Game)
+void display_Menu(sfRenderWindow* Game, Config* config)
 {
     Screen* Menu = screen_Create();
     sfMusic *menuMusic = sfMusic_CreateFromFile("sounds/music/ParagonX9 - Metropolis [8-Bit].ogg");
@@ -42,7 +42,7 @@ void display_Menu(sfRenderWindow* Game)
     sfEvent Event;
     sfInput* Key_Input;
     _Bool launched = true;
-    int menu_select = 1;
+    int menu_select = 1, player_width = sfImage_GetWidth(image_animation);
 
     screen_LoadImage(Menu, BG_image);                           // Chargement de l'arrière-plan
     screen_LoadFont(Menu, menuFont);                            // Chargement de la police d'écriture
@@ -66,7 +66,7 @@ void display_Menu(sfRenderWindow* Game)
     object_LoadImg(obj_temp2, NULL, animation2);
     object_SetPosition(obj_temp2, 0, 230);
 */
-    Map* map = map_Create(0, 400);
+    Map* map = map_Create(0, 400, config);
    /* map_AddObject(map, obj_temp);
     map_AddObject(map, obj_temp2);*/
 
@@ -103,15 +103,15 @@ void display_Menu(sfRenderWindow* Game)
         for (int i = 0; i < Menu->nb_text; i++)
             screen_DrawText(Game, Menu, i);                     // Dessin des textes
 
-        gravitysystem_WorldUpdate(map, 9.1);
+        gravitysystem_WorldUpdate(map, 9.81, config);
         map_Draw(Game, map);
         //quad_tree_Draw(Game, map->quad_tree);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 
         Key_Input = sfRenderWindow_GetInput(Game);
-        if (sfInput_IsKeyDown(Key_Input, sfKeyRight)) player_tab[0]->coord_x += 5;
-        if (sfInput_IsKeyDown(Key_Input, sfKeyLeft)) player_tab[0]->coord_x -= 5;
+        if (sfInput_IsKeyDown(Key_Input, sfKeyRight) && player_tab[0]->coord_x < config->width - player_width) player_tab[0]->coord_x += 1;
+        if (sfInput_IsKeyDown(Key_Input, sfKeyLeft) && player_tab[0]->coord_x > 1) player_tab[0]->coord_x -= 1;
 
         while (sfRenderWindow_GetEvent(Game, &Event))           // Surveillance des évènements
         {
@@ -132,7 +132,7 @@ void display_Menu(sfRenderWindow* Game)
                     switch (menu_select)
                     {
                     case 1:                                     // Affichage du menu de jeu
-                        if (display_PlayMenu(Game, BG_image, menuFont))
+                        if (display_PlayMenu(Game, BG_image, menuFont, config))
                             launched = false;
                         break;
                     case 2:                                     // Affichage du menu options

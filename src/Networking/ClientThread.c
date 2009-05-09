@@ -25,7 +25,7 @@
 #include "Networking/Networking.h"
 #include "Networking/PacketDefines.h"
 
-void client_Main(char* name, sfIPAddress ip, int port)
+void client_Main(char* name, sfIPAddress ip, int port, Config* config)
 {
     Map* map = NULL;
     sfPacket* connect_request = client_CreateConnectPacket(name), *response = NULL;
@@ -47,7 +47,7 @@ void client_Main(char* name, sfIPAddress ip, int port)
             unsigned int curr_players = (unsigned int) sfPacket_ReadUint8(response);
 
             sfPacket_Clear(response);
-            map = map_Create(map_id, max_players);
+            map = map_Create(map_id, max_players, config);
             map->game_port = (unsigned short) port;
 
             for (int i = 0; i < curr_players; i++)

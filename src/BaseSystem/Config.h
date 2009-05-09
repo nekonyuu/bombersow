@@ -24,4 +24,31 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+// Index des binds dans le tableau de config
+enum BINDINGS
+{
+    UP_KEY,
+    DOWN_KEY,
+    LEFT_KEY,
+    RIGHT_KEY,
+    FIRE_KEY,
+    JETPACK_MODE_KEY,
+    CB_KEY,
+    RL_KEY,
+    GL_KEY,
+    SG_KEY,
+    MG_KEY,
+    SNP_KEY,
+    LG_KEY
+};
+
+// Structure de config
+typedef struct CONFIG_ARRAY
+{
+    int width;
+    int height;
+    char* pseudo;
+    //sfKeyCode* key_bindings;
+} Config;
+
 #endif

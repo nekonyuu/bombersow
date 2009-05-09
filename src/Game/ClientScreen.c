@@ -28,7 +28,7 @@
 #include "Gui/Gui.h"
 #include "Networking/Networking.h"
 
-_Bool display_ClientMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont)
+_Bool display_ClientMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont, Config* config)
 {
     Screen* clientMenu = screen_Create();
     sfImage* textbox_bg = sfImage_CreateFromFile("base/images/gui/textbox_back.png");
@@ -91,7 +91,7 @@ _Bool display_ClientMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFo
                     break;
 
                 case sfKeyReturn:
-                    client_Main(pseudo, sfIPAddress_FromString(ip), port);
+                    client_Main(pseudo, sfIPAddress_FromString(ip), port, config);
                     break;
 
                 case sfKeyUp:

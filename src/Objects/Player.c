@@ -108,26 +108,26 @@ Player* player_GetPlayerFromID(Map* map, unsigned int player_id)
 }
 
 // Déplacement du personnage sur la map
-void player_Displace(Player* player_, float x, float y)
+void player_Displace(Player* player_, float x, float y, Config* config)
 {
     float temp_x = player_->coord_x + x;
     float temp_y = player_->coord_y + y;
 
-    if (temp_x <= SCREEN_WIDTH)
+    if (temp_x <= config->width)
         if (temp_x < 0)
             player_->coord_x = 0;
         else
             player_->coord_x = temp_x;
     else
-        player_->coord_x = SCREEN_WIDTH;
+        player_->coord_x = config->width;
 
-    if (temp_y <= SCREEN_WIDTH)
+    if (temp_y <= config->width)
         if (temp_y < 0)
             player_->coord_y = 0;
         else
             player_->coord_y = temp_y;
     else
-        player_->coord_y = SCREEN_WIDTH;
+        player_->coord_y = config->width;
 }
 
 void player_SwitchWeapon(Player* player_, int weapon_type)

@@ -26,7 +26,8 @@
 
 #include <stdbool.h>
 #include <SFML/Network.h>
-#include "GraphicEngine/Image.h"
+#include <BaseSystem/Config.h>
+#include <GraphicEngine/Image.h>
 
 #define NB_MAX_WEAPONS 7
 #define SHOTGUN_SHRAPNELS 7
@@ -223,7 +224,7 @@ void armory_Destroy(Weapon*);
 Player* player_Create(char*, unsigned int);
 void player_Destroy(Player*);
 Player* player_GetPlayerFromID(Map*, unsigned int);
-void player_Displace(Player*, float, float);
+void player_Displace(Player*, float, float, Config*);
 void player_SwitchWeapon(Player*, int);
 void player_CollectWeapon(Player*, int);
 void player_WeaponShoot(Map*, Player*);
@@ -235,7 +236,7 @@ Bullet* bullet_Create(unsigned int, unsigned int);
 void bullet_Destroy(Bullet*);
 void bullet_Draw(sfRenderWindow*, Bullet*);
 
-Map* map_Create();
+Map* map_Create(unsigned int, unsigned int, Config*);
 void map_Destroy();
 void map_AddObject(Map*, Object*);
 void map_DelObject(Map*, unsigned int);

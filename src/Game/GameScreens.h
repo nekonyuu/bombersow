@@ -26,11 +26,12 @@
 
 #include <stdbool.h>
 #include <SFML/Graphics.h>
+#include <BaseSystem/Config.h>
 
-void display_Menu(sfRenderWindow*);
-_Bool display_PlayMenu(sfRenderWindow*, sfImage*, sfFont*);
+void display_Menu(sfRenderWindow*, Config*);
+_Bool display_PlayMenu(sfRenderWindow*, sfImage*, sfFont*, Config*);
 _Bool display_ServerMenu(sfRenderWindow*, sfImage*, sfFont*);
-_Bool display_ClientMenu(sfRenderWindow*, sfImage*, sfFont*);
+_Bool display_ClientMenu(sfRenderWindow*, sfImage*, sfFont*, Config*);
 _Bool display_Credits(sfRenderWindow*, sfImage*, sfFont*);
 _Bool display_Settings(sfRenderWindow*, sfImage*, sfFont*);
 

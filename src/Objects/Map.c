@@ -28,7 +28,7 @@
 #include "GraphicEngine/Draw.h"
 
 // Constructeur
-Map* map_Create(unsigned int map_id, unsigned int nb_players)
+Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
 {
     Map* new_map = NULL;
     assert(new_map = (Map*) malloc(sizeof(Map)));
@@ -71,8 +71,8 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players)
     new_map->quad_tree = quad_tree_Create();
     new_map->quad_tree->rect.Left = 0;
     new_map->quad_tree->rect.Top = 0;
-    new_map->quad_tree->rect.Bottom = SCREEN_HEIGHT;
-    new_map->quad_tree->rect.Right = SCREEN_WIDTH;
+    new_map->quad_tree->rect.Bottom = config->height;
+    new_map->quad_tree->rect.Right = config->width;
 
     new_map->quad_tree->first = new_map->quad_tree;
 

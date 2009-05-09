@@ -25,7 +25,7 @@
 #include "BaseSystem/Logging.h"
 #include "Objects/GameObjects.h"
 
-void control_Playercontrols(sfRenderWindow* App, Map* map, Player* player_ )            // Fonction qui gère les touches pour les mouvements/tirs des joueurs
+void control_Playercontrols(sfRenderWindow* App, Map* map, Player* player_, Config* config)            // Fonction qui gère les touches pour les mouvements/tirs des joueurs
 {
     _Bool ingame = true;
     sfEvent Event;
@@ -40,16 +40,16 @@ void control_Playercontrols(sfRenderWindow* App, Map* map, Player* player_ )    
                 player_Jump(player_);
                 if (player_->jetpack_mode)                                              // En mode jetpack
                 {
-                    player_Displace(player_, 0, 0.33);
+                    player_Displace(player_, 0, 0.33, config);
 
                     if (Event.Type == sfEvtKeyPressed && Event.Key.Code == sfKeyS)      // CONNARD QUI APPUIE SUR DEUX TOUCHES
                         break;
 
                     if (Event.Type == sfEvtKeyPressed && Event.Key.Code == sfKeyQ)      // Diagonale gauche
-                        player_Displace(player_, -0.33, 0.33);
+                        player_Displace(player_, -0.33, 0.33, config);
 
                     if (Event.Type == sfEvtKeyPressed && Event.Key.Code == sfKeyZ)      // Diagonale droite
-                        player_Displace(player_, 0.33, 0.33);
+                        player_Displace(player_, 0.33, 0.33, config);
                 }
                 else
                 {
@@ -57,31 +57,31 @@ void control_Playercontrols(sfRenderWindow* App, Map* map, Player* player_ )    
                         break;                                                          // Mais au final, ça continuera de sauter genre
 
                     if (Event.Type == sfEvtKeyPressed && Event.Key.Code == sfKeyD)
-                        player_Displace(player_, 0.16, 0.0);
+                        player_Displace(player_, 0.16, 0.0, config);
 
                     if (Event.Type == sfEvtKeyPressed && Event.Key.Code == sfKeyQ)
-                        player_Displace(player_, -0.16, 0.0);
+                        player_Displace(player_, -0.16, 0.0, config);
                 }
             }
 
             if (Event.Type == sfEvtKeyPressed && player_->jetpack_mode) //commande uniquement disponible pour le jetpack
             {
                 if (Event.Key.Code == sfKeyS)
-                    player_Displace(player_, 0.0, -0.33);
+                    player_Displace(player_, 0.0, -0.33, config);
 
                 if (Event.Key.Code == sfKeyZ)
                     break;
 
                 if (Event.Key.Code == sfKeyQ)                                           // Pour le déplacement pendant qu'il tombe
-                    player_Displace(player_, -0.33, -0.33);                             // -X pour la gauche
+                    player_Displace(player_, -0.33, -0.33, config);                             // -X pour la gauche
 
                 if (Event.Key.Code == sfKeyD)
-                    player_Displace(player_, 0.33, -0.33);                              // +X pour la droite
+                    player_Displace(player_, 0.33, -0.33, config);                              // +X pour la droite
             }
 
             if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyQ) )       //Déplacement à gauche
             {
-                player_Displace(player_, -0.16, 0.0);
+                player_Displace(player_, -0.16, 0.0, config);
 
                 if ( (Event.Type == sfEvtKeyPressed) && ( (Event.Key.Code == sfKeyS) || (Event.Key.Code == sfKeyD) ) )
                     break;
@@ -93,19 +93,19 @@ void control_Playercontrols(sfRenderWindow* App, Map* map, Player* player_ )    
 
                 if (player_->jetpack_mode)
                 {
-                    player_Displace(player_, -0.33, 0.0);
+                    player_Displace(player_, -0.33, 0.0, config);
 
                     if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyD) )
                         break;
 
                     if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyS) )
                     {
-                        player_Displace(player_, -0.33, -0.33);
+                        player_Displace(player_, -0.33, -0.33, config);
                     }
 
                     if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyZ) )
                     {
-                        player_Displace(player_, -0.33, 0.33);
+                        player_Displace(player_, -0.33, 0.33, config);
                     }
 
                 }
@@ -113,7 +113,7 @@ void control_Playercontrols(sfRenderWindow* App, Map* map, Player* player_ )    
 
             if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyD) )       //Déplacement à droite
             {
-                player_Displace(player_, 0.16, 0.0);
+                player_Displace(player_, 0.16, 0.0, config);
 
                 if ( (Event.Type == sfEvtKeyPressed) && ( (Event.Key.Code == sfKeyS) || (Event.Key.Code == sfKeyQ) ) )
                     break;
@@ -125,19 +125,19 @@ void control_Playercontrols(sfRenderWindow* App, Map* map, Player* player_ )    
 
                 if (player_->jetpack_mode)
                 {
-                    player_Displace(player_, 0.33, 0.0);
+                    player_Displace(player_, 0.33, 0.0, config);
 
                     if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyQ) )
                         break;
 
                     if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyS) )
                     {
-                        player_Displace(player_, 0.33, -0.33);
+                        player_Displace(player_, 0.33, -0.33, config);
                     }
 
                     if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyZ) )
                     {
-                        player_Displace(player_, 0.33, 0.33);
+                        player_Displace(player_, 0.33, 0.33, config);
                     }
 
                 }

@@ -46,7 +46,7 @@ sfPacket* server_CreateResponsePacket(Map* map, unsigned int response);
 void server_ReadUDPPacket(sfPacket* packet, Map* map);
 
 // ClientThread.c
-void client_Main(char* name, sfIPAddress ip, int port);
+void client_Main(char* name, sfIPAddress ip, int port, Config* config);
 sfPacket* client_CreateConnectPacket(char* name);
 sfPacket* client_CreateDisconnectPacket(unsigned int player_id);
 
