@@ -63,7 +63,6 @@ void list_element_Print(List_element* list)
     }
 }
 
-
 List* list_Create()
 {
 
@@ -172,9 +171,6 @@ void list_Print(List* list)
         printf("FIN\n");
     }
 }
-
-
-
 
 /*
 Quad_tree* quad_tree_Create()
@@ -786,15 +782,15 @@ void quad_tree_Update(void* obj_, int type)
 
 }
 
-int IntRect_Contains(sfIntRect* rect, sfIntRect* rect2)
+_Bool IntRect_Contains(sfIntRect* rect, sfIntRect* rect2)
 {
 
     if (sfIntRect_Intersects(rect, rect2, NULL))
         if (rect->Top <= rect2->Top && rect->Bottom >= rect2->Bottom && rect->Left <= rect2->Left && rect->Right >= rect2->Right)
-            return 1;
+            return true;
         else
-            return 0;
+            return false;
     else
-        return 0;
+        return false;
 
 }

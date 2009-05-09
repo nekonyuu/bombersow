@@ -45,6 +45,8 @@ _Bool display_Credits(sfRenderWindow* Game, sfImage* BG_image, sfFont* creditsFo
     screen_LoadText(Credits, "Moteur graphique, physique", sfWhite, 20, sfStringRegular, 450.0f, 360.0f);
     screen_LoadText(Credits, "Ce jeu a été codé en C \"POO\" avec la SFML", sfWhite, 20, sfStringRegular, 450.0f, 430.0f);
     screen_LoadText(Credits, "http://www.sfml-dev.org/", sfWhite, 20, sfStringItalic, 450.0f, 460.0f);
+    screen_LoadText(Credits, "Musiques par ParagonX9", sfWhite, 20, sfStringRegular, 450.0f, 520.0f);
+    screen_LoadText(Credits, "Licence Creative Commons BY-NC-SA", sfWhite, 20, sfStringRegular, 450.0f, 550.0f);
 
     logging_Info("display_Credits", "Started without error");
 

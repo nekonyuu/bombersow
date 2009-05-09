@@ -32,7 +32,6 @@ enum BINDINGS
     LEFT_KEY,
     RIGHT_KEY,
     FIRE_KEY,
-    JETPACK_MODE_KEY,
     CB_KEY,
     RL_KEY,
     GL_KEY,
@@ -45,9 +44,14 @@ enum BINDINGS
 // Structure de config
 typedef struct CONFIG_ARRAY
 {
-    int width;
-    int height;
-    char* pseudo;
+    int width;                      // Largeur de l'écran
+    int height;                     // Hauteur de l'écran
+    char* pseudo;                   // Pseudo du joueur
+    int move_speed;                 // Vitesse de déplacement en px/s
+    int jump_speed;                 // Vitesse de saut en px/s
+    int force_fall_speed;           // Vitesse de descente forcée en px/s
+    int fly_speed;                  // Vitesse de vol en px/s
+    float gravity_speed;            // Gravité en px/s
     //sfKeyCode* key_bindings;
 } Config;
 

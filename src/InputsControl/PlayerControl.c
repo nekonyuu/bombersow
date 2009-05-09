@@ -29,131 +29,46 @@ void control_Playercontrols(sfRenderWindow* App, Map* map, Player* player_, Conf
 {
     _Bool ingame = true;
     sfEvent Event;
+    sfInput* KeysInput;
 
     while (ingame)                                                                      // Tant qu'on est dans une partie
     {
-        while (sfRenderWindow_GetEvent(App, &Event))                                    // Tant qu'il se passe quelque chose
+        KeysInput = sfRenderWindow_GetInput(App);                                       // Récupération des entrées temps réel
+
+        if (sfInput_IsKeyDown(KeysInput, sfKeyD))                                       // Touche D appuyée
+            player_Displace(player_, RIGHT, sfRenderWindow_GetFrameTime(App), config);
+        if (sfInput_IsKeyDown(KeysInput, sfKeyQ))                                       // Touche Q appuyée
+            player_Displace(player_, LEFT, sfRenderWindow_GetFrameTime(App), config);
+
+        while (sfRenderWindow_GetEvent(App, &Event))                                    // Tant qu'il se passe quelque chose sur les entrées
         {
-
-            if (Event.Type == sfEvtKeyPressed && Event.Key.Code == sfKeyZ)
+            if (Event.Type == sfEvtKeyPressed)
             {
-                player_Jump(player_);
-                if (player_->jetpack_mode)                                              // En mode jetpack
+                switch (Event.Key.Code)
                 {
-                    player_Displace(player_, 0, 0.33, config);
-
-                    if (Event.Type == sfEvtKeyPressed && Event.Key.Code == sfKeyS)      // CONNARD QUI APPUIE SUR DEUX TOUCHES
-                        break;
-
-                    if (Event.Type == sfEvtKeyPressed && Event.Key.Code == sfKeyQ)      // Diagonale gauche
-                        player_Displace(player_, -0.33, 0.33, config);
-
-                    if (Event.Type == sfEvtKeyPressed && Event.Key.Code == sfKeyZ)      // Diagonale droite
-                        player_Displace(player_, 0.33, 0.33, config);
-                }
-                else
-                {
-                    if (Event.Type == sfEvtKeyPressed && Event.Key.Code == sfKeyS)      // Si le joueur appuie sur S alors qu'il appuie sur Z (quel connard) ça s'arrête
-                        break;                                                          // Mais au final, ça continuera de sauter genre
-
-                    if (Event.Type == sfEvtKeyPressed && Event.Key.Code == sfKeyD)
-                        player_Displace(player_, 0.16, 0.0, config);
-
-                    if (Event.Type == sfEvtKeyPressed && Event.Key.Code == sfKeyQ)
-                        player_Displace(player_, -0.16, 0.0, config);
-                }
-            }
-
-            if (Event.Type == sfEvtKeyPressed && player_->jetpack_mode) //commande uniquement disponible pour le jetpack
-            {
-                if (Event.Key.Code == sfKeyS)
-                    player_Displace(player_, 0.0, -0.33, config);
-
-                if (Event.Key.Code == sfKeyZ)
+                // Saut
+                case sfKeyZ:
+                    player_Displace(player_, UP, sfRenderWindow_GetFrameTime(App), config);
                     break;
 
-                if (Event.Key.Code == sfKeyQ)                                           // Pour le déplacement pendant qu'il tombe
-                    player_Displace(player_, -0.33, -0.33, config);                             // -X pour la gauche
-
-                if (Event.Key.Code == sfKeyD)
-                    player_Displace(player_, 0.33, -0.33, config);                              // +X pour la droite
-            }
-
-            if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyQ) )       //Déplacement à gauche
-            {
-                player_Displace(player_, -0.16, 0.0, config);
-
-                if ( (Event.Type == sfEvtKeyPressed) && ( (Event.Key.Code == sfKeyS) || (Event.Key.Code == sfKeyD) ) )
+                // Descente rapide
+                case sfKeyS:
+                    player_Displace(player_, DOWN, sfRenderWindow_GetFrameTime(App), config);
                     break;
 
-                if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyZ) )    //Un saut avant
-                {
-                    player_Jump(player_);
-                }
-
-                if (player_->jetpack_mode)
-                {
-                    player_Displace(player_, -0.33, 0.0, config);
-
-                    if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyD) )
-                        break;
-
-                    if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyS) )
-                    {
-                        player_Displace(player_, -0.33, -0.33, config);
-                    }
-
-                    if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyZ) )
-                    {
-                        player_Displace(player_, -0.33, 0.33, config);
-                    }
-
-                }
-            }
-
-            if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyD) )       //Déplacement à droite
-            {
-                player_Displace(player_, 0.16, 0.0, config);
-
-                if ( (Event.Type == sfEvtKeyPressed) && ( (Event.Key.Code == sfKeyS) || (Event.Key.Code == sfKeyQ) ) )
+                // Menu
+                case sfKeyEscape:
+                    // TODO : Boite de dialogue quitte y/n, ou bien sur le menu
                     break;
 
-                if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyZ) )
-                {
-                    player_Jump(player_);
-                }
-
-                if (player_->jetpack_mode)
-                {
-                    player_Displace(player_, 0.33, 0.0, config);
-
-                    if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyQ) )
-                        break;
-
-                    if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyS) )
-                    {
-                        player_Displace(player_, 0.33, -0.33, config);
-                    }
-
-                    if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyZ) )
-                    {
-                        player_Displace(player_, 0.33, 0.33, config);
-                    }
-
+                // Autres appuis ignorés
+                default:
+                    break;
                 }
             }
-
-            if ( (Event.Type = sfEvtMouseButtonPressed) && (Event.MouseButton.Button == sfButtonLeft) )
-            {
+            // Tir
+            if (Event.Type == sfEvtMouseButtonPressed && Event.MouseButton.Button == sfButtonLeft)
                 player_WeaponShoot(map, player_);
-            }
-
-            if ( (Event.Type == sfEvtKeyPressed) && (Event.Key.Code == sfKeyEscape) )
-            {
-                //TODO : Boite de dialogue quitte y/n, ou bien sur le menu
-            }
         }
-        sfSleep(0.025f);
     }
 }
-

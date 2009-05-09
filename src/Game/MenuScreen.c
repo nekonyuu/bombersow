@@ -66,11 +66,11 @@ void display_Menu(sfRenderWindow* Game, Config* config)
     object_LoadImg(obj_temp2, NULL, animation2);
     object_SetPosition(obj_temp2, 0, 230);
 */
-    Map* map = map_Create(0, 400, config);
+    Map* map = map_Create(0, 100, config);
    /* map_AddObject(map, obj_temp);
     map_AddObject(map, obj_temp2);*/
 
-    Player* player_tab[400];
+    Player* player_tab[100];
 
     Animation* animation3 = NULL;
 
@@ -103,15 +103,17 @@ void display_Menu(sfRenderWindow* Game, Config* config)
         for (int i = 0; i < Menu->nb_text; i++)
             screen_DrawText(Game, Menu, i);                     // Dessin des textes
 
-        gravitysystem_WorldUpdate(map, 9.81, config);
+        gravitysystem_WorldUpdate(map, config);
         map_Draw(Game, map);
         //quad_tree_Draw(Game, map->quad_tree);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 
         Key_Input = sfRenderWindow_GetInput(Game);
-        if (sfInput_IsKeyDown(Key_Input, sfKeyRight) && player_tab[0]->coord_x < config->width - player_width) player_tab[0]->coord_x += 1;
-        if (sfInput_IsKeyDown(Key_Input, sfKeyLeft) && player_tab[0]->coord_x > 1) player_tab[0]->coord_x -= 1;
+        if (sfInput_IsKeyDown(Key_Input, sfKeyRight))
+            player_Displace(player_tab[0], RIGHT, sfRenderWindow_GetFrameTime(Game), config);
+        if (sfInput_IsKeyDown(Key_Input, sfKeyLeft))
+            player_Displace(player_tab[0], LEFT, sfRenderWindow_GetFrameTime(Game), config);
 
         while (sfRenderWindow_GetEvent(Game, &Event))           // Surveillance des évènements
         {
@@ -155,7 +157,7 @@ void display_Menu(sfRenderWindow* Game, Config* config)
                         sfString_SetColor(Menu->texts[menu_select], sfWhite);
                         sfString_SetColor(Menu->texts[--menu_select], sfRed);
                     }
-                    player_tab[0]->speed_y = -100;
+                    player_Displace(player_tab[0], UP, 0, config);
                     break;
 
                 case sfKeyDown:
@@ -164,6 +166,7 @@ void display_Menu(sfRenderWindow* Game, Config* config)
                         sfString_SetColor(Menu->texts[menu_select], sfWhite);
                         sfString_SetColor(Menu->texts[++menu_select], sfRed);
                     }
+                    player_Displace(player_tab[0], DOWN, 0, config);
                     break;
 
                 default:

@@ -32,11 +32,16 @@
 int main()
 {
     // TODO : Loader de config, Ludo on t'attends =D
+    /* -------- START CONFIG -------- */
     Config* game_config;
     assert(game_config = (Config*) malloc(sizeof(Config)));
     game_config->width = 900;
     game_config->height = 675;
-
+    game_config->move_speed = 900;
+    game_config->jump_speed = -250;
+    game_config->force_fall_speed = 375;
+    game_config->gravity_speed = 19.62;
+    /* --------- END CONFIG --------- */
     sfWindowSettings Settings = {24, 8, 0};
     sfVideoMode Mode = {game_config->width, game_config->height, 32};
     sfRenderWindow* Game;

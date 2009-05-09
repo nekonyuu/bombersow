@@ -32,7 +32,8 @@
 #define NB_MAX_WEAPONS 7
 #define SHOTGUN_SHRAPNELS 7
 
-typedef enum JUMP_TYPE {NO_JUMP, SIMPLE_JUMP} jump_t;
+typedef enum JUMP_TYPE {NO_JUMP, SIMPLE_JUMP, DOUBLE_JUMP} jump_t;
+typedef enum DIRECTION {UP, DOWN, LEFT, RIGHT} Direction;
 
 // Structure stockant le paquet + son type
 typedef struct PACKET
@@ -130,7 +131,7 @@ typedef struct PLAYER
     float coord_x, coord_y;         // Emplacement sur la map
     float m_coord_x, m_coord_y;     // Coordonnées souris
 
-    float speed_x, speed_y;  // Vitesse
+    float speed_x, speed_y;         // Vitesse
 
     jump_t jump;                    // Type de saut en cours
     _Bool jetpack_mode;             // Mode JetPack ?
@@ -224,11 +225,11 @@ void armory_Destroy(Weapon*);
 Player* player_Create(char*, unsigned int);
 void player_Destroy(Player*);
 Player* player_GetPlayerFromID(Map*, unsigned int);
-void player_Displace(Player*, float, float, Config*);
+void player_Displace(Player*, Direction, float, Config*);
 void player_SwitchWeapon(Player*, int);
 void player_CollectWeapon(Player*, int);
 void player_WeaponShoot(Map*, Player*);
-void player_Jump(Player*);
+void player_Jump(Player*, Config*);
 void player_SetPosition(Player*, float, float);
 void player_Draw(sfRenderWindow*, Player*);
 

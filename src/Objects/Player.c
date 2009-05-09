@@ -107,35 +107,64 @@ Player* player_GetPlayerFromID(Map* map, unsigned int player_id)
     return map->players_list[i];
 }
 
-// Déplacement du personnage sur la map
-void player_Displace(Player* player_, float x, float y, Config* config)
+// Déplacement du personnage sur la map sur x et y, y seulement pour le jetpack
+// TODO : gestion collisions
+void player_Displace(Player* player_, Direction move, float time, Config* config)
 {
-    float temp_x = player_->coord_x + x;
-    float temp_y = player_->coord_y + y;
+    float temp_x, temp_y;
 
-    if (temp_x <= config->width)
+    if(!player_->jetpack_mode)
+    {
+        if(move == UP)
+        {
+            player_Jump(player_, config);
+            return;
+        }
+        if(move == DOWN)
+        {
+            player_->speed_y = config->force_fall_speed;
+            return;
+        }
+        temp_x = player_->coord_x + ((move == LEFT) ? -config->move_speed * time : (move == RIGHT) ? config->move_speed * time : 0);
+    }
+    else
+    {
+        temp_x = player_->coord_x + ((move == LEFT) ? -config->fly_speed * time : (move == RIGHT) ? config->fly_speed * time : 0);
+        temp_y = player_->coord_y + ((move == UP) ? -config->fly_speed * time : (move == DOWN) ? config->fly_speed * time : 0);
+    }
+
+    if (temp_x + player_->sprite->largeur <= config->width)
+    {
         if (temp_x < 0)
             player_->coord_x = 0;
         else
             player_->coord_x = temp_x;
+    }
     else
-        player_->coord_x = config->width;
+        player_->coord_x = config->width - player_->sprite->largeur;
 
-    if (temp_y <= config->width)
-        if (temp_y < 0)
-            player_->coord_y = 0;
+    if(player_->jetpack_mode)
+    {
+        if (temp_y + player_->sprite->hauteur <= config->height)
+        {
+            if (temp_y < 0)
+                player_->coord_y = 0;
+            else
+                player_->coord_y = temp_y;
+        }
         else
-            player_->coord_y = temp_y;
-    else
-        player_->coord_y = config->width;
+            player_->coord_y = config->height - player_->sprite->hauteur;
+    }
 }
 
+// Changement d'arme
 void player_SwitchWeapon(Player* player_, int weapon_type)
 {
     if (weapon_type < NB_MAX_WEAPONS && player_->weapons[weapon_type]->collected)
         player_->current_weapon = weapon_type;
 }
 
+// Récupération d'arme
 void player_CollectWeapon(Player* player_, int weapon_type)
 {
     if (weapon_type < NB_MAX_WEAPONS)
@@ -157,17 +186,19 @@ void player_WeaponShoot(Map* map, Player* player_)
 
 }
 
-// Fonction qui gère le saut du joueur, TODO : Trajectoire lors du saut, vecteur force
-void player_Jump(Player* player_)
+// Fonction qui gère le saut du joueur
+void player_Jump(Player* player_, Config* config)
 {
     assert(player_);
     if (player_->jump == NO_JUMP)
     {
+        player_->speed_y = config->jump_speed;
         player_->jump = SIMPLE_JUMP;
     }
     else if (player_->jump == SIMPLE_JUMP)
     {
-        player_->jump = NO_JUMP;
+        player_->speed_y = config->jump_speed;
+        player_->jump = DOUBLE_JUMP;
     }
 }
 
@@ -176,7 +207,6 @@ void player_SetPosition(Player* player, float x, float y)
     player->coord_x = x;
     player->coord_y = y;
     sprite_SetPosition(player->sprite, x, y);
-
 }
 
 void player_Draw(sfRenderWindow* Game, Player* player)
