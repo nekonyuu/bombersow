@@ -37,7 +37,7 @@ int main()
     assert(game_config = (Config*) malloc(sizeof(Config)));
     game_config->width = 900;
     game_config->height = 675;
-    game_config->move_speed = 450;
+    game_config->move_speed = 325;
     game_config->jump_speed = -500;
     game_config->force_fall_speed = 375;
     game_config->gravity_speed = 39.24f;

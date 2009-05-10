@@ -53,16 +53,23 @@ _Bool display_Playing(sfRenderWindow* Game, Config* config)
     map_AddObject(map, obj_temp);
     map_AddObject(map, obj_temp2);
 
-    Player* player_tab[100];
-
-    for (int i = 0; i < 100; i++)
+    int i = 0;
+    for (i = 0; i < 25; i++)
     {
         Sprite* spr = sprite_Create(0, 0, image_animation, NULL);
+        Player* plr = player_Create("HAHA", CROWBAR);
+        plr->sprite = spr;
+        player_SetPosition(plr, (i-i%10)*5, (i%10)*50);
+        map_AddPlayer(map, plr);
+    }
 
-        player_tab[i] = player_Create("HAHA", CROWBAR);
-        player_tab[i]->sprite = spr;
-        player_SetPosition(player_tab[i], (i-i%10)*5, (i%10)*50);
-        map_AddPlayer(map, player_tab[i]);
+    for (i = 50; i < 76; i++)
+    {
+        Animation* ani = animation_Create(image_animation2, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
+        Object* obj_temp = object_Create(0);
+        object_LoadImg(obj_temp, NULL, ani);
+        object_SetPosition(obj_temp, (i-i%10)*5, (i%10)*50);
+        map_AddObject(map, obj_temp);
     }
 
     sfClock* clock = sfClock_Create();
@@ -89,7 +96,7 @@ _Bool display_Playing(sfRenderWindow* Game, Config* config)
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 
-        control_PlayerControl(Game, map, player_tab[0], config, &ingame);
+        control_PlayerControl(Game, map, map->players_list[0], config, &ingame);
     }
     while (ingame);
 
