@@ -34,6 +34,7 @@ _Bool display_Playing(sfRenderWindow* Game, Config* config)
 {
     sfImage *image_animation = sfImage_CreateFromFile("base/images/animation2.png"); // Test
     sfImage *image_animation2 = sfImage_CreateFromFile("base/images/animation.png"); // Test
+    _Bool ingame = true;
 
     sfEvent Event;
 
@@ -70,20 +71,6 @@ _Bool display_Playing(sfRenderWindow* Game, Config* config)
     // Vidage des Events qui trainent dans la sfRenderWindow
     while (sfRenderWindow_GetEvent(Game, &Event));
 
-    ControlData* player_data = (ControlData*) malloc(sizeof(ControlData));
-    player_data->App = Game;
-    player_data->map = map;
-    player_data->player = player_tab[0];
-    player_data->config = config;
-    player_data->ingame = true;
-    sfThread* player_control = sfThread_Create(&control_PlayerControl, player_data);
-    Control_DrawMutex = sfMutex_Create();
-    //sfThread_Launch(player_control);
-
-    sfInput* keys_input;
-    sfClock* timer = sfClock_Create();
-    float elapsed_time;
-
     do
     {
         if (sfClock_GetTime(clock) > 1)
@@ -102,56 +89,9 @@ _Bool display_Playing(sfRenderWindow* Game, Config* config)
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 
-        // TODO : Temporaire, Bug anormal dans l'accès par le thread a la fenêtre
-        elapsed_time = sfClock_GetTime(timer);
-        sfClock_Reset(timer);
-
-        keys_input = sfRenderWindow_GetInput(player_data->App);
-
-        if (sfInput_IsKeyDown(keys_input, sfKeyD))                   // Touche D appuyée
-        {
-            player_Displace(player_data->player, RIGHT, elapsed_time, player_data->config);
-        }
-        if (sfInput_IsKeyDown(keys_input, sfKeyQ))                   // Touche Q appuyée
-        {
-            player_Displace(player_data->player, LEFT, elapsed_time, player_data->config);
-        }
-
-        while (sfRenderWindow_GetEvent(player_data->App, &Event))   // Tant qu'il se passe quelque chose sur les entrées
-        {
-            if (Event.Type == sfEvtKeyPressed)
-            {
-                // Saut
-                if (Event.Key.Code == sfKeyZ)
-                    player_Displace(player_data->player, UP, 0, player_data->config);
-
-                // Descente rapide
-                if (Event.Key.Code == sfKeyS)
-                    player_Displace(player_data->player, DOWN, 0, player_data->config);
-
-                // Menu
-                if (Event.Key.Code == sfKeyEscape)
-                {
-                    // TODO : Boite de dialogue quitte y/n, ou bien sur le menu
-                    player_data->ingame = false;
-                }
-            }
-
-            if(Event.Type == sfEvtClosed)
-                player_data->ingame = false;
-
-            // Tir
-            /*if (Event.Type == sfEvtMouseButtonPressed && Event.MouseButton.Button == sfButtonLeft)
-                player_WeaponShoot(player_data->map, player_data->player);*/
-        }
-
+        control_PlayerControl(Game, map, player_tab[0], config, &ingame);
     }
-    while (player_data->ingame);
-
-    //sfThread_Wait(player_control);
-    //sfThread_Destroy(player_control);
-
-    free_secure(player_data);
+    while (ingame);
 
     map_Destroy(map);
 

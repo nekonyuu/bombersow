@@ -208,19 +208,9 @@ typedef struct MAP
 
 } Map;
 
-// Structure d'encapsulation Thread control_PlayerControl
-typedef struct PLAYER_CONTROL_CAPT
-{
-    sfRenderWindow* App;
-    Map* map;
-    Player* player;
-    Config* config;
-    _Bool ingame;
-} ControlData;
-
 // Variables Globales
 Weapon armory[NB_MAX_WEAPONS];      // Armes du jeu en accès global
-sfMutex* Control_DrawMutex;
+sfMutex* Players_CoordUpdate;       // Mutex MàJ Players
 sfMutex* Network_ServerMutex;       // Mutex Serveur
 
 // Objects.c
@@ -266,6 +256,6 @@ void map_UpdateDisconnectedPlayers(void*);
 void map_Draw(sfRenderWindow*, Map*);
 
 // PlayerControl.c
-void control_PlayerControl(void*);
+void control_PlayerControl(sfRenderWindow*, Map*, Player*, Config*, _Bool*);
 
 #endif

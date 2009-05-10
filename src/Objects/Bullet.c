@@ -55,7 +55,5 @@ void bullet_Destroy(Bullet* bullet2destroy)
 
 void bullet_Draw(sfRenderWindow* Game, Bullet* bullet)
 {
-    sfMutex_Lock(Control_DrawMutex);
     sprite_Draw(Game, bullet->draw_image);
-    sfMutex_Unlock(Control_DrawMutex);
 }

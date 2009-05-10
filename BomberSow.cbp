@@ -158,6 +158,9 @@
 		<Unit filename="src\Game\PlayScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src\Game\PlayingScreen.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src\Game\ServerScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>

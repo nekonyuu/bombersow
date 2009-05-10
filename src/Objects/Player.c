@@ -128,8 +128,6 @@ void player_Displace(Player* player_, Direction move, float time, Config* config
             return;
         }
 
-        sfMutex_Lock(Control_DrawMutex);
-
         temp_x = player_->coord_x + ((move == LEFT) ? -config->move_speed * time : (move == RIGHT) ? config->move_speed * time : 0);
         if (temp_x + player_->sprite->largeur <= config->width)
         {
@@ -140,12 +138,9 @@ void player_Displace(Player* player_, Direction move, float time, Config* config
         }
         else
             player_->coord_x = config->width - player_->sprite->largeur;
-
-        sfMutex_Unlock(Control_DrawMutex);
     }
     else
     {
-        sfMutex_Lock(Control_DrawMutex);
         temp_x = player_->coord_x + ((move == LEFT) ? -config->fly_speed * time : (move == RIGHT) ? config->fly_speed * time : 0);
         temp_y = player_->coord_y + ((move == UP) ? -config->fly_speed * time : (move == DOWN) ? config->fly_speed * time : 0);
         if (temp_y + player_->sprite->hauteur <= config->height)
@@ -157,8 +152,6 @@ void player_Displace(Player* player_, Direction move, float time, Config* config
         }
         else
             player_->coord_y = config->height - player_->sprite->hauteur;
-
-        sfMutex_Unlock(Control_DrawMutex);
     }
     return;
 }

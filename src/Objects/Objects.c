@@ -79,7 +79,6 @@ void object_LoadImg(Object* object, sfImage* image, Animation* animation)
 
 void object_Draw(sfRenderWindow* Game, Object* object)
 {
-    sfMutex_Lock(Control_DrawMutex);
     if (object->speed != 0)
     {
         if (object->start_coord_x < object->dest_coord_x && object->curr_coord_x < object->dest_coord_x)
@@ -116,7 +115,6 @@ void object_Draw(sfRenderWindow* Game, Object* object)
     }
 
     sprite_Draw(Game, object->sprite);
-    sfMutex_Unlock(Control_DrawMutex);
 }
 
 void object_SetPosition(Object* obj, float x, float y)

@@ -30,7 +30,6 @@
 
 void gravitysystem_PlayerUpdate(Map* map_, Player* player, Config* config)
 {
-    sfMutex_Lock(Control_DrawMutex);
     float speed_y = player->speed_y + config->gravity_speed * config->gravity_speed * map_->clock_time;
     float y = speed_y * map_->clock_time;
     if(player->sprite->hauteur + player->coord_y + y <= config->height && player->coord_y + y > 0)
@@ -57,8 +56,6 @@ void gravitysystem_PlayerUpdate(Map* map_, Player* player, Config* config)
     }
     else
         player->speed_y = speed_y;
-
-    sfMutex_Unlock(Control_DrawMutex);
 }
 
 void gravitysystem_BulletUpdate(Map* map_, Bullet* bullet_, Config* config)
