@@ -38,7 +38,7 @@ _Bool display_PlayMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont
     screen_LoadImage(playMenu, BG_image);                           // Chargement de l'arrière-plan
     screen_LoadFont(playMenu, playFont);                            // Chargement de la police d'écriture
     // Préparation des textes
-    screen_LoadText(playMenu, GAME_NAME, sfRed, 60, sfStringRegular, 450.0f, 40.0f);
+    screen_LoadText(playMenu, GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
     screen_LoadText(playMenu, "Rejoindre une partie", sfRed, 35, sfStringItalic, 450.0f, 140.0f);
     screen_LoadText(playMenu, "Créer un serveur", sfWhite, 35, sfStringItalic, 450.0f, 190.0f);
     screen_LoadText(playMenu, "Retour", sfWhite, 35, sfStringItalic, 450.0f, 240.0f);

@@ -38,7 +38,7 @@ _Bool display_Settings(sfRenderWindow* Game, sfImage* BG_image, sfFont* settings
     screen_LoadImage(Settings, BG_image);                       // Chargement de l'arrière-plan
     screen_LoadFont(Settings, settingsFont);                    // Chargement de la police d'écriture
     //screen_AddTextbox(Settings, 450, 140, 125, 20, 25, bg_textbox, sfRed, CHAR, player_name, "Pseudo :  ", sfRed, settingsFont, 25);
-    screen_LoadText(Settings, GAME_NAME, sfRed, 60, sfStringRegular, 450.0f, 40.0f);
+    screen_LoadText(Settings, GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
 
     logging_Info("display_Settings", "Started without error");
 

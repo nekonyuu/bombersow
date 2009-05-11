@@ -40,7 +40,7 @@ _Bool display_ClientMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFo
     screen_LoadImage(clientMenu, BG_image);                             // Chargement de l'arrière-plan
     screen_LoadFont(clientMenu, playFont);                              // Chargement de la police d'écriture
     // Préparation des textes
-    screen_LoadText(clientMenu, GAME_NAME, sfRed, 60, sfStringRegular, 450.0f, 40.0f);
+    screen_LoadText(clientMenu, GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
     screen_LoadText(clientMenu, "Pseudo", sfRed, 35, sfStringRegular, 450.0f, 140.0f);
     screen_LoadText(clientMenu, "IP", sfWhite, 35, sfStringRegular, 450.0f, 190.0f);
     screen_LoadText(clientMenu, "Port", sfWhite, 35, sfStringRegular, 450.0f, 240.0f);

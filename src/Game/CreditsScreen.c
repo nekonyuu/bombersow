@@ -35,7 +35,7 @@ _Bool display_Credits(sfRenderWindow* Game, sfImage* BG_image, sfFont* creditsFo
     screen_LoadImage(Credits, BG_image);                        // Chargement de l'arrière-plan
     screen_LoadFont(Credits, creditsFont);                      // Chargement de la police d'écriture
     // Préparation des textes
-    screen_LoadText(Credits, GAME_NAME, sfRed, 60, sfStringRegular, 450.0f, 40.0f);
+    screen_LoadText(Credits, GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
     screen_LoadText(Credits, "Auteurs :", sfWhite, 20, sfStringRegular, 450.0f, 140.0f);
     screen_LoadText(Credits, "Raffre Jonathan (Loven x Kotonoha)", sfWhite, 20, sfStringRegular, 450.0f, 190.0f);
     screen_LoadText(Credits, "Netcode, Gestion Objects", sfWhite, 20, sfStringRegular, 450.0f, 220.0f);

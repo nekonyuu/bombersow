@@ -41,7 +41,7 @@ _Bool display_ServerMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFo
     screen_LoadImage(serverMenu, BG_image);                             // Chargement de l'arrière-plan
     screen_LoadFont(serverMenu, playFont);                              // Chargement de la police d'écriture
     // Préparation des textes
-    screen_LoadText(serverMenu, GAME_NAME, sfRed, 60, sfStringRegular, 450.0f, 40.0f);
+    screen_LoadText(serverMenu, GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
     screen_LoadText(serverMenu, "Nom du serveur", sfRed, 20, sfStringRegular, 450.0f, 250.0f);
     screen_LoadText(serverMenu, "Pseudo", sfWhite, 20, sfStringRegular, 450.0f, 300.0f);
     screen_LoadText(serverMenu, "Port", sfWhite, 20, sfStringRegular, 450.0f, 350.0f);

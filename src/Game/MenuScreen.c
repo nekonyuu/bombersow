@@ -43,15 +43,18 @@ void display_Menu(sfRenderWindow* Game, Config* config)
     screen_LoadImage(Menu, BG_image);                           // Chargement de l'arrière-plan
     screen_LoadFont(Menu, menuFont);                            // Chargement de la police d'écriture
     // Préparation des textes
-    screen_LoadText(Menu, GAME_NAME, sfRed, 60, sfStringRegular, 450.0f, 40.0f);
+    screen_LoadText(Menu, GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
     screen_LoadText(Menu, "Jouer", sfRed, 35, sfStringItalic, 450.0f, 140.0f);
     screen_LoadText(Menu, "Options", sfWhite, 35, sfStringItalic, 450.0f, 190.0f);
     screen_LoadText(Menu, "Credits", sfWhite, 35, sfStringItalic, 450.0f, 240.0f);
     screen_LoadText(Menu, "Quitter", sfWhite, 35, sfStringItalic, 450.0f, 290.0f);
     screen_LoadText(Menu, "Test Screen", sfWhite, 35, sfStringItalic, 450.0f, 340.0f);
     screen_LoadMusic(Menu, menuMusic, sfTrue);                  // Chargement de la musique
-    /*if (Menu->music)
-        screen_PlayMusic(Menu);*/                                 // Lecture
+
+#ifndef DEBUG_MODE
+    if (Menu->music)
+        screen_PlayMusic(Menu);                                 // Lecture
+#endif
 
     logging_Info("display_Menu", "Started without error");
 

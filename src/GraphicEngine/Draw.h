@@ -27,6 +27,6 @@
 #include <SFML/Graphics.h>
 
 #define FRAMERATE 60
-#define GAME_NAME "BomberSow"
+#define GAME_NAME "BomberSow 0.1"
 
 #endif
