@@ -69,11 +69,6 @@ void display_Menu(sfRenderWindow* Game, Config* config)
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 
-        sfInput* inputs;
-        inputs = sfRenderWindow_GetInput(Game);
-        if(sfInput_IsKeyDown(inputs, sfKeyD))
-            puts("D PRESSED");
-
         while (sfRenderWindow_GetEvent(Game, &Event))           // Surveillance des évènements
         {
             switch (Event.Type)

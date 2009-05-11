@@ -52,7 +52,6 @@ int main()
 
     // Création de la fenêtre principale
     Game = sfRenderWindow_Create(Mode, GAME_NAME, sfClose, Settings);
-    //sfRenderWindow_SetFramerateLimit(Game, FRAMERATE);
     sfRenderWindow_UseVerticalSync(Game, sfTrue);
 
     if (!Game)
