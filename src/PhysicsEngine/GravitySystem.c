@@ -30,8 +30,8 @@
 
 void gravitysystem_PlayerUpdate(Map* map_, Player* player, Config* config)
 {
-    float speed_y = player->speed_y + config->gravity_speed * config->gravity_speed * map_->clock_time;
-    float y = speed_y * map_->clock_time;
+    float speed_y = player->speed_y + config->gravity_speed * map_->clock_time;
+    float y = speed_y; //map_->clock_time;
     if(player->sprite->hauteur + player->coord_y + y <= config->height && player->coord_y + y > 0)
     {
         player_SetPosition(player, player->coord_x, player->coord_y + y);
