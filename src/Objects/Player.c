@@ -191,12 +191,12 @@ void player_Jump(Player* player_, Config* config)
     assert(player_);
     if (player_->jump == NO_JUMP)
     {
-        player_->speed_y = config->jump_speed;
+        player_->speed_y = config->jump_speed * config->gravity_coef;
         player_->jump = SIMPLE_JUMP;
     }
     else if (player_->jump == SIMPLE_JUMP)
     {
-        player_->speed_y = config->jump_speed;
+        player_->speed_y = config->jump_speed * config->gravity_coef;
         player_->jump = DOUBLE_JUMP;
     }
 }

@@ -38,10 +38,10 @@ int main()
     game_config->width = 900;
     game_config->height = 675;
     game_config->move_speed = 425;
-    game_config->jump_speed = -475;
+    game_config->jump_speed = -85;
     game_config->force_fall_speed = 250;
     game_config->gravity_speed = 275.f;
-    game_config->gravity_coef = 6.f;
+    game_config->gravity_coef = 6.66f;
     /* --------- END CONFIG --------- */
     sfWindowSettings Settings = {24, 8, 0};
     sfVideoMode Mode = {game_config->width, game_config->height, 32};
