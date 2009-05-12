@@ -30,8 +30,9 @@
 
 void gravitysystem_PlayerUpdate(Map* map_, Player* player, Config* config)
 {
-    float speed_y = player->speed_y + config->gravity_speed * map_->clock_time;
-    float y = speed_y; //map_->clock_time;
+    float speed_y = player->speed_y + config->gravity_speed * map_->clock_time * config->gravity_coef;
+    float y = speed_y * map_->clock_time;
+
     if(player->sprite->hauteur + player->coord_y + y <= config->height && player->coord_y + y > 0)
     {
         player_SetPosition(player, player->coord_x, player->coord_y + y);
@@ -39,7 +40,7 @@ void gravitysystem_PlayerUpdate(Map* map_, Player* player, Config* config)
         Collision* collision = collision_Detection_Object(player, PLAYER);
         if(collision != NULL)
         {
-            player_SetPosition(player, player->coord_x, player->coord_y-y);
+            player_SetPosition(player, player->coord_x, player->coord_y - y);
             quad_tree_Update(player, PLAYER);
             speed_y = 0;
             player->jump = NO_JUMP;
@@ -66,7 +67,7 @@ void gravitysystem_BulletUpdate(Map* map_, Bullet* bullet_, Config* config)
 void gravitysystem_WorldUpdate(Map* map_, Config* config)
 {
     map_->clock_time = (sfClock_GetTime(map_->clock) > 0) ? sfClock_GetTime(map_->clock) : 0;
-    sfClock_Reset(map_->clock);
+
     for (int i = 0; i < map_->nb_players; i++)
     {
         gravitysystem_PlayerUpdate(map_,map_->players_list[i], config);
@@ -76,4 +77,6 @@ void gravitysystem_WorldUpdate(Map* map_, Config* config)
     {
 
     }*/
+
+    sfClock_Reset(map_->clock);
 }

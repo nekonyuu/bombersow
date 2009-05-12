@@ -41,7 +41,8 @@ enum BINDINGS
     LG_KEY
 };
 
-// Structure de config
+// Structure de config, permettra de faire des mods de type de jeu
+// TODO : Vérifier concordance entre configs client serveur pour éviter le cheat
 typedef struct CONFIG_ARRAY
 {
     int width;                      // Largeur de l'écran
@@ -51,7 +52,8 @@ typedef struct CONFIG_ARRAY
     int jump_speed;                 // Vitesse de saut en px/s
     int force_fall_speed;           // Vitesse de descente forcée en px/s
     int fly_speed;                  // Vitesse de vol en px/s
-    float gravity_speed;            // Gravité en px/s
+    float gravity_speed;            // Gravité en px/s (?)
+    float gravity_coef;             // Coefficient de gravité
     //sfKeyCode* key_bindings;
 } Config;
 

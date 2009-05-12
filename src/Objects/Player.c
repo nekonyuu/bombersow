@@ -123,7 +123,7 @@ void player_Displace(Player* player_, Direction move, float time, Config* config
 
         if (move == DOWN && !(player_->jump == FALLING))
         {
-            player_->speed_y = config->force_fall_speed;
+            player_->speed_y += config->force_fall_speed;
             player_->jump = FALLING;
             return;
         }
