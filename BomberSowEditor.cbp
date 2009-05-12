@@ -70,12 +70,13 @@
 					<Add option="-DDEBUG_MODE" />
 				</Compiler>
 				<Linker>
-					<Add option="-pg" />
+					<Add option="-pg -lgmon" />
 					<Add option="-lcsfml-audio" />
 					<Add option="-lcsfml-graphics" />
 					<Add option="-lcsfml-window" />
 					<Add option="-lcsfml-network" />
 					<Add option="-lcsfml-system" />
+					<Add option="-lGLEW" />
 					<Add directory="dep\lib-nix" />
 				</Linker>
 			</Target>
@@ -101,6 +102,7 @@
 					<Add option="-lcsfml-window" />
 					<Add option="-lcsfml-network" />
 					<Add option="-lcsfml-system" />
+					<Add option="-lGLEW" />
 					<Add directory="dep\lib-nix" />
 				</Linker>
 			</Target>
@@ -119,6 +121,8 @@
 		<Unit filename="dep\CSFML-GUI\Gui\Gui.h" />
 		<Unit filename="dep\GLEW\glew.c">
 			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Release" />
 		</Unit>
 		<Unit filename="dep\include\Memleak\halloc.c">
 			<Option compilerVar="CC" />
