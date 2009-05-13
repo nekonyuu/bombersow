@@ -28,12 +28,15 @@
 #include <SFML/Graphics.h>
 #include <BaseSystem/Config.h>
 
+typedef enum {SERVER, CLIENT} link_t;
+
 void display_Menu(sfRenderWindow*, Config*);
-_Bool display_PlayMenu(sfRenderWindow*, sfImage*, sfFont*, Config*);
-_Bool display_ServerMenu(sfRenderWindow*, sfImage*, sfFont*);
-_Bool display_ClientMenu(sfRenderWindow*, sfImage*, sfFont*, Config*);
+_Bool display_PlayMenu(sfRenderWindow*, Config*, sfImage*, sfFont*);
+_Bool display_ServerMenu(sfRenderWindow*, Config*, sfImage*, sfFont*);
+_Bool display_ClientMenu(sfRenderWindow*, Config*, sfImage*, sfFont*);
 _Bool display_Credits(sfRenderWindow*, sfImage*, sfFont*);
 _Bool display_Settings(sfRenderWindow*, sfImage*, sfFont*);
 _Bool display_Playing(sfRenderWindow*, Config*);
+_Bool display_LobbyScreen(sfRenderWindow*, Config*, sfFont*, unsigned int, link_t, unsigned int, unsigned int, char*);
 
 #endif

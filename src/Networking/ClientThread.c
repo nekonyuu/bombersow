@@ -25,48 +25,70 @@
 #include "Networking/Networking.h"
 #include "Networking/PacketDefines.h"
 
-void client_Main(char* name, sfIPAddress ip, int port, Config* config)
+void client_Main(void* UserData)
 {
-    Map* map = NULL;
-    sfPacket* connect_request = client_CreateConnectPacket(name), *response = NULL;
+    sfMutex_Lock(server_creation);
+
+    logging_Info("client_Main", "Client thread start...");
+
+    ClientData* client_data = (ClientData*) UserData;
+
     sfSocketTCP* client_socket = sfSocketTCP_Create();
     unsigned int code = REFUSED;
-    if (sfSocketTCP_Connect(client_socket, port, ip, 30.0f))
+
+    if (sfSocketTCP_Connect(client_socket, client_data->port, client_data->ip, 10.0f))
     {
+        sfPacket* connect_request = client_CreateConnectPacket(client_data->name), *response = sfPacket_Create();
+        logging_Info("client_Main", "Sending connect resquest");
         sfSocketTCP_SendPacket(client_socket, connect_request);
         sfPacket_Destroy(connect_request);
 
+        logging_Info("client_Main", "Receive response");
         sfSocketTCP_ReceivePacket(client_socket, response);
 
         code = (unsigned int) sfPacket_ReadUint8(response);
 
         if (code == ACCEPTED)
         {
+            logging_Info("client_Main", "Connection accepted, reading server info");
+
             unsigned int map_id = (unsigned int) sfPacket_ReadUint8(response);
             unsigned int max_players = (unsigned int) sfPacket_ReadUint8(response);
             unsigned int curr_players = (unsigned int) sfPacket_ReadUint8(response);
 
             sfPacket_Clear(response);
-            map = map_Create(map_id, max_players, config);
-            map->game_port = (unsigned short) port;
+            logging_Info("client_Main", "Creating map...");
+            client_data->map = map_Create(map_id, max_players, client_data->config);
+            client_data->map->game_port = (unsigned short) client_data->port;
 
+            logging_Info("client_Main", "Adding players");
             for (int i = 0; i < curr_players; i++)
             {
                 unsigned int code = 0;
                 sfSocketTCP_ReceivePacket(client_socket, response);
                 code = sfPacket_ReadUint8(response);
                 if (code == PLAYER)
-                    map_AddPlayer(map, player_CreateFromPacket(map, response));
+                    map_AddPlayer(client_data->map, player_CreateFromPacket(client_data->map, response));
 
                 sfPacket_Clear(response);
             }
-
-            // Ecran de lobby
+            logging_Info("client_Main", "Client connected and ready !");
+            client_connected = true;
+            sfMutex_Unlock(server_creation);
         }
+        else if(code == REFUSED)
+        {
+            logging_Info("client_Main", "Server has refused connection");
+            sfMutex_Unlock(server_creation);
+        }
+
+        sfPacket_Destroy(response);
     }
     else
     {
         // Serveur Down ou mauvaise ip
+        logging_Info("client_Main", "Can't reach server...");
+        sfMutex_Unlock(server_creation);
     }
 }
 

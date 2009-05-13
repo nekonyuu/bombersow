@@ -27,8 +27,11 @@
 #include "Networking/PacketDefines.h"
 #include "BaseSystem/Config.h"
 
-void server_Main(Map* map)
+void server_Main(void* UserData)
 {
+    sfMutex_Lock(server_creation);
+
+    Map* map = (Map*) UserData;
     sfThread* players_listening = sfThread_Create(&server_Listen_Connections, map);
     sfThread* update_disconnect_players = sfThread_Create(&map_UpdateDisconnectedPlayers, map);
     sfThread* game_listening = sfThread_Create(&server_Listen_Game, map);
@@ -39,27 +42,37 @@ void server_Main(Map* map)
     if (!sfSocketUDP_IsValid(map->game_socket))
         logging_Error("server_Start", "Port already used");
 
+    logging_Info("server_Main", "Players Listening thread launch...");
     sfThread_Launch(players_listening);
+    logging_Info("server_Main", "Disconnecting players thread launch...");
     sfThread_Launch(update_disconnect_players);
+    logging_Info("server_Main", "Server started !");
     server_started = true;
     map->chat_started = true;
 
     // Ecran d'attente joueurs (Salon de discussion)
-    while (!map->game_started)
-        sfSleep(0.2f);
+    while (!map->game_started && server_started)
+        sfSleep(0.1f);
 
+    /*
     sfThread_Launch(game_listening);
 
     // Boucle principale du serveur
     while(map->game_started)
-        sfSleep(0.2f);
+        sfSleep(0.2f);*/
 
     map->chat_started = false;
+    logging_Info("server_Main", "Waiting server sub-threads end...");
     sfThread_Wait(players_listening);
     sfThread_Wait(update_disconnect_players);
 
+    sfThread_Destroy(players_listening);
+    sfThread_Destroy(update_disconnect_players);
+
+    logging_Info("server_Main", "Unbind ports");
     sfSocketUDP_Unbind(map->game_socket);
     sfSocketUDP_Destroy(map->game_socket);
+    logging_Info("server_Main", "End server thread");
 }
 
 // Ecoute les connexions, et attend le paquet de connexion du client
@@ -69,15 +82,18 @@ void server_Listen_Connections(void* UserData)
 
     sfSocketTCP* connect_socket = sfSocketTCP_Create();
     sfSocketTCP_Listen(connect_socket, map->game_port);
+    sfMutex_Unlock(server_creation);
 
     do
     {
         sfSocketTCP* new_player = sfSocketTCP_Create();
         sfIPAddress* new_player_ip = NULL;
-        sfPacket* new_player_packet = NULL, *response_packet = NULL, *player_packet = NULL;
+        sfPacket* new_player_packet = sfPacket_Create(), *response_packet = sfPacket_Create(), *player_packet = sfPacket_Create();
         char* name = NULL;
         sfSocketTCP_Accept(connect_socket, &new_player, new_player_ip);                     // Connexion acceptée
+        logging_Info("server_Listen_Connections", "New client connected !");
         sfSocketTCP_ReceivePacket(new_player, new_player_packet);                           // Réception du paquet
+        logging_Info("server_Listen_Connections", "Read packet code...");
         unsigned int packet_code = (unsigned int) sfPacket_ReadUint8(new_player_packet);    // Lecture du code du paquet
         switch (packet_code)
         {
@@ -88,17 +104,23 @@ void server_Listen_Connections(void* UserData)
             {
                 ChatData* player_data = NULL;
                 sfPacket_ReadString(new_player_packet, name);
-                sfMutex_Lock(Network_ServerMutex);                                          // Verrouillage
-                map_AddPlayer(map, player_Create(name, CROWBAR));                           // Création et ajout du player
+                // Verrouillage
+                sfMutex_Lock(Network_ServerMutex);
+                // Création et ajout du player
+                logging_Info("server_Listen_Connections", "Adding player to map");
+                map_AddPlayer(map, player_Create(name, CROWBAR));
                 map->players_list[map->nb_players - 1]->player_ip = new_player_ip;
                 map->players_list[map->nb_players - 1]->listen_socket = new_player;
                 // Réponse du serveur
+                logging_Info("server_Listen_Connections", "Respond to client");
                 player_packet = server_CreateResponsePacket(map, ACCEPTED);
                 sfSocketTCP_SendPacket(new_player, player_packet);
                 // Envoyer les players présents au nouveau client
+                logging_Info("server_Listen_Connections", "Send connected players to the new client...");
                 for(int i = 0; i < map->nb_players; i++)
                     sfSocketTCP_SendPacket(new_player, player_CreateStartPacket(map->players_list[i])->packet);
                 // Avertir les autres clients
+                logging_Info("server_Listen_Connections", "Send the new player to connected clients...");
                 player_packet = player_CreatePacket(map->players_list[map->nb_players - 1])->packet;
                 for(int i = 0; i < map->nb_players - 1; i++)
                     sfSocketTCP_SendPacket(map->players_list[i]->listen_socket, player_packet);
@@ -107,14 +129,18 @@ void server_Listen_Connections(void* UserData)
                 sfPacket_Destroy(response_packet);
                 sfPacket_Destroy(player_packet);
                 // Préparation et démarrage du thread d'écoute TCP du player
+                logging_Info("server_Listen_Connections", "Prepare listening thread...");
                 player_data = chat_CreatePlayerData(map, map->players_list[map->nb_players - 1]->player_id);
                 map->players_list[map->nb_players - 1]->player_thread = sfThread_Create(&server_Listen_TCP, player_data);
                 sfMutex_Unlock(Network_ServerMutex);                                        // Déverrouille les données
                 sfThread_Launch(map->players_list[map->nb_players - 1]->player_thread);
+                logging_Info("server_Listen_Connections", "New player OK");
             }
             else  // Sinon on refuse
             {
+                logging_Info("server_Listen_Connections", "Player limit reached ! Refuse connection...");
                 sfPacket_Destroy(new_player_packet);
+                logging_Info("server_Listen_Connections", "Send response packet...");
                 response_packet = server_CreateResponsePacket(NULL, REFUSED);                  // Création du paquet de réponse
                 sfSocketTCP_SendPacket(new_player, response_packet);                        // Envoi
                 // Nettoyage
@@ -124,8 +150,10 @@ void server_Listen_Connections(void* UserData)
             break;
 
         default:
+            logging_Info("server_Listen_Connections", "Unknown packet type...");
             break;
         }
+        sfSleep(0.1f);
     }
     while (server_started);
 
@@ -145,6 +173,7 @@ void server_Listen_TCP(void* UserData)
     {
         unsigned int packet_code;
         sfSocketTCP_ReceivePacket(player_socket, packet);                               // Réception
+        logging_Info("server_Listen_TCP", "New packet received ! Reading...");
         packet_code = (unsigned int) sfPacket_ReadUint8(packet);                        // Lecture code
 
         sfMutex_Lock(Network_ServerMutex);                                              // Verrouillage
@@ -153,6 +182,7 @@ void server_Listen_TCP(void* UserData)
         {
         case CHAT:
         {
+            logging_Info("server_Listen_TCP", "CHAT type packet, resend to all");
             sfPacket* resend = sfPacket_Create();                                       // Paquet de renvoi
             char* mess = NULL;
             sfPacket_ReadString(packet, mess);                                          // Lecture message
@@ -168,6 +198,7 @@ void server_Listen_TCP(void* UserData)
 
         case DISCONNECT:
         {
+            logging_Info("server_Listen_TCP", "DISCONNECT type packet, flag player for destroy");
             map->players_list[*index]->connected = false;                               // Marquage du joueur pour suppression
             sfPacket_Destroy(packet);
             break;
@@ -178,6 +209,7 @@ void server_Listen_TCP(void* UserData)
         }
 
         sfMutex_Unlock(Network_ServerMutex);
+        sfSleep(0.1f);
     }
     while (server_started && map->players_list[*index]->connected);
 

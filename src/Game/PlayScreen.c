@@ -28,7 +28,7 @@
 #include "GraphicEngine/Image.h"
 #include "Objects/GameObjects.h"
 
-_Bool display_PlayMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont, Config* config)
+_Bool display_PlayMenu(sfRenderWindow* Game, Config* config, sfImage* BG_image, sfFont* playFont)
 {
     Screen* playMenu = screen_Create();
     sfEvent Event;
@@ -76,14 +76,14 @@ _Bool display_PlayMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont
                     switch (menu_select)
                     {
                     case 1:                                         // Ecran de connexion à un serveur
-                        if (display_ClientMenu(Game, BG_image, playFont, config))
+                        if (display_ClientMenu(Game, config, BG_image, playFont))
                         {
                             launched = false;
                             close = true;
                         }
                         break;
                     case 2:
-                        if (display_ServerMenu(Game, BG_image, playFont))
+                        if (display_ServerMenu(Game, config, BG_image, playFont))
                         {
                             launched = false;
                             close = true;

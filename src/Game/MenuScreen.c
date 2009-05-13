@@ -88,7 +88,7 @@ void display_Menu(sfRenderWindow* Game, Config* config)
                     switch (menu_select)
                     {
                     case 1:                                     // Affichage du menu de jeu
-                        if (display_PlayMenu(Game, BG_image, menuFont, config))
+                        if (display_PlayMenu(Game, config, BG_image, menuFont))
                             launched = false;
                         break;
                     case 2:                                     // Affichage du menu options

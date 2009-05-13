@@ -20,3 +20,121 @@
     to Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
 
 */
+
+#include "BaseSystem/Logging.h"
+#include "Game/GameScreens.h"
+#include "Objects/Screen.h"
+#include "Networking/Networking.h"
+
+_Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, unsigned int port, link_t link_type, unsigned int map_id, unsigned int nb_players, char* player_name)
+{
+    Screen* lobby_view = screen_Create();
+    Map* map = NULL;
+    _Bool launched = true, close = false;
+    sfThread* server_thread, *client_thread;
+    ClientData* client_data = (ClientData*) malloc(sizeof(ClientData));
+    sfString* text_display = sfString_Create();
+    sfEvent Event;
+
+    server_creation = sfMutex_Create();
+
+    // Squelette de l'écran Lobby
+    screen_LoadFont(lobby_view, font);
+    screen_LoadText(lobby_view, "Joueurs connectés", sfRed, 35, sfStringRegular, 115.f, 50.f);
+
+    // Ecran d'attente
+    sfString_SetFont(text_display, font);
+    sfString_SetText(text_display, "Connexion en cours...");
+    sfString_SetSize(text_display, 40);
+    sfString_SetX(text_display, 0);
+    sfString_SetY(text_display, 0);
+
+    sfRenderWindow_Clear(Game, sfBlack);
+    sfRenderWindow_DrawString(Game, text_display);
+    sfRenderWindow_Display(Game);
+
+    // Si mode Server
+    if (link_type == SERVER)
+    {
+        client_data->name = player_name;
+        client_data->ip = sfIPAddress_FromString("127.0.0.1");
+        client_data->port = port;
+        client_data->config = config;
+
+        map = map_Create(map_id, nb_players, config);
+        map->game_port = port;
+
+        server_thread = sfThread_Create(&server_Main, map);
+        client_thread = sfThread_Create(&client_Main, client_data);
+        sfThread_Launch(server_thread);
+        sfSleep(0.5f);
+        sfThread_Launch(client_thread);
+        sfSleep(0.5f);
+    }
+    else if (link_type == CLIENT)       // Sinon si mode Client
+    {
+
+    }
+
+    sfMutex_Lock(server_creation);
+
+    for (int i = 0; i < map->nb_players; i++)
+        screen_LoadText(lobby_view, client_data->map->players_list[i]->char_name, sfWhite, 20, sfStringItalic, 115.f, 100.f + i * 25);
+
+    while(!client_connected)
+        sfSleep(0.1f);
+
+    do
+    {
+        sfRenderWindow_Clear(Game, sfBlack);
+
+        for (int i = 0; i < lobby_view->nb_text; i++)
+            screen_DrawText(Game, lobby_view, i);                       // Dessin des textes
+
+        while (sfRenderWindow_GetEvent(Game, &Event))                   // Surveillance des évènements
+        {
+            // Fermer : Quitter le jeu
+            if (Event.Type == sfEvtClosed)
+            {
+                close = true;                                           // Fermeture du Menu
+                launched = false;
+            }
+
+            if (Event.Type == sfEvtMouseButtonPressed)                  // Clic sur une textbox ?
+            {
+                gui_Click(lobby_view->gui, Event.MouseButton.X, Event.MouseButton.Y);
+            }
+
+            if (Event.Type == sfEvtTextEntered)                         // Entrée de texte
+            {
+                gui_TextEntered(lobby_view->gui, Event.Text.Unicode);
+            }
+
+            if (Event.Type == sfEvtKeyPressed)
+            {
+                if (Event.Key.Code == sfKeyEscape)                      // Echap : Reviens en arrière
+                {
+                    launched = false;
+                }
+                else if (Event.Key.Code == sfKeyReturn)
+                {
+
+                }
+            }
+        }
+    }
+    while (launched);
+
+    sfMutex_Unlock(server_creation);
+    sfMutex_Destroy(server_creation);
+
+    sfThread_Wait(client_thread);
+    sfThread_Wait(server_thread);
+
+    sfThread_Destroy(client_thread);
+    sfThread_Destroy(server_thread);
+
+    screen_Destroy(lobby_view);
+
+    return close;
+}

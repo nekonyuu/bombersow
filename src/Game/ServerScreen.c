@@ -22,13 +22,14 @@
 */
 
 #include "BaseSystem/Logging.h"
+#include "Game/GameScreens.h"
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
 #include "GraphicEngine/Image.h"
 #include "Gui/Gui.h"
 #include "Networking/Networking.h"
 
-_Bool display_ServerMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFont)
+_Bool display_ServerMenu(sfRenderWindow* Game, Config* config, sfImage* BG_image, sfFont* playFont)
 {
     Screen* serverMenu = screen_Create();
     sfImage* textbox_bg = sfImage_CreateFromFile("base/images/gui/textbox_back.png");
@@ -45,7 +46,7 @@ _Bool display_ServerMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFo
     screen_LoadText(serverMenu, "Nom du serveur", sfRed, 20, sfStringRegular, 450.0f, 250.0f);
     screen_LoadText(serverMenu, "Pseudo", sfWhite, 20, sfStringRegular, 450.0f, 300.0f);
     screen_LoadText(serverMenu, "Port", sfWhite, 20, sfStringRegular, 450.0f, 350.0f);
-    screen_LoadText(serverMenu, "Création du serveur", sfWhite, 40, sfStringRegular, 420.0f, 120.0f);
+    screen_LoadText(serverMenu, "Création du serveur", sfWhite, 35, sfStringRegular, 450.0f, 120.0f);
     gui_Add_Textbox(serverMenu->gui, widget_textbox_Create(630, 250, 175, 20, 20, textbox_bg, sfBlack, CHAR, servername, "", sfBlack, textbox_font, 10));
     gui_Add_Textbox(serverMenu->gui, widget_textbox_Create(630, 300, 175, 20, 20, textbox_bg, sfBlack, CHAR, pseudo, "", sfBlack, textbox_font, 10));
     gui_Add_Textbox(serverMenu->gui, widget_textbox_Create(630, 350, 75, 20, 5, textbox_bg, sfBlack, INT, &port, "", sfBlack, playFont, 10));
@@ -92,7 +93,11 @@ _Bool display_ServerMenu(sfRenderWindow* Game, sfImage* BG_image, sfFont* playFo
                 }
                 else if (Event.Key.Code == sfKeyReturn)
                 {
-
+                    if(display_LobbyScreen(Game, config, playFont, port, SERVER, 0, 4, pseudo))
+                    {
+                        close = true;
+                        launched = false;
+                    }
                 }
                 else if (Event.Key.Code == sfKeyUp && menu_select > 1)
                 {
