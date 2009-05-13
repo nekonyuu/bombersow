@@ -42,3 +42,9 @@ void logging_Info(char* fct_name, char* text)
     printf("Debug Info - %s : %s\n", fct_name, text);
 #endif
 }
+
+inline void free_secure(void* ptr)
+{
+    free(ptr);
+    ptr = NULL;
+}

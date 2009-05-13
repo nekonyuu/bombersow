@@ -37,12 +37,15 @@ int main()
     assert(game_config = (Config*) malloc(sizeof(Config)));
     game_config->width = 900;
     game_config->height = 675;
+    game_config->vsync = sfFalse;
+    game_config->fps_limit = 1000;
     game_config->move_speed = 425;
     game_config->jump_speed = -85;
     game_config->force_fall_speed = 250;
     game_config->gravity_speed = 275.f;
     game_config->gravity_coef = 6.66f;
     /* --------- END CONFIG --------- */
+
     sfWindowSettings Settings = {24, 8, 0};
     sfVideoMode Mode = {game_config->width, game_config->height, 32};
     sfRenderWindow* Game;
@@ -53,7 +56,10 @@ int main()
 
     // Création de la fenêtre principale
     Game = sfRenderWindow_Create(Mode, GAME_NAME, sfClose, Settings);
-    sfRenderWindow_UseVerticalSync(Game, sfTrue);
+
+    sfRenderWindow_UseVerticalSync(Game, game_config->vsync);
+    if(!game_config->vsync)
+        sfRenderWindow_SetFramerateLimit(Game, game_config->fps_limit);
 
     if (!Game)
         return EXIT_FAILURE;
