@@ -86,13 +86,13 @@ void server_Listen_Connections(void* UserData)
 
     do
     {
-        sfSocketTCP* new_player = sfSocketTCP_Create();
+        sfSocketTCP* new_player_sck = sfSocketTCP_Create();
         sfIPAddress* new_player_ip = NULL;
         sfPacket* new_player_packet = sfPacket_Create(), *response_packet = sfPacket_Create(), *player_packet = sfPacket_Create();
-        char* name = NULL;
-        sfSocketTCP_Accept(connect_socket, &new_player, new_player_ip);                     // Connexion acceptée
+        char* name = (char*) malloc(20 * sizeof(char));
+        sfSocketTCP_Accept(connect_socket, &new_player_sck, new_player_ip);                     // Connexion acceptée
         logging_Info("server_Listen_Connections", "New client connected !");
-        sfSocketTCP_ReceivePacket(new_player, new_player_packet);                           // Réception du paquet
+        sfSocketTCP_ReceivePacket(new_player_sck, new_player_packet);                           // Réception du paquet
         logging_Info("server_Listen_Connections", "Read packet code...");
         unsigned int packet_code = (unsigned int) sfPacket_ReadUint8(new_player_packet);    // Lecture du code du paquet
         switch (packet_code)
@@ -102,23 +102,25 @@ void server_Listen_Connections(void* UserData)
             // S'il reste de la place sur le serveur on accepte
             if (map->nb_players < map->max_players)
             {
+                Player* new_player_ptr = NULL;
                 ChatData* player_data = NULL;
                 sfPacket_ReadString(new_player_packet, name);
                 // Verrouillage
                 sfMutex_Lock(Network_ServerMutex);
                 // Création et ajout du player
                 logging_Info("server_Listen_Connections", "Adding player to map");
-                map_AddPlayer(map, player_Create(name, CROWBAR));
+                new_player_ptr = player_Create(name, CROWBAR);
+                map_AddPlayer(map, new_player_ptr);
                 map->players_list[map->nb_players - 1]->player_ip = new_player_ip;
-                map->players_list[map->nb_players - 1]->listen_socket = new_player;
+                map->players_list[map->nb_players - 1]->listen_socket = new_player_sck;
                 // Réponse du serveur
                 logging_Info("server_Listen_Connections", "Respond to client");
                 player_packet = server_CreateResponsePacket(map, ACCEPTED);
-                sfSocketTCP_SendPacket(new_player, player_packet);
+                sfSocketTCP_SendPacket(new_player_sck, player_packet);
                 // Envoyer les players présents au nouveau client
                 logging_Info("server_Listen_Connections", "Send connected players to the new client...");
                 for(int i = 0; i < map->nb_players; i++)
-                    sfSocketTCP_SendPacket(new_player, player_CreateStartPacket(map->players_list[i])->packet);
+                    sfSocketTCP_SendPacket(new_player_sck, player_CreateStartPacket(map->players_list[i])->packet);
                 // Avertir les autres clients
                 logging_Info("server_Listen_Connections", "Send the new player to connected clients...");
                 player_packet = player_CreatePacket(map->players_list[map->nb_players - 1])->packet;
@@ -132,7 +134,7 @@ void server_Listen_Connections(void* UserData)
                 logging_Info("server_Listen_Connections", "Prepare listening thread...");
                 player_data = chat_CreatePlayerData(map, map->players_list[map->nb_players - 1]->player_id);
                 map->players_list[map->nb_players - 1]->player_thread = sfThread_Create(&server_Listen_TCP, player_data);
-                sfMutex_Unlock(Network_ServerMutex);                                        // Déverrouille les données
+                sfMutex_Unlock(Network_ServerMutex);                                            // Déverrouille les données
                 sfThread_Launch(map->players_list[map->nb_players - 1]->player_thread);
                 logging_Info("server_Listen_Connections", "New player OK");
             }
@@ -141,11 +143,11 @@ void server_Listen_Connections(void* UserData)
                 logging_Info("server_Listen_Connections", "Player limit reached ! Refuse connection...");
                 sfPacket_Destroy(new_player_packet);
                 logging_Info("server_Listen_Connections", "Send response packet...");
-                response_packet = server_CreateResponsePacket(NULL, REFUSED);                  // Création du paquet de réponse
-                sfSocketTCP_SendPacket(new_player, response_packet);                        // Envoi
+                response_packet = server_CreateResponsePacket(NULL, REFUSED);                   // Création du paquet de réponse
+                sfSocketTCP_SendPacket(new_player_sck, response_packet);                        // Envoi
                 // Nettoyage
                 sfPacket_Destroy(response_packet);
-                sfSocketTCP_Destroy(new_player);
+                sfSocketTCP_Destroy(new_player_sck);
             }
             break;
 
@@ -165,13 +167,14 @@ void server_Listen_TCP(void* UserData)
 {
     ChatData* player_data = (ChatData*) UserData;                                       // Cast des données void* envoyées, inhérent à SFML
     Map* map = player_data->map;
-    unsigned int* index = &player_data->player_id;
-    sfSocketTCP* player_socket = map->players_list[*index]->listen_socket;
+    unsigned int* index = &(player_data->player_id);
+    sfSocketTCP* player_socket = map->players_list[*index - 1]->listen_socket;
     sfPacket* packet = sfPacket_Create();
 
     do
     {
         unsigned int packet_code;
+        logging_Info("server_Listen_TCP", "Waiting packet...");
         sfSocketTCP_ReceivePacket(player_socket, packet);                               // Réception
         logging_Info("server_Listen_TCP", "New packet received ! Reading...");
         packet_code = (unsigned int) sfPacket_ReadUint8(packet);                        // Lecture code
@@ -199,7 +202,7 @@ void server_Listen_TCP(void* UserData)
         case DISCONNECT:
         {
             logging_Info("server_Listen_TCP", "DISCONNECT type packet, flag player for destroy");
-            map->players_list[*index]->connected = false;                               // Marquage du joueur pour suppression
+            map->players_list[*index - 1]->connected = false;                               // Marquage du joueur pour suppression
             sfPacket_Destroy(packet);
             break;
         }
@@ -211,7 +214,7 @@ void server_Listen_TCP(void* UserData)
         sfMutex_Unlock(Network_ServerMutex);
         sfSleep(0.1f);
     }
-    while (server_started && map->players_list[*index]->connected);
+    while (server_started && map->players_list[*index - 1]->connected);
 
 
     free_secure(player_data);

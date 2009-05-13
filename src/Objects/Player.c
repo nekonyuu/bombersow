@@ -35,7 +35,9 @@ Player* player_Create(char* name, unsigned int current_weapon)
 
     new_player->name = sfString_Create();
     sfString_SetText(new_player->name, name);
+
     new_player->char_name = name;
+
     new_player->player_id = 0;
     new_player->life = 100;
 
@@ -70,7 +72,8 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->connected = sfTrue;
     new_player->ready = sfFalse;
 
-    new_player->sprite = NULL;
+    // TODO : Image Player
+    new_player->sprite = sprite_Create(0, 0, player_default_image, NULL);
 
     new_player->quad_node = NULL;
     new_player->list_node = NULL;
@@ -88,6 +91,8 @@ void player_Destroy(Player* player2destroy)
     else
     {
         sfString_Destroy(player2destroy->name);
+        free_secure(player2destroy->char_name);
+
         for (int i = 0; i < NB_MAX_WEAPONS; i++)
             weapon_Destroy(player2destroy->weapons[i]);
 

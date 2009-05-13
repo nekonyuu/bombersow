@@ -36,7 +36,7 @@ void client_Main(void* UserData)
     sfSocketTCP* client_socket = sfSocketTCP_Create();
     unsigned int code = REFUSED;
 
-    if (sfSocketTCP_Connect(client_socket, client_data->port, client_data->ip, 10.0f))
+    if (!sfSocketTCP_Connect(client_socket, client_data->port, client_data->ip, 0))     // Bug CSFML 1.4, sfSocketTCP_Connect retourne sfFalse au lieu de sfTrue et vice versa
     {
         sfPacket* connect_request = client_CreateConnectPacket(client_data->name), *response = sfPacket_Create();
         logging_Info("client_Main", "Sending connect resquest");
@@ -75,6 +75,11 @@ void client_Main(void* UserData)
             logging_Info("client_Main", "Client connected and ready !");
             client_connected = true;
             sfMutex_Unlock(server_creation);
+
+            while(client_connected)
+            {
+                sfSleep(0.1f);
+            }
         }
         else if(code == REFUSED)
         {

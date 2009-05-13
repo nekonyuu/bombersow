@@ -29,4 +29,7 @@
 #define FRAMERATE 60
 #define GAME_NAME "BomberSow 0.1"
 
+// Temporaire ?
+sfImage* player_default_image;
+
 #endif

@@ -156,7 +156,7 @@ void map_DelObject(Map* map_, unsigned int object_id)
 
 void map_AddPlayer(Map* map_, Player* player_)
 {
-    if(map_->max_players >= map_->nb_players + 1)
+    if(map_->max_players > map_->nb_players)
     {
         map_->nb_players++;
         map_->players_list[map_->nb_players - 1] = player_;

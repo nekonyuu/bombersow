@@ -46,6 +46,9 @@ int main()
     game_config->gravity_coef = 6.66f;
     /* --------- END CONFIG --------- */
 
+    /* -------- Player Image -------- */
+    player_default_image = sfImage_CreateFromFile("base/images/animation2.png");
+
     sfWindowSettings Settings = {24, 8, 0};
     sfVideoMode Mode = {game_config->width, game_config->height, 32};
     sfRenderWindow* Game;
@@ -72,6 +75,7 @@ int main()
     // Nettoyage des ressources
     sfRenderWindow_Close(Game);     // Fermeture de la fenêtre
     sfRenderWindow_Destroy(Game);
+    sfImage_Destroy(player_default_image);
     armory_Destroy(armory);         // Destruction de l'armurerie
     free_secure(game_config);
 
