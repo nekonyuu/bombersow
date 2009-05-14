@@ -30,17 +30,18 @@ _Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, un
 {
     Screen* lobby_view = screen_Create();
     Map* map = NULL;
-    _Bool launched = true, close = false;
-    sfThread* server_thread, *client_thread;
+    PlayersList* players_display = NULL;
     ClientData* client_data = NULL;
+    sfThread* server_thread, *client_thread;
     sfString* text_display = sfString_Create();
     sfEvent Event;
+    _Bool launched = true, close = false;
 
     server_creation = sfMutex_Create();
 
     // Squelette de l'écran Lobby
     screen_LoadFont(lobby_view, font);
-    screen_LoadText(lobby_view, "Joueurs connectés", sfRed, 18, sfStringRegular, 115.f, 25.f);
+    screen_LoadText(lobby_view, "Joueurs connectés", sfRed, 18, sfStringRegular, 40.f, 25.f);
 
     // Ecran d'attente
     sfString_SetFont(text_display, font);
@@ -75,15 +76,19 @@ _Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, un
 
     sfMutex_Lock(server_creation);
 
-    for (int i = 0; i < map->nb_players; i++)
-        screen_LoadText(lobby_view, client_data->map->players_list[i]->char_name, sfWhite, 12, sfStringItalic, 115.f, 60.f + i * 25);
-
     while(!client_connected)
         sfSleep(0.1f);
+
+    players_display = playerslist_Create(client_data->map, font, sfWhite, 12, sfStringItalic, 40.f, 60.f);
 
     do
     {
         sfRenderWindow_Clear(Game, sfBlack);
+
+        // Actualisation des joueurs connectés
+        playerslist_Update(players_display, client_data->map);
+
+        playerslist_Draw(players_display, Game);
 
         for (int i = 0; i < lobby_view->nb_text; i++)
             screen_DrawText(Game, lobby_view, i);                       // Dessin des textes
@@ -127,7 +132,6 @@ _Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, un
     server_started = false;
     client_connected = false;
 
-    sfMutex_Unlock(server_creation);
     sfMutex_Destroy(server_creation);
 
     sfThread_Wait(client_thread);
@@ -137,6 +141,7 @@ _Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, un
     sfThread_Destroy(server_thread);
 
     clientdata_Destroy(client_data);
+    playerslist_Destroy(players_display);
     map_Destroy(map);
 
     screen_Destroy(lobby_view);

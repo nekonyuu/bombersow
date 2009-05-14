@@ -73,7 +73,6 @@
 					<Add option="-std=c99" />
 				</Compiler>
 				<Linker>
-					<Add option="-pg -lgmon" />
 					<Add option="-lcsfml-audio" />
 					<Add option="-lcsfml-graphics" />
 					<Add option="-lcsfml-window" />
@@ -267,6 +266,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\Objects\Player.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\Objects\PlayersList.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\Objects\Screen.c">

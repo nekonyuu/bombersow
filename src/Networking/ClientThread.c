@@ -55,11 +55,13 @@ void client_Main(void* UserData)
             unsigned int map_id = (unsigned int) sfPacket_ReadUint8(response);
             unsigned int max_players = (unsigned int) sfPacket_ReadUint8(response);
             unsigned int curr_players = (unsigned int) sfPacket_ReadUint8(response);
+            unsigned int cpt_players_rev = (unsigned int) sfPacket_ReadUint8(response);
 
             sfPacket_Clear(response);
             logging_Info("client_Main", "Creating map...");
             client_data->map = map_Create(map_id, max_players, client_data->config);
-            client_data->map->game_port = (unsigned short) client_data->port;
+            map_SetGamePort(client_data->map, (unsigned short) client_data->port);
+            map_SetCptCurrPlayers(client_data->map, cpt_players_rev);
 
             logging_Info("client_Main", "Adding players");
             for (int i = 0; i < curr_players; i++)
@@ -80,6 +82,8 @@ void client_Main(void* UserData)
             {
                 sfSleep(0.1f);
             }
+
+            logging_Info("client_Main", "Cleaning resources...");
             map_Destroy(client_data->map);
         }
         else if(code == REFUSED)
@@ -96,6 +100,8 @@ void client_Main(void* UserData)
         logging_Info("client_Main", "Can't reach server...");
         sfMutex_Unlock(server_creation);
     }
+
+    logging_Info("client_Main", "End Client thread");
 }
 
 sfPacket* client_CreateConnectPacket(char* name)

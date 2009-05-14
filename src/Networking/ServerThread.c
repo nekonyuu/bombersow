@@ -45,7 +45,7 @@ void server_Main(void* UserData)
 
     logging_Info("server_Main", "Listen_TCP thread launch...");
     sfThread_Launch(tcp_listening);
-    logging_Info("server_Main", "Disconnecting players thread launch...");
+    logging_Info("server_Main", "UpdateDisconnectedPlayers thread launch...");
     sfThread_Launch(update_disconnect_players);
     logging_Info("server_Main", "Server started !");
     server_started = true;
@@ -73,7 +73,7 @@ void server_Main(void* UserData)
 
     logging_Info("server_Main", "Unbind ports");
     sfSocketUDP_Unbind(map->game_socket);
-    logging_Info("server_Main", "End server thread");
+    logging_Info("server_Main", "End Server thread");
 }
 
 // Ecoute les connexions, et attend le paquet de connexion du client
@@ -88,7 +88,7 @@ void server_Listen_TCP(void* UserData)
 
     do
     {
-        unsigned int nb_sck_ready = sfSelectorTCP_Wait(map->tcp_selector, 1.0f);
+        unsigned int nb_sck_ready = sfSelectorTCP_Wait(map->tcp_selector, 0.1f);
 
         if (nb_sck_ready > 0)
         {
@@ -276,6 +276,7 @@ sfPacket* server_CreateResponsePacket(Map* map, unsigned int response)
         sfPacket_WriteUint8(new_packet, (sfUint8) map->mapId);
         sfPacket_WriteUint8(new_packet, (sfUint8) map->max_players);
         sfPacket_WriteUint8(new_packet, (sfUint8) map->nb_players);
+        sfPacket_WriteUint8(new_packet, (sfUint8) map->cpt_players_rev);
     }
     return new_packet;
 }

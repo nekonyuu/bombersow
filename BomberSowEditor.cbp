@@ -70,7 +70,6 @@
 					<Add option="-DDEBUG_MODE" />
 				</Compiler>
 				<Linker>
-					<Add option="-pg -lgmon" />
 					<Add option="-lcsfml-audio" />
 					<Add option="-lcsfml-graphics" />
 					<Add option="-lcsfml-window" />

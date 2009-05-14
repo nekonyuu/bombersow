@@ -102,16 +102,6 @@ void player_Destroy(Player* player2destroy)
     }
 }
 
-Player* player_GetPlayerFromID(Map* map, unsigned int player_id)
-{
-    int i = 0;
-    for (i = 0; i < map->nb_players; i++)
-        if (player_id == map->players_list[i]->player_id)
-            break;
-
-    return map->players_list[i];
-}
-
 // Déplacement du personnage sur la map sur x et y, y seulement pour le jetpack
 // TODO : gestion collisions
 void player_Displace(Player* player_, Direction move, float time, Config* config)
@@ -122,7 +112,16 @@ void player_Displace(Player* player_, Direction move, float time, Config* config
     {
         if (move == UP)
         {
-            player_Jump(player_, config);
+            if (player_->jump == NO_JUMP)
+            {
+                player_->speed_y = config->jump_speed * config->gravity_coef;
+                player_->jump = SIMPLE_JUMP;
+            }
+            else if (player_->jump == SIMPLE_JUMP)
+            {
+                player_->speed_y = config->jump_speed * config->gravity_coef;
+                player_->jump = DOUBLE_JUMP;
+            }
             return;
         }
 
@@ -188,22 +187,6 @@ void player_WeaponShoot(Map* map, Player* player_)
 
     player_->weapons[player_->current_weapon]->nb_curr_bullets--;
 
-}
-
-// Fonction qui gère le saut du joueur
-void player_Jump(Player* player_, Config* config)
-{
-    assert(player_);
-    if (player_->jump == NO_JUMP)
-    {
-        player_->speed_y = config->jump_speed * config->gravity_coef;
-        player_->jump = SIMPLE_JUMP;
-    }
-    else if (player_->jump == SIMPLE_JUMP)
-    {
-        player_->speed_y = config->jump_speed * config->gravity_coef;
-        player_->jump = DOUBLE_JUMP;
-    }
 }
 
 void player_SetPosition(Player* player, float x, float y)

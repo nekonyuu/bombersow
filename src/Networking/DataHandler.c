@@ -83,13 +83,15 @@ Packet* player_CreateStartPacket(Player* player_)
 
 Player* player_CreateFromPacket(Map* map, sfPacket* packet)
 {
-    assert(packet);
+    if(!packet)
+        logging_Error("player_CreateFromPacket", "sfPacket sent NULL");
 
     Player* new_player;
-    char* name = NULL;
-
+    char* name = (char*) malloc(20 * sizeof(char));
+    unsigned int player_id = (unsigned int) sfPacket_ReadUint8(packet);
     sfPacket_ReadString(packet, name);
     new_player = player_Create(name, (unsigned int) sfPacket_ReadUint8(packet));
+    new_player->player_id = player_id;
     new_player->coord_x = sfPacket_ReadFloat(packet);
     new_player->coord_y = sfPacket_ReadFloat(packet);
 
@@ -99,9 +101,10 @@ Player* player_CreateFromPacket(Map* map, sfPacket* packet)
 void player_ReadPacket(Map* map, sfPacket* packet)
 {
     unsigned int player_id = (unsigned int) sfPacket_ReadUint8(packet);
-    map->players_list[player_id]->current_weapon = (unsigned int) sfPacket_ReadUint8(packet);
-    map->players_list[player_id]->coord_x = sfPacket_ReadFloat(packet);
-    map->players_list[player_id]->coord_y = sfPacket_ReadFloat(packet);
+    Player* ptr = map_GetPlayerFromID(map, player_id);
+    ptr->current_weapon = (unsigned int) sfPacket_ReadUint8(packet);
+    ptr->coord_x = sfPacket_ReadFloat(packet);
+    ptr->coord_y = sfPacket_ReadFloat(packet);
 }
 
 Packet* object_CreatePacket(Object* object_)

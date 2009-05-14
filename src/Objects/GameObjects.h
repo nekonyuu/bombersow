@@ -50,6 +50,14 @@ typedef struct PACKET_LIST
 
 } PacketList;
 
+// Structure contenant la liste des joueurs connectés pour le salon
+typedef struct PLAYERS_LIST
+{
+    sfString** players;         // Nom des joueurs
+    unsigned int max_players;   // Taille du tableau
+    unsigned int nb_players;    // Nombre de joueurs
+} PlayersList;
+
 enum { PLATFORM, PLATFORM_DYNA, TRAP, WEAPON, AMMO };
 
 typedef struct OBJECT
@@ -177,6 +185,7 @@ typedef struct MAP
 {
     unsigned int mapId;             // ID de la map (transmission réseau)
     unsigned int max_players;       // Nombre maxi de joueurs
+    unsigned int cpt_players_rev;   // Compteur courant pour les player_id
     sfSprite* background;           // Arrière-plan
 
     Image* images;                  // Images de la map
@@ -229,12 +238,10 @@ void armory_Destroy(Weapon*);
 // Player.c
 Player* player_Create(char*, unsigned int);
 void player_Destroy(Player*);
-Player* player_GetPlayerFromID(Map*, unsigned int);
 void player_Displace(Player*, Direction, float, Config*);
 void player_SwitchWeapon(Player*, int);
 void player_CollectWeapon(Player*, int);
 void player_WeaponShoot(Map*, Player*);
-void player_Jump(Player*, Config*);
 void player_SetPosition(Player*, float, float);
 void player_Draw(sfRenderWindow*, Player*);
 
@@ -253,10 +260,18 @@ void map_DelPlayer(Map*, unsigned int);
 void map_AddBullet(Map*, Bullet*);
 void map_DelBullet(Map*, unsigned int);
 void map_UpdateDisconnectedPlayers(void*);
+Player* map_GetPlayerFromID(Map*, unsigned int);
 void map_SetGamePort(Map*, unsigned int);
+void map_SetCptCurrPlayers(Map*, unsigned int);
 void map_Draw(sfRenderWindow*, Map*);
 
 // PlayerControl.c
 void control_PlayerControl(sfRenderWindow*, Map*, Player*, Config*, _Bool*);
+
+// PlayersList.c
+PlayersList* playerslist_Create(Map*, sfFont*, sfColor, int, sfStringStyle, float, float);
+void playerslist_Destroy(PlayersList*);
+void playerslist_Draw(PlayersList*, sfRenderWindow*);
+void playerslist_Update(PlayersList*, Map*);
 
 #endif

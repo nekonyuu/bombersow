@@ -37,7 +37,7 @@ int main()
     assert(game_config = (Config*) malloc(sizeof(Config)));
     game_config->width = 900;
     game_config->height = 675;
-    game_config->vsync = sfFalse;
+    game_config->vsync = sfTrue;
     game_config->fps_limit = 2000;
     game_config->move_speed = 425;
     game_config->jump_speed = -85;

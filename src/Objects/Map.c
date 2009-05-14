@@ -35,6 +35,7 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
 
     new_map->mapId = map_id;
     new_map->max_players = nb_players;
+    new_map->cpt_players_rev = 0;
     new_map->background = NULL;
 
     new_map->images = NULL;
@@ -44,7 +45,7 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
     new_map->objects_list = NULL;
     new_map->nb_objects = 0;
 
-    if(nb_players > 0)
+    if (nb_players > 0)
     {
         new_map->players_list = (Player**) malloc(nb_players * sizeof(Player*));
         for (int i = 0; i < nb_players; i++)
@@ -106,11 +107,11 @@ void map_Destroy(Map* map2destroy)
             bullet_Destroy(map2destroy->bullets_list[i]);
         free_secure(map2destroy->bullets_list);
 
-        if(map2destroy->game_packets2send)
+        if (map2destroy->game_packets2send)
             for (int i = 0; i < map2destroy->game_packets2send->nb_packets; i++)
                 packet_Destroy(map2destroy->game_packets2send->packets[i]);
 
-        if(map2destroy->game_socket)
+        if (map2destroy->game_socket)
             sfSocketUDP_Destroy(map2destroy->game_socket);
 
         sfClock_Destroy(map2destroy->clock);
@@ -157,17 +158,17 @@ void map_DelObject(Map* map_, unsigned int object_id)
 
 void map_AddPlayer(Map* map_, Player* player_)
 {
-    if(map_->max_players > map_->nb_players)
+    if (map_->max_players > map_->nb_players)
     {
         map_->nb_players++;
         map_->players_list[map_->nb_players - 1] = player_;
-        map_->players_list[map_->nb_players - 1]->player_id = map_->nb_players;
+        if (map_->players_list[map_->nb_players - 1]->player_id == 0)
+            map_->players_list[map_->nb_players - 1]->player_id = ++map_->cpt_players_rev;
 
         quad_tree_Add(map_->quad_tree, player_, PLAYER);
     }
 }
 
-// TODO : Gestion mise à jour player_id des clients
 void map_DelPlayer(Map* map_, unsigned int player_id)
 {
     if (!map_->players_list[player_id])
@@ -176,17 +177,17 @@ void map_DelPlayer(Map* map_, unsigned int player_id)
         return;
     }
 
-    quad_tree_Delete_Elt(map_->players_list[player_id], PLAYER);
+    Player* ptr = map_GetPlayerFromID(map_, player_id);
 
-    player_Destroy(map_->players_list[player_id]);
+    quad_tree_Delete_Elt(ptr, PLAYER);
+
+    player_Destroy(ptr);
 
     for (int i = player_id; i < map_->nb_players - 1; i++)
-    {
         map_->players_list[i] = map_->players_list[i + 1];
-        map_->players_list[i]->player_id = i - 1;
-    }
 
     map_->players_list[map_->nb_players - 1] = NULL;
+    map_->nb_players--;
 }
 
 void map_AddBullet(Map* map_, Bullet* bullet_)
@@ -236,11 +237,28 @@ void map_UpdateDisconnectedPlayers(void* UserData)
     }
 }
 
+// Retourne le player ayant l'id player_id
+Player* map_GetPlayerFromID(Map* map, unsigned int player_id)
+{
+    int i = 0;
+    for (i = 0; i < map->nb_players; i++)
+        if (player_id == map->players_list[i]->player_id)
+            break;
+
+    return map->players_list[i];
+}
+
 void map_SetGamePort(Map* map, unsigned int port)
 {
     map->game_port = port;
 }
 
+void map_SetCptCurrPlayers(Map* map, unsigned int cpt)
+{
+    map->cpt_players_rev = cpt;
+}
+
+// Dessin de la map
 void map_Draw(sfRenderWindow* Game, Map* map)
 {
     for (int i = 0; i < map->nb_players; i++)
