@@ -139,7 +139,6 @@ typedef struct PLAYER
     unsigned int frags;             // Nombre de tués
     unsigned int killed;            // Nombre de morts
 
-    sfThread* player_thread;        // Thread du player
     sfSocketTCP* listen_socket;     // Socket d'écoute
     sfBool connected;               // Booléen de présence sur le serveur
     sfBool ready;                   // Prêt à jouer
@@ -198,6 +197,7 @@ typedef struct MAP
     _Bool chat_started;             // Salon de discussion démarré ?
     _Bool game_started;             // Partie démarrée ?
 
+    sfSelectorTCP* tcp_selector;    // Selecteur de sockets TCP pour discussion/connexion/déconnexion
     sfSocketUDP* game_socket;       // Socket de jeu
     unsigned short game_port;       // Port de jeu
 
@@ -253,6 +253,7 @@ void map_DelPlayer(Map*, unsigned int);
 void map_AddBullet(Map*, Bullet*);
 void map_DelBullet(Map*, unsigned int);
 void map_UpdateDisconnectedPlayers(void*);
+void map_SetGamePort(Map*, unsigned int);
 void map_Draw(sfRenderWindow*, Map*);
 
 // PlayerControl.c

@@ -63,7 +63,8 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
     new_map->chat_started = false;
     new_map->game_started = false;
 
-    new_map->game_socket = NULL;
+    new_map->tcp_selector = sfSelectorTCP_Create();
+    new_map->game_socket = sfSocketUDP_Create();
     new_map->game_port = 0;
 
     new_map->clock = sfClock_Create();
@@ -166,6 +167,7 @@ void map_AddPlayer(Map* map_, Player* player_)
     }
 }
 
+// TODO : Gestion mise à jour player_id des clients
 void map_DelPlayer(Map* map_, unsigned int player_id)
 {
     if (!map_->players_list[player_id])
@@ -181,7 +183,7 @@ void map_DelPlayer(Map* map_, unsigned int player_id)
     for (int i = player_id; i < map_->nb_players - 1; i++)
     {
         map_->players_list[i] = map_->players_list[i + 1];
-        map_->players_list[i]->player_id = i + 1;
+        map_->players_list[i]->player_id = i - 1;
     }
 
     map_->players_list[map_->nb_players - 1] = NULL;
@@ -232,6 +234,11 @@ void map_UpdateDisconnectedPlayers(void* UserData)
 
         sfSleep(1.0f);
     }
+}
+
+void map_SetGamePort(Map* map, unsigned int port)
+{
+    map->game_port = port;
 }
 
 void map_Draw(sfRenderWindow* Game, Map* map)

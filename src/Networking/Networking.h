@@ -51,7 +51,6 @@ sfMutex* server_creation;
 
 // ServerThread.c
 void server_Main(void* UserData);
-void server_Listen_Connections(void* UserData);
 void server_Listen_TCP(void* UserData);
 void server_Listen_Game(void* UserData);
 sfPacket* server_CreateResponsePacket(Map* map, unsigned int response);
@@ -80,5 +79,7 @@ Packet* bullet_CreatePacket(Bullet*);
 void bullet_ReadPacket(Map*, sfPacket*);
 void map_CreateGamePackets(Map*);
 void map_DestroyAllPackets(Map*);
+ClientData* clientdata_Create(char*, char*, unsigned int, Config*);
+void clientdata_Destroy(ClientData*);
 
 #endif

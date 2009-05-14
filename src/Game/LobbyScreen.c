@@ -32,7 +32,7 @@ _Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, un
     Map* map = NULL;
     _Bool launched = true, close = false;
     sfThread* server_thread, *client_thread;
-    ClientData* client_data = (ClientData*) malloc(sizeof(ClientData));
+    ClientData* client_data = NULL;
     sfString* text_display = sfString_Create();
     sfEvent Event;
 
@@ -56,13 +56,10 @@ _Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, un
     // Si mode Server
     if (link_type == SERVER)
     {
-        client_data->name = player_name;
-        client_data->ip = sfIPAddress_FromString("127.0.0.1");
-        client_data->port = port;
-        client_data->config = config;
+        client_data = clientdata_Create(player_name, "127.0.0.1", port, config);
 
         map = map_Create(map_id, nb_players, config);
-        map->game_port = port;
+        map_SetGamePort(map, port);
 
         server_thread = sfThread_Create(&server_Main, map);
         client_thread = sfThread_Create(&client_Main, client_data);
@@ -138,6 +135,9 @@ _Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, un
 
     sfThread_Destroy(client_thread);
     sfThread_Destroy(server_thread);
+
+    clientdata_Destroy(client_data);
+    map_Destroy(map);
 
     screen_Destroy(lobby_view);
 

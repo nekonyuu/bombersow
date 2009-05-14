@@ -80,6 +80,7 @@ void client_Main(void* UserData)
             {
                 sfSleep(0.1f);
             }
+            map_Destroy(client_data->map);
         }
         else if(code == REFUSED)
         {
@@ -122,6 +123,7 @@ sfPacket* client_CreateDisconnectPacket(unsigned int player_id)
 
     sfPacket* new_packet = sfPacket_Create();
     sfPacket_WriteUint8(new_packet, DISCONNECT);
+    sfPacket_WriteUint8(new_packet, player_id);
 
     return new_packet;
 }

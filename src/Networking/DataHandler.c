@@ -25,8 +25,6 @@
 #include "Networking/Networking.h"
 #include "Networking/PacketDefines.h"
 
-// Le destructeur de paquet utilisé sera sfPacket_Destroy(sfPacket*)
-
 Packet* packet_Create(unsigned int code, sfPacket* packet)
 {
     Packet* new_packet = NULL;
@@ -74,6 +72,7 @@ Packet* player_CreateStartPacket(Player* player_)
     sfPacket* new_packet = sfPacket_Create();
 
     sfPacket_WriteUint8(new_packet, PLAYER);
+    sfPacket_WriteUint8(new_packet, player_->player_id);
     sfPacket_WriteString(new_packet, player_->char_name);
     sfPacket_WriteUint8(new_packet, player_->current_weapon);
     sfPacket_WriteFloat(new_packet, player_->coord_x);
@@ -225,4 +224,20 @@ void map_DestroyAllPackets(Map* map_)
         packet_Destroy(map_->game_packets2send->packets[i]);
     free_secure(map_->game_packets2send->packets);
     free_secure(map_->game_packets2send);
+}
+
+ClientData* clientdata_Create(char* player_name, char* ip, unsigned int port, Config* config)
+{
+    ClientData* client_data = (ClientData*) malloc(sizeof(ClientData));
+    client_data->name = player_name;
+    client_data->ip = sfIPAddress_FromString(ip);
+    client_data->port = port;
+    client_data->config = config;
+
+    return client_data;
+}
+
+void clientdata_Destroy(ClientData* ptr)
+{
+    free_secure(ptr);
 }

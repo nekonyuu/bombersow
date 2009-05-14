@@ -66,7 +66,6 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->frags = 0;
     new_player->killed = 0;
 
-    new_player->player_thread = NULL;
     new_player->listen_socket = NULL;
 
     new_player->connected = sfTrue;
@@ -98,6 +97,7 @@ void player_Destroy(Player* player2destroy)
 
         sprite_Destroy(player2destroy->sprite);
         free_secure(player2destroy->weapons);
+        sfSocketTCP_Destroy(player2destroy->listen_socket);
         free_secure(player2destroy);
     }
 }
