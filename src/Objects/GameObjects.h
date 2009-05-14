@@ -261,6 +261,7 @@ void map_AddBullet(Map*, Bullet*);
 void map_DelBullet(Map*, unsigned int);
 void map_UpdateDisconnectedPlayers(void*);
 Player* map_GetPlayerFromID(Map*, unsigned int);
+unsigned int map_GetPlayerIDFromName(Map*, char*);
 void map_SetGamePort(Map*, unsigned int);
 void map_SetCptCurrPlayers(Map*, unsigned int);
 void map_Draw(sfRenderWindow*, Map*);

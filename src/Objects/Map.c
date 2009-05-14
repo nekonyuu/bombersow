@@ -248,6 +248,17 @@ Player* map_GetPlayerFromID(Map* map, unsigned int player_id)
     return map->players_list[i];
 }
 
+unsigned int map_GetPlayerIDFromName(Map* map, char* name)
+{
+    for(int i = 0; i < map->nb_players; i++)
+    {
+        if(!strcmp(name, map->players_list[i]->char_name))
+            return map->players_list[i]->player_id;
+    }
+
+    return 0;
+}
+
 void map_SetGamePort(Map* map, unsigned int port)
 {
     map->game_port = port;

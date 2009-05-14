@@ -34,7 +34,7 @@ void server_Main(void* UserData)
 
     Map* map = (Map*) UserData;
     sfThread* update_disconnect_players = sfThread_Create(&map_UpdateDisconnectedPlayers, map);
-    sfThread* game_listening = sfThread_Create(&server_Listen_Game, map);
+    //sfThread* game_listening = sfThread_Create(&server_Listen_Game, map);
     sfThread* tcp_listening = sfThread_Create(&server_Listen_TCP, map);
 
     Network_ServerMutex = sfMutex_Create();
@@ -45,11 +45,11 @@ void server_Main(void* UserData)
 
     logging_Info("server_Main", "Listen_TCP thread launch...");
     sfThread_Launch(tcp_listening);
+    server_started = true;
+    map->chat_started = true;
     logging_Info("server_Main", "UpdateDisconnectedPlayers thread launch...");
     sfThread_Launch(update_disconnect_players);
     logging_Info("server_Main", "Server started !");
-    server_started = true;
-    map->chat_started = true;
 
     // Ecran d'attente joueurs (Salon de discussion)
     while (!map->game_started && server_started)
@@ -152,7 +152,7 @@ void server_Listen_TCP(void* UserData)
 
                             // Avertir les autres clients
                             logging_Info("server_Listen_TCP", "Send the new player to connected clients...");
-                            Packet* new_player_packet_obj = player_CreatePacket(map->players_list[map->nb_players - 1]);
+                            Packet* new_player_packet_obj = player_CreateStartPacket(map->players_list[map->nb_players - 1]);
                             for (int i = 0; i < map->nb_players - 1; i++)
                                 sfSocketTCP_SendPacket(map->players_list[i]->listen_socket, new_player_packet_obj->packet);
 
@@ -211,7 +211,7 @@ void server_Listen_TCP(void* UserData)
                         logging_Info("server_Listen_TCP", "DISCONNECT type packet, flag player for destroy");
 
                         // Marquage du joueur pour suppression
-                        map->players_list[((unsigned int) sfPacket_ReadUint8(packet)) - 1]->connected = false;
+                        map_GetPlayerFromID(map, (unsigned int) sfPacket_ReadUint8(packet))->connected = false;
 
                         // Nettoyage
                         sfPacket_Destroy(packet);

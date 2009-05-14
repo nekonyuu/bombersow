@@ -26,13 +26,13 @@
 #include "Objects/Screen.h"
 #include "Networking/Networking.h"
 
-_Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, unsigned int port, link_t link_type, unsigned int map_id, unsigned int nb_players, char* player_name)
+_Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, unsigned int port, link_t link_type, char* ip, unsigned int map_id, unsigned int nb_players, char* player_name)
 {
     Screen* lobby_view = screen_Create();
     Map* map = NULL;
     PlayersList* players_display = NULL;
     ClientData* client_data = NULL;
-    sfThread* server_thread, *client_thread;
+    sfThread* server_thread = NULL, *client_thread = NULL;
     sfString* text_display = sfString_Create();
     sfEvent Event;
     _Bool launched = true, close = false;
@@ -71,7 +71,10 @@ _Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, un
     }
     else if (link_type == CLIENT)       // Sinon si mode Client
     {
-
+        client_data = clientdata_Create(player_name, ip, port, config);
+        client_thread = sfThread_Create(&client_Main, client_data);
+        sfThread_Launch(client_thread);
+        sfSleep(0.5f);
     }
 
     sfMutex_Lock(server_creation);
@@ -138,7 +141,8 @@ _Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, un
     sfThread_Wait(server_thread);
 
     sfThread_Destroy(client_thread);
-    sfThread_Destroy(server_thread);
+    if(server_thread)
+        sfThread_Destroy(server_thread);
 
     clientdata_Destroy(client_data);
     playerslist_Destroy(players_display);

@@ -93,7 +93,7 @@ _Bool display_ServerMenu(sfRenderWindow* Game, Config* config, sfImage* BG_image
                 }
                 else if (Event.Key.Code == sfKeyReturn)
                 {
-                    if(display_LobbyScreen(Game, config, playFont, port, SERVER, 0, 4, pseudo))
+                    if(display_LobbyScreen(Game, config, playFont, port, SERVER, NULL, 0, 4, pseudo))
                     {
                         close = true;
                         launched = false;

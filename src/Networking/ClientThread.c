@@ -63,6 +63,8 @@ void client_Main(void* UserData)
             map_SetGamePort(client_data->map, (unsigned short) client_data->port);
             map_SetCptCurrPlayers(client_data->map, cpt_players_rev);
 
+            sfSelectorTCP_Add(client_data->map->tcp_selector, client_socket);
+
             logging_Info("client_Main", "Adding players");
             for (int i = 0; i < curr_players; i++)
             {
@@ -78,15 +80,35 @@ void client_Main(void* UserData)
             client_connected = true;
             sfMutex_Unlock(server_creation);
 
-            while(client_connected)
+            while (client_connected)
             {
-                sfSleep(0.1f);
+                unsigned int code = 0;
+                unsigned int nb_sck_ready = sfSelectorTCP_Wait(client_data->map->tcp_selector, 0.1f);
+
+                if (nb_sck_ready > 0)
+                {
+                    for (int i = 0; i < nb_sck_ready; i++)
+                    {
+                        sfSocketTCP* new_socket = sfSelectorTCP_GetSocketReady(client_data->map->tcp_selector, i);
+                        sfSocketTCP_ReceivePacket(new_socket, response);
+                        code = sfPacket_ReadUint8(response);
+                        if (code == PLAYER)
+                            map_AddPlayer(client_data->map, player_CreateFromPacket(client_data->map, response));
+
+                        sfPacket_Clear(response);
+                    }
+                }
             }
+
+            logging_Info("client_Main", "Disconnecting...");
+            sfPacket_Destroy(response);
+            response = client_CreateDisconnectPacket(map_GetPlayerIDFromName(client_data->map, client_data->name));
+            sfSocketTCP_SendPacket(client_socket, response);
 
             logging_Info("client_Main", "Cleaning resources...");
             map_Destroy(client_data->map);
         }
-        else if(code == REFUSED)
+        else if (code == REFUSED)
         {
             logging_Info("client_Main", "Server has refused connection");
             sfMutex_Unlock(server_creation);

@@ -22,6 +22,7 @@
 */
 
 #include "BaseSystem/Logging.h"
+#include "Game/GameScreens.h"
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
 #include "GraphicEngine/Image.h"
@@ -41,12 +42,13 @@ _Bool display_ClientMenu(sfRenderWindow* Game, Config* config, sfImage* BG_image
     screen_LoadFont(clientMenu, playFont);                              // Chargement de la police d'écriture
     // Préparation des textes
     screen_LoadText(clientMenu, GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
-    screen_LoadText(clientMenu, "Pseudo", sfRed, 35, sfStringRegular, 450.0f, 140.0f);
-    screen_LoadText(clientMenu, "IP", sfWhite, 35, sfStringRegular, 450.0f, 190.0f);
-    screen_LoadText(clientMenu, "Port", sfWhite, 35, sfStringRegular, 450.0f, 240.0f);
-    gui_Add_Textbox(clientMenu->gui, widget_textbox_Create(600, 150, 200, 25, 20, textbox_bg, sfBlack, CHAR, pseudo, "", sfBlack, playFont, 10));
-    gui_Add_Textbox(clientMenu->gui, widget_textbox_Create(600, 200, 200, 25, 20, textbox_bg, sfBlack, CHAR, ip, "", sfBlack, playFont, 10));
-    gui_Add_Textbox(clientMenu->gui, widget_textbox_Create(600, 250, 100, 25, 5, textbox_bg, sfBlack, INT, &port, "", sfBlack, playFont, 10));
+    screen_LoadText(clientMenu, "Pseudo", sfRed, 20, sfStringRegular, 450.0f, 250.0f);
+    screen_LoadText(clientMenu, "IP", sfWhite, 20, sfStringRegular, 450.0f, 300.0f);
+    screen_LoadText(clientMenu, "Port", sfWhite, 20, sfStringRegular, 450.0f, 350.0f);
+    screen_LoadText(clientMenu, "Connexion IP", sfWhite, 35, sfStringRegular, 450.0f, 120.0f);
+    gui_Add_Textbox(clientMenu->gui, widget_textbox_Create(630, 250, 175, 20, 20, textbox_bg, sfBlack, CHAR, pseudo, "", sfBlack, playFont, 10));
+    gui_Add_Textbox(clientMenu->gui, widget_textbox_Create(630, 300, 175, 20, 20, textbox_bg, sfBlack, CHAR, ip, "", sfBlack, playFont, 10));
+    gui_Add_Textbox(clientMenu->gui, widget_textbox_Create(630, 350, 75, 20, 5, textbox_bg, sfBlack, INT, &port, "", sfBlack, playFont, 10));
     clientMenu->gui->widget_textbox[0]->active = true;
 
     logging_Info("display_ClientMenu", "Started without error");
@@ -91,7 +93,11 @@ _Bool display_ClientMenu(sfRenderWindow* Game, Config* config, sfImage* BG_image
                     break;
 
                 case sfKeyReturn:
-                    //client_Main(pseudo, sfIPAddress_FromString(ip), port, config);
+                    if(display_LobbyScreen(Game, config, playFont, port, CLIENT, ip, 0, 4, pseudo))
+                    {
+                        close = true;
+                        launched = false;
+                    }
                     break;
 
                 case sfKeyUp:
