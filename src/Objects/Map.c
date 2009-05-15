@@ -21,6 +21,7 @@
 
 */
 
+#include <string.h>
 #include "BaseSystem/Config.h"
 #include "BaseSystem/Logging.h"
 #include "Networking/Networking.h"

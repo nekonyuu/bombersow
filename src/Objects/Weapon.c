@@ -74,6 +74,7 @@ void weapon_Destroy(Weapon* weapon2destroy)
 void armory_Create(Weapon* armory)
 {
     // Pied de biche
+    logging_Info("armory_Create", "Load Crowbar");
     armory[CROWBAR].name = sfString_Create();
     sfString_SetText(armory[CROWBAR].name, "Crowbar");
     armory[CROWBAR].type = CROWBAR;
@@ -101,6 +102,7 @@ void armory_Create(Weapon* armory)
 
 
     // Lance Roquettes
+    logging_Info("armory_Create", "Load Rocket-Launcher");
     armory[ROCKET_LAUNCHER].name = sfString_Create();
     sfString_SetText(armory[ROCKET_LAUNCHER].name, "Rocket-Launcher");
     armory[ROCKET_LAUNCHER].type = ROCKET_LAUNCHER;
@@ -128,6 +130,7 @@ void armory_Create(Weapon* armory)
 
 
     // Grenades (explosion 3500ms)
+    logging_Info("armory_Create", "Load Grenade-Launcher");
     armory[GRENADES].name = sfString_Create();
     sfString_SetText(armory[GRENADES].name, "Grenades");
     armory[GRENADES].type = GRENADES;
@@ -155,6 +158,7 @@ void armory_Create(Weapon* armory)
 
 
     // Fusil à pompe
+    logging_Info("armory_Create", "Load Shotgun");
     armory[SHOTGUN].name = sfString_Create();
     sfString_SetText(armory[SHOTGUN].name, "Shotgun");
     armory[SHOTGUN].type = SHOTGUN;
@@ -182,6 +186,7 @@ void armory_Create(Weapon* armory)
 
 
     // Mitrailleuse
+    logging_Info("armory_Create", "Load MachineGun");
     armory[MACHINEGUN].name = sfString_Create();
     sfString_SetText(armory[MACHINEGUN].name, "MachineGun");
     armory[MACHINEGUN].type = MACHINEGUN;
@@ -209,6 +214,7 @@ void armory_Create(Weapon* armory)
 
 
     // Sniper
+    logging_Info("armory_Create", "Load Sniper");
     armory[SNIPER].name = sfString_Create();
     sfString_SetText(armory[SNIPER].name, "Sniper");
     armory[SNIPER].type = SNIPER;
@@ -236,6 +242,7 @@ void armory_Create(Weapon* armory)
 
 
     //Lasergun
+    logging_Info("armory_Create", "Load Lasergun");
     armory[LASERGUN].name = sfString_Create();
     sfString_SetText(armory[LASERGUN].name, "Lasergun");
     armory[LASERGUN].type = LASERGUN;

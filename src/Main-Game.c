@@ -31,6 +31,7 @@
 
 int main()
 {
+    logging_Info("main", "Load config");
     // TODO : Loader de config, Ludo on t'attends =D
     /* -------- START CONFIG -------- */
     Config* game_config;
@@ -47,23 +48,28 @@ int main()
     /* --------- END CONFIG --------- */
 
     /* -------- Player Image -------- */
+    logging_Info("main", "Load default sprite");
     player_default_image = sfImage_CreateFromFile("base/images/animation2.png");
 
+    logging_Info("main", "Set Display parameters");
     sfWindowSettings Settings = {24, 8, 0};
     sfVideoMode Mode = {game_config->width, game_config->height, 32};
     sfRenderWindow* Game;
 
-    Image *image = image_Create();
+    /*Image *image = image_Create();
     map_Loader_Image(image, "test.txt");
-    image_Destroy(image);
+    image_Destroy(image);*/
 
     // Création de la fenêtre principale
+    logging_Info("main", "Create Display window");
     Game = sfRenderWindow_Create(Mode, GAME_NAME, sfClose, Settings);
 
+    logging_Info("main", "Set framerate parameters");
     sfRenderWindow_UseVerticalSync(Game, game_config->vsync);
     if(!game_config->vsync)
         sfRenderWindow_SetFramerateLimit(Game, game_config->fps_limit);
 
+    logging_Info("main", "Verify Window state");
     if (!Game)
         return EXIT_FAILURE;
 

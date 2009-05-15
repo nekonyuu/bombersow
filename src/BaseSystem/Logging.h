@@ -36,6 +36,6 @@
 void logging_Warning(char*, char*);
 void logging_Error(char*, char*);
 void logging_Info(char*, char*);
-inline void free_secure(void*);
+void free_secure(void*);
 
 #endif
