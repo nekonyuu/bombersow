@@ -22,11 +22,16 @@
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
-					<Add option="-lcsfml-audio-d" />
-					<Add option="-lcsfml-graphics-d" />
-					<Add option="-lcsfml-window-d" />
-					<Add option="-lcsfml-network-d" />
-					<Add option="-lcsfml-system-d" />
+					<Add option="-lcsfml-audio-s-d" />
+					<Add option="-lsfml-audio-s-d" />
+					<Add option="-lcsfml-graphics-s-d" />
+					<Add option="-lsfml-graphics-s-d" />
+					<Add option="-lcsfml-window-s-d" />
+					<Add option="-lsfml-window-s-d" />
+					<Add option="-lcsfml-network-s-d" />
+					<Add option="-lsfml-network-s-d" />
+					<Add option="-lcsfml-system-s-d" />
+					<Add option="-lsfml-system-s-d" />
 					<Add option="-lopengl32" />
 					<Add option="-lmingw32" />
 					<Add directory="dep\lib-win" />
@@ -50,11 +55,16 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-lcsfml-audio" />
-					<Add option="-lcsfml-graphics" />
-					<Add option="-lcsfml-window" />
-					<Add option="-lcsfml-network" />
-					<Add option="-lcsfml-system" />
+					<Add option="-lcsfml-audio-s" />
+					<Add option="-lsfml-audio-s" />
+					<Add option="-lcsfml-graphics-s" />
+					<Add option="-lsfml-graphics-s" />
+					<Add option="-lcsfml-window-s" />
+					<Add option="-lsfml-window-s" />
+					<Add option="-lcsfml-network-s" />
+					<Add option="-lsfml-network-s" />
+					<Add option="-lcsfml-system-s" />
+					<Add option="-lsfml-system-s" />
 					<Add option="-lopengl32" />
 					<Add option="-lmingw32" />
 					<Add directory="dep\lib-win" />
@@ -112,7 +122,6 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-DCSFML_DYNAMIC" />
 			<Add option="-DGLEW_STATIC" />
 			<Add directory="src" />
 			<Add directory="dep\include" />

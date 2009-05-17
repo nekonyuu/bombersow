@@ -25,6 +25,7 @@
 #define LOGGING_H
 
 #include <assert.h>
+#include <SFML/Graphics.h>
 
 // Sécurisation du free() (Evite les crash sur un free déjà effectué)
 //#define free_secure(pointer) { free(pointer); pointer = NULL; }
@@ -37,5 +38,6 @@ void logging_Warning(char*, char*);
 void logging_Error(char*, char*);
 void logging_Info(char*, char*);
 void free_secure(void*);
+void logging_FPSShow(sfRenderWindow*);
 
 #endif

@@ -67,6 +67,9 @@ void display_Menu(sfRenderWindow* Game, Config* config)
         for (int i = 0; i < Menu->nb_text; i++)
             screen_DrawText(Game, Menu, i);                     // Dessin des textes
 
+        if(config->show_fps)
+            logging_FPSShow(Game);
+
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 
         while (sfRenderWindow_GetEvent(Game, &Event))           // Surveillance des évènements

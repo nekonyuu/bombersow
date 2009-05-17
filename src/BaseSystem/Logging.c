@@ -48,3 +48,18 @@ inline void free_secure(void* ptr)
     free(ptr);
     ptr = NULL;
 }
+
+inline void logging_FPSShow(sfRenderWindow* App)
+{
+    sfString* fps_text = sfString_Create();
+    sfString_SetSize(fps_text, 14);
+    sfString_SetPosition(fps_text, 0, 0);
+    char* tmp_fps = malloc(20 * sizeof(char));
+
+    sprintf(tmp_fps, "%d", (int) (1.0f/sfRenderWindow_GetFrameTime(App)));
+    sfString_SetText(fps_text, tmp_fps);
+    sfRenderWindow_DrawString(App, fps_text);
+
+    free_secure(tmp_fps);
+    sfString_Destroy(fps_text);
+}
