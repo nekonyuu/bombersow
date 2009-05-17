@@ -26,7 +26,7 @@
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
 
-_Bool display_Credits(sfRenderWindow* Game, sfImage* BG_image, sfFont* creditsFont)
+_Bool display_Credits(sfRenderWindow* Game, Config* config, sfImage* BG_image, sfFont* creditsFont)
 {
     Screen* Credits = screen_Create();
     sfEvent Event;
@@ -58,6 +58,9 @@ _Bool display_Credits(sfRenderWindow* Game, sfImage* BG_image, sfFont* creditsFo
 
         for (int i = 0; i < Credits->nb_text; i++)              // Dessin des textes
             screen_DrawText(Game, Credits, i);
+
+        if(config->show_fps)
+            logging_FPSShow(Game);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 

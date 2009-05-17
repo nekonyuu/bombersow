@@ -26,7 +26,7 @@
 #include "Objects/GameObjects.h"
 
 // Fonction qui gère les touches pour les mouvements/tirs des joueurs
-void control_PlayerControl(sfRenderWindow* App, Map* map, Player* player, Config* config, _Bool* ingame)
+inline void control_PlayerControl(sfRenderWindow* App, Map* map, Player* player, Config* config, _Bool* ingame)
 {
     sfInput* keys_input;
     sfEvent Event;

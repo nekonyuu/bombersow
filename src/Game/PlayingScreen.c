@@ -36,11 +36,10 @@ _Bool display_Playing(sfRenderWindow* Game, Config* config)
     sfImage *image_animation2 = sfImage_CreateFromFile("base/images/animation.png"); // Test
     _Bool ingame = true;
 
-    sfEvent Event;
-
     Animation *animation = animation_Create(image_animation2, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
     Animation *animation2 = animation_Create(image_animation2, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
 
+    logging_Info("display_Playing", "Create objects...");
     Object* obj_temp = object_Create(0);
     object_LoadImg(obj_temp, NULL, animation);
     object_SetPosition(obj_temp, 800, 560);
@@ -49,20 +48,23 @@ _Bool display_Playing(sfRenderWindow* Game, Config* config)
     object_LoadImg(obj_temp2, NULL, animation2);
     object_SetPosition(obj_temp2, 800, 230);
 
+    logging_Info("display_Playing", "Create map...");
     Map* map = map_Create(0, 100, config);
     map_AddObject(map, obj_temp);
     map_AddObject(map, obj_temp2);
 
     int i = 0;
+    logging_Info("display_Playing", "Create players...");
     for (i = 0; i < 25; i++)
     {
-        Sprite* spr = sprite_Create(0, 0, image_animation, NULL);
-        Player* plr = player_Create("HAHA", CROWBAR);
-        plr->sprite = spr;
+        char* name = malloc(5 * sizeof(char));
+        strcpy(name, "HAHA");
+        Player* plr = player_Create(name, CROWBAR);
         player_SetPosition(plr, (i-i%10)*5, (i%10)*50);
         map_AddPlayer(map, plr);
     }
 
+    logging_Info("display_Playing", "Create pseudo-platform...");
     for (i = 50; i < 76; i++)
     {
         Animation* ani = animation_Create(image_animation2, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
@@ -72,27 +74,16 @@ _Bool display_Playing(sfRenderWindow* Game, Config* config)
         map_AddObject(map, obj_temp);
     }
 
-    sfClock* clock = sfClock_Create();
-    int fps = 0;
-
-    // Vidage des Events qui trainent dans la sfRenderWindow
-    while (sfRenderWindow_GetEvent(Game, &Event));
-
     do
     {
-        if (sfClock_GetTime(clock) > 1)
-        {
-            printf("%d\n", fps);
-            sfClock_Reset(clock);
-            fps = 0;
-        }
-        fps++;
-
         sfRenderWindow_Clear(Game, sfBlack);                    // Vidage de l'écran
 
         gravitysystem_WorldUpdate(map, config);
         map_Draw(Game, map);
         //quad_tree_Draw(Game, map->quad_tree);
+
+        if(config->show_fps)
+            logging_FPSShow(Game);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 

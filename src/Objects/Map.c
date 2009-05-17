@@ -89,37 +89,51 @@ void map_Destroy(Map* map2destroy)
         logging_Warning("map_Destroy", "Map object sent NULL");
     else
     {
+        logging_Info("map_Destroy", "Destroy sent map...");
+        logging_Info("map_Destroy", "Destroy background...");
         sfSprite_Destroy(map2destroy->background);
 
+        logging_Info("map_Destroy", "Destroy animations...");
         for (int i = 0; i < map2destroy->nb_anim; i++)
             animation_Destroy(map2destroy->animations[i]);
 
+        logging_Info("map_Destroy", "Destroy images...");
         image_Destroy(map2destroy->images);
 
+        logging_Info("map_Destroy", "Destroy objects...");
         for (int i = 0; i < map2destroy->nb_objects; i++)
             object_Destroy(map2destroy->objects_list[i]);
         free_secure(map2destroy->objects_list);
 
+        logging_Info("map_Destroy", "Destroy players...");
         for (int i = 0; i < map2destroy->nb_players; i++)
             player_Destroy(map2destroy->players_list[i]);
         free_secure(map2destroy->players_list);
 
+        logging_Info("map_Destroy", "Destroy bullets...");
         for (int i = 0; i < map2destroy->nb_bullets; i++)
             bullet_Destroy(map2destroy->bullets_list[i]);
         free_secure(map2destroy->bullets_list);
 
+        logging_Info("map_Destroy", "Destroy pending packets...");
         if (map2destroy->game_packets2send)
             for (int i = 0; i < map2destroy->game_packets2send->nb_packets; i++)
                 packet_Destroy(map2destroy->game_packets2send->packets[i]);
 
+        logging_Info("map_Destroy", "Destroy network sockets...");
         if (map2destroy->game_socket)
             sfSocketUDP_Destroy(map2destroy->game_socket);
 
+        sfSelectorTCP_Destroy(map2destroy->tcp_selector);
+
+        logging_Info("map_Destroy", "Destroy clock...");
         sfClock_Destroy(map2destroy->clock);
 
+        logging_Info("map_Destroy", "Destroy quad tree...");
         quad_tree_Destroy(map2destroy->quad_tree);
 
         free_secure(map2destroy);
+        logging_Info("map_Destroy", "Map destroyed !");
     }
 }
 

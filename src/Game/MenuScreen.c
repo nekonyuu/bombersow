@@ -95,11 +95,11 @@ void display_Menu(sfRenderWindow* Game, Config* config)
                             launched = false;
                         break;
                     case 2:                                     // Affichage du menu options
-                        if (display_Settings(Game, BG_image, menuFont))
+                        if (display_Settings(Game, config, BG_image, menuFont))
                             launched = false;
                         break;
                     case 3:                                     // Affichage des credits
-                        if (display_Credits(Game, BG_image, menuFont))
+                        if (display_Credits(Game, config, BG_image, menuFont))
                             launched = false;
                         break;
                     case 4:                                     // Quitter

@@ -63,6 +63,9 @@ _Bool display_ServerMenu(sfRenderWindow* Game, Config* config, sfImage* BG_image
         for (int i = 0; i < serverMenu->nb_text; i++)
             screen_DrawText(Game, serverMenu, i);                       // Dessin des textes
 
+        if(config->show_fps)
+            logging_FPSShow(Game);
+
         gui_Draw(Game, serverMenu->gui);                                // Dessin de la GUI
         sfRenderWindow_Display(Game);                                   // Mise à jour de la fenêtre
 

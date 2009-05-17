@@ -27,7 +27,7 @@
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
 
-_Bool display_Settings(sfRenderWindow* Game, sfImage* BG_image, sfFont* settingsFont)
+_Bool display_Settings(sfRenderWindow* Game, Config* config, sfImage* BG_image, sfFont* settingsFont)
 {
     Screen* Settings = screen_Create();
     sfEvent Event;
@@ -50,6 +50,9 @@ _Bool display_Settings(sfRenderWindow* Game, sfImage* BG_image, sfFont* settings
         for (int i = 0; i < Settings->nb_text; i++)
             screen_DrawText(Game, Settings, i);                 // Dessin des textes
         //screen_DrawGui(Game, Settings);                         // Dessin de la GUI
+
+        if(config->show_fps)
+            logging_FPSShow(Game);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 

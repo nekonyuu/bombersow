@@ -224,7 +224,6 @@ void sprite_Destroy(Sprite* sprite)
     }
 
     free_secure(sprite);
-    sprite = NULL;
 }
 
 void sprite_SetPosition(Sprite* sprite, int x, int y)

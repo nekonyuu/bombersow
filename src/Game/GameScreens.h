@@ -34,8 +34,8 @@ void display_Menu(sfRenderWindow*, Config*);
 _Bool display_PlayMenu(sfRenderWindow*, Config*, sfImage*, sfFont*);
 _Bool display_ServerMenu(sfRenderWindow*, Config*, sfImage*, sfFont*);
 _Bool display_ClientMenu(sfRenderWindow*, Config*, sfImage*, sfFont*);
-_Bool display_Credits(sfRenderWindow*, sfImage*, sfFont*);
-_Bool display_Settings(sfRenderWindow*, sfImage*, sfFont*);
+_Bool display_Credits(sfRenderWindow*, Config*, sfImage*, sfFont*);
+_Bool display_Settings(sfRenderWindow*, Config*, sfImage*, sfFont*);
 _Bool display_Playing(sfRenderWindow*, Config*);
 _Bool display_LobbyScreen(sfRenderWindow*, Config*, sfFont*, unsigned int, link_t, char*, unsigned int, unsigned int, char*);
 

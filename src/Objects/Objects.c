@@ -73,7 +73,8 @@ void object_Destroy(Object* object2destroy)
 
 void object_LoadImg(Object* object, sfImage* image, Animation* animation)
 {
-    sprite_Destroy(object->sprite);
+    if(object->sprite)
+        sprite_Destroy(object->sprite);
     object->sprite = sprite_Create((int)object->curr_coord_x, (int)object->curr_coord_y, image, animation);
 }
 

@@ -228,8 +228,6 @@ void server_Listen_TCP(void* UserData)
         }
     }
     while (server_started);
-
-    sfSocketTCP_Destroy(connect_socket);
 }
 
 void server_Listen_Game(void* UserData)

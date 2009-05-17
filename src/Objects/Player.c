@@ -89,16 +89,23 @@ void player_Destroy(Player* player2destroy)
         logging_Warning("player_Destroy", "Player object sent NULL");
     else
     {
+        logging_Info("player_Destroy", "Destroy sent player...");
+        logging_Info("player_Destroy", "Destroy sfString...");
         sfString_Destroy(player2destroy->name);
+        logging_Info("player_Destroy", "Destroy name...");
         free_secure(player2destroy->char_name);
 
+        logging_Info("player_Destroy", "Destroy weapons...");
         for (int i = 0; i < NB_MAX_WEAPONS; i++)
             weapon_Destroy(player2destroy->weapons[i]);
-
-        sprite_Destroy(player2destroy->sprite);
         free_secure(player2destroy->weapons);
+
+        logging_Info("player_Destroy", "Destroy player's sprite...");
+        sprite_Destroy(player2destroy->sprite);
+        logging_Info("player_Destroy", "Destroy player's TCP socket...");
         sfSocketTCP_Destroy(player2destroy->listen_socket);
         free_secure(player2destroy);
+        logging_Info("player_Destroy", "Player destroyed !");
     }
 }
 

@@ -96,6 +96,9 @@ _Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, un
         for (int i = 0; i < lobby_view->nb_text; i++)
             screen_DrawText(Game, lobby_view, i);                       // Dessin des textes
 
+        if(config->show_fps)
+            logging_FPSShow(Game);
+
         sfRenderWindow_Display(Game);
 
         while (sfRenderWindow_GetEvent(Game, &Event))                   // Surveillance des évènements
