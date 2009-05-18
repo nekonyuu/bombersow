@@ -21,6 +21,7 @@
 
 */
 
+#include <string.h>
 #include "BaseSystem/Logging.h"
 #include "Game/GameScreens.h"
 #include "GraphicEngine/Draw.h"

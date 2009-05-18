@@ -112,6 +112,7 @@ void server_Listen_TCP(void* UserData)
 
                     if (packet_code == CONNECT)
                     {
+                        logging_Info("server_Listen_TCP", "CONNECT type packet, verifying...");
                         // S'il reste de la place sur le serveur on accepte
                         if (map->nb_players < map->max_players)
                         {
@@ -167,8 +168,8 @@ void server_Listen_TCP(void* UserData)
                             logging_Info("server_Listen_TCP", "Player limit reached ! Refuse connection...");
                             sfPacket_Destroy(new_player_packet);
                             logging_Info("server_Listen_TCP", "Send response packet...");
-                            response_packet = server_CreateResponsePacket(NULL, REFUSED);                   // Création du paquet de réponse
-                            sfSocketTCP_SendPacket(new_player_sck, response_packet);                        // Envoi
+                            response_packet = server_CreateResponsePacket(NULL, REFUSED);               // Création du paquet de réponse
+                            sfSocketTCP_SendPacket(new_player_sck, response_packet);                    // Envoi
                             // Nettoyage
                             sfPacket_Destroy(response_packet);
                             sfSocketTCP_Destroy(new_player_sck);
@@ -179,50 +180,58 @@ void server_Listen_TCP(void* UserData)
                 {
                     unsigned int packet_code;
                     sfPacket* packet = sfPacket_Create();
-                    sfSocketTCP_ReceivePacket(new_socket, packet);                               // Réception
-                    logging_Info("server_Listen_TCP", "New packet received ! Reading...");
-                    packet_code = (unsigned int) sfPacket_ReadUint8(packet);                        // Lecture code
-
-                    sfMutex_Lock(Network_ServerMutex);                                              // Verrouillage
-
-                    switch (packet_code)
+                    sfSocketTCP_ReceivePacket(new_socket, packet);                                      // Réception
+                    if (sfPacket_CanRead(packet))
                     {
-                    case CHAT:
-                    {
-                        logging_Info("server_Listen_TCP", "CHAT type packet, resend to all");
-                        sfPacket* resend = sfPacket_Create();                                       // Paquet de renvoi
-                        char* mess = (char*) malloc(255 * sizeof(char));
+                        logging_Info("server_Listen_TCP", "New packet received ! Reading...");
+                        packet_code = (unsigned int) sfPacket_ReadUint8(packet);                        // Lecture code
+                        logging_Info("server_Listen_TCP", "Locking resources...");
 
-                        sfPacket_ReadString(packet, mess);                                          // Lecture message
-                        sfPacket_WriteUint8(resend, (sfUint8) CHAT);                                // Création paquet
-                        sfPacket_WriteString(resend, mess);
+                        switch (packet_code)
+                        {
+                        case CHAT:
+                        {
+                            logging_Info("server_Listen_TCP", "CHAT type packet, resend to all");
+                            sfPacket* resend = sfPacket_Create();                                       // Paquet de renvoi
+                            char* mess = (char*) malloc(255 * sizeof(char));
 
-                        for (int i = 0; i < map->nb_players; i++)                                   // Envoi à tous
-                            sfSocketTCP_SendPacket(map->players_list[i]->listen_socket, resend);
+                            sfPacket_ReadString(packet, mess);                                          // Lecture message
+                            sfPacket_WriteUint8(resend, (sfUint8) CHAT);                                // Création paquet
+                            sfPacket_WriteString(resend, mess);
 
-                        // Nettoyage
-                        sfPacket_Destroy(packet);
-                        sfPacket_Destroy(resend);
-                        break;
+                            for (int i = 0; i < map->nb_players; i++)                                   // Envoi à tous
+                            {
+                                sfMutex_Lock(Network_ServerMutex);
+                                sfSocketTCP_SendPacket(map->players_list[i]->listen_socket, resend);
+                                sfMutex_Unlock(Network_ServerMutex);
+                            }
+
+                            // Nettoyage
+                            sfPacket_Destroy(packet);
+                            sfPacket_Destroy(resend);
+                            break;
+                        }
+
+                        case DISCONNECT:
+                        {
+                            logging_Info("server_Listen_TCP", "DISCONNECT type packet, flag player for destroy");
+                            // On retire le socket concerné du selector
+                            sfSelectorTCP_Remove(map->tcp_selector, new_socket);
+                            // Marquage du joueur pour suppression
+                            map_GetPlayerFromID(map, (unsigned int) sfPacket_ReadUint8(packet))->connected = false;
+                            // Nettoyage
+                            sfPacket_Destroy(packet);
+                            break;
+                        }
+
+                        default:
+                            logging_Info("server_Listen_TCP", "Unknown type packet, Skipping");
+                            sfPacket_Destroy(packet);
+                            break;
+                        }
                     }
-
-                    case DISCONNECT:
-                    {
-                        logging_Info("server_Listen_TCP", "DISCONNECT type packet, flag player for destroy");
-
-                        // Marquage du joueur pour suppression
-                        map_GetPlayerFromID(map, (unsigned int) sfPacket_ReadUint8(packet))->connected = false;
-
-                        // Nettoyage
-                        sfPacket_Destroy(packet);
-                        break;
-                    }
-
-                    default:
-                        break;
-                    }
-
-                    sfMutex_Unlock(Network_ServerMutex);
+                    else
+                        logging_Info("server_Listen_TCP", "Corrupted packet, Skipping");
                 }
             }
         }

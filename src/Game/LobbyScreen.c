@@ -138,14 +138,16 @@ _Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, un
     server_started = false;
     client_connected = false;
 
-    sfMutex_Destroy(server_creation);
-
     sfThread_Wait(client_thread);
-    sfThread_Wait(server_thread);
-
     sfThread_Destroy(client_thread);
+
     if(server_thread)
+    {
+        sfThread_Wait(server_thread);
         sfThread_Destroy(server_thread);
+    }
+
+    sfMutex_Destroy(server_creation);
 
     clientdata_Destroy(client_data);
     playerslist_Destroy(players_display);

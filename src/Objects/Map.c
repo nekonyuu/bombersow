@@ -186,13 +186,13 @@ void map_AddPlayer(Map* map_, Player* player_)
 
 void map_DelPlayer(Map* map_, unsigned int player_id)
 {
-    if (!map_->players_list[player_id])
+    Player* ptr = map_GetPlayerFromID(map_, player_id);
+
+    if (!ptr)
     {
         logging_Warning("map_DelPlayer", "Player object at player_id is NULL");
         return;
     }
-
-    Player* ptr = map_GetPlayerFromID(map_, player_id);
 
     quad_tree_Delete_Elt(ptr, PLAYER);
 
@@ -246,7 +246,7 @@ void map_UpdateDisconnectedPlayers(void* UserData)
     {
         for (int i = 0; i < map->nb_players; i++)
             if (!map->players_list[i]->connected)
-                map_DelPlayer(map, i);
+                map_DelPlayer(map, map->players_list[i]->player_id);
 
         sfSleep(1.0f);
     }
@@ -255,12 +255,19 @@ void map_UpdateDisconnectedPlayers(void* UserData)
 // Retourne le player ayant l'id player_id
 Player* map_GetPlayerFromID(Map* map, unsigned int player_id)
 {
+    Player* ptr = NULL;
     int i = 0;
-    for (i = 0; i < map->nb_players; i++)
-        if (player_id == map->players_list[i]->player_id)
-            break;
 
-    return map->players_list[i];
+    for (i = 0; i < map->nb_players; i++)
+    {
+        if (player_id == map->players_list[i]->player_id)
+        {
+            ptr = map->players_list[i];
+            break;
+        }
+    }
+
+    return ptr;
 }
 
 unsigned int map_GetPlayerIDFromName(Map* map, char* name)

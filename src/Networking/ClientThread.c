@@ -104,14 +104,15 @@ void client_Main(void* UserData)
             sfPacket_Destroy(response);
             response = client_CreateDisconnectPacket(map_GetPlayerIDFromName(client_data->map, client_data->name));
             sfSocketTCP_SendPacket(client_socket, response);
+            sfSelectorTCP_Remove(client_data->map->tcp_selector, client_socket);
 
             logging_Info("client_Main", "Cleaning resources...");
             map_Destroy(client_data->map);
         }
         else if (code == REFUSED)
         {
-            logging_Info("client_Main", "Server has refused connection");
             sfMutex_Unlock(server_creation);
+            logging_Info("client_Main", "Server has refused connection");
         }
 
         sfPacket_Destroy(response);
@@ -119,10 +120,11 @@ void client_Main(void* UserData)
     else
     {
         // Serveur Down ou mauvaise ip
-        logging_Info("client_Main", "Can't reach server...");
         sfMutex_Unlock(server_creation);
+        logging_Info("client_Main", "Can't reach server...");
     }
 
+    sfSocketTCP_Destroy(client_socket);
     logging_Info("client_Main", "End Client thread");
 }
 
