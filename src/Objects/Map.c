@@ -194,15 +194,19 @@ void map_DelPlayer(Map* map_, unsigned int player_id)
         return;
     }
 
+    logging_Info("map_DelPlayer", "Remove player from QuadTree...");
     quad_tree_Delete_Elt(ptr, PLAYER);
 
+    logging_Info("map_DelPlayer", "Destroy player...");
     player_Destroy(ptr);
 
+    logging_Info("map_DelPlayer", "Fill vacant case...");
     for (int i = player_id; i < map_->nb_players - 1; i++)
         map_->players_list[i] = map_->players_list[i + 1];
 
     map_->players_list[map_->nb_players - 1] = NULL;
     map_->nb_players--;
+    logging_Info("map_DelPlayer", "Player deleted from map !");
 }
 
 void map_AddBullet(Map* map_, Bullet* bullet_)

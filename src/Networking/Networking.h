@@ -54,6 +54,7 @@ void server_Main(void* UserData);
 void server_Listen_TCP(void* UserData);
 void server_Listen_Game(void* UserData);
 sfPacket* server_CreateResponsePacket(Map* map, unsigned int response);
+sfPacket* server_CreateDestroyPlayerPacket(unsigned int player_id);
 void server_ReadUDPPacket(sfPacket* packet, Map* map);
 
 // ClientThread.c

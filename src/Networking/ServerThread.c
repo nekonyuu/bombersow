@@ -215,10 +215,18 @@ void server_Listen_TCP(void* UserData)
                         case DISCONNECT:
                         {
                             logging_Info("server_Listen_TCP", "DISCONNECT type packet, flag player for destroy");
+                            unsigned int playerid2destroy = (unsigned int) sfPacket_ReadUint8(packet);
+                            sfPacket* destroy_request = server_CreateDestroyPlayerPacket(playerid2destroy);
+                            // On préviens les autres players du départ du player donné
+                            for(int i = 0; i < map->nb_players; i++)
+                            {
+                                if(playerid2destroy != map->players_list[i]->player_id)
+                                    sfSocketTCP_SendPacket(map->players_list[i]->listen_socket, destroy_request);
+                            }
                             // On retire le socket concerné du selector
                             sfSelectorTCP_Remove(map->tcp_selector, new_socket);
                             // Marquage du joueur pour suppression
-                            map_GetPlayerFromID(map, (unsigned int) sfPacket_ReadUint8(packet))->connected = false;
+                            map_GetPlayerFromID(map, playerid2destroy)->connected = false;
                             // Nettoyage
                             sfPacket_Destroy(packet);
                             break;
@@ -285,6 +293,21 @@ sfPacket* server_CreateResponsePacket(Map* map, unsigned int response)
         sfPacket_WriteUint8(new_packet, (sfUint8) map->nb_players);
         sfPacket_WriteUint8(new_packet, (sfUint8) map->cpt_players_rev);
     }
+    return new_packet;
+}
+
+sfPacket* server_CreateDestroyPlayerPacket(unsigned int player_id)
+{
+    if (!player_id)
+    {
+        logging_Warning("server_CreateDestroyPlayerPacket", "No player_id sent, aborting packet creation");
+        return NULL;
+    }
+
+    sfPacket* new_packet = sfPacket_Create();
+    sfPacket_WriteUint8(new_packet, DISCONNECT);
+    sfPacket_WriteUint8(new_packet, player_id);
+
     return new_packet;
 }
 

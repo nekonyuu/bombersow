@@ -92,8 +92,18 @@ void client_Main(void* UserData)
                         sfSocketTCP* new_socket = sfSelectorTCP_GetSocketReady(client_data->map->tcp_selector, i);
                         sfSocketTCP_ReceivePacket(new_socket, response);
                         code = sfPacket_ReadUint8(response);
-                        if (code == PLAYER)
-                            map_AddPlayer(client_data->map, player_CreateFromPacket(client_data->map, response));
+                        switch(code)
+                        {
+                            case PLAYER:
+                                map_AddPlayer(client_data->map, player_CreateFromPacket(client_data->map, response));
+                                break;
+                            case DISCONNECT:
+                                map_DelPlayer(client_data->map, (unsigned int) sfPacket_ReadUint8(response));
+                                break;
+                            default:
+
+                                break;
+                        }
 
                         sfPacket_Clear(response);
                     }
