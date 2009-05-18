@@ -65,9 +65,7 @@ typedef struct OBJECT
     unsigned int objectID;          // ID de l'object (transmission réseau)
     unsigned int type;              // Type d'objet (0 = Plate-forme fixe, 1 = Plate-forme dyna, 2 = Piège, 3 = Arme, 4 = Ammo)
 
-    /*Voir pour inclusion dans une struct*/
-    Sprite* sprite;
-    /*************************************/
+    Sprite* sprite;                 // Sprite de l'objet
 
     float start_coord_x;            // Coordonnées de l'objet
     float start_coord_y;
@@ -84,11 +82,11 @@ typedef struct OBJECT
     unsigned int weapon_id;         // ID de l'arme liée au dessin (si type <= 2)
     unsigned int nb_ammo;           // Nombre de munitions ajoutées par le pack
 
-    sfBool spawned;                  // Affiché ou pas
+    sfBool spawned;                 // Affiché ou pas
 
-    _Bool gravity;
+    _Bool gravity;                  // Subit la gravité ?
 
-    struct QUAD_TREE* quad_node;
+    struct QUAD_TREE* quad_node;            // Noeud du struct QUAD_TREE de la map qui contient l'objet
     struct LIST_ELEMENT* list_node;
 
 } Object;
@@ -153,7 +151,7 @@ typedef struct PLAYER
 
     Sprite* sprite;
 
-    struct QUAD_TREE* quad_node;
+    struct QUAD_TREE* quad_node;            // Noeud du struct QUAD_TREE de la map qui contient le player
     struct LIST_ELEMENT* list_node;
 
     _Bool gravity;
@@ -173,7 +171,7 @@ typedef struct BULLET
 
     Sprite* draw_image;             // Image de la balle (Si Balle invisible, Sprite Transparent)
 
-    struct QUAD_TREE* quad_node;
+    struct QUAD_TREE* quad_node;            // Noeud du struct QUAD_TREE de la map qui contient le bullet
     struct LIST_ELEMENT* list_node;
 
     _Bool gravity;
@@ -213,7 +211,7 @@ typedef struct MAP
     sfClock* clock;                 // Timer d'actualisation
     float clock_time;               // Temps clock
 
-    struct QUAD_TREE* quad_tree;
+    struct QUAD_TREE* quad_tree;            // struct QUAD_TREE pour la gestion de collisions
 
 } Map;
 

@@ -36,12 +36,12 @@ void gravitysystem_PlayerUpdate(Map* map_, Player* player, Config* config)
     if(player->sprite->hauteur + player->coord_y + y <= config->height && player->coord_y + y > 0)
     {
         player_SetPosition(player, player->coord_x, player->coord_y + y);
-        quad_tree_Update(player, PLAYER);
+        quadtree_Update(player, PLAYER);
         Collision* collision = collision_Detection_Object(player, PLAYER);
         if(collision != NULL)
         {
             player_SetPosition(player, player->coord_x, player->coord_y - y);
-            quad_tree_Update(player, PLAYER);
+            quadtree_Update(player, PLAYER);
             speed_y = 0;
             player->jump = NO_JUMP;
         }
@@ -51,7 +51,7 @@ void gravitysystem_PlayerUpdate(Map* map_, Player* player, Config* config)
     else if(player->sprite->hauteur + player->coord_y + y > config->height)
     {
         player_SetPosition(player, player->coord_x, config->height - player->sprite->hauteur);
-        quad_tree_Update(player, PLAYER);
+        quadtree_Update(player, PLAYER);
         player->speed_y = 0;
         player->jump = NO_JUMP;
     }

@@ -31,6 +31,7 @@
 // Constructeur
 Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
 {
+    logging_Info("map_Create", "Base creation of the map...");
     Map* new_map = NULL;
     assert(new_map = (Map*) malloc(sizeof(Map)));
 
@@ -71,13 +72,15 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
 
     new_map->clock = sfClock_Create();
 
-    new_map->quad_tree = quad_tree_Create();
+    new_map->quad_tree = quadtree_Create();
     new_map->quad_tree->rect.Left = 0;
     new_map->quad_tree->rect.Top = 0;
     new_map->quad_tree->rect.Bottom = config->height;
     new_map->quad_tree->rect.Right = config->width;
 
     new_map->quad_tree->first = new_map->quad_tree;
+
+    logging_Info("map_Create", "Map created !");
 
     return new_map;
 }
@@ -130,7 +133,7 @@ void map_Destroy(Map* map2destroy)
         sfClock_Destroy(map2destroy->clock);
 
         logging_Info("map_Destroy", "Destroy quad tree...");
-        quad_tree_Destroy(map2destroy->quad_tree);
+        quadtree_Destroy(map2destroy->quad_tree);
 
         free_secure(map2destroy);
         logging_Info("map_Destroy", "Map destroyed !");
@@ -149,7 +152,7 @@ void map_AddObject(Map* map_, Object* object_)
 
     map_->objects_list[map_->nb_objects - 1] = object_;
 
-    quad_tree_Add(map_->quad_tree, object_, OBJECT);
+    quadtree_Add(map_->quad_tree, object_, OBJECT);
 }
 
 void map_DelObject(Map* map_, unsigned int object_id)
@@ -165,7 +168,7 @@ void map_DelObject(Map* map_, unsigned int object_id)
     for (int i = object_id; i < map_->nb_objects - 1; i++)
         map_->objects_list[i] = map_->objects_list[i + 1];
 
-    quad_tree_Delete_Elt(map_->objects_list[object_id], OBJECT);
+    quadtree_Delete_Elt(map_->objects_list[object_id], OBJECT);
 
     assert(map_->objects_list = (Object**) realloc(map_->objects_list, --map_->nb_objects * sizeof(Object*)));
 
@@ -173,14 +176,20 @@ void map_DelObject(Map* map_, unsigned int object_id)
 
 void map_AddPlayer(Map* map_, Player* player_)
 {
+    if(!map_ && !player_)
+    {
+        logging_Warning("map_AddPlayer", "Map or Player object sent NULL");
+    }
     if (map_->max_players > map_->nb_players)
     {
+        logging_Info("map_AddPlayer", "Adding player...");
         map_->nb_players++;
         map_->players_list[map_->nb_players - 1] = player_;
         if (map_->players_list[map_->nb_players - 1]->player_id == 0)
             map_->players_list[map_->nb_players - 1]->player_id = ++map_->cpt_players_rev;
 
-        quad_tree_Add(map_->quad_tree, player_, PLAYER);
+        quadtree_Add(map_->quad_tree, player_, PLAYER);
+        logging_Info("map_AddPlayer", "Player added !");
     }
 }
 
@@ -195,7 +204,7 @@ void map_DelPlayer(Map* map_, unsigned int player_id)
     }
 
     logging_Info("map_DelPlayer", "Remove player from QuadTree...");
-    quad_tree_Delete_Elt(ptr, PLAYER);
+    quadtree_Delete_Elt(ptr, PLAYER);
 
     logging_Info("map_DelPlayer", "Destroy player...");
     player_Destroy(ptr);
@@ -221,7 +230,7 @@ void map_AddBullet(Map* map_, Bullet* bullet_)
 
     map_->bullets_list[map_->nb_bullets - 1] = bullet_;
 
-    quad_tree_Add(map_->quad_tree, bullet_, BULLET);
+    quadtree_Add(map_->quad_tree, bullet_, BULLET);
 }
 
 void map_DelBullet(Map* map_, unsigned int bullet_id)
@@ -237,7 +246,7 @@ void map_DelBullet(Map* map_, unsigned int bullet_id)
     for (int i = bullet_id; i < map_->nb_bullets - 1; i++)
         map_->bullets_list[i] = map_->bullets_list[i + 1];
 
-    quad_tree_Delete_Elt(map_->bullets_list[bullet_id], BULLET);
+    quadtree_Delete_Elt(map_->bullets_list[bullet_id], BULLET);
 
     assert(map_->bullets_list = (Bullet**) realloc(map_->bullets_list, --map_->nb_bullets * sizeof(Bullet*)));
 }
@@ -250,7 +259,10 @@ void map_UpdateDisconnectedPlayers(void* UserData)
     {
         for (int i = 0; i < map->nb_players; i++)
             if (!map->players_list[i]->connected)
+            {
+                logging_Info("map_UpdateDisconnectedPlayers", "Destroying flagged player...");
                 map_DelPlayer(map, map->players_list[i]->player_id);
+            }
 
         sfSleep(1.0f);
     }

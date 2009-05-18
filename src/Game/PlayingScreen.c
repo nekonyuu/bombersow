@@ -81,7 +81,7 @@ _Bool display_Playing(sfRenderWindow* Game, Config* config)
 
         gravitysystem_WorldUpdate(map, config);
         map_Draw(Game, map);
-        //quad_tree_Draw(Game, map->quad_tree);
+        //quadtree_Draw(Game, map->quadtree);
 
         if(config->show_fps)
             logging_FPSShow(Game);

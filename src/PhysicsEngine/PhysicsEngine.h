@@ -76,18 +76,18 @@ typedef struct QUAD_TREE {
     struct QUAD_TREE* parent;
     struct QUAD_TREE* first;
 
-}Quad_tree;
+} QuadTree;
 
-Quad_tree* quad_tree_Create();
-void quad_tree_Destroy(Quad_tree*);
-void quad_tree_Generate(Quad_tree*, Map*);
-void quad_tree_Add(Quad_tree*, void*, int);
-void quad_tree_Delete_Node(Quad_tree*);
-void quad_tree_Check_Node(Quad_tree*, _Bool*);
-void quad_tree_Delete_Elt(void*, int);
-void quad_tree_Update(void*, int);
-void quad_tree_Print(Quad_tree*);
-void quad_tree_Draw(sfRenderWindow*, Quad_tree*);
+QuadTree* quadtree_Create();
+void quadtree_Destroy(QuadTree*);
+void quadtree_Generate(QuadTree*, Map*);
+void quadtree_Add(QuadTree*, void*, int);
+void quadtree_Delete_Node(QuadTree*);
+void quadtree_Check_Node(QuadTree*, _Bool*);
+void quadtree_Delete_Elt(void*, int);
+void quadtree_Update(void*, int);
+void quadtree_Print(QuadTree*);
+void quadtree_Draw(sfRenderWindow*, QuadTree*);
 
 _Bool IntRect_Contains(sfIntRect*, sfIntRect*);
 

@@ -49,8 +49,8 @@ void collision_Destroy(Collision* collision){
 
 Collision* collision_Detection_Object(void* obj_, int type){
 
-    Quad_tree* node = NULL;
-    Quad_tree* node_obj = NULL;
+    QuadTree* node = NULL;
+    QuadTree* node_obj = NULL;
     sfIntRect rect_obj;
 
     if(type == OBJECT){
@@ -138,7 +138,7 @@ Collision* collision_Detection_Object(void* obj_, int type){
 
 }
 
-void collision_Detection_ObjectArb(void* obj_, int type, Quad_tree* node, Collision* collision)
+void collision_Detection_ObjectArb(void* obj_, int type, QuadTree* node, Collision* collision)
 {
 
     if( (collision->type == OBJECT && collision->object == NULL) && node != NULL)

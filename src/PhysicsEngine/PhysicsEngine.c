@@ -173,11 +173,11 @@ void list_Print(List* list)
 }
 
 /*
-Quad_tree* quad_tree_Create()
+QuadTree* quadtree_Create()
 {
 
-    Quad_tree* quad = NULL;
-    assert(quad = (Quad_tree*)malloc(sizeof(Quad_tree)));
+    QuadTree* quad = NULL;
+    assert(quad = (QuadTree*)malloc(sizeof(QuadTree)));
 
     quad->bullet = NULL;
     quad->object = NULL;
@@ -203,7 +203,7 @@ Quad_tree* quad_tree_Create()
 
 }
 
-void quad_tree_Destroy(Quad_tree* quad)
+void quadtree_Destroy(QuadTree* quad)
 {
     if (quad != NULL)
     {
@@ -212,12 +212,12 @@ void quad_tree_Destroy(Quad_tree* quad)
         list_Destroy(quad->player);
 
         for (int i = 0; i < 4; i++)
-            quad_tree_Destroy(quad->noeuds[i]);
+            quadtree_Destroy(quad->noeuds[i]);
         free_secure(quad);
     }
 }
 
-void quad_tree_Add_Node(Quad_tree* quad, void* obj_, int type)
+void quadtree_Add_Node(QuadTree* quad, void* obj_, int type)
 {
     if (type == OBJECT)
     {
@@ -239,38 +239,38 @@ void quad_tree_Add_Node(Quad_tree* quad, void* obj_, int type)
     }
 }
 
-void quad_tree_Create_Node(Quad_tree* quad)
+void quadtree_Create_Node(QuadTree* quad)
 {
     sfIntRect rectNW = {quad->rect.Left, quad->rect.Top, (quad->rect.Right+quad->rect.Left)/2, (quad->rect.Bottom+quad->rect.Top)/2};
-    quad->noeuds[NW] = quad_tree_Create();
+    quad->noeuds[NW] = quadtree_Create();
     quad->noeuds[NW]->rect = rectNW;
     quad->noeuds[NW]->parent = quad;
     quad->noeuds[NW]->first = quad->first;
     quad->noeuds[NW]->depth = quad->depth++;
 
     sfIntRect rectNE = {(quad->rect.Right+quad->rect.Left)/2, quad->rect.Top, quad->rect.Right, (quad->rect.Bottom+quad->rect.Top)/2};
-    quad->noeuds[NE] = quad_tree_Create();
+    quad->noeuds[NE] = quadtree_Create();
     quad->noeuds[NE]->rect = rectNE;
     quad->noeuds[NE]->parent = quad;
     quad->noeuds[NE]->first = quad->first;
     quad->noeuds[NE]->depth = quad->depth++;
 
     sfIntRect rectSW = {quad->rect.Left, (quad->rect.Bottom+quad->rect.Top)/2, (quad->rect.Right+quad->rect.Left)/2, quad->rect.Bottom};
-    quad->noeuds[SW] = quad_tree_Create();
+    quad->noeuds[SW] = quadtree_Create();
     quad->noeuds[SW]->rect = rectSW;
     quad->noeuds[SW]->parent = quad;
     quad->noeuds[SW]->first = quad->first;
     quad->noeuds[SW]->depth = quad->depth++;
 
     sfIntRect rectSE = {(quad->rect.Right+quad->rect.Left)/2, (quad->rect.Bottom+quad->rect.Top)/2, quad->rect.Right, quad->rect.Bottom};
-    quad->noeuds[SE] = quad_tree_Create();
+    quad->noeuds[SE] = quadtree_Create();
     quad->noeuds[SE]->rect = rectSE;
     quad->noeuds[SE]->parent = quad;
     quad->noeuds[SE]->first = quad->first;
     quad->noeuds[SE]->depth = quad->depth++;
 }
 
-void quad_tree_Add(Quad_tree* quad, void* obj_, int type)
+void quadtree_Add(QuadTree* quad, void* obj_, int type)
 {
 
     sfIntRect rect_obj;
@@ -306,56 +306,56 @@ void quad_tree_Add(Quad_tree* quad, void* obj_, int type)
         {
             if(quad->object->taille+quad->player->taille+quad->bullet->taille < quad->max_object)
             {
-                quad_tree_Add_Node(quad, obj_, type);
+                quadtree_Add_Node(quad, obj_, type);
             }
             else
             {
                 if(quad->depth < quad->max_depth)
                 {
-                    quad_tree_Create_Node(quad);
+                    quadtree_Create_Node(quad);
 
                     do{
                         List_element* elt = list_Get(quad->player);
-                        quad_tree_Add(quad->noeuds[NW], elt->elt, PLAYER);
-                        quad_tree_Add(quad->noeuds[SW], elt->elt, PLAYER);
-                        quad_tree_Add(quad->noeuds[NE], elt->elt, PLAYER);
-                        quad_tree_Add(quad->noeuds[SE], elt->elt, PLAYER);
+                        quadtree_Add(quad->noeuds[NW], elt->elt, PLAYER);
+                        quadtree_Add(quad->noeuds[SW], elt->elt, PLAYER);
+                        quadtree_Add(quad->noeuds[NE], elt->elt, PLAYER);
+                        quadtree_Add(quad->noeuds[SE], elt->elt, PLAYER);
                     }while(list_Next(quad->player));
                     list_Destroy(quad->player);
                     quad->player = NULL;
 
-                    quad_tree_Add(quad->noeuds[NW], obj_, type);
-                    quad_tree_Add(quad->noeuds[SW], obj_, type);
-                    quad_tree_Add(quad->noeuds[NE], obj_, type);
-                    quad_tree_Add(quad->noeuds[SE], obj_, type);
+                    quadtree_Add(quad->noeuds[NW], obj_, type);
+                    quadtree_Add(quad->noeuds[SW], obj_, type);
+                    quadtree_Add(quad->noeuds[NE], obj_, type);
+                    quadtree_Add(quad->noeuds[SE], obj_, type);
                 }
                 else
                 {
-                    quad_tree_Add_Node(quad, obj_, type);
+                    quadtree_Add_Node(quad, obj_, type);
                 }
             }
         }
         else
         {
-            quad_tree_Add(quad->noeuds[NW], obj_, type);
-            quad_tree_Add(quad->noeuds[SW], obj_, type);
-            quad_tree_Add(quad->noeuds[NE], obj_, type);
-            quad_tree_Add(quad->noeuds[SE], obj_, type);
+            quadtree_Add(quad->noeuds[NW], obj_, type);
+            quadtree_Add(quad->noeuds[SW], obj_, type);
+            quadtree_Add(quad->noeuds[NE], obj_, type);
+            quadtree_Add(quad->noeuds[SE], obj_, type);
         }
     }
 }
 
-void quad_tree_Print(Quad_tree* quad)
+void quadtree_Print(QuadTree* quad)
 {
     if (quad != NULL)
     {
         printf("%d %d %d %d\n", quad->rect.Left, quad->rect.Top, quad->rect.Right, quad->rect.Bottom);
         for (int i = 0; i < 4; i++)
-            quad_tree_Print(quad->noeuds[i]);
+            quadtree_Print(quad->noeuds[i]);
     }
 }
 
-void quad_tree_Draw(sfRenderWindow* Game, Quad_tree* quad)
+void quadtree_Draw(sfRenderWindow* Game, QuadTree* quad)
 {
     if (quad != NULL)
     {
@@ -371,53 +371,53 @@ void quad_tree_Draw(sfRenderWindow* Game, Quad_tree* quad)
         sfRenderWindow_DrawShape(Game, test);
         sfShape_Destroy(test);
         for (int i = 0; i < 4; i++)
-            quad_tree_Draw(Game, quad->noeuds[i]);
+            quadtree_Draw(Game, quad->noeuds[i]);
     }
 }
 
-void quad_tree_Generate(Quad_tree* quad, Map* map)
+void quadtree_Generate(QuadTree* quad, Map* map)
 {
 
     for (int i = 0; i < map->nb_objects; i++)
     {
-        quad_tree_Add(quad, map->objects_list[i], OBJECT);
+        quadtree_Add(quad, map->objects_list[i], OBJECT);
     }
 
     for (int i = 0; i < map->nb_players; i++)
     {
-        quad_tree_Add(quad, map->players_list[i], PLAYER);
+        quadtree_Add(quad, map->players_list[i], PLAYER);
     }
 
     for (int i = 0; i < map->nb_bullets; i++)
     {
-        quad_tree_Add(quad, map->bullets_list[i], BULLET);
+        quadtree_Add(quad, map->bullets_list[i], BULLET);
     }
 }
 
-void quad_tree_Delete_Elt(void* obj_, int type)
+void quadtree_Delete_Elt(void* obj_, int type)
 {
     if (type == OBJECT)
     {
         Object* obj = obj_;
         list_Delete(obj->quad_node->object, obj->list_node);
-        quad_tree_Delete_Node(obj->quad_node);
+        quadtree_Delete_Node(obj->quad_node);
     }
     else if (type == PLAYER)
     {
         Player* obj = obj_;
         list_Delete(obj->quad_node->player, obj->list_node);
-        quad_tree_Delete_Node(obj->quad_node);
+        quadtree_Delete_Node(obj->quad_node);
     }
     else
     {
         Bullet* obj = obj_;
         list_Delete(obj->quad_node->bullet, obj->list_node);
-        quad_tree_Delete_Node(obj->quad_node);
+        quadtree_Delete_Node(obj->quad_node);
     }
 
 }
 
-void quad_tree_Check_Node(Quad_tree* quad, _Bool* check)
+void quadtree_Check_Node(QuadTree* quad, _Bool* check)
 {
 
     if (*check == 0)
@@ -428,7 +428,7 @@ void quad_tree_Check_Node(Quad_tree* quad, _Bool* check)
         if (quad->object->taille == 0 && quad->player->taille == 0 && quad->bullet->taille == 0)
         {
             for (int i = 0; i < 4; i++)
-                quad_tree_Check_Node(quad->noeuds[i], check);
+                quadtree_Check_Node(quad->noeuds[i], check);
         }
         else
         {
@@ -437,30 +437,30 @@ void quad_tree_Check_Node(Quad_tree* quad, _Bool* check)
     }
 }
 
-void quad_tree_Delete_Node(Quad_tree* quad)
+void quadtree_Delete_Node(QuadTree* quad)
 {
 
     _Bool test;
     test = 1;
-    quad_tree_Check_Node(quad, &test);
+    quadtree_Check_Node(quad, &test);
     if (test)
     {
         for (int i = 0; i < 4; i++)
         {
-            quad_tree_Destroy(quad->noeuds[i]);
+            quadtree_Destroy(quad->noeuds[i]);
             quad->noeuds[i] = NULL;
         }
-        quad_tree_Delete_Node(quad->parent);
+        quadtree_Delete_Node(quad->parent);
     }
 
 }
 
 
-void quad_tree_Update(void* obj_, int type)
+void quadtree_Update(void* obj_, int type)
 {
 
     sfIntRect rect_obj;
-    Quad_tree* quad = NULL;
+    QuadTree* quad = NULL;
     if (type == OBJECT)
     {
         Object* obj = obj_;
@@ -482,8 +482,8 @@ void quad_tree_Update(void* obj_, int type)
 
     if (!IntRect_Contains(&quad->rect, &rect_obj))
     {
-        quad_tree_Delete_Elt(obj_, type);
-        quad_tree_Add(quad->first, obj_, type);
+        quadtree_Delete_Elt(obj_, type);
+        quadtree_Add(quad->first, obj_, type);
     }
 
 }
@@ -502,11 +502,11 @@ int IntRect_Contains(sfIntRect* rect, sfIntRect* rect2)
 }
 */
 
-Quad_tree* quad_tree_Create()
+QuadTree* quadtree_Create()
 {
 
-    Quad_tree* quad = NULL;
-    assert(quad = (Quad_tree*)malloc(sizeof(Quad_tree)));
+    QuadTree* quad = NULL;
+    assert(quad = (QuadTree*)malloc(sizeof(QuadTree)));
 
     quad->bullet = NULL;
     quad->object = NULL;
@@ -528,7 +528,7 @@ Quad_tree* quad_tree_Create()
 
 }
 
-void quad_tree_Destroy(Quad_tree* quad)
+void quadtree_Destroy(QuadTree* quad)
 {
     if (quad != NULL)
     {
@@ -537,12 +537,12 @@ void quad_tree_Destroy(Quad_tree* quad)
         list_Destroy(quad->player);
 
         for (int i = 0; i < 4; i++)
-            quad_tree_Destroy(quad->noeuds[i]);
+            quadtree_Destroy(quad->noeuds[i]);
         free_secure(quad);
     }
 }
 
-void quad_tree_Add(Quad_tree* quad, void* obj_, int type)
+void quadtree_Add(QuadTree* quad, void* obj_, int type)
 {
 
     sfIntRect rect_obj;
@@ -577,25 +577,25 @@ void quad_tree_Add(Quad_tree* quad, void* obj_, int type)
         if (quad->noeuds[NW] == NULL)
         {
             sfIntRect rectNW = {quad->rect.Left, quad->rect.Top, (quad->rect.Right+quad->rect.Left)/2, (quad->rect.Bottom+quad->rect.Top)/2};
-            quad->noeuds[NW] = quad_tree_Create();
+            quad->noeuds[NW] = quadtree_Create();
             quad->noeuds[NW]->rect = rectNW;
             quad->noeuds[NW]->parent = quad;
             quad->noeuds[NW]->first = quad->first;
 
             sfIntRect rectNE = {(quad->rect.Right+quad->rect.Left)/2, quad->rect.Top, quad->rect.Right, (quad->rect.Bottom+quad->rect.Top)/2};
-            quad->noeuds[NE] = quad_tree_Create();
+            quad->noeuds[NE] = quadtree_Create();
             quad->noeuds[NE]->rect = rectNE;
             quad->noeuds[NE]->parent = quad;
             quad->noeuds[NE]->first = quad->first;
 
             sfIntRect rectSW = {quad->rect.Left, (quad->rect.Bottom+quad->rect.Top)/2, (quad->rect.Right+quad->rect.Left)/2, quad->rect.Bottom};
-            quad->noeuds[SW] = quad_tree_Create();
+            quad->noeuds[SW] = quadtree_Create();
             quad->noeuds[SW]->rect = rectSW;
             quad->noeuds[SW]->parent = quad;
             quad->noeuds[SW]->first = quad->first;
 
             sfIntRect rectSE = {(quad->rect.Right+quad->rect.Left)/2, (quad->rect.Bottom+quad->rect.Top)/2, quad->rect.Right, quad->rect.Bottom};
-            quad->noeuds[SE] = quad_tree_Create();
+            quad->noeuds[SE] = quadtree_Create();
             quad->noeuds[SE]->rect = rectSE;
             quad->noeuds[SE]->parent = quad;
             quad->noeuds[SE]->first = quad->first;
@@ -613,7 +613,7 @@ void quad_tree_Add(Quad_tree* quad, void* obj_, int type)
         if (nombre_noeuds == 1)
         {
             for (int i = 0; i < 4; i++)
-                quad_tree_Add(quad->noeuds[i], obj_, type);
+                quadtree_Add(quad->noeuds[i], obj_, type);
         }
         else
         {
@@ -640,17 +640,17 @@ void quad_tree_Add(Quad_tree* quad, void* obj_, int type)
     }
 }
 
-void quad_tree_Print(Quad_tree* quad)
+void quadtree_Print(QuadTree* quad)
 {
     if (quad != NULL)
     {
         printf("%d %d %d %d\n", quad->rect.Left, quad->rect.Top, quad->rect.Right, quad->rect.Bottom);
         for (int i = 0; i < 4; i++)
-            quad_tree_Print(quad->noeuds[i]);
+            quadtree_Print(quad->noeuds[i]);
     }
 }
 
-void quad_tree_Draw(sfRenderWindow* Game, Quad_tree* quad)
+void quadtree_Draw(sfRenderWindow* Game, QuadTree* quad)
 {
     if (quad != NULL)
     {
@@ -666,53 +666,53 @@ void quad_tree_Draw(sfRenderWindow* Game, Quad_tree* quad)
         sfRenderWindow_DrawShape(Game, test);
         sfShape_Destroy(test);
         for (int i = 0; i < 4; i++)
-            quad_tree_Draw(Game, quad->noeuds[i]);
+            quadtree_Draw(Game, quad->noeuds[i]);
     }
 }
 
-void quad_tree_Generate(Quad_tree* quad, Map* map)
+void quadtree_Generate(QuadTree* quad, Map* map)
 {
 
     for (int i = 0; i < map->nb_objects; i++)
     {
-        quad_tree_Add(quad, map->objects_list[i], OBJECT);
+        quadtree_Add(quad, map->objects_list[i], OBJECT);
     }
 
     for (int i = 0; i < map->nb_players; i++)
     {
-        quad_tree_Add(quad, map->players_list[i], PLAYER);
+        quadtree_Add(quad, map->players_list[i], PLAYER);
     }
 
     for (int i = 0; i < map->nb_bullets; i++)
     {
-        quad_tree_Add(quad, map->bullets_list[i], BULLET);
+        quadtree_Add(quad, map->bullets_list[i], BULLET);
     }
 }
 
-void quad_tree_Delete_Elt(void* obj_, int type)
+void quadtree_Delete_Elt(void* obj_, int type)
 {
     if (type == OBJECT)
     {
         Object* obj = obj_;
         list_Delete(obj->quad_node->object, obj->list_node);
-        quad_tree_Delete_Node(obj->quad_node);
+        quadtree_Delete_Node(obj->quad_node);
     }
     else if (type == PLAYER)
     {
         Player* obj = obj_;
         list_Delete(obj->quad_node->player, obj->list_node);
-        quad_tree_Delete_Node(obj->quad_node);
+        quadtree_Delete_Node(obj->quad_node);
     }
     else
     {
         Bullet* obj = obj_;
         list_Delete(obj->quad_node->bullet, obj->list_node);
-        quad_tree_Delete_Node(obj->quad_node);
+        quadtree_Delete_Node(obj->quad_node);
     }
 
 }
 
-void quad_tree_Check_Node(Quad_tree* quad, _Bool* check)
+void quadtree_Check_Node(QuadTree* quad, _Bool* check)
 {
 
     if (*check == 0)
@@ -723,7 +723,7 @@ void quad_tree_Check_Node(Quad_tree* quad, _Bool* check)
         if (quad->object->taille == 0 && quad->player->taille == 0 && quad->bullet->taille == 0)
         {
             for (int i = 0; i < 4; i++)
-                quad_tree_Check_Node(quad->noeuds[i], check);
+                quadtree_Check_Node(quad->noeuds[i], check);
         }
         else
         {
@@ -732,29 +732,29 @@ void quad_tree_Check_Node(Quad_tree* quad, _Bool* check)
     }
 }
 
-void quad_tree_Delete_Node(Quad_tree* quad)
+void quadtree_Delete_Node(QuadTree* quad)
 {
 
     _Bool test;
     test = 1;
-    quad_tree_Check_Node(quad, &test);
+    quadtree_Check_Node(quad, &test);
     if (test)
     {
         for (int i = 0; i < 4; i++)
         {
-            quad_tree_Destroy(quad->noeuds[i]);
+            quadtree_Destroy(quad->noeuds[i]);
             quad->noeuds[i] = NULL;
         }
-        quad_tree_Delete_Node(quad->parent);
+        quadtree_Delete_Node(quad->parent);
     }
 
 }
 
-void quad_tree_Update(void* obj_, int type)
+void quadtree_Update(void* obj_, int type)
 {
 
     sfIntRect rect_obj;
-    Quad_tree* quad = NULL;
+    QuadTree* quad = NULL;
     if (type == OBJECT)
     {
         Object* obj = obj_;
@@ -776,8 +776,8 @@ void quad_tree_Update(void* obj_, int type)
 
     if (!IntRect_Contains(&quad->rect, &rect_obj))
     {
-        quad_tree_Delete_Elt(obj_, type);
-        quad_tree_Add(quad->first, obj_, type);
+        quadtree_Delete_Elt(obj_, type);
+        quadtree_Add(quad->first, obj_, type);
     }
 
 }
