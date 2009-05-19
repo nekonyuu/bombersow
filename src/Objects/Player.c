@@ -24,7 +24,7 @@
 #include <string.h>
 #include "BaseSystem/Logging.h"
 #include "GraphicEngine/Draw.h"
-#include "Objects/GameObjects.h"
+#include "PhysicsEngine/CollisionSystem.h"
 
 // Constructeur
 Player* player_Create(char* name, unsigned int current_weapon)
@@ -113,7 +113,7 @@ void player_Destroy(Player* player2destroy)
 // TODO : gestion collisions
 void player_Displace(Player* player_, Direction move, float time, Config* config)
 {
-    float temp_x, temp_y;
+    float temp_x, temp_y, old_x = player_->coord_x, old_y = player_->coord_y, final_x, final_y;
 
     if (!player_->jetpack_mode)
     {
@@ -143,12 +143,14 @@ void player_Displace(Player* player_, Direction move, float time, Config* config
         if (temp_x + player_->sprite->largeur <= config->width)
         {
             if (temp_x < 0)
-                player_->coord_x = 0;
+                final_x = 0;
             else
-                player_->coord_x = temp_x;
+                final_x = temp_x;
         }
         else
-            player_->coord_x = config->width - player_->sprite->largeur;
+            final_x = config->width - player_->sprite->largeur;
+
+        final_y = player_->coord_y;
     }
     else
     {
@@ -157,13 +159,27 @@ void player_Displace(Player* player_, Direction move, float time, Config* config
         if (temp_y + player_->sprite->hauteur <= config->height)
         {
             if (temp_y < 0)
-                player_->coord_y = 0;
+                final_y = 0;
             else
-                player_->coord_y = temp_y;
+                final_y = temp_y;
         }
         else
-            player_->coord_y = config->height - player_->sprite->hauteur;
+            final_y = config->height - player_->sprite->hauteur;
     }
+
+    player_SetPosition(player_, final_x, final_y);
+    quadtree_Update(player_, PLAYER);
+    Collision* collision = collision_Detection_Object(player_, PLAYER);
+    if(collision != NULL)
+    {
+        final_x = old_x;
+        final_y = old_y;
+        player_SetPosition(player_, old_x, old_y);
+        quadtree_Update(player_, PLAYER);
+        player_->jump = NO_JUMP;
+    }
+    collision_Destroy(collision);
+
     return;
 }
 

@@ -24,7 +24,6 @@
 #ifndef COLLISIONSYSTEM_H
 #define COLLISIONSYSTEM_H
 
-#include "Objects/GameObjects.h"
 #include "PhysicsEngine/PhysicsEngine.h"
 
 typedef struct COLLISION {

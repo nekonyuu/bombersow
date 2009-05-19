@@ -27,7 +27,8 @@
 #include "PhysicsEngine/CollisionSystem.h"
 #include "Objects/GameObjects.h"
 
-Collision* collision_Create(){
+Collision* collision_Create()
+{
 
     Collision* collision = NULL;
     assert(collision = (Collision*)malloc(sizeof(Collision)));
@@ -40,28 +41,34 @@ Collision* collision_Create(){
     return collision;
 }
 
-void collision_Destroy(Collision* collision){
+void collision_Destroy(Collision* collision)
+{
 
     free_secure(collision);
     collision = NULL;
 
 }
 
-Collision* collision_Detection_Object(void* obj_, int type){
-
+Collision* collision_Detection_Object(void* obj_, int type)
+{
     QuadTree* node = NULL;
     QuadTree* node_obj = NULL;
     sfIntRect rect_obj;
 
-    if(type == OBJECT){
+    if (type == OBJECT)
+    {
         Object* obj = obj_;
         rect_obj = sprite_GetRect(obj->sprite);
         node = obj->quad_node;
-    }else if(type == PLAYER){
+    }
+    else if (type == PLAYER)
+    {
         Player* obj = obj_;
         rect_obj = sprite_GetRect(obj->sprite);
         node = obj->quad_node;
-    }else{
+    }
+    else
+    {
         Bullet* obj = obj_;
         rect_obj = sprite_GetRect(obj->draw_image);
         node = obj->quad_node;
@@ -79,13 +86,15 @@ Collision* collision_Detection_Object(void* obj_, int type){
 
     int nbr = 0;
 
-    while(node != NULL){
-
+    while (node != NULL)
+    {
         list_temp = (node->object != NULL) ? node->object->first : NULL;
-        while(list_temp != NULL && list_temp->elt != NULL){
+        while (list_temp != NULL && list_temp->elt != NULL)
+        {
             object_temp = list_temp->elt;
             sfIntRect rect_obj2 = sprite_GetRect(object_temp->sprite);
-            if( object_temp != obj_ && sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) ){
+            if ( object_temp != obj_ && sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) )
+            {
                 collision->type = OBJECT;
                 collision->object = object_temp;
                 return collision;
@@ -94,12 +103,13 @@ Collision* collision_Detection_Object(void* obj_, int type){
             list_temp = list_temp->next;
         }
 
-
         list_temp = (node->bullet != NULL) ? node->bullet->first : NULL;
-        while(list_temp != NULL && list_temp->elt != NULL){
+        while (list_temp != NULL && list_temp->elt != NULL)
+        {
             bullet_temp = list_temp->elt;
             sfIntRect rect_obj2 = sprite_GetRect(bullet_temp->draw_image);
-            if( bullet_temp != obj_ && sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) ){
+            if ( bullet_temp != obj_ && sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) )
+            {
                 collision->type = BULLET;
                 collision->bullet = bullet_temp;
                 return collision;
@@ -110,10 +120,12 @@ Collision* collision_Detection_Object(void* obj_, int type){
 
         nbr = 0;
         list_temp = (node->player != NULL) ? node->player->first : NULL;
-        while(list_temp != NULL && list_temp->elt != NULL){
+        while (list_temp != NULL && list_temp->elt != NULL)
+        {
             player_temp = list_temp->elt;
             sfIntRect rect_obj2 = sprite_GetRect(player_temp->sprite);
-            if( player_temp != obj_  && sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) ){
+            if ( player_temp != obj_  && sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) )
+            {
                 collision->type = PLAYER;
                 collision->player = player_temp;
                 return collision;
@@ -125,33 +137,36 @@ Collision* collision_Detection_Object(void* obj_, int type){
         node = node->parent;
     }
 
-    for(int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++)
     {
         collision_Detection_ObjectArb(obj_, type, node_obj->noeuds[i], collision);
     }
 
-    if( collision->type != OBJECT || collision->object != NULL )
+    if ( collision->type != OBJECT || collision->object != NULL )
         return collision;
 
     collision_Destroy(collision);
     return NULL;
-
 }
 
 void collision_Detection_ObjectArb(void* obj_, int type, QuadTree* node, Collision* collision)
 {
-
-    if( (collision->type == OBJECT && collision->object == NULL) && node != NULL)
+    if ( (collision->type == OBJECT && collision->object == NULL) && node != NULL)
     {
         sfIntRect rect_obj;
 
-        if(type == OBJECT){
+        if (type == OBJECT)
+        {
             Object* obj = obj_;
             rect_obj = sprite_GetRect(obj->sprite);
-        }else if(type == PLAYER){
+        }
+        else if (type == PLAYER)
+        {
             Player* obj = obj_;
             rect_obj = sprite_GetRect(obj->sprite);
-        }else{
+        }
+        else
+        {
             Bullet* obj = obj_;
             rect_obj = sprite_GetRect(obj->draw_image);
         }
@@ -164,10 +179,12 @@ void collision_Detection_ObjectArb(void* obj_, int type, QuadTree* node, Collisi
         Bullet* bullet_temp = NULL;
 
         list_temp = (node->object != NULL) ? node->object->first : NULL;
-        while(list_temp != NULL && list_temp->elt != NULL){
+        while (list_temp != NULL && list_temp->elt != NULL)
+        {
             object_temp = list_temp->elt;
             sfIntRect rect_obj2 = sprite_GetRect(object_temp->sprite);
-            if( object_temp != obj_ && sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) ){
+            if ( object_temp != obj_ && sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) )
+            {
                 collision->type = OBJECT;
                 collision->object = object_temp;
                 return;
@@ -178,10 +195,12 @@ void collision_Detection_ObjectArb(void* obj_, int type, QuadTree* node, Collisi
 
 
         list_temp = (node->bullet != NULL) ? node->bullet->first : NULL;
-        while(list_temp != NULL && list_temp->elt != NULL){
+        while (list_temp != NULL && list_temp->elt != NULL)
+        {
             bullet_temp = list_temp->elt;
             sfIntRect rect_obj2 = sprite_GetRect(bullet_temp->draw_image);
-            if( bullet_temp != obj_ && sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) ){
+            if ( bullet_temp != obj_ && sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) )
+            {
                 collision->type = BULLET;
                 collision->bullet = bullet_temp;
                 return;
@@ -191,10 +210,12 @@ void collision_Detection_ObjectArb(void* obj_, int type, QuadTree* node, Collisi
         }
 
         list_temp = (node->player != NULL) ? node->player->first : NULL;
-        while(list_temp != NULL && list_temp->elt != NULL){
+        while (list_temp != NULL && list_temp->elt != NULL)
+        {
             player_temp = list_temp->elt;
             sfIntRect rect_obj2 = sprite_GetRect(player_temp->sprite);
-            if( player_temp != obj_  && sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) ){
+            if ( player_temp != obj_  && sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) )
+            {
                 collision->type = PLAYER;
                 collision->player = player_temp;
                 return;
@@ -203,10 +224,10 @@ void collision_Detection_ObjectArb(void* obj_, int type, QuadTree* node, Collisi
             list_temp = list_temp->next;
         }
 
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
             collision_Detection_ObjectArb(obj_, type, node->noeuds[i], collision);
 
     }
-
+    return;
 }
 

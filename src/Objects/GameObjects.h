@@ -53,9 +53,9 @@ typedef struct PACKET_LIST
 // Structure contenant la liste des joueurs connectés pour le salon
 typedef struct PLAYERS_LIST
 {
-    sfString** players;         // Nom des joueurs
-    unsigned int max_players;   // Taille du tableau
-    unsigned int nb_players;    // Nombre de joueurs
+    sfString** players;             // Nom des joueurs
+    unsigned int max_players;       // Taille du tableau
+    unsigned int nb_players;        // Nombre de joueurs
 } PlayersList;
 
 enum { PLATFORM, PLATFORM_DYNA, TRAP, WEAPON, AMMO };
@@ -86,7 +86,7 @@ typedef struct OBJECT
 
     _Bool gravity;                  // Subit la gravité ?
 
-    struct QUAD_TREE* quad_node;            // Noeud du struct QUAD_TREE de la map qui contient l'objet
+    struct QUAD_TREE* quad_node;    // Noeud du struct QUAD_TREE de la map qui contient l'objet
     struct LIST_ELEMENT* list_node;
 
 } Object;
@@ -151,7 +151,7 @@ typedef struct PLAYER
 
     Sprite* sprite;
 
-    struct QUAD_TREE* quad_node;            // Noeud du struct QUAD_TREE de la map qui contient le player
+    struct QUAD_TREE* quad_node;    // Noeud du struct QUAD_TREE de la map qui contient le player
     struct LIST_ELEMENT* list_node;
 
     _Bool gravity;
@@ -171,7 +171,7 @@ typedef struct BULLET
 
     Sprite* draw_image;             // Image de la balle (Si Balle invisible, Sprite Transparent)
 
-    struct QUAD_TREE* quad_node;            // Noeud du struct QUAD_TREE de la map qui contient le bullet
+    struct QUAD_TREE* quad_node;    // Noeud du struct QUAD_TREE de la map qui contient le bullet
     struct LIST_ELEMENT* list_node;
 
     _Bool gravity;
@@ -211,7 +211,7 @@ typedef struct MAP
     sfClock* clock;                 // Timer d'actualisation
     float clock_time;               // Temps clock
 
-    struct QUAD_TREE* quad_tree;            // struct QUAD_TREE pour la gestion de collisions
+    struct QUAD_TREE* quad_tree;    // struct QUAD_TREE pour la gestion de collisions
 
 } Map;
 

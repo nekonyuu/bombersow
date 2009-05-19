@@ -26,7 +26,7 @@
 
 #include "Objects/GameObjects.h"
 
-typedef enum PHYSICS_TYPE {OBJECT, PLAYER, BULLET}Physics_type;
+typedef enum PHYSICS_TYPE {OBJECT, PLAYER, BULLET} Physics_type;
 
 typedef enum QUAD_POS {NW, NE, SW, SE} Quad_pos;
 
