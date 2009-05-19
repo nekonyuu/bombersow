@@ -236,6 +236,7 @@ ClientData* clientdata_Create(char* player_name, char* ip, unsigned int port, Co
     client_data->ip = sfIPAddress_FromString(ip);
     client_data->port = port;
     client_data->config = config;
+    client_data->server_close = false;
 
     return client_data;
 }

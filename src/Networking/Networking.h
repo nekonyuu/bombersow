@@ -43,6 +43,7 @@ typedef struct CLIENT_DATA
     sfIPAddress ip;
     int port;
     Config* config;
+    bool server_close;
 } ClientData;
 
 _Bool server_started;

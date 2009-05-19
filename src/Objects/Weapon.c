@@ -29,7 +29,6 @@ Weapon* weapon_Create(int type)
 {
     Weapon* new_weapon = NULL;
     assert(new_weapon = (Weapon*) malloc(sizeof(Weapon)));
-
     new_weapon->name = armory[type].name;
 
     new_weapon->weapon_img = sfSprite_Create(weap_img[type].weapon_img);
@@ -62,7 +61,6 @@ void weapon_Destroy(Weapon* weapon2destroy)
         logging_Warning("weapon_Destroy", "Weapon object sent NULL");
     else
     {
-        free_secure(weapon2destroy->name);
         sfSprite_Destroy(weapon2destroy->weapon_img);
         free_secure(weapon2destroy);
     }

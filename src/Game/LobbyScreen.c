@@ -133,7 +133,7 @@ _Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, un
             }
         }
     }
-    while (launched);
+    while (launched && !client_data->server_close);
 
     server_started = false;
     client_connected = false;
