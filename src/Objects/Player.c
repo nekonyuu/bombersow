@@ -172,11 +172,8 @@ void player_Displace(Player* player_, Direction move, float time, Config* config
     Collision* collision = collision_Detection_Object(player_, PLAYER);
     if(collision != NULL)
     {
-        final_x = old_x;
-        final_y = old_y;
         player_SetPosition(player_, old_x, old_y);
         quadtree_Update(player_, PLAYER);
-        player_->jump = NO_JUMP;
     }
     collision_Destroy(collision);
 
