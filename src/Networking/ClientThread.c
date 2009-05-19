@@ -27,6 +27,7 @@
 
 void client_Main(void* UserData)
 {
+    bool server_close = false;
     sfMutex_Lock(server_creation);
 
     logging_Info("client_Main", "Client thread start...");
@@ -100,6 +101,10 @@ void client_Main(void* UserData)
                             case DISCONNECT:
                                 map_DelPlayer(client_data->map, (unsigned int) sfPacket_ReadUint8(response));
                                 break;
+                            case SERVER_CLOSING:
+                                client_connected = false;
+                                server_close = true;
+                                break;
                             default:
 
                                 break;
@@ -112,8 +117,11 @@ void client_Main(void* UserData)
 
             logging_Info("client_Main", "Disconnecting...");
             sfPacket_Destroy(response);
-            response = client_CreateDisconnectPacket(map_GetPlayerIDFromName(client_data->map, client_data->name));
-            sfSocketTCP_SendPacket(client_socket, response);
+            if(!server_close)
+            {
+                response = client_CreateDisconnectPacket(map_GetPlayerIDFromName(client_data->map, client_data->name));
+                sfSocketTCP_SendPacket(client_socket, response);
+            }
             sfSelectorTCP_Remove(client_data->map->tcp_selector, client_socket);
 
             logging_Info("client_Main", "Cleaning resources...");

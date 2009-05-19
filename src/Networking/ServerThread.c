@@ -245,6 +245,13 @@ void server_Listen_TCP(void* UserData)
         }
     }
     while (server_started);
+
+    sfPacket* disconnect_notify = server_CreateClosePacket();
+
+    for(int i = 0; i < map->nb_players; i++)
+        sfSocketTCP_SendPacket(map->players_list[i]->listen_socket, disconnect_notify);
+
+    sfPacket_Destroy(disconnect_notify);
 }
 
 void server_Listen_Game(void* UserData)
@@ -309,6 +316,15 @@ sfPacket* server_CreateDestroyPlayerPacket(unsigned int player_id)
     sfPacket_WriteUint8(new_packet, player_id);
 
     return new_packet;
+}
+
+sfPacket* server_CreateClosePacket()
+{
+    sfPacket* pck = sfPacket_Create();
+
+    sfPacket_WriteUint8(pck, SERVER_CLOSING);
+
+    return pck;
 }
 
 void server_ReadUDPPacket(sfPacket* packet, Map* map)
