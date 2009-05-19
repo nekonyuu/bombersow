@@ -76,6 +76,7 @@ int main()
 
     // Démarrage du jeu
     armory_Create(armory);          // Remplissage de l'armurerie
+    armory_LoadImages(weap_img);    // Remplissage du tableau d'images de base
     logging_Info("main", "Game Start");
     display_Menu(Game, game_config);
 
@@ -83,7 +84,8 @@ int main()
     sfRenderWindow_Close(Game);     // Fermeture de la fenêtre
     sfRenderWindow_Destroy(Game);
     sfImage_Destroy(player_default_image);
-    armory_Destroy(armory);         // Destruction de l'armurerie
+    armory_Destroy(armory);
+    armory_DestroyImages(weap_img);
     free_secure(game_config);
 
 #ifdef DEBUG_MODE

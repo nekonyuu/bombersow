@@ -32,8 +32,7 @@ Weapon* weapon_Create(int type)
 
     new_weapon->name = armory[type].name;
 
-    new_weapon->weapon_img = armory[type].weapon_img;
-    new_weapon->bullet_img = armory[type].bullet_img;
+    new_weapon->weapon_img = sfSprite_Create(weap_img[type].weapon_img);
 
     new_weapon->nb_curr_bullets = armory[type].nb_curr_bullets;
     new_weapon->nb_max_bullets = armory[type].nb_max_bullets;
@@ -63,24 +62,59 @@ void weapon_Destroy(Weapon* weapon2destroy)
         logging_Warning("weapon_Destroy", "Weapon object sent NULL");
     else
     {
-        weapon2destroy->name = NULL;
-        weapon2destroy->weapon_img = NULL;
-        weapon2destroy->bullet_img = NULL;
+        free_secure(weapon2destroy->name);
+        sfSprite_Destroy(weapon2destroy->weapon_img);
         free_secure(weapon2destroy);
     }
 }
 
-// Création de l'armurerie & WeaponDefs, TODO : Chargement des sprites des armes
+void armory_LoadImages(WeaponImg* img_tab)
+{
+    img_tab[CROWBAR].weapon_img = sfImage_CreateFromFile("base/images/weapons/Crowbar.png");
+    img_tab[CROWBAR].bullet_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
+
+    img_tab[ROCKET_LAUNCHER].weapon_img = sfImage_CreateFromFile("base/images/weapons/Rocket Launcher.png");
+    img_tab[ROCKET_LAUNCHER].bullet_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
+
+    img_tab[GRENADES].weapon_img = sfImage_CreateFromFile("base/images/weapons/Crowbar.png");
+    img_tab[GRENADES].bullet_img = sfImage_CreateFromFile("base/images/weapons/Grenade.png");
+
+    img_tab[SHOTGUN].weapon_img = sfImage_CreateFromFile("base/images/weapons/Shotgun.png");
+    img_tab[SHOTGUN].bullet_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
+
+    img_tab[MACHINEGUN].weapon_img = sfImage_CreateFromFile("base/images/weapons/Machine-Gun.png");
+    img_tab[MACHINEGUN].bullet_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
+
+    img_tab[SNIPER].weapon_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
+    img_tab[SNIPER].bullet_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
+
+    img_tab[LASERGUN].weapon_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
+    img_tab[LASERGUN].bullet_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
+
+    logging_Info("armory_loadImages", "Armory images database loaded");
+}
+
+void armory_DestroyImages(WeaponImg* img_tab)
+{
+    for(int i = 0; i < NB_MAX_WEAPONS; i++)
+    {
+        sfImage_Destroy(img_tab[i].weapon_img);
+        sfImage_Destroy(img_tab[i].bullet_img);
+    }
+}
+
+// Création de l'armurerie & WeaponDefs
 void armory_Create(Weapon* armory)
 {
+    for(int i = 0; i < NB_MAX_WEAPONS; i++)
+        assert(armory[i].name = (char*) malloc(20 * sizeof(char)));
+
     // Pied de biche
     logging_Info("armory_Create", "Load Crowbar");
-    armory[CROWBAR].name = sfString_Create();
-    sfString_SetText(armory[CROWBAR].name, "Crowbar");
+    strcpy(armory[CROWBAR].name, "Crowbar");
     armory[CROWBAR].type = CROWBAR;
 
     armory[CROWBAR].weapon_img = NULL;
-    armory[CROWBAR].bullet_img = NULL;
 
     armory[CROWBAR].nb_max_bullets = -1;
     armory[CROWBAR].nb_curr_bullets = -1;
@@ -103,12 +137,10 @@ void armory_Create(Weapon* armory)
 
     // Lance Roquettes
     logging_Info("armory_Create", "Load Rocket-Launcher");
-    armory[ROCKET_LAUNCHER].name = sfString_Create();
-    sfString_SetText(armory[ROCKET_LAUNCHER].name, "Rocket-Launcher");
+    strcpy(armory[ROCKET_LAUNCHER].name, "Rocket-Launcher");
     armory[ROCKET_LAUNCHER].type = ROCKET_LAUNCHER;
 
     armory[ROCKET_LAUNCHER].weapon_img = NULL;
-    armory[ROCKET_LAUNCHER].bullet_img = NULL;
 
     armory[ROCKET_LAUNCHER].nb_max_bullets = 40;
     armory[ROCKET_LAUNCHER].nb_curr_bullets = 0;
@@ -131,12 +163,10 @@ void armory_Create(Weapon* armory)
 
     // Grenades (explosion 3500ms)
     logging_Info("armory_Create", "Load Grenade-Launcher");
-    armory[GRENADES].name = sfString_Create();
-    sfString_SetText(armory[GRENADES].name, "Grenades");
+    strcpy(armory[GRENADES].name, "Grenades");
     armory[GRENADES].type = GRENADES;
 
     armory[GRENADES].weapon_img = NULL;
-    armory[GRENADES].bullet_img = NULL;
 
     armory[GRENADES].nb_max_bullets = 20;
     armory[GRENADES].nb_curr_bullets = 0;
@@ -159,12 +189,10 @@ void armory_Create(Weapon* armory)
 
     // Fusil à pompe
     logging_Info("armory_Create", "Load Shotgun");
-    armory[SHOTGUN].name = sfString_Create();
-    sfString_SetText(armory[SHOTGUN].name, "Shotgun");
+    strcpy(armory[SHOTGUN].name, "Shotgun");
     armory[SHOTGUN].type = SHOTGUN;
 
     armory[SHOTGUN].weapon_img = NULL;
-    armory[SHOTGUN].bullet_img = NULL;
 
     armory[SHOTGUN].nb_max_bullets = 20;					// Nombre de cartouches, soit 140 projectiles
     armory[SHOTGUN].nb_curr_bullets = 0;
@@ -187,12 +215,10 @@ void armory_Create(Weapon* armory)
 
     // Mitrailleuse
     logging_Info("armory_Create", "Load MachineGun");
-    armory[MACHINEGUN].name = sfString_Create();
-    sfString_SetText(armory[MACHINEGUN].name, "MachineGun");
+    strcpy(armory[MACHINEGUN].name, "MachineGun");
     armory[MACHINEGUN].type = MACHINEGUN;
 
     armory[MACHINEGUN].weapon_img = NULL;
-    armory[MACHINEGUN].bullet_img = NULL;
 
     armory[MACHINEGUN].nb_max_bullets = 200;
     armory[MACHINEGUN].nb_curr_bullets = 0;
@@ -215,12 +241,10 @@ void armory_Create(Weapon* armory)
 
     // Sniper
     logging_Info("armory_Create", "Load Sniper");
-    armory[SNIPER].name = sfString_Create();
-    sfString_SetText(armory[SNIPER].name, "Sniper");
+    strcpy(armory[SNIPER].name, "Sniper");
     armory[SNIPER].type = SNIPER;
 
     armory[SNIPER].weapon_img = NULL;
-    armory[SNIPER].bullet_img = NULL;
 
     armory[SNIPER].nb_max_bullets = 5;
     armory[SNIPER].nb_curr_bullets = 0;
@@ -243,12 +267,10 @@ void armory_Create(Weapon* armory)
 
     //Lasergun
     logging_Info("armory_Create", "Load Lasergun");
-    armory[LASERGUN].name = sfString_Create();
-    sfString_SetText(armory[LASERGUN].name, "Lasergun");
+    strcpy(armory[LASERGUN].name, "Lasergun");
     armory[LASERGUN].type = LASERGUN;
 
     armory[LASERGUN].weapon_img = NULL;
-    armory[LASERGUN].bullet_img = NULL;
 
     armory[LASERGUN].nb_max_bullets = 500;
     armory[LASERGUN].nb_curr_bullets = 0;
@@ -275,13 +297,5 @@ void armory_Create(Weapon* armory)
 void armory_Destroy(Weapon* armory2destroy)
 {
     for (int i = 0; i < NB_MAX_WEAPONS; i++)
-    {
-        if (armory2destroy[i].name != NULL && armory2destroy[i].weapon_img != NULL
-                && armory2destroy[i].bullet_img != NULL)
-        {
-            sfString_Destroy(armory2destroy[i].name);
-            sfSprite_Destroy(armory2destroy[i].weapon_img);
-            sprite_Destroy(armory2destroy[i].bullet_img);
-        }
-    }
+        free_secure(armory2destroy[i].name);
 }

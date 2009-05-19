@@ -34,7 +34,7 @@ Bullet* bullet_Create(unsigned int player_id, unsigned int type)
     new_bullet->damage = armory[type].damage;
     new_bullet->trajectory = armory[type].trajectory;
     new_bullet->range = armory[type].range;
-    new_bullet->draw_image = armory[type].bullet_img;
+    new_bullet->draw_image = sprite_Create(0, 0, weap_img[type].bullet_img, NULL);
 
     new_bullet->quad_node = NULL;
     new_bullet->list_node = NULL;
@@ -49,7 +49,7 @@ void bullet_Destroy(Bullet* bullet2destroy)
 {
     if (!bullet2destroy)
         logging_Error("bullet_Destroy", "Bullet object sent NULL");
-    bullet2destroy->draw_image = NULL;
+    sprite_Destroy(bullet2destroy->draw_image);
     free_secure(bullet2destroy);
 }
 

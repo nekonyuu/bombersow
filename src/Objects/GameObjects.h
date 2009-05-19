@@ -50,6 +50,12 @@ typedef struct PACKET_LIST
 
 } PacketList;
 
+typedef struct WEAPON_IMG
+{
+    sfImage* weapon_img;
+    sfImage* bullet_img;
+} WeaponImg;
+
 // Structure contenant la liste des joueurs connectés pour le salon
 typedef struct PLAYERS_LIST
 {
@@ -97,11 +103,10 @@ enum WEAPON_TYPE { CROWBAR, ROCKET_LAUNCHER, GRENADES, SHOTGUN, MACHINEGUN, SNIP
 // Définition de la structure Arme
 typedef struct WEAPON
 {
-    sfString *name;                 // Nom de l'arme
+    char* name;                     // Nom de l'arme
     int type;                       // ID de l'arme
 
     sfSprite *weapon_img;           // Image de l'arme
-    Sprite *bullet_img;             // Projectile
 
     int nb_max_bullets;             // Nombre de munitions max (-1 si infini)
     int nb_curr_bullets;            // Nombre de munitions restantes (-1 si infini)
@@ -216,9 +221,10 @@ typedef struct MAP
 } Map;
 
 // Variables Globales
-Weapon armory[NB_MAX_WEAPONS];      // Armes du jeu en accès global
-sfMutex* Players_CoordUpdate;       // Mutex MàJ Players
-sfMutex* Network_ServerMutex;       // Mutex Serveur
+WeaponImg weap_img[NB_MAX_WEAPONS];     // Images des armes
+Weapon armory[NB_MAX_WEAPONS];          // Armes du jeu en accès global
+sfMutex* Players_CoordUpdate;           // Mutex MàJ Players
+sfMutex* Network_ServerMutex;           // Mutex Serveur
 
 // Objects.c
 Object* object_Create(unsigned int);
@@ -230,6 +236,8 @@ void object_SetPosition(Object*, float, float);
 // Weapon.c
 Weapon* weapon_Create(int);
 void weapon_Destroy(Weapon*);
+void armory_LoadImages(WeaponImg* img_tab);
+void armory_DestroyImages(WeaponImg* img_tab);
 void armory_Create(Weapon*);
 void armory_Destroy(Weapon*);
 
