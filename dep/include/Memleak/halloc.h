@@ -88,7 +88,7 @@
   typedef struct
   {
     unsigned long nbr_magique;       // Nombre magique
-    _Bool est_alloue;                 // Pointeur alloué ou libéré ?
+    bool est_alloue;                 // Pointeur alloué ou libéré ?
     size_t taille;                   // Taille allouée (sans ces informations)
     const char* nom_fich;            // Nom du fichier source
     unsigned long num_ligne;         // Ligne du fichier
@@ -111,7 +111,7 @@
 
   // Affiche le contenu du conteneur malloc (libère les pointeurs si
   // libere_mem=true)
-  void ConteneurMalloc_Affiche (_Bool libere_mem);
+  void ConteneurMalloc_Affiche (bool libere_mem);
 
   // Sort un pointeur du conteneur malloc
   void ConteneurMalloc_Remplace (InfoMalloc *Info, InfoMalloc *NvInfo);

@@ -141,12 +141,12 @@ void screen_LoadImage(Screen* screen, sfImage* image)
 }
 
 void screen_AddTextbox(Screen* screen, int x, int y, int width, int height, int length, sfImage* image,
-                       sfColor border_color, Widget_textbox_type type, void* var, char* text,
+                       sfColor border_color, Widget_textbox_type type, void* var, sfColor text_color, char* text,
                        sfColor label_color, sfFont* label_font, int text_size)
 {
     if(!screen)
         logging_Error("screen_AddTextbox", "Screen object sent NULL");
-    Widget_textbox* textbox = widget_textbox_Create(x, y, width, height, length, image, border_color, type, var, text, label_color, label_font, text_size);
+    Widget_textbox* textbox = widget_textbox_Create(x, y, width, height, length, image, border_color, type, var, text_color, text, label_color, label_font, text_size);
     gui_Add_Textbox(screen->gui, textbox);
 }
 

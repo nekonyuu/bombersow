@@ -31,11 +31,11 @@
 #include "PhysicsEngine/CollisionSystem.h"
 #include "PhysicsEngine/GravitySystem.h"
 
-_Bool display_Playing(sfRenderWindow* Game, Config* config)
+bool display_Playing(sfRenderWindow* Game, Config* config)
 {
     sfImage *image_animation = sfImage_CreateFromFile("base/images/animation2.png"); // Test
     sfImage *image_animation2 = sfImage_CreateFromFile("base/images/animation.png"); // Test
-    _Bool ingame = true;
+    bool ingame = true;
 
     Animation *animation = animation_Create(image_animation2, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
     Animation *animation2 = animation_Create(image_animation2, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);

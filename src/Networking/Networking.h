@@ -46,8 +46,8 @@ typedef struct CLIENT_DATA
     bool server_close;
 } ClientData;
 
-_Bool server_started;
-_Bool client_connected;
+bool server_started;
+bool client_connected;
 sfMutex* server_creation;
 
 // ServerThread.c

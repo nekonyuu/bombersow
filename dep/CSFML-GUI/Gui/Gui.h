@@ -85,7 +85,7 @@ typedef struct WIDGET_TEXTBOX
 
     sfString *alt;                  // Annotation de la textbox
 
-    _Bool active;                   // Booléen de sélection
+    bool active;                   // Booléen de sélection
 
 }Widget_textbox;
 
@@ -95,16 +95,16 @@ void widget_textbox_var_Destroy(Widget_textbox_var*);
 void widget_textbox_var_Get(Widget_textbox_var*, Widget_textbox*);
 void widget_textbox_var_Set(Widget_textbox_var*, Widget_textbox*);
 
-Widget_textbox* widget_textbox_Create(int, int, int, int, int, sfImage*, sfColor, Widget_textbox_type, void*, char*, sfColor, sfFont*, int);
+Widget_textbox* widget_textbox_Create(int, int, int, int, int, sfImage*, sfColor, Widget_textbox_type, void*, sfColor, char*, sfColor, sfFont*, int);
 void widget_textbox_Destroy(Widget_textbox*);
 void widget_textbox_Click(Widget_textbox*, int, int);
 void widget_textbox_Write(Widget_textbox*, sfUint32);
-_Bool widget_textbox_Check(Widget_textbox*);
+bool widget_textbox_Check(Widget_textbox*);
 void widget_textbox_Draw(sfRenderWindow*, Widget_textbox*);
 
 
 //Widget bouton
-typedef enum BOUTON_ACTION {NOTHING, OVER, CLICK}Bouton_action;
+typedef enum BOUTON_ACTION {NOTHING, OVER, CLICK} Bouton_action;
 typedef struct WIDGET_BOUTON
 {
 

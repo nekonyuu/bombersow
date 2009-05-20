@@ -29,12 +29,13 @@
 #include "Gui/Gui.h"
 #include "Networking/Networking.h"
 
-_Bool display_ClientMenu(sfRenderWindow* Game, Config* config, sfImage* BG_image, sfFont* playFont)
+bool display_ClientMenu(sfRenderWindow* Game, Config* config, sfImage* BG_image, sfFont* playFont)
 {
     Screen* clientMenu = screen_Create();
     sfImage* textbox_bg = sfImage_CreateFromFile("base/images/gui/textbox_back.png");
+    sfFont* textbox_font = sfFont_CreateFromFile("base/fonts/friday13v12.ttf", 50, NULL);
     sfEvent Event;
-    _Bool launched = true, close = false;
+    bool launched = true, close = false;
     int menu_select = 1, port = DEFAULT_PORT;
     char pseudo[20] = "Player", ip[20] = "127.0.0.1";
 
@@ -46,9 +47,9 @@ _Bool display_ClientMenu(sfRenderWindow* Game, Config* config, sfImage* BG_image
     screen_LoadText(clientMenu, "IP", sfWhite, 20, sfStringRegular, 450.0f, 300.0f);
     screen_LoadText(clientMenu, "Port", sfWhite, 20, sfStringRegular, 450.0f, 350.0f);
     screen_LoadText(clientMenu, "Connexion IP", sfWhite, 35, sfStringRegular, 450.0f, 120.0f);
-    gui_Add_Textbox(clientMenu->gui, widget_textbox_Create(630, 250, 175, 20, 20, textbox_bg, sfBlack, CHAR, pseudo, "", sfBlack, playFont, 10));
-    gui_Add_Textbox(clientMenu->gui, widget_textbox_Create(630, 300, 175, 20, 20, textbox_bg, sfBlack, CHAR, ip, "", sfBlack, playFont, 10));
-    gui_Add_Textbox(clientMenu->gui, widget_textbox_Create(630, 350, 75, 20, 5, textbox_bg, sfBlack, INT, &port, "", sfBlack, playFont, 10));
+    screen_AddTextbox(clientMenu, 630, 250, 175, 20, 20, textbox_bg, sfBlack, CHAR, pseudo, sfBlack, "", sfBlack, textbox_font, 10);
+    screen_AddTextbox(clientMenu, 630, 300, 175, 20, 20, textbox_bg, sfBlack, CHAR, ip, sfBlack, "", sfBlack, playFont, 10);
+    screen_AddTextbox(clientMenu, 630, 350, 75, 20, 5, textbox_bg, sfBlack, INT, &port, sfBlack, "", sfBlack, playFont, 10);
     clientMenu->gui->widget_textbox[0]->active = true;
 
     logging_Info("display_ClientMenu", "Started without error");
@@ -65,7 +66,7 @@ _Bool display_ClientMenu(sfRenderWindow* Game, Config* config, sfImage* BG_image
         if(config->show_fps)
             logging_FPSShow(Game);
 
-        gui_Draw(Game, clientMenu->gui);                                // Dessin de la GUI
+        screen_DrawGui(Game, clientMenu);                               // Dessin de la GUI
         sfRenderWindow_Display(Game);                                   // Mise à jour de la fenêtre
 
         while (sfRenderWindow_GetEvent(Game, &Event))                   // Surveillance des évènements

@@ -26,11 +26,11 @@
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
 
-_Bool display_Credits(sfRenderWindow* Game, Config* config, sfImage* BG_image, sfFont* creditsFont)
+bool display_Credits(sfRenderWindow* Game, Config* config, sfImage* BG_image, sfFont* creditsFont)
 {
     Screen* Credits = screen_Create();
     sfEvent Event;
-    _Bool launched = true, close = false;
+    bool launched = true, close = false;
 
     screen_LoadImage(Credits, BG_image);                        // Chargement de l'arrière-plan
     screen_LoadFont(Credits, creditsFont);                      // Chargement de la police d'écriture

@@ -28,11 +28,11 @@
 #include "GraphicEngine/Image.h"
 #include "Objects/GameObjects.h"
 
-_Bool display_PlayMenu(sfRenderWindow* Game, Config* config, sfImage* BG_image, sfFont* playFont)
+bool display_PlayMenu(sfRenderWindow* Game, Config* config, sfImage* BG_image, sfFont* playFont)
 {
     Screen* playMenu = screen_Create();
     sfEvent Event;
-    _Bool launched = true, close = false;
+    bool launched = true, close = false;
     int menu_select = 1;
 
     screen_LoadImage(playMenu, BG_image);                           // Chargement de l'arrière-plan

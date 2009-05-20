@@ -101,7 +101,7 @@ void Malloc_PrepareOverflow (InfoMalloc *info)
 // Vérifie la tampon anti-overflow : renvoie true s'il n'a pas été touché,
 // false sinon
 // (ptr pointe sur les informations de débogage InfoMalloc)
-_Bool Malloc_TamponOverflowIntact (const InfoMalloc *info)
+bool Malloc_TamponOverflowIntact (const InfoMalloc *info)
 {
   char *ptr;
   unsigned long i;
@@ -234,10 +234,10 @@ void VerifieInfoMalloc (InfoMalloc* info)
 
 // Affiche le contenu du conteneur malloc (libère les pointeurs si
 // libere_mem=true)
-void ConteneurMalloc_Affiche (_Bool libere_mem)
+void ConteneurMalloc_Affiche (bool libere_mem)
 {
   struct PtrChaineMalloc *elem, *suivant;
-  _Bool titre_affiche = false;  // Le titre a déjà été affiché ?
+  bool titre_affiche = false;  // Le titre a déjà été affiché ?
   unsigned long nbr_pointeur=0;       // Nombre de pointeurs non libérés
   unsigned long taille_totale=0;      // Taille totale en octet non libérée
   InfoMalloc* info;

@@ -37,7 +37,7 @@ void display_Menu(sfRenderWindow* Game, Config* config)
     sfImage *BG_image = sfImage_CreateFromFile("base/images/Menu/menu_bg.png");
     sfFont *menuFont = sfFont_CreateFromFile("base/fonts/ITCKRIST.TTF", 50, NULL);
     sfEvent Event;
-    _Bool launched = true;
+    bool launched = true;
     int menu_select = 1;
 
     screen_LoadImage(Menu, BG_image);                           // Chargement de l'arrière-plan

@@ -90,7 +90,7 @@ typedef struct OBJECT
 
     sfBool spawned;                 // Affiché ou pas
 
-    _Bool gravity;                  // Subit la gravité ?
+    bool gravity;                  // Subit la gravité ?
 
     struct QUAD_TREE* quad_node;    // Noeud du struct QUAD_TREE de la map qui contient l'objet
     struct LIST_ELEMENT* list_node;
@@ -124,7 +124,7 @@ typedef struct WEAPON
     int proj_speed;                 // Vitesse des projectiles (-1 si instantané)
     unsigned int trajectory;        // Type de trajectoire (0 = Rectiligne, 1 = Parabole (Grenade), 2 = Spread (Shotgun)
 
-    _Bool collected;                // Ramassée ? (utilisé seulement pour l'inventaire du joueur)
+    bool collected;                // Ramassée ? (utilisé seulement pour l'inventaire du joueur)
 } Weapon;
 
 typedef struct PLAYER
@@ -145,7 +145,7 @@ typedef struct PLAYER
     float speed_x, speed_y;         // Vitesse
 
     jump_t jump;                    // Type de saut en cours
-    _Bool jetpack_mode;             // Mode JetPack ?
+    bool jetpack_mode;             // Mode JetPack ?
 
     unsigned int frags;             // Nombre de tués
     unsigned int killed;            // Nombre de morts
@@ -159,7 +159,7 @@ typedef struct PLAYER
     struct QUAD_TREE* quad_node;    // Noeud du struct QUAD_TREE de la map qui contient le player
     struct LIST_ELEMENT* list_node;
 
-    _Bool gravity;
+    bool gravity;
 
 } Player;
 
@@ -179,7 +179,7 @@ typedef struct BULLET
     struct QUAD_TREE* quad_node;    // Noeud du struct QUAD_TREE de la map qui contient le bullet
     struct LIST_ELEMENT* list_node;
 
-    _Bool gravity;
+    bool gravity;
     float acceleration;
 
 } Bullet;
@@ -206,8 +206,8 @@ typedef struct MAP
 
     PacketList* game_packets2send;  // Liste des paquets de jeu à envoyer
 
-    _Bool chat_started;             // Salon de discussion démarré ?
-    _Bool game_started;             // Partie démarrée ?
+    bool chat_started;             // Salon de discussion démarré ?
+    bool game_started;             // Partie démarrée ?
 
     sfSelectorTCP* tcp_selector;    // Selecteur de sockets TCP pour discussion/connexion/déconnexion
     sfSocketUDP* game_socket;       // Socket de jeu
@@ -273,7 +273,7 @@ void map_SetCptCurrPlayers(Map*, unsigned int);
 void map_Draw(sfRenderWindow*, Map*);
 
 // PlayerControl.c
-void control_PlayerControl(sfRenderWindow*, Map*, Player*, Config*, _Bool*);
+void control_PlayerControl(sfRenderWindow*, Map*, Player*, Config*, bool*);
 
 // PlayersList.c
 PlayersList* playerslist_Create(Map*, sfFont*, sfColor, int, sfStringStyle, float, float);

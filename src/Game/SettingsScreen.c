@@ -27,13 +27,13 @@
 #include "Objects/Screen.h"
 #include "GraphicEngine/Draw.h"
 
-_Bool display_Settings(sfRenderWindow* Game, Config* config, sfImage* BG_image, sfFont* settingsFont)
+bool display_Settings(sfRenderWindow* Game, Config* config, sfImage* BG_image, sfFont* settingsFont)
 {
     Screen* Settings = screen_Create();
     sfEvent Event;
     //sfImage* bg_textbox = sfImage_CreateFromFile("base/images/gui/textbox_back.png");
     //char player_name[50];
-    _Bool launched = true, close = false;
+    bool launched = true, close = false;
 
     screen_LoadImage(Settings, BG_image);                       // Chargement de l'arrière-plan
     screen_LoadFont(Settings, settingsFont);                    // Chargement de la police d'écriture

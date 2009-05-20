@@ -24,6 +24,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <stdbool.h>
 #include <SFML/System.h>
 
 // Index des binds dans le tableau de config
@@ -51,7 +52,7 @@ typedef struct CONFIG_ARRAY
     int height;                     // Hauteur de l'écran
     sfBool vsync;                   // VSync ON/OFF
     int fps_limit;                  // Limite de fps si VSync off
-    _Bool show_fps;                 // Affichage des fps
+    bool show_fps;                 // Affichage des fps
     char* pseudo;                   // Pseudo du joueur
     int move_speed;                 // Vitesse de déplacement en px/s
     int jump_speed;                 // Vitesse de saut en px/s

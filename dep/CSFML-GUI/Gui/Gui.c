@@ -182,8 +182,8 @@ void widget_textbox_var_Set(Widget_textbox_var* textbox_var, Widget_textbox* tex
 }
 
 
-Widget_textbox* widget_textbox_Create(int x, int y, int width, int height, int taille, sfImage* bg_image, sfColor couleur,
-                                      Widget_textbox_type type, void* var, char* texte, sfColor couleur_label, sfFont* font, int texte_size)
+Widget_textbox* widget_textbox_Create(int x, int y, int width, int height, int taille, sfImage* bg_image, sfColor couleur_cadre,
+                                      Widget_textbox_type type, void* var, sfColor couleur_text, char* texte, sfColor couleur_label, sfFont* font, int texte_size)
 {
     Widget_textbox* textbox = NULL;
     assert(textbox = malloc(sizeof(Widget_textbox)));
@@ -203,7 +203,7 @@ Widget_textbox* widget_textbox_Create(int x, int y, int width, int height, int t
 
     textbox->text = sfString_Create();
     sfString_SetPosition(textbox->text, rect->Right, y-2);
-    sfString_SetColor(textbox->text, sfBlack);
+    sfString_SetColor(textbox->text, couleur_text);
     sfString_SetSize(textbox->text, height-2);
     if (font)
         sfString_SetFont(textbox->text, font);
@@ -218,7 +218,7 @@ Widget_textbox* widget_textbox_Create(int x, int y, int width, int height, int t
     textbox->width = width;
     textbox->height = height;
 
-    textbox->cadre = widget_cadre_Create(bg_image, couleur, (int)rect->Right, y, width, height);
+    textbox->cadre = widget_cadre_Create(bg_image, couleur_cadre, (int)rect->Right, y, width, height);
 
     textbox->var = widget_text_box_var_Create(type, var);
     widget_textbox_var_Get(textbox->var, textbox);
@@ -290,7 +290,7 @@ void widget_textbox_Write(Widget_textbox* textbox, sfUint32 lettre)
     }
 }
 
-_Bool widget_textbox_Check(Widget_textbox* textbox)
+bool widget_textbox_Check(Widget_textbox* textbox)
 {
     return textbox->active;
 }

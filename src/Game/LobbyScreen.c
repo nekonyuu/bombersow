@@ -23,19 +23,25 @@
 
 #include "BaseSystem/Logging.h"
 #include "Game/GameScreens.h"
+#include <Gui/Gui.h>
 #include "Objects/Screen.h"
 #include "Networking/Networking.h"
 
-_Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, unsigned int port, link_t link_type, char* ip, unsigned int map_id, unsigned int nb_players, char* player_name)
+bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, unsigned int port, link_t link_type, char* ip, unsigned int map_id, unsigned int nb_players, char* player_name)
 {
     Screen* lobby_view = screen_Create();
+    // Data Init
     Map* map = NULL;
     PlayersList* players_display = NULL;
     ClientData* client_data = NULL;
+    // Base Init
     sfThread* server_thread = NULL, *client_thread = NULL;
     sfString* text_display = sfString_Create();
     sfEvent Event;
-    _Bool launched = true, close = false;
+    bool launched = true, close = false;
+    // GUI Chat Init
+    sfImage* textbox_bg = sfImage_CreateFromFile("base/images/gui/textbox_back_black.png");
+    char message[255] = { '\0' };
 
     server_creation = sfMutex_Create();
 
@@ -43,10 +49,14 @@ _Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, un
     screen_LoadFont(lobby_view, font);
     screen_LoadText(lobby_view, "Joueurs connectés", sfRed, 18, sfStringRegular, 40.f, 25.f);
 
+    // Gui Chat
+    screen_AddTextbox(lobby_view, 0, config->height - 21, config->width - 4, 20, 255, textbox_bg, sfWhite, CHAR, message, sfWhite, "", sfWhite, font, 6);
+    lobby_view->gui->widget_textbox[0]->active = true;
+
     // Ecran d'attente
     sfString_SetFont(text_display, font);
     sfString_SetText(text_display, "Connexion en cours...");
-    sfString_SetSize(text_display, 30);
+    sfString_SetSize(text_display, 25);
     sfString_SetX(text_display, 0);
     sfString_SetY(text_display, 0);
 
@@ -98,6 +108,8 @@ _Bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, un
 
         if(config->show_fps)
             logging_FPSShow(Game);
+
+        screen_DrawGui(Game, lobby_view);
 
         sfRenderWindow_Display(Game);
 

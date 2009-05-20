@@ -83,12 +83,12 @@ void quadtree_Destroy(QuadTree*);
 void quadtree_Generate(QuadTree*, Map*);
 void quadtree_Add(QuadTree*, void*, int);
 void quadtree_Delete_Node(QuadTree*);
-void quadtree_Check_Node(QuadTree*, _Bool*);
+void quadtree_Check_Node(QuadTree*, bool*);
 void quadtree_Delete_Elt(void*, int);
 void quadtree_Update(void*, int);
 void quadtree_Print(QuadTree*);
 void quadtree_Draw(sfRenderWindow*, QuadTree*);
 
-_Bool IntRect_Contains(sfIntRect*, sfIntRect*);
+bool IntRect_Contains(sfIntRect*, sfIntRect*);
 
 #endif

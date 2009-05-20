@@ -417,7 +417,7 @@ void quadtree_Delete_Elt(void* obj_, int type)
 
 }
 
-void quadtree_Check_Node(QuadTree* quad, _Bool* check)
+void quadtree_Check_Node(QuadTree* quad, bool* check)
 {
 
     if (*check == 0)
@@ -440,7 +440,7 @@ void quadtree_Check_Node(QuadTree* quad, _Bool* check)
 void quadtree_Delete_Node(QuadTree* quad)
 {
 
-    _Bool test;
+    bool test;
     test = 1;
     quadtree_Check_Node(quad, &test);
     if (test)
@@ -712,7 +712,7 @@ void quadtree_Delete_Elt(void* obj_, int type)
 
 }
 
-void quadtree_Check_Node(QuadTree* quad, _Bool* check)
+void quadtree_Check_Node(QuadTree* quad, bool* check)
 {
 
     if (*check == 0)
@@ -735,7 +735,7 @@ void quadtree_Check_Node(QuadTree* quad, _Bool* check)
 void quadtree_Delete_Node(QuadTree* quad)
 {
 
-    _Bool test;
+    bool test;
     test = 1;
     quadtree_Check_Node(quad, &test);
     if (test)
@@ -782,7 +782,7 @@ void quadtree_Update(void* obj_, int type)
 
 }
 
-_Bool IntRect_Contains(sfIntRect* rect, sfIntRect* rect2)
+bool IntRect_Contains(sfIntRect* rect, sfIntRect* rect2)
 {
 
     if (sfIntRect_Intersects(rect, rect2, NULL))

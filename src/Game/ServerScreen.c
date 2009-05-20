@@ -29,13 +29,13 @@
 #include "Gui/Gui.h"
 #include "Networking/Networking.h"
 
-_Bool display_ServerMenu(sfRenderWindow* Game, Config* config, sfImage* BG_image, sfFont* playFont)
+bool display_ServerMenu(sfRenderWindow* Game, Config* config, sfImage* BG_image, sfFont* playFont)
 {
     Screen* serverMenu = screen_Create();
     sfImage* textbox_bg = sfImage_CreateFromFile("base/images/gui/textbox_back.png");
     sfFont* textbox_font = sfFont_CreateFromFile("base/fonts/friday13v12.ttf", 50, NULL);
     sfEvent Event;
-    _Bool launched = true, close = false;
+    bool launched = true, close = false;
     int menu_select = 1, port = DEFAULT_PORT;
     char pseudo[20] = "Player", servername[20] = "BomberSow Server";
 
@@ -47,9 +47,9 @@ _Bool display_ServerMenu(sfRenderWindow* Game, Config* config, sfImage* BG_image
     screen_LoadText(serverMenu, "Pseudo", sfWhite, 20, sfStringRegular, 450.0f, 300.0f);
     screen_LoadText(serverMenu, "Port", sfWhite, 20, sfStringRegular, 450.0f, 350.0f);
     screen_LoadText(serverMenu, "Création du serveur", sfWhite, 35, sfStringRegular, 450.0f, 120.0f);
-    gui_Add_Textbox(serverMenu->gui, widget_textbox_Create(630, 250, 175, 20, 20, textbox_bg, sfBlack, CHAR, servername, "", sfBlack, textbox_font, 10));
-    gui_Add_Textbox(serverMenu->gui, widget_textbox_Create(630, 300, 175, 20, 20, textbox_bg, sfBlack, CHAR, pseudo, "", sfBlack, textbox_font, 10));
-    gui_Add_Textbox(serverMenu->gui, widget_textbox_Create(630, 350, 75, 20, 5, textbox_bg, sfBlack, INT, &port, "", sfBlack, playFont, 10));
+    screen_AddTextbox(serverMenu, 630, 250, 175, 20, 20, textbox_bg, sfBlack, CHAR, servername, sfBlack, "", sfBlack, textbox_font, 10);
+    screen_AddTextbox(serverMenu, 630, 300, 175, 20, 20, textbox_bg, sfBlack, CHAR, pseudo, sfBlack, "", sfBlack, textbox_font, 10);
+    screen_AddTextbox(serverMenu, 630, 350, 75, 20, 5, textbox_bg, sfBlack, INT, &port, sfBlack, "", sfBlack, playFont, 10);
     serverMenu->gui->widget_textbox[0]->active = true;
 
     logging_Info("display_ServerMenu", "Started without error");
@@ -66,7 +66,7 @@ _Bool display_ServerMenu(sfRenderWindow* Game, Config* config, sfImage* BG_image
         if(config->show_fps)
             logging_FPSShow(Game);
 
-        gui_Draw(Game, serverMenu->gui);                                // Dessin de la GUI
+        screen_DrawGui(Game, serverMenu);                               // Dessin de la GUI
         sfRenderWindow_Display(Game);                                   // Mise à jour de la fenêtre
 
         while (sfRenderWindow_GetEvent(Game, &Event))                   // Surveillance des évènements
