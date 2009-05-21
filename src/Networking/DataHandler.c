@@ -51,7 +51,7 @@ void packet_Destroy(Packet* packet)
 Packet* player_CreatePacket(Player* player_)
 {
     if (!player_)
-        logging_Error("player_PacketCreate", "Player object sent NULL, can't continue networking");
+        logging_Error("player_PacketCreate", "Player object sent NULL, can't continue networking", NULL_PTR);
 
     sfPacket* new_packet = sfPacket_Create();
 
@@ -67,7 +67,7 @@ Packet* player_CreatePacket(Player* player_)
 Packet* player_CreateStartPacket(Player* player_)
 {
     if (!player_)
-        logging_Error("player_PacketCreate", "Player object sent NULL, can't continue networking");
+        logging_Error("player_PacketCreate", "Player object sent NULL, can't continue networking", NULL_PTR);
 
     sfPacket* new_packet = sfPacket_Create();
 
@@ -84,7 +84,7 @@ Packet* player_CreateStartPacket(Player* player_)
 Player* player_CreateFromPacket(Map* map, sfPacket* packet)
 {
     if(!packet)
-        logging_Error("player_CreateFromPacket", "sfPacket sent NULL");
+        logging_Error("player_CreateFromPacket", "sfPacket sent NULL", NULL_PTR);
 
     Player* new_player;
     char* name = (char*) malloc(20 * sizeof(char));
@@ -110,7 +110,7 @@ void player_ReadPacket(Map* map, sfPacket* packet)
 Packet* object_CreatePacket(Object* object_)
 {
     if (!object_)
-        logging_Error("object_CreatePacket", "Object object sent NULL, can't continue networking");
+        logging_Error("object_CreatePacket", "Object object sent NULL, can't continue networking", NULL_PTR);
 
     sfPacket* new_packet = sfPacket_Create();
 
@@ -169,7 +169,7 @@ void object_ReadPacket(Map* map, sfPacket* packet)
 Packet* bullet_CreatePacket(Bullet* bullet)
 {
     if (!bullet)
-        logging_Error("bullet_CreatePacket", "Bullet object sent NULL, can't continue networking");
+        logging_Error("bullet_CreatePacket", "Bullet object sent NULL, can't continue networking", NULL_PTR);
 
     sfPacket* packet = sfPacket_Create();
 
@@ -192,7 +192,7 @@ void bullet_ReadPacket(Map* map, sfPacket* packet)
 void map_CreateGamePackets(Map* map_)
 {
     if (!map_)
-        logging_Error("map_CreateAllPacket", "Map object sent NULL, can't create packet list");
+        logging_Error("map_CreateAllPacket", "Map object sent NULL, can't create packet list", NULL_PTR);
 
     assert(map_->game_packets2send = (PacketList*) malloc(sizeof(PacketList)));
 

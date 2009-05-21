@@ -72,13 +72,13 @@ int main()
 
     logging_Info("main", "Verify Window state");
     if (!Game)
-        return EXIT_FAILURE;
+        return DISPLAY_FAIL;
 
     // Démarrage du jeu
     armory_Create(armory);          // Remplissage de l'armurerie
     armory_LoadImages(weap_img);    // Remplissage du tableau d'images de base
     logging_Info("main", "Game Start");
-    display_Menu(Game, game_config);
+    game_MainMenu(Game, game_config);
 
     // Nettoyage des ressources
     sfRenderWindow_Close(Game);     // Fermeture de la fenêtre
@@ -92,5 +92,5 @@ int main()
     ConteneurMalloc_Affiche (true);
 #endif
 
-    return EXIT_SUCCESS;
+    return NO_ERROR;
 }

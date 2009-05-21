@@ -48,7 +48,7 @@ Bullet* bullet_Create(unsigned int player_id, unsigned int type)
 void bullet_Destroy(Bullet* bullet2destroy)
 {
     if (!bullet2destroy)
-        logging_Error("bullet_Destroy", "Bullet object sent NULL");
+        logging_Error("bullet_Destroy", "Bullet object sent NULL", NULL_PTR);
     sprite_Destroy(bullet2destroy->draw_image);
     free_secure(bullet2destroy);
 }

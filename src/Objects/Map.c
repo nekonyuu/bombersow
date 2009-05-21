@@ -148,7 +148,7 @@ void map_AddObject(Map* map_, Object* object_)
         map_->objects_list = (Object**) realloc(map_->objects_list, ++map_->nb_objects * sizeof(Object*));
 
     if (!map_->objects_list && !map_->objects_list[map_->nb_objects - 1])
-        logging_Error("map_AddObject", "Memory allocation error");
+        logging_Error("map_AddObject", "Memory allocation error", LOW_MEMORY);
 
     map_->objects_list[map_->nb_objects - 1] = object_;
 
@@ -226,7 +226,7 @@ void map_AddBullet(Map* map_, Bullet* bullet_)
         assert(map_->bullets_list = (Bullet**) realloc(map_->bullets_list, ++map_->nb_bullets * sizeof(Bullet*)));
 
     if (!map_->bullets_list && !map_->bullets_list[map_->nb_bullets - 1])
-        logging_Error("map_AddBullet", "Memory allocation error");
+        logging_Error("map_AddBullet", "Memory allocation error", LOW_MEMORY);
 
     map_->bullets_list[map_->nb_bullets - 1] = bullet_;
 

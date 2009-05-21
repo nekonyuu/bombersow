@@ -28,29 +28,39 @@
 #include <SFML/Audio.h>
 #include <Gui/Gui.h>
 
+typedef enum { OPT_FONT, GUI_FONT, ALT_GUI_FONT } ScreenFontType;
+
 typedef struct SCREEN
 {
-    sfSprite** images;          // Sprites de l'écran
-    unsigned int nb_img;        // Nombre d'images
+    sfImage** base_images;      // Images sources
+    unsigned int nb_img;        // Nombre d'images source
+    sfSprite** sprites;         // Sprites de l'écran
+    unsigned int nb_spr;        // Nombre de sprites
 
     sfString** texts;           // Textes
     unsigned int nb_text;       // Nombre de textes
+    sfFont* opt_font;           // Police des options
+    // Intervalle contenant le menu
+    unsigned int min_menu;
+    unsigned int max_menu;
 
     Gui* gui;                   // Structure stockant les boutons et textbox
+    sfFont* gui_font;           // Police de la GUI
+    sfFont* alt_gui_font;       // Police alternative de la GUI
 
-    sfFont* font;               // Police des options
     sfMusic* music;             // Musique
 } Screen;
 
 Screen* screen_Create();
 void screen_Destroy(Screen*);
-void screen_LoadFont(Screen*, sfFont*);
+void screen_LoadFont(Screen*, ScreenFontType, char*);
 void screen_LoadText(Screen*, char*, sfColor, int, sfStringStyle, float, float);
-void screen_DrawText(sfRenderWindow*, Screen*, int);
-void screen_LoadMusic(Screen*, sfMusic*, sfBool);
+void screen_SetMenuInterval(Screen*, unsigned int, unsigned int);
+void screen_LoadMusic(Screen*, char*, sfBool);
 void screen_PlayMusic(Screen*);
-void screen_LoadImage(Screen*, sfImage*);
-void screen_AddTextbox(Screen*, int, int, int, int, int, sfImage*, sfColor, Widget_textbox_type, void*, sfColor, char*, sfColor, sfFont*, int);
-void screen_DrawGui(sfRenderWindow*, Screen*);
+void screen_StopMusic(Screen*);
+void screen_LoadImage(Screen*, char*);
+void screen_AddTextbox(Screen*, int, int, int, int, int, sfImage*, sfColor, Widget_textbox_type, void*, sfColor, char*, sfColor, int);
+void screen_Draw(Screen*, sfRenderWindow*);
 
 #endif

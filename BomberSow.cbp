@@ -200,29 +200,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\BaseSystem\Logging.h" />
-		<Unit filename="src\Game\ClientScreen.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\Game\CreditsScreen.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="src\Game\GameScreens.h" />
 		<Unit filename="src\Game\LobbyScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\Game\MenuScreen.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\Game\PlayScreen.c">
+		<Unit filename="src\Game\MainMenu.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\Game\PlayingScreen.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\Game\ServerScreen.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\Game\SettingsScreen.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\GraphicEngine\Draw.c">

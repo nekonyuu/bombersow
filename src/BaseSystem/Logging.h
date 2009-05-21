@@ -27,15 +27,14 @@
 #include <assert.h>
 #include <SFML/Graphics.h>
 
-// Sécurisation du free() (Evite les crash sur un free déjà effectué)
-//#define free_secure(pointer) { free(pointer); pointer = NULL; }
-
 #ifdef DEBUG_MODE
 #include "Memleak/halloc.h"
 #endif
 
+enum { NO_ERROR, DISPLAY_FAIL, NULL_PTR, NETWORK_FAIL, LOW_MEMORY };
+
 void logging_Warning(char*, char*);
-void logging_Error(char*, char*);
+void logging_Error(char*, char*, int);
 void logging_Info(char*, char*);
 void free_secure(void*);
 void logging_FPSShow(sfRenderWindow*);

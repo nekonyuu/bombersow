@@ -30,10 +30,10 @@ inline void logging_Warning(char* fct_name, char* text)
     printf("Warning - %s : %s\n", fct_name, text);
 }
 
-inline void logging_Error(char* fct_name, char* text)
+inline void logging_Error(char* fct_name, char* text, int err_code)
 {
     printf("Error - %s : %s\n", fct_name, text);
-    exit(1);
+    exit(err_code);
 }
 
 inline void logging_Info(char* fct_name, char* text)

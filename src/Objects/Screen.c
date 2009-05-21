@@ -31,15 +31,21 @@ Screen* screen_Create()
 
     assert(new_screen = (Screen*) malloc(sizeof(Screen)));
 
-    new_screen->images = NULL;
+    new_screen->base_images = NULL;
     new_screen->nb_img = 0;
+    new_screen->sprites = NULL;
+    new_screen->nb_spr = 0;
 
     new_screen->texts = NULL;
     new_screen->nb_text = 0;
+    new_screen->opt_font = NULL;
+    new_screen->min_menu = 0;
+    new_screen->max_menu = 0;
 
     new_screen->gui = gui_Create();
+    new_screen->gui_font = NULL;
+    new_screen->alt_gui_font = NULL;
 
-    new_screen->font = NULL;
     new_screen->music = NULL;
 
     return new_screen;
@@ -54,64 +60,77 @@ void screen_Destroy(Screen* screen2destroy)
         sfString_Destroy(screen2destroy->texts[i]);
     free_secure(screen2destroy->texts);
 
-    for (int i = 0; i < screen2destroy->nb_img; i++)
-        sfSprite_Destroy(screen2destroy->images[i]);
-    free_secure(screen2destroy->images);
+    for (int i = 0; i < screen2destroy->nb_spr; i++)
+        sfSprite_Destroy(screen2destroy->sprites[i]);
+    free_secure(screen2destroy->sprites);
 
-    screen2destroy->font = NULL;
+    for (int i = 0; i < screen2destroy->nb_img; i++)
+        sfImage_Destroy(screen2destroy->base_images[i]);
+    free_secure(screen2destroy->base_images);
+
     sfMusic_Destroy(screen2destroy->music);
     gui_Destroy(screen2destroy->gui);
+
+    sfFont_Destroy(screen2destroy->opt_font);
+    sfFont_Destroy(screen2destroy->gui_font);
+    sfFont_Destroy(screen2destroy->alt_gui_font);
+
     free_secure(screen2destroy);
 }
 
 // Charge une police
-void screen_LoadFont(Screen* screen, sfFont* font_)
+void screen_LoadFont(Screen* screen, ScreenFontType type, char* path)
 {
-    if (!font_)
-        logging_Error("screen_LoadFont", "sfFont object sent NULL");
+    if (!path)
+        logging_Error("screen_LoadFont", "No path sent", NULL_PTR);
 
-    screen->font = font_;
+    switch(type)
+    {
+    case OPT_FONT:
+        screen->opt_font = sfFont_CreateFromFile(path, 50, NULL);
+        break;
+    case GUI_FONT:
+        screen->gui_font = sfFont_CreateFromFile(path, 50, NULL);
+        break;
+    case ALT_GUI_FONT:
+        screen->alt_gui_font = sfFont_CreateFromFile(path, 50, NULL);
+        break;
+    default:
+        break;
+    }
+    return;
 }
 
 // Ajout d'une sfString dans Screen
 void screen_LoadText(Screen* screen, char* text, sfColor color, int font_size, sfStringStyle style, float x, float y)
 {
     if (!screen)
-        logging_Error("screen_LoadText", "Screen object sent NULL");
+        logging_Error("screen_LoadText", "Screen object sent NULL", NULL_PTR);
 
-    screen->nb_text++;
-    if (!screen->texts)
-        assert(screen->texts = (sfString**) malloc(sizeof(sfString*)));
-    else
-        assert(screen->texts = (sfString**) realloc(screen->texts, screen->nb_text * sizeof(sfString*)));
+    assert(screen->texts = (sfString**) realloc(screen->texts, ++screen->nb_text * sizeof(sfString*)));
 
     screen->texts[screen->nb_text - 1] = sfString_Create();
     sfString_SetText(screen->texts[screen->nb_text - 1], text);
-    sfString_SetFont(screen->texts[screen->nb_text - 1], screen->font);
+    sfString_SetFont(screen->texts[screen->nb_text - 1], screen->opt_font);
     sfString_SetColor(screen->texts[screen->nb_text - 1], color);
     sfString_SetStyle(screen->texts[screen->nb_text - 1], style);
     sfString_SetSize(screen->texts[screen->nb_text - 1], font_size);
     sfString_SetPosition(screen->texts[screen->nb_text - 1], x, y);
 }
 
-// Dessin de texte
-void screen_DrawText(sfRenderWindow* window, Screen* screen, int id)
+void screen_SetMenuInterval(Screen* screen, unsigned int min, unsigned int max)
 {
-    if (!screen)
-        logging_Error("screen_DrawText", "Screen object sent NULL");
-    if (!screen->texts)
-        logging_Warning("screen_DrawText", "No texts loaded in Screen object sent");
-    else
-        sfRenderWindow_DrawString(window, screen->texts[id]);
+    screen->min_menu = min;
+    screen->max_menu = max;
 }
 
 // Charge une musique dans un Screen
-void screen_LoadMusic(Screen* screen, sfMusic* music, sfBool loop)
+void screen_LoadMusic(Screen* screen, char* path, sfBool loop)
 {
-    if (!music)
-        logging_Warning("screen_LoadMusic", "sfMusic object sent NULL");
+    if (!path)
+        logging_Error("screen_LoadMusic", "No music path sent", NULL_PTR);
 
-    screen->music = music;
+    screen->music = sfMusic_CreateFromFile(path);
     sfMusic_SetLoop(screen->music, loop);
 }
 
@@ -122,35 +141,56 @@ void screen_PlayMusic(Screen* screen)
         sfMusic_Play(screen->music);
 }
 
-// Charge un arrière plan dans un Screen
-void screen_LoadImage(Screen* screen, sfImage* image)
+// Arrêt de la musique
+void screen_StopMusic(Screen* screen)
 {
-    if (!image)
-        logging_Error("screen_LoadImage", "sfImage object sent NULL");
+    if (screen->music)
+        sfMusic_Stop(screen->music);
+}
+
+// Charge une image dans un screen
+void screen_LoadImage(Screen* screen, char* path)
+{
+    if (!path)
+        logging_Error("screen_LoadImage", "No image path sent", NULL_PTR);
     if (!screen)
-        logging_Error("screen_LoadImage", "Screen object sent NULL");
+        logging_Error("screen_LoadImage", "Screen object sent NULL", NULL_PTR);
 
-    screen->nb_img++;
-    if (!screen->images)
-        assert(screen->images = (sfSprite**) malloc(sizeof(sfSprite*)));
-    else
-        assert(screen->images = (sfSprite**) realloc(screen->images, screen->nb_img * sizeof(sfSprite*)));
+    assert(screen->base_images = (sfImage**) realloc(screen->base_images, ++screen->nb_img * sizeof(sfImage*)));
 
-    screen->images[screen->nb_img - 1] = sfSprite_Create();
-    sfSprite_SetImage(screen->images[screen->nb_img - 1], image);
+    assert(screen->sprites = (sfSprite**) realloc(screen->sprites, ++screen->nb_spr * sizeof(sfSprite*)));
+
+    screen->base_images[screen->nb_img - 1] = sfImage_CreateFromFile(path);
+    screen->sprites[screen->nb_spr - 1] = sfSprite_Create();
+    sfSprite_SetImage(screen->sprites[screen->nb_img - 1], screen->base_images[screen->nb_img - 1]);
 }
 
 void screen_AddTextbox(Screen* screen, int x, int y, int width, int height, int length, sfImage* image,
                        sfColor border_color, Widget_textbox_type type, void* var, sfColor text_color, char* text,
-                       sfColor label_color, sfFont* label_font, int text_size)
+                       sfColor label_color, int text_size)
 {
     if(!screen)
-        logging_Error("screen_AddTextbox", "Screen object sent NULL");
-    Widget_textbox* textbox = widget_textbox_Create(x, y, width, height, length, image, border_color, type, var, text_color, text, label_color, label_font, text_size);
+        logging_Error("screen_AddTextbox", "Screen object sent NULL", NULL_PTR);
+
+    Widget_textbox* textbox = widget_textbox_Create(x, y, width, height, length, image, border_color, type, var,
+        text_color, text, label_color, (type == INT) ? screen->alt_gui_font : screen->gui_font, text_size);
+
     gui_Add_Textbox(screen->gui, textbox);
 }
 
-void screen_DrawGui(sfRenderWindow* Game, Screen* screen)
+void screen_Draw(Screen* screen, sfRenderWindow* Game)
 {
+    if (!screen)
+        logging_Error("screen_DrawText", "Screen object sent NULL", NULL_PTR);
+
+    // Dessin images
+    for(int i = 0; i < screen->nb_spr; i++)
+        sfRenderWindow_DrawSprite(Game, screen->sprites[i]);
+
+    // Dessin textes
+    for (int i = 0; i < screen->nb_text; i++)
+        sfRenderWindow_DrawString(Game, screen->texts[i]);
+
+    // Dessin GUI
     gui_Draw(Game, screen->gui);
 }

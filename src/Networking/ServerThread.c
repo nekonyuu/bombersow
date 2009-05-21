@@ -41,7 +41,7 @@ void server_Main(void* UserData)
 
     sfSocketUDP_Bind(map->game_socket, map->game_port);
     if (!sfSocketUDP_IsValid(map->game_socket))
-        logging_Error("server_Start", "Port already used");
+        logging_Error("server_Start", "Port already used", NETWORK_FAIL);
 
     logging_Info("server_Main", "Listen_TCP thread launch...");
     sfThread_Launch(tcp_listening);

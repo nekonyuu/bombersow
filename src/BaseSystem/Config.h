@@ -27,6 +27,8 @@
 #include <stdbool.h>
 #include <SFML/System.h>
 
+#define GAME_NAME "BomberSow 0.1"
+
 // Index des binds dans le tableau de config
 enum BINDINGS
 {

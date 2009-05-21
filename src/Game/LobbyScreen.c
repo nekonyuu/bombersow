@@ -41,16 +41,18 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, uns
     bool launched = true, close = false;
     // GUI Chat Init
     sfImage* textbox_bg = sfImage_CreateFromFile("base/images/gui/textbox_back_black.png");
+    sfFloatRect rect_view_chat = { 0.f, 0.f, (float) config->width, 2000.f };
+    sfView* ChatText_View = sfView_CreateFromRect(rect_view_chat);
     char message[255] = { '\0' };
 
     server_creation = sfMutex_Create();
 
     // Squelette de l'écran Lobby
-    screen_LoadFont(lobby_view, font);
+    screen_LoadFont(lobby_view, OPT_FONT, "base/fonts/ITCKRIST.TTF");
     screen_LoadText(lobby_view, "Joueurs connectés", sfRed, 18, sfStringRegular, 40.f, 25.f);
 
     // Gui Chat
-    screen_AddTextbox(lobby_view, 0, config->height - 21, config->width - 4, 20, 255, textbox_bg, sfWhite, CHAR, message, sfWhite, "", sfWhite, font, 6);
+    screen_AddTextbox(lobby_view, 0, config->height - 21, config->width - 4, 20, 255, textbox_bg, sfWhite, CHAR, message, sfWhite, "", sfWhite, 6);
     lobby_view->gui->widget_textbox[0]->active = true;
 
     // Ecran d'attente
@@ -103,13 +105,10 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, uns
 
         playerslist_Draw(players_display, Game);
 
-        for (int i = 0; i < lobby_view->nb_text; i++)
-            screen_DrawText(Game, lobby_view, i);                       // Dessin des textes
+        screen_Draw(lobby_view, Game);
 
         if(config->show_fps)
             logging_FPSShow(Game);
-
-        screen_DrawGui(Game, lobby_view);
 
         sfRenderWindow_Display(Game);
 
@@ -163,6 +162,7 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, uns
 
     clientdata_Destroy(client_data);
     playerslist_Destroy(players_display);
+    sfView_Destroy(ChatText_View);
     map_Destroy(map);
 
     screen_Destroy(lobby_view);
