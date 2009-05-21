@@ -83,11 +83,12 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
     screen_LoadText(Screens_List[SERVER_SCR], "Nom du serveur", sfRed, 20, sfStringRegular, 450.0f, 250.0f);
     screen_LoadText(Screens_List[SERVER_SCR], "Pseudo", sfWhite, 20, sfStringRegular, 450.0f, 300.0f);
     screen_LoadText(Screens_List[SERVER_SCR], "Port", sfWhite, 20, sfStringRegular, 450.0f, 350.0f);
+    screen_LoadText(Screens_List[SERVER_SCR], "Démarrer le serveur", sfWhite, 20, sfStringRegular, 450.0f, 400.0f);
     screen_LoadText(Screens_List[SERVER_SCR], "Création du serveur", sfWhite, 35, sfStringRegular, 450.0f, 120.0f);
     screen_AddTextbox(Screens_List[SERVER_SCR], 630, 250, 175, 20, 20, textbox_bg_white, sfBlack, CHAR, servername, sfBlack, "", sfBlack, 10);
     screen_AddTextbox(Screens_List[SERVER_SCR], 630, 300, 175, 20, 20, textbox_bg_white, sfBlack, CHAR, pseudo, sfBlack, "", sfBlack, 10);
     screen_AddTextbox(Screens_List[SERVER_SCR], 630, 350, 75, 20, 5, textbox_bg_white, sfBlack, INT, &port, sfBlack, "", sfBlack, 10);
-    screen_SetMenuInterval(Screens_List[SERVER_SCR], 1, 3);
+    screen_SetMenuInterval(Screens_List[SERVER_SCR], 1, 4);
     Screens_List[SERVER_SCR]->gui->widget_textbox[0]->active = true;
 
     // Menu Client
@@ -100,11 +101,12 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
     screen_LoadText(Screens_List[CLIENT_SCR], "Pseudo", sfRed, 20, sfStringRegular, 450.0f, 250.0f);
     screen_LoadText(Screens_List[CLIENT_SCR], "IP", sfWhite, 20, sfStringRegular, 450.0f, 300.0f);
     screen_LoadText(Screens_List[CLIENT_SCR], "Port", sfWhite, 20, sfStringRegular, 450.0f, 350.0f);
+    screen_LoadText(Screens_List[CLIENT_SCR], "Connexion", sfWhite, 20, sfStringRegular, 450.0f, 400.0f);
     screen_LoadText(Screens_List[CLIENT_SCR], "Connexion IP", sfWhite, 35, sfStringRegular, 450.0f, 120.0f);
     screen_AddTextbox(Screens_List[CLIENT_SCR], 630, 250, 175, 20, 20, textbox_bg_white, sfBlack, CHAR, pseudo, sfBlack, "", sfBlack, 10);
     screen_AddTextbox(Screens_List[CLIENT_SCR], 630, 300, 175, 20, 15, textbox_bg_white, sfBlack, CHAR, ip, sfBlack, "", sfBlack, 10);
     screen_AddTextbox(Screens_List[CLIENT_SCR], 630, 350, 75, 20, 5, textbox_bg_white, sfBlack, INT, &port, sfBlack, "", sfBlack, 10);
-    screen_SetMenuInterval(Screens_List[CLIENT_SCR], 1, 3);
+    screen_SetMenuInterval(Screens_List[CLIENT_SCR], 1, 4);
     Screens_List[CLIENT_SCR]->gui->widget_textbox[0]->active = true;
 
     // Credits
@@ -218,6 +220,11 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
                     case 4:
                         if(Current_Screen == Screens_List[MAIN_MENU_SCR])
                             close = true;
+                        else if (Current_Screen == Screens_List[CLIENT_SCR])
+                            display_LobbyScreen(Game, config, port, CLIENT, ip, 0, 4, pseudo);
+                        else if (Current_Screen == Screens_List[SERVER_SCR])
+                            display_LobbyScreen(Game, config, port, SERVER, ip, 0, 4, pseudo);
+
                         break;
                     case 5:
                         if(Current_Screen == Screens_List[MAIN_MENU_SCR])
@@ -230,11 +237,11 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
                     if (menu_select > Current_Screen->min_menu)
                     {
                         sfString_SetColor(Current_Screen->texts[menu_select], sfWhite);
-                        if(Current_Screen == Screens_List[SERVER_SCR] || Current_Screen == Screens_List[CLIENT_SCR])
+                        if((Current_Screen == Screens_List[SERVER_SCR] || Current_Screen == Screens_List[CLIENT_SCR]) && gui_Exist_Textbox(screen_GetGUI(Current_Screen), menu_select))
                             screen_SetInactiveTextbox(Current_Screen, menu_select - 1);
 
                         sfString_SetColor(Current_Screen->texts[--menu_select], sfRed);
-                        if(Current_Screen == Screens_List[SERVER_SCR] || Current_Screen == Screens_List[CLIENT_SCR])
+                        if((Current_Screen == Screens_List[SERVER_SCR] || Current_Screen == Screens_List[CLIENT_SCR]) && gui_Exist_Textbox(screen_GetGUI(Current_Screen), menu_select))
                             screen_SetActiveTextbox(Current_Screen, menu_select - 1);
                     }
                     break;
@@ -243,11 +250,11 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
                     if (menu_select < Current_Screen->max_menu)
                     {
                         sfString_SetColor(Current_Screen->texts[menu_select], sfWhite);
-                        if(Current_Screen == Screens_List[SERVER_SCR] || Current_Screen == Screens_List[CLIENT_SCR])
+                        if((Current_Screen == Screens_List[SERVER_SCR] || Current_Screen == Screens_List[CLIENT_SCR]) && gui_Exist_Textbox(screen_GetGUI(Current_Screen), menu_select))
                             screen_SetInactiveTextbox(Current_Screen, menu_select - 1);
 
                         sfString_SetColor(Current_Screen->texts[++menu_select], sfRed);
-                        if(Current_Screen == Screens_List[SERVER_SCR] || Current_Screen == Screens_List[CLIENT_SCR])
+                        if((Current_Screen == Screens_List[SERVER_SCR] || Current_Screen == Screens_List[CLIENT_SCR]) && gui_Exist_Textbox(screen_GetGUI(Current_Screen), menu_select))
                             screen_SetActiveTextbox(Current_Screen, menu_select - 1);
                     }
                     break;

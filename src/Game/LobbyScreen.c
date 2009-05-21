@@ -27,7 +27,7 @@
 #include "Objects/Screen.h"
 #include "Networking/Networking.h"
 
-bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, unsigned int port, link_t link_type, char* ip, unsigned int map_id, unsigned int nb_players, char* player_name)
+bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port, link_t link_type, char* ip, unsigned int map_id, unsigned int nb_players, char* player_name)
 {
     Screen* lobby_view = screen_Create();
     // Data Init
@@ -53,10 +53,10 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, uns
 
     // Gui Chat
     screen_AddTextbox(lobby_view, 0, config->height - 21, config->width - 4, 20, 255, textbox_bg, sfWhite, CHAR, message, sfWhite, "", sfWhite, 6);
-    lobby_view->gui->widget_textbox[0]->active = true;
+    screen_SetActiveTextbox(lobby_view, 0);
 
     // Ecran d'attente
-    sfString_SetFont(text_display, font);
+    sfString_SetFont(text_display, lobby_view->opt_font);
     sfString_SetText(text_display, "Connexion en cours...");
     sfString_SetSize(text_display, 25);
     sfString_SetX(text_display, 0);
@@ -94,7 +94,7 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, sfFont* font, uns
     while(!client_connected)
         sfSleep(0.1f);
 
-    players_display = playerslist_Create(client_data->map, font, sfWhite, 12, sfStringItalic, 40.f, 60.f);
+    players_display = playerslist_Create(client_data->map, lobby_view->opt_font, sfWhite, 12, sfStringItalic, 40.f, 60.f);
 
     do
     {

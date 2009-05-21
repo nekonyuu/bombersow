@@ -32,6 +32,6 @@ typedef enum {SERVER, CLIENT} link_t;
 
 int game_MainMenu(sfRenderWindow* Game, Config* config);
 bool display_Playing(sfRenderWindow*, Config*);
-bool display_LobbyScreen(sfRenderWindow*, Config*, sfFont*, unsigned int, link_t, char*, unsigned int, unsigned int, char*);
+bool display_LobbyScreen(sfRenderWindow*, Config*, unsigned int, link_t, char*, unsigned int, unsigned int, char*);
 
 #endif

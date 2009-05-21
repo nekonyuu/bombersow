@@ -26,7 +26,7 @@
 
 #include <SFML/Graphics.h>
 #include <SFML/Audio.h>
-#include <Gui/Gui.h>
+#include "Gui/Gui.h"
 
 typedef enum { OPT_FONT, GUI_FONT, ALT_GUI_FONT } ScreenFontType;
 
@@ -62,6 +62,7 @@ void screen_PlayMusic(Screen*);
 void screen_StopMusic(Screen*);
 void screen_LoadImage(Screen*, char*);
 void screen_AddTextbox(Screen*, int, int, int, int, int, sfImage*, sfColor, Widget_textbox_type, void*, sfColor, char*, sfColor, int);
+Gui* screen_GetGUI(Screen* ptr);
 void screen_SetActiveTextbox(Screen*, int);
 void screen_SetInactiveTextbox(Screen*, int);
 void screen_Draw(Screen*, sfRenderWindow*);

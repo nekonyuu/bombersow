@@ -175,6 +175,7 @@ void gui_Destroy(Gui*);
 
 void gui_Load_Textbox(Gui*, Widget_textbox**, int);
 void gui_Add_Textbox(Gui*, Widget_textbox*);
+bool gui_Exist_Textbox(Gui*, unsigned int);
 
 void gui_Load_Bouton(Gui*, Widget_bouton**, int);
 void gui_Add_Bouton(Gui*, Widget_bouton*);

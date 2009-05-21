@@ -190,6 +190,11 @@ void screen_AddTextbox(Screen* screen, int x, int y, int width, int height, int 
     gui_Add_Textbox(screen->gui, textbox);
 }
 
+Gui* screen_GetGUI(Screen* ptr)
+{
+    return ptr->gui;
+}
+
 // Met le focus sur la textbox
 void screen_SetActiveTextbox(Screen* screen, int id)
 {
