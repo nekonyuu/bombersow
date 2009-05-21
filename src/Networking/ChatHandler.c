@@ -79,3 +79,43 @@ void chat_DestroyPlayerData(ChatData* data)
 {
     free_secure(data);
 }
+
+ChatMessages* chatmessages_Create()
+{
+    ChatMessages* ptr = malloc(sizeof(Chatmessages));
+    ptr->messages = NULL;
+    ptr->nb_mess = 0;
+
+    return ptr;
+}
+
+void chatmessages_AddMessage(ChatMessages* ptr, char* mess)
+{
+    if(!ptr)
+        logging_Error("chatmessages_AddMessage", "ChatMessages object sent NULL", NULL_PTR);
+
+    ptr->messages = (sfString**) realloc(ptr->messages, ++ptr->nb_mess * sizeof(sfString*));
+    if(!ptr->messages)
+        logging_Error("chatmessages_AddMessage", "Memory allocation error", LOW_MEMORY);
+
+    ptr->messages[ptr->nb_mess - 1] = sfString_Create();
+    sfString_SetText(ptr->messages[ptr->nb_mess - 1], mess);
+    sfString_SetSize(ptr->messages[ptr->nb_mess - 1], 8);
+    sfString_SetPosition(ptr->messages[ptr->nb_mess - 1], 0, ptr->nb_mess * 12);
+}
+
+void chatmessages_Draw(ChatMessages* ptr, sfRenderWindow* Game, sfView* view)
+{
+    sfRenderWindow_SetView(Game, view);
+
+    for (int i = 0; i < ptr->nb_mess; i++)
+        sfRenderWindow_DrawString(Game, ptr->messages[i]);
+
+    sfRenderWindow_SetView(Game, sfRenderWindow_GetDefaultView(Game));
+}
+
+void chatmessages_Destroy(ChatMessages* ptr)
+{
+    for (int i = 0; i < ptr->nb_mess; i++)
+        sfString_Destroy(ptr->messages[i]);
+}

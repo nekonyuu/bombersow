@@ -35,6 +35,13 @@ typedef struct CHAT_DATA
     unsigned int player_id;
 } ChatData;
 
+// Permet de stocker les messages de discusison pour l'affichage
+typedef struct CHAT_MESS_VIEW
+{
+    sfString** messages;
+    unsigned int nb_mess;
+} ChatMessages;
+
 // Permet de regrouper les données client à envoyer au thread
 typedef struct CLIENT_DATA
 {
@@ -68,6 +75,9 @@ sfPacket* client_CreateDisconnectPacket(unsigned int player_id);
 sfPacket* chat_CreatePacket(Player* player, const char* message);
 char* chat_ReadPacket(Map* map, sfPacket* packet);
 ChatData* chat_CreatePlayerData(Map*, unsigned int);
+ChatMessages* chatmessages_Create();
+void chatmessages_Draw(ChatMessages* ptr, sfRenderWindow* Game, sfView* view);
+void chatmessages_Destroy(ChatMessages* ptr);
 
 // DataHandler.c
 Packet* packet_Create(unsigned int code, sfPacket* packet);
