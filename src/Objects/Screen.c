@@ -118,6 +118,17 @@ void screen_LoadText(Screen* screen, char* text, sfColor color, int font_size, s
     sfString_SetPosition(screen->texts[screen->nb_text - 1], x, y);
 }
 
+void screen_HightlightText(Screen* screen, unsigned int id, sfColor color)
+{
+    for(int i = 1; i < screen->nb_text; i++)
+    {
+        if(i == id)
+            sfString_SetColor(screen->texts[i], color);
+        else
+            sfString_SetColor(screen->texts[i], sfWhite);
+    }
+}
+
 void screen_SetMenuInterval(Screen* screen, unsigned int min, unsigned int max)
 {
     screen->min_menu = min;
@@ -165,6 +176,7 @@ void screen_LoadImage(Screen* screen, char* path)
     sfSprite_SetImage(screen->sprites[screen->nb_img - 1], screen->base_images[screen->nb_img - 1]);
 }
 
+// Ajout d'une textbox à l'écran
 void screen_AddTextbox(Screen* screen, int x, int y, int width, int height, int length, sfImage* image,
                        sfColor border_color, Widget_textbox_type type, void* var, sfColor text_color, char* text,
                        sfColor label_color, int text_size)
@@ -178,6 +190,19 @@ void screen_AddTextbox(Screen* screen, int x, int y, int width, int height, int 
     gui_Add_Textbox(screen->gui, textbox);
 }
 
+// Met le focus sur la textbox
+void screen_SetActiveTextbox(Screen* screen, int id)
+{
+    screen->gui->widget_textbox[id]->active = true;
+}
+
+// Supprime le focus sur la textbox
+void screen_SetInactiveTextbox(Screen* screen, int id)
+{
+    screen->gui->widget_textbox[id]->active = false;
+}
+
+// Dessin des objets de l'écran
 void screen_Draw(Screen* screen, sfRenderWindow* Game)
 {
     if (!screen)

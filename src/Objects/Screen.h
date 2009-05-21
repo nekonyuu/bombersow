@@ -55,12 +55,15 @@ Screen* screen_Create();
 void screen_Destroy(Screen*);
 void screen_LoadFont(Screen*, ScreenFontType, char*);
 void screen_LoadText(Screen*, char*, sfColor, int, sfStringStyle, float, float);
+void screen_HightlightText(Screen*, unsigned int, sfColor);
 void screen_SetMenuInterval(Screen*, unsigned int, unsigned int);
 void screen_LoadMusic(Screen*, char*, sfBool);
 void screen_PlayMusic(Screen*);
 void screen_StopMusic(Screen*);
 void screen_LoadImage(Screen*, char*);
 void screen_AddTextbox(Screen*, int, int, int, int, int, sfImage*, sfColor, Widget_textbox_type, void*, sfColor, char*, sfColor, int);
+void screen_SetActiveTextbox(Screen*, int);
+void screen_SetInactiveTextbox(Screen*, int);
 void screen_Draw(Screen*, sfRenderWindow*);
 
 #endif
