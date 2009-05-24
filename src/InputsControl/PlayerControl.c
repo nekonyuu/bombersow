@@ -53,9 +53,11 @@ inline void control_PlayerControl(sfRenderWindow* App, Map* map, Player* player,
             if (Event.Key.Code == sfKeyZ)
                 player_Displace(player, UP, 0, config);
 
+            /* Y A PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSS
             // Descente rapide
             if (Event.Key.Code == sfKeyS)
                 player_Displace(player, DOWN, 0, config);
+            */
 
             // Menu
             if (Event.Key.Code == sfKeyEscape)
