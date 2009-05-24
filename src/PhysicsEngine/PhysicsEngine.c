@@ -559,7 +559,9 @@ void quadtree_Add(QuadTree* quad, void* obj_, int type)
     else
     {
         Bullet* obj = obj_;
+        printf("QUADTREE : MOUCHARD 1\n");
         rect_obj = sprite_GetRect(obj->draw_image);
+        printf("QUADTREE : MOUCHARD 2\n");
     }
 
     if (quad->object == NULL)

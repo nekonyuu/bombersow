@@ -228,9 +228,12 @@ void map_AddBullet(Map* map_, Bullet* bullet_)
     if (!map_->bullets_list && !map_->bullets_list[map_->nb_bullets - 1])
         logging_Error("map_AddBullet", "Memory allocation error", LOW_MEMORY);
 
+    printf("MAP ADD BULLET : MOUCHARD 1\n");
     map_->bullets_list[map_->nb_bullets - 1] = bullet_;
+    printf("MAP ADD BULLET : MOUCHARD 2\n");
 
     quadtree_Add(map_->quad_tree, bullet_, BULLET);
+    printf("MAP ADD BULLET : MOUCHARD 3\n");
 }
 
 void map_DelBullet(Map* map_, unsigned int bullet_id)

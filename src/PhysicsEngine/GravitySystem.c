@@ -61,7 +61,9 @@ void gravitysystem_PlayerUpdate(Map* map_, Player* player, Config* config)
 
 void gravitysystem_BulletUpdate(Map* map_, Bullet* bullet_, Config* config)
 {
-
+    float speed_x = bullet_->speed_x * map_->clock_time;
+    float speed_y = bullet_->speed_y * map_->clock_time;
+    bullet_SetPosition(bullet_, bullet_->coord_x+speed_x, bullet_->coord_y+speed_y);
 }
 
 void gravitysystem_WorldUpdate(Map* map_, Config* config)
@@ -73,10 +75,10 @@ void gravitysystem_WorldUpdate(Map* map_, Config* config)
         gravitysystem_PlayerUpdate(map_,map_->players_list[i], config);
     }
 
-    /*for (int i = 0; i < map_->nb_objects; i++)
+    for (int i = 0; i < map_->nb_bullets; i++)
     {
-
-    }*/
+        gravitysystem_BulletUpdate(map_,map_->bullets_list[i], config);
+    }
 
     sfClock_Reset(map_->clock);
 }

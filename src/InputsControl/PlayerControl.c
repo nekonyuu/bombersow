@@ -71,7 +71,7 @@ inline void control_PlayerControl(sfRenderWindow* App, Map* map, Player* player,
             *ingame = false;
 
         // Tir
-        /*if (Event.Type == sfEvtMouseButtonPressed && Event.MouseButton.Button == sfButtonLeft)
-            player_WeaponShoot(ctrl_player->map, ctrl_player->player);*/
+        if (Event.Type == sfEvtMouseButtonPressed && Event.MouseButton.Button == sfButtonLeft)
+            player_WeaponShoot(map, player, sfInput_GetMouseX(keys_input), sfInput_GetMouseY(keys_input));
     }
 }

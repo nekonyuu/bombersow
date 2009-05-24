@@ -82,7 +82,7 @@ void chat_DestroyPlayerData(ChatData* data)
 
 ChatMessages* chatmessages_Create()
 {
-    ChatMessages* ptr = malloc(sizeof(Chatmessages));
+    ChatMessages* ptr = malloc(sizeof(ChatMessages));
     ptr->messages = NULL;
     ptr->nb_mess = 0;
 
