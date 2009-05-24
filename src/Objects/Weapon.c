@@ -120,7 +120,7 @@ void armory_Create(Weapon* armory)
 
     armory[CROWBAR].reload_latency = 1000;
     armory[CROWBAR].switch_latency = 800;
-    //armory[CROWBAR].respawn_time = ;
+    armory[CROWBAR].respawn_time = 0;
 
     armory[CROWBAR].range = 20;
     armory[CROWBAR].splash_radius = 0;
@@ -146,7 +146,7 @@ void armory_Create(Weapon* armory)
 
     armory[ROCKET_LAUNCHER].reload_latency = 800;
     armory[ROCKET_LAUNCHER].switch_latency = 800;
-    //armory[ROCKET_LAUNCHER].respawn_time = ;
+    armory[ROCKET_LAUNCHER].respawn_time = 15;
 
     armory[ROCKET_LAUNCHER].range = 2000;
     armory[ROCKET_LAUNCHER].splash_radius = 26;
@@ -172,7 +172,7 @@ void armory_Create(Weapon* armory)
 
     armory[GRENADES].reload_latency = 1500;
     armory[GRENADES].switch_latency = 500;
-    //armory[GRENADES].respawn_time = ;
+    armory[GRENADES].respawn_time = 15;
 
     armory[GRENADES].range = 2000;
     armory[GRENADES].splash_radius = 50;
@@ -198,7 +198,7 @@ void armory_Create(Weapon* armory)
 
     armory[SHOTGUN].reload_latency = 1000;
     armory[SHOTGUN].switch_latency = 1000;
-    //armory[SHOTGUN].respawn_time = ;
+    armory[SHOTGUN].respawn_time = 15;
 
     armory[SHOTGUN].range = 150;
     armory[SHOTGUN].splash_radius = 0;
@@ -224,7 +224,7 @@ void armory_Create(Weapon* armory)
 
     armory[MACHINEGUN].reload_latency = 100;
     armory[MACHINEGUN].switch_latency = 0;
-    //armory[MACHINEGUN].respawn_time = ;
+    armory[MACHINEGUN].respawn_time = 15;
 
     armory[MACHINEGUN].range = 2000;
     armory[MACHINEGUN].splash_radius = 5;
@@ -250,7 +250,7 @@ void armory_Create(Weapon* armory)
 
     armory[SNIPER].reload_latency = 1500;
     armory[SNIPER].switch_latency = -1;
-    //armory[SNIPER].respawn_time = ;
+    armory[SNIPER].respawn_time = 60;
 
     armory[SNIPER].range = 2000;
     armory[SNIPER].splash_radius = 0;
@@ -276,7 +276,7 @@ void armory_Create(Weapon* armory)
 
     armory[LASERGUN].reload_latency = 50;
     armory[LASERGUN].switch_latency = -1;
-    //armory[LASERGUN].respawn_time = ;
+    armory[LASERGUN].respawn_time = 60;
 
     armory[LASERGUN].range = 200;
     armory[LASERGUN].splash_radius = 0;
