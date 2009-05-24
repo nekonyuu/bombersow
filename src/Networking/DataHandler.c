@@ -188,7 +188,7 @@ void bullet_ReadPacket(Map* map, sfPacket* packet)
 {
 
 }
-
+/* A REVOIR, TROP COMPLEXE
 void map_CreateGamePackets(Map* map_)
 {
     if (!map_)
@@ -220,6 +220,7 @@ void map_CreateGamePackets(Map* map_)
 
     sfMutex_Unlock(Network_ServerMutex);                                                  // Déverrouillage
 }
+*/
 
 void map_DestroyAllPackets(Map* map_)
 {

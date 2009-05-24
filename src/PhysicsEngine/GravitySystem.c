@@ -75,9 +75,9 @@ void gravitysystem_WorldUpdate(Map* map_, Config* config)
         gravitysystem_PlayerUpdate(map_,map_->players_list[i], config);
     }
 
-    for (int i = 0; i < map_->nb_bullets; i++)
+    for (Bullet* ptr = map_->bullets_list; ptr != NULL; ptr = bullet_GetNext(ptr))
     {
-        gravitysystem_BulletUpdate(map_,map_->bullets_list[i], config);
+        gravitysystem_BulletUpdate(map_, ptr, config);
     }
 
     sfClock_Reset(map_->clock);

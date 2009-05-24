@@ -29,6 +29,9 @@ Bullet* bullet_Create(unsigned int player_id, unsigned int type)
     Bullet* new_bullet = NULL;
     assert(new_bullet = (Bullet*) malloc(sizeof(Bullet)));
 
+    new_bullet->prev = NULL;
+    new_bullet->next = NULL;
+
     new_bullet->owner = player_id;
     new_bullet->bullet_type = type;
     new_bullet->damage = armory[type].damage;
@@ -45,17 +48,73 @@ Bullet* bullet_Create(unsigned int player_id, unsigned int type)
     return new_bullet;
 }
 
-void bullet_Destroy(Bullet* bullet2destroy)
+void bullet_Destroy(Bullet* ptr)
+{
+    if (!ptr)
+        logging_Error("bullet_Destroy", "Bullet object sent NULL", NULL_PTR);
+
+    sprite_Destroy(ptr->draw_image);
+    free_secure(ptr);
+}
+
+void bullet_DeleteFromList(Bullet* bullet2destroy)
 {
     if (!bullet2destroy)
-        logging_Error("bullet_Destroy", "Bullet object sent NULL", NULL_PTR);
+        logging_Error("bullet_DeleteFromList", "Bullet object sent NULL", NULL_PTR);
+
+    bullet2destroy->prev->next = bullet2destroy->next;
+    bullet2destroy->next->prev = bullet2destroy->prev;
+
     sprite_Destroy(bullet2destroy->draw_image);
     free_secure(bullet2destroy);
+}
+
+// Destruction d'une liste complète, head vaut NULL après destruction
+void bullet_DestroyList(Bullet** head)
+{
+    if (!head)
+        logging_Error("bullet_DestroyList", "Bullet list sent NULL", NULL_PTR);
+
+    Bullet* ptr = *head, *ptr2 = NULL;
+    while(ptr != NULL)
+    {
+        ptr2 = ptr->next;
+        bullet_Destroy(ptr);
+        ptr = ptr2;
+    }
+
+    *head = NULL;
+}
+
+void bullet_SetNext(Bullet* ptr, Bullet* new_bullet)
+{
+    ptr->next = new_bullet;
+}
+
+void bullet_SetPrev(Bullet* ptr, Bullet* new_bullet)
+{
+    ptr->prev = new_bullet;
+}
+
+Bullet* bullet_GetNext(Bullet* ptr)
+{
+    return ptr->next;
+}
+
+Bullet* bullet_GetPrev(Bullet* ptr)
+{
+    return ptr->prev;
 }
 
 void bullet_Draw(sfRenderWindow* Game, Bullet* bullet)
 {
     sprite_Draw(Game, bullet->draw_image);
+}
+
+void bullet_DrawList(sfRenderWindow* Game, Bullet* bullet)
+{
+    for (Bullet* ptr = bullet; ptr != NULL; ptr = ptr->next)
+        sprite_Draw(Game, ptr->draw_image);
 }
 
 void bullet_SetPosition(Bullet* bullet, float x, float y)

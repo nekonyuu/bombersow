@@ -165,6 +165,9 @@ typedef struct PLAYER
 
 typedef struct BULLET
 {
+    struct BULLET* prev;            // Liste D-Chain
+    struct BULLET* next;
+
     unsigned int owner;             // Tireur (utile pour le self-damage)
     unsigned int bullet_type;       // Type de balles
     unsigned int damage;            // Dommages infligés
@@ -204,8 +207,7 @@ typedef struct MAP
     Player** players_list;          // Liste des joueurs de la map
     unsigned int nb_players;        // Nombre de joueurs connectés sur la map
 
-    Bullet** bullets_list;          // Liste des balles tirées
-    unsigned int nb_bullets;        // Nombre de balles tirées
+    Bullet* bullets_list;           // Liste des balles tirées
 
     PacketList* game_packets2send;  // Liste des paquets de jeu à envoyer
 
@@ -257,7 +259,14 @@ void player_Draw(sfRenderWindow*, Player*);
 // Bullet.c
 Bullet* bullet_Create(unsigned int, unsigned int);
 void bullet_Destroy(Bullet*);
+void bullet_DestroyList(Bullet**);
+void bullet_DeleteFromList(Bullet*);
+void bullet_SetNext(Bullet*, Bullet*);
+void bullet_SetPrev(Bullet*, Bullet*);
+Bullet* bullet_GetNext(Bullet*);
+Bullet* bullet_GetPrev(Bullet*);
 void bullet_Draw(sfRenderWindow*, Bullet*);
+void bullet_DrawList(sfRenderWindow*, Bullet*);
 void bullet_SetPosition(Bullet*, float, float);
 void bullet_SetSpeed(Bullet*, float, float);
 
@@ -269,7 +278,7 @@ void map_DelObject(Map*, unsigned int);
 void map_AddPlayer(Map*, Player*);
 void map_DelPlayer(Map*, unsigned int);
 void map_AddBullet(Map*, Bullet*);
-void map_DelBullet(Map*, unsigned int);
+void map_DelBullet(Map*, Bullet*);
 void map_UpdateDisconnectedPlayers(void*);
 Player* map_GetPlayerFromID(Map*, unsigned int);
 unsigned int map_GetPlayerIDFromName(Map*, char*);

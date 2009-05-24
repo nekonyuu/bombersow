@@ -206,26 +206,22 @@ void player_WeaponShoot(Map* map, Player* player_, float mouse_x, float mouse_y)
     float vec_x = (mouse_x - x_center) / diagonale;
     float vec_y = (mouse_y - y_center) / diagonale;
 
-    printf("MOUCHARD 1\n");
     player_CollectWeapon(player_, SHOTGUN);
-    printf("MOUCHARD 2\n");
     player_SwitchWeapon(player_, SHOTGUN);
-    printf("MOUCHARD 3\n");
 
     if (player_->weapons[player_->current_weapon]->type == SHOTGUN)
     {
-        printf("MOUCHARD 4\n");
         srand (time (NULL));
-        printf("MOUCHARD 5\n");
+
         for (int nb_bullet = 0; nb_bullet < SHOTGUN_SHRAPNELS; nb_bullet++)
         {
             Bullet* bullet = bullet_Create(player_->player_id, player_->current_weapon);
-            printf("MOUCHARD 6\n");
+
             float rand_num = (float)rand() / (RAND_MAX+1);
 
             vec_x = (mouse_x - x_center) / diagonale;
             vec_y = (mouse_y - y_center) / diagonale;
-            printf("MOUCHARD 7\n");
+
             bullet_SetPosition(bullet, x_center+vec_x*30, y_center+vec_y*30);
 
             vec_x = 2000 * (mouse_x - x_center) / diagonale;
@@ -234,11 +230,9 @@ void player_WeaponShoot(Map* map, Player* player_, float mouse_x, float mouse_y)
             float angle = ((int)(nb_bullet/2)) * ((nb_bullet%2) - 1) * 3.14/18;
             float vec_x2 = vec_x * cos(angle) + vec_y * sin(angle);
             float vec_y2 = -vec_x * sin(angle) + vec_y * cos(angle);
-            printf("MOUCHARD 8\n");
             bullet_SetSpeed(bullet, vec_x2, vec_y2);
-            printf("MOUCHARD 9\n");
+
             map_AddBullet(map, bullet);
-            printf("MOUCHARD 10\n");
         }
 
     }

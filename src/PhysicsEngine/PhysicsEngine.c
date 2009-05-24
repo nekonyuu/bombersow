@@ -685,9 +685,9 @@ void quadtree_Generate(QuadTree* quad, Map* map)
         quadtree_Add(quad, map->players_list[i], PLAYER);
     }
 
-    for (int i = 0; i < map->nb_bullets; i++)
+    for (Bullet* ptr = map->bullets_list; ptr != NULL; ptr = bullet_GetNext(ptr))
     {
-        quadtree_Add(quad, map->bullets_list[i], BULLET);
+        quadtree_Add(quad, ptr, BULLET);
     }
 }
 

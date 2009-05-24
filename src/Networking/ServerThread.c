@@ -268,7 +268,7 @@ void server_Listen_Game(void* UserData)
         server_ReadUDPPacket(packet, map);
 
         // Envoi des nouvelles données à chaque player
-        map_CreateGamePackets(map);
+        //map_CreateGamePackets(map);
 
         for (int i = 0; i < map->game_packets2send->nb_packets; i++)
             if (map->game_packets2send->packets[i]->code != WEAPON && map->game_packets2send->packets[i]->code != AMMO)

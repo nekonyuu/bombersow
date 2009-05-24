@@ -59,7 +59,6 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
     new_map->nb_players = 0;
 
     new_map->bullets_list = NULL;
-    new_map->nb_bullets = 0;
 
     new_map->game_packets2send = NULL;
 
@@ -114,9 +113,7 @@ void map_Destroy(Map* map2destroy)
         free_secure(map2destroy->players_list);
 
         logging_Info("map_Destroy", "Destroy bullets...");
-        for (int i = 0; i < map2destroy->nb_bullets; i++)
-            bullet_Destroy(map2destroy->bullets_list[i]);
-        free_secure(map2destroy->bullets_list);
+        bullet_DestroyList(&map2destroy->bullets_list);
 
         logging_Info("map_Destroy", "Destroy pending packets...");
         if (map2destroy->game_packets2send)
@@ -220,38 +217,33 @@ void map_DelPlayer(Map* map_, unsigned int player_id)
 
 void map_AddBullet(Map* map_, Bullet* bullet_)
 {
-    if (!map_->bullets_list)
-        assert(map_->bullets_list = (Bullet**) malloc(++map_->nb_bullets * sizeof(Bullet*)));
-    else
-        assert(map_->bullets_list = (Bullet**) realloc(map_->bullets_list, ++map_->nb_bullets * sizeof(Bullet*)));
-
-    if (!map_->bullets_list && !map_->bullets_list[map_->nb_bullets - 1])
-        logging_Error("map_AddBullet", "Memory allocation error", LOW_MEMORY);
-
-    printf("MAP ADD BULLET : MOUCHARD 1\n");
-    map_->bullets_list[map_->nb_bullets - 1] = bullet_;
-    printf("MAP ADD BULLET : MOUCHARD 2\n");
-
-    quadtree_Add(map_->quad_tree, bullet_, BULLET);
-    printf("MAP ADD BULLET : MOUCHARD 3\n");
-}
-
-void map_DelBullet(Map* map_, unsigned int bullet_id)
-{
-    if (!map_->bullets_list[bullet_id])
+    if (!bullet_)
     {
-        logging_Warning("map_DelBullet", "Bullet object at bullet_id is NULL");
+        logging_Warning("map_AddBullet", "Bullet object sent NULL");
         return;
     }
 
-    bullet_Destroy(map_->bullets_list[bullet_id]);
+    if(map_->bullets_list);
+    {
+        bullet_SetPrev(map_->bullets_list, bullet_);
+        bullet_SetNext(bullet_, map_->bullets_list);
+    }
+    map_->bullets_list = bullet_;
 
-    for (int i = bullet_id; i < map_->nb_bullets - 1; i++)
-        map_->bullets_list[i] = map_->bullets_list[i + 1];
+    quadtree_Add(map_->quad_tree, bullet_, BULLET);
+}
 
-    quadtree_Delete_Elt(map_->bullets_list[bullet_id], BULLET);
+void map_DelBullet(Map* map_, Bullet* bullet)
+{
+    if (!bullet)
+    {
+        logging_Warning("map_DelBullet", "Bullet object sent NULL");
+        return;
+    }
 
-    assert(map_->bullets_list = (Bullet**) realloc(map_->bullets_list, --map_->nb_bullets * sizeof(Bullet*)));
+    bullet_DeleteFromList(bullet);
+
+    quadtree_Delete_Elt(bullet, BULLET);
 }
 
 void map_UpdateDisconnectedPlayers(void* UserData)
@@ -323,8 +315,5 @@ void map_Draw(sfRenderWindow* Game, Map* map)
         object_Draw(Game, map->objects_list[i]);
     }
 
-    for (int i = 0; i < map->nb_bullets; i++)
-    {
-        bullet_Draw(Game, map->bullets_list[i]);
-    }
+    bullet_DrawList(Game, map->bullets_list);
 }
