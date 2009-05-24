@@ -195,15 +195,59 @@ void player_CollectWeapon(Player* player_, int weapon_type)
 }
 
 // Diminue le nombre de cartouches restantes et crée un/des bullet(s)
-void player_WeaponShoot(Map* map, Player* player_)
+void player_WeaponShoot(Map* map, Player* player_, float mouse_x, float mouse_y)
 {
+    float x_center = player_->coord_x+player_->sprite->largeur/2;
+    float y_center = player_->coord_y+player_->sprite->hauteur/2;
+
+    float diagonale = sqrt((mouse_x - x_center)*(mouse_x - x_center) + (mouse_y - y_center)*(mouse_y - y_center));
+
+    float vec_x = (mouse_x - x_center) / diagonale;
+    float vec_y = (mouse_y - y_center) / diagonale;
+
+    player_CollectWeapon(player_, SHOTGUN);
+    player_SwitchWeapon(player_, SHOTGUN);
+
     if (player_->weapons[player_->current_weapon]->type == SHOTGUN)
     {
+        srand (time (NULL));
+
         for (int nb_bullet = 0; nb_bullet < SHOTGUN_SHRAPNELS; nb_bullet++)
-            map_AddBullet(map, bullet_Create(player_->player_id, player_->current_weapon));
+        {
+            Bullet* bullet = bullet_Create(player_->player_id, player_->current_weapon);
+
+            float rand_num = (float)rand() / (RAND_MAX+1);
+
+            vec_x = (mouse_x - x_center) / diagonale;
+            vec_y = (mouse_y - y_center) / diagonale;
+
+            bullet_SetPosition(bullet, x_center+vec_x*30, y_center+vec_y*30);
+
+            vec_x = 2000 * (mouse_x - x_center) / diagonale;
+            vec_y = 2000 * (mouse_y - y_center) / diagonale;
+
+            float angle = ((int)(nb_bullet/2)) * ((nb_bullet%2) - 1) * 3.14/18;
+            float vec_x2 = vec_x * cos(angle) + vec_y * sin(angle);
+            float vec_y2 = -vec_x * sin(angle) + vec_y * cos(angle);
+
+            bullet_SetSpeed(bullet, vec_x2, vec_y2);
+            map_AddBullet(map, bullet);
+        }
+
     }
     else
-        map_AddBullet(map, bullet_Create(player_->player_id, player_->current_weapon));
+    {
+        Bullet* bullet = bullet_Create(player_->player_id, player_->current_weapon);
+
+        bullet_SetPosition(bullet, x_center+vec_x*30, y_center+vec_y*30);
+
+        vec_x = player_->weapons[player_->current_weapon]->proj_speed * (mouse_x - x_center) / diagonale;
+        vec_y = player_->weapons[player_->current_weapon]->proj_speed * (mouse_y - y_center) / diagonale;
+
+        bullet_SetSpeed(bullet, vec_x, vec_y);
+
+        map_AddBullet(map, bullet);
+    }
 
     player_->weapons[player_->current_weapon]->nb_curr_bullets--;
 

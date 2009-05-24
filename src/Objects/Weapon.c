@@ -69,7 +69,7 @@ void weapon_Destroy(Weapon* weapon2destroy)
 void armory_LoadImages(WeaponImg* img_tab)
 {
     img_tab[CROWBAR].weapon_img = sfImage_CreateFromFile("base/images/weapons/Crowbar.png");
-    img_tab[CROWBAR].bullet_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
+    img_tab[CROWBAR].bullet_img = sfImage_CreateFromFile("base/images/weapons/Grenade.png");
 
     img_tab[ROCKET_LAUNCHER].weapon_img = sfImage_CreateFromFile("base/images/weapons/Rocket Launcher.png");
     img_tab[ROCKET_LAUNCHER].bullet_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
@@ -78,7 +78,7 @@ void armory_LoadImages(WeaponImg* img_tab)
     img_tab[GRENADES].bullet_img = sfImage_CreateFromFile("base/images/weapons/Grenade.png");
 
     img_tab[SHOTGUN].weapon_img = sfImage_CreateFromFile("base/images/weapons/Shotgun.png");
-    img_tab[SHOTGUN].bullet_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
+    img_tab[SHOTGUN].bullet_img = sfImage_CreateFromFile("base/images/weapons/shotgunammo.png");
 
     img_tab[MACHINEGUN].weapon_img = sfImage_CreateFromFile("base/images/weapons/Machine-Gun.png");
     img_tab[MACHINEGUN].bullet_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
@@ -205,7 +205,7 @@ void armory_Create(Weapon* armory)
     armory[SHOTGUN].splash_coef = 1;
     armory[SHOTGUN].selfdamage_coef = 0;
 
-    armory[SHOTGUN].proj_speed = -1;
+    armory[SHOTGUN].proj_speed = 200;
     armory[SHOTGUN].trajectory = 2;
 
     armory[SHOTGUN].collected = false;

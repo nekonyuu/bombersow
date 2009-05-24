@@ -174,6 +174,9 @@ typedef struct BULLET
     float coord_x;                  // Coordonnées
     float coord_y;
 
+    float speed_x;
+    float speed_y;
+
     Sprite* draw_image;             // Image de la balle (Si Balle invisible, Sprite Transparent)
 
     struct QUAD_TREE* quad_node;    // Noeud du struct QUAD_TREE de la map qui contient le bullet
@@ -247,7 +250,7 @@ void player_Destroy(Player*);
 void player_Displace(Player*, Direction, float, Config*);
 void player_SwitchWeapon(Player*, int);
 void player_CollectWeapon(Player*, int);
-void player_WeaponShoot(Map*, Player*);
+void player_WeaponShoot(Map*, Player*, float, float);
 void player_SetPosition(Player*, float, float);
 void player_Draw(sfRenderWindow*, Player*);
 
@@ -255,6 +258,8 @@ void player_Draw(sfRenderWindow*, Player*);
 Bullet* bullet_Create(unsigned int, unsigned int);
 void bullet_Destroy(Bullet*);
 void bullet_Draw(sfRenderWindow*, Bullet*);
+void bullet_SetPosition(Bullet*, float, float);
+void bullet_SetSpeed(Bullet*, float, float);
 
 // Map.c
 Map* map_Create(unsigned int, unsigned int, Config*);

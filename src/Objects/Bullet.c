@@ -57,3 +57,18 @@ void bullet_Draw(sfRenderWindow* Game, Bullet* bullet)
 {
     sprite_Draw(Game, bullet->draw_image);
 }
+
+void bullet_SetPosition(Bullet* bullet, float x, float y)
+{
+    bullet->coord_x = x;
+    bullet->coord_y = y;
+    sprite_SetPosition(bullet->draw_image, x, y);
+}
+
+void bullet_SetSpeed(Bullet* bullet, float x, float y)
+{
+    bullet->speed_x = x;
+    bullet->speed_y = y;
+}
+
+
