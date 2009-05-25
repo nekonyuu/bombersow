@@ -663,7 +663,7 @@ void quadtree_Draw(sfRenderWindow* Game, QuadTree* quad)
         }
         else
         {
-            test = sfShape_CreateRectangle(quad->rect.Left+1, quad->rect.Top+1, quad->rect.Right-1, quad->rect.Bottom-1, sfColor_FromRGBA(255,255,255,0), 1, sfWhite);
+            test = sfShape_CreateRectangle(quad->rect.Left + 1, quad->rect.Top + 1, quad->rect.Right - 1, quad->rect.Bottom - 1, sfColor_FromRGBA(255, 255, 255, 0), 1, sfWhite);
         }
         sfRenderWindow_DrawShape(Game, test);
         sfShape_Destroy(test);
@@ -685,7 +685,7 @@ void quadtree_Generate(QuadTree* quad, Map* map)
         quadtree_Add(quad, map->players_list[i], PLAYER);
     }
 
-    for (Bullet* ptr = map->bullets_list; ptr != NULL; ptr = bullet_GetNext(ptr))
+    for (Bullet* ptr = BulletList_GetHead(map->bullets); ptr != NULL; ptr = bullet_GetNext(ptr))
     {
         quadtree_Add(quad, ptr, BULLET);
     }

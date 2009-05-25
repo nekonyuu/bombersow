@@ -31,12 +31,13 @@
 #include "Memleak/halloc.h"
 #endif
 
+#define free_secure(ptr) { free(ptr); ptr = NULL; }
+
 enum { NO_ERROR, DISPLAY_FAIL, NULL_PTR, NETWORK_FAIL, LOW_MEMORY };
 
 void logging_Warning(char*, char*);
 void logging_Error(char*, char*, int);
 void logging_Info(char*, char*);
-void free_secure(void*);
 void logging_FPSShow(sfRenderWindow*);
 
 #endif

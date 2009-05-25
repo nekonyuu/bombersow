@@ -75,7 +75,7 @@ void gravitysystem_WorldUpdate(Map* map_, Config* config)
         gravitysystem_PlayerUpdate(map_,map_->players_list[i], config);
     }
 
-    for (Bullet* ptr = map_->bullets_list; ptr != NULL; ptr = bullet_GetNext(ptr))
+    for (Bullet* ptr = BulletList_GetHead(map_->bullets); ptr != NULL; ptr = bullet_GetNext(ptr))
     {
         gravitysystem_BulletUpdate(map_, ptr, config);
     }

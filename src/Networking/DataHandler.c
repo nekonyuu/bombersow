@@ -22,6 +22,7 @@
 */
 
 #include "BaseSystem/Logging.h"
+#include "Objects/GameObjects.h"
 #include "Networking/Networking.h"
 #include "Networking/PacketDefines.h"
 
@@ -188,9 +189,12 @@ void bullet_ReadPacket(Map* map, sfPacket* packet)
 {
 
 }
-/* A REVOIR, TROP COMPLEXE
+
 void map_CreateGamePackets(Map* map_)
 {
+    Bullet* ptr = NULL;
+    int cpt = 0;
+
     if (!map_)
         logging_Error("map_CreateAllPacket", "Map object sent NULL, can't create packet list", NULL_PTR);
 
@@ -198,7 +202,7 @@ void map_CreateGamePackets(Map* map_)
 
     sfMutex_Lock(Network_ServerMutex);                                                  // Verrouillage des ressources
 
-    map_->game_packets2send->nb_packets = map_->nb_players + map_->nb_bullets;
+    map_->game_packets2send->nb_packets = map_->nb_players + BulletList_GetNbBullets(map_->bullets);
 
     // Compte le nombre de paquets à créer
     for (int i = 0; i < map_->nb_objects; i++)
@@ -211,8 +215,8 @@ void map_CreateGamePackets(Map* map_)
     for (int i = 0; i < map_->nb_players; i++)
         map_->game_packets2send->packets[i] = player_CreatePacket(map_->players_list[i]);
 
-    for (int i = 0; i < map_->nb_bullets; i++)
-        map_->game_packets2send->packets[i] = bullet_CreatePacket(map_->bullets_list[i]);
+    for (cpt = 0, ptr = BulletList_GetHead(map_->bullets); ptr != NULL; ptr = bullet_GetNext(ptr), cpt++)
+        map_->game_packets2send->packets[cpt] = bullet_CreatePacket(ptr);
 
     for (int i = map_->nb_players; i < map_->game_packets2send->nb_packets; i++)
         if (map_->objects_list[i]->type > 0)
@@ -220,7 +224,6 @@ void map_CreateGamePackets(Map* map_)
 
     sfMutex_Unlock(Network_ServerMutex);                                                  // Déverrouillage
 }
-*/
 
 void map_DestroyAllPackets(Map* map_)
 {

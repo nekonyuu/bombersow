@@ -130,4 +130,72 @@ void bullet_SetSpeed(Bullet* bullet, float x, float y)
     bullet->speed_y = y;
 }
 
+BulletList* BulletList_Create()
+{
+    BulletList* ptr = NULL;
+    assert(ptr = malloc(sizeof(BulletList)));
 
+    ptr->head = NULL;
+    ptr->tail = NULL;
+    ptr->nb_bullets = 0;
+
+    return ptr;
+}
+
+void BulletList_Destroy(BulletList* ptr)
+{
+    bullet_DestroyList(&ptr->head);
+    free_secure(ptr);
+}
+
+void BulletList_AddBullet(BulletList* ptr, Bullet* ptr2)
+{
+    if(!ptr)
+        logging_Error("BulletList_AddBullet", "BulletList pointer sent NULL", NULL_PTR);
+
+    if(!ptr->head)
+    {
+        ptr->head = ptr2;
+        ptr->tail = ptr2;
+    }
+    else
+    {
+        ptr->tail->next = ptr2;
+        ptr2->prev = ptr->tail;
+        ptr->tail = ptr2;
+        ptr2->next = NULL;
+    }
+
+    ptr->nb_bullets++;
+}
+
+void BulletList_DeleteBullet(BulletList* ptr, Bullet* ptr2)
+{
+    Bullet* ptr_temp = NULL;
+
+    if(!ptr)
+        logging_Error("BulletList_DeleteBullet", "BulletList pointer sent NULL", NULL_PTR);
+
+    for(ptr_temp = ptr->head; ptr_temp != ptr2 && ptr_temp != NULL; ptr_temp = bullet_GetNext(ptr_temp));
+
+    if(ptr_temp)
+    {
+        bullet_DeleteFromList(ptr_temp);
+        ptr->nb_bullets--;
+    }
+}
+
+Bullet* BulletList_GetHead(BulletList* ptr)
+{
+    return ptr->head;
+}
+
+Bullet* BulletList_GetTail(BulletList* ptr)
+{
+    return ptr->tail;
+}
+
+unsigned int BulletList_GetNbBullets(BulletList* ptr)
+{
+    return ptr->nb_bullets;
+}

@@ -24,6 +24,7 @@
 #include "BaseSystem/Logging.h"
 #include "Game/GameScreens.h"
 #include <Gui/Gui.h>
+#include "Objects/GameObjects.h"
 #include "Objects/Screen.h"
 #include "Networking/Networking.h"
 

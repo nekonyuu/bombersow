@@ -21,12 +21,12 @@
 
 */
 
+#include "BaseSystem/Config.h"
 #include "BaseSystem/Logging.h"
 #include "GraphicEngine/Draw.h"
+#include "Objects/GameObjects.h"
 #include "Networking/Networking.h"
 #include "Networking/PacketDefines.h"
-#include "BaseSystem/Config.h"
-
 
 void server_Main(void* UserData)
 {
@@ -268,7 +268,7 @@ void server_Listen_Game(void* UserData)
         server_ReadUDPPacket(packet, map);
 
         // Envoi des nouvelles données à chaque player
-        //map_CreateGamePackets(map);
+        map_CreateGamePackets(map);
 
         for (int i = 0; i < map->game_packets2send->nb_packets; i++)
             if (map->game_packets2send->packets[i]->code != WEAPON && map->game_packets2send->packets[i]->code != AMMO)

@@ -43,12 +43,6 @@ inline void logging_Info(char* fct_name, char* text)
 #endif
 }
 
-inline void free_secure(void* ptr)
-{
-    free(ptr);
-    ptr = NULL;
-}
-
 inline void logging_FPSShow(sfRenderWindow* App)
 {
     sfString* fps_text = sfString_Create();

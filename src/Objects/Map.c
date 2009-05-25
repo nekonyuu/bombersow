@@ -24,6 +24,7 @@
 #include <string.h>
 #include "BaseSystem/Config.h"
 #include "BaseSystem/Logging.h"
+#include "Objects/GameObjects.h"
 #include "Networking/Networking.h"
 #include "PhysicsEngine/PhysicsEngine.h"
 #include "GraphicEngine/Draw.h"
@@ -58,7 +59,7 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
 
     new_map->nb_players = 0;
 
-    new_map->bullets_list = NULL;
+    new_map->bullets = BulletList_Create();
 
     new_map->game_packets2send = NULL;
 
@@ -113,7 +114,7 @@ void map_Destroy(Map* map2destroy)
         free_secure(map2destroy->players_list);
 
         logging_Info("map_Destroy", "Destroy bullets...");
-        bullet_DestroyList(&map2destroy->bullets_list);
+        BulletList_Destroy(map2destroy->bullets);
 
         logging_Info("map_Destroy", "Destroy pending packets...");
         if (map2destroy->game_packets2send)
@@ -223,12 +224,7 @@ void map_AddBullet(Map* map_, Bullet* bullet_)
         return;
     }
 
-    if(map_->bullets_list);
-    {
-        bullet_SetPrev(map_->bullets_list, bullet_);
-        bullet_SetNext(bullet_, map_->bullets_list);
-    }
-    map_->bullets_list = bullet_;
+    BulletList_AddBullet(map_->bullets, bullet_);
 
     quadtree_Add(map_->quad_tree, bullet_, BULLET);
 }
@@ -241,7 +237,7 @@ void map_DelBullet(Map* map_, Bullet* bullet)
         return;
     }
 
-    bullet_DeleteFromList(bullet);
+    BulletList_DeleteBullet(map_->bullets, bullet);
 
     quadtree_Delete_Elt(bullet, BULLET);
 }
@@ -315,5 +311,5 @@ void map_Draw(sfRenderWindow* Game, Map* map)
         object_Draw(Game, map->objects_list[i]);
     }
 
-    bullet_DrawList(Game, map->bullets_list);
+    bullet_DrawList(Game, BulletList_GetHead(map->bullets));
 }

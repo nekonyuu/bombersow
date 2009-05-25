@@ -163,6 +163,16 @@ typedef struct PLAYER
 
 } Player;
 
+/*
+// Conteneur pour la liste de players
+typedef struct PLAYERS_LIST
+{
+    Player* head;
+    Player* tail;
+    unsigned int nb_players;
+} PlayerList;
+*/
+
 typedef struct BULLET
 {
     struct BULLET* prev;            // Liste D-Chain
@@ -190,6 +200,14 @@ typedef struct BULLET
 
 } Bullet;
 
+// Conteneur pour la liste de bullets
+typedef struct BULLET_LIST
+{
+    Bullet* head;
+    Bullet* tail;
+    unsigned int nb_bullets;
+} BulletList;
+
 typedef struct MAP
 {
     unsigned int mapId;             // ID de la map (transmission réseau)
@@ -207,12 +225,12 @@ typedef struct MAP
     Player** players_list;          // Liste des joueurs de la map
     unsigned int nb_players;        // Nombre de joueurs connectés sur la map
 
-    Bullet* bullets_list;           // Liste des balles tirées
+    BulletList* bullets;            // Liste des balles tirées
 
     PacketList* game_packets2send;  // Liste des paquets de jeu à envoyer
 
-    bool chat_started;             // Salon de discussion démarré ?
-    bool game_started;             // Partie démarrée ?
+    bool chat_started;              // Salon de discussion démarré ?
+    bool game_started;              // Partie démarrée ?
 
     sfSelectorTCP* tcp_selector;    // Selecteur de sockets TCP pour discussion/connexion/déconnexion
     sfSocketUDP* game_socket;       // Socket de jeu
@@ -269,6 +287,13 @@ void bullet_Draw(sfRenderWindow*, Bullet*);
 void bullet_DrawList(sfRenderWindow*, Bullet*);
 void bullet_SetPosition(Bullet*, float, float);
 void bullet_SetSpeed(Bullet*, float, float);
+BulletList* BulletList_Create();
+void BulletList_Destroy(BulletList* ptr);
+void BulletList_AddBullet(BulletList* ptr, Bullet* ptr2);
+void BulletList_DeleteBullet(BulletList* ptr, Bullet* ptr2);
+Bullet* BulletList_GetHead(BulletList* ptr);
+Bullet* BulletList_GetTail(BulletList* ptr);
+unsigned int BulletList_GetNbBullets(BulletList* ptr);
 
 // Map.c
 Map* map_Create(unsigned int, unsigned int, Config*);

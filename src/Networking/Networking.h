@@ -24,8 +24,6 @@
 #ifndef NETWORKING_H
 #define NETWORKING_H
 
-#include "Objects/GameObjects.h"
-
 #define DEFAULT_PORT 48535
 
 // Permet de regrouper la map et l'id du joueur pour lequel on écoute
