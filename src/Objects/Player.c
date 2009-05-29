@@ -213,7 +213,7 @@ void player_WeaponShoot(Map* map, Player* player_, float mouse_x, float mouse_y)
     {
         srand (time (NULL));
 
-        for (int nb_bullet = 0; nb_bullet < SHOTGUN_SHRAPNELS; nb_bullet++)
+        for (int nb_bullet = 0; nb_bullet < 1; nb_bullet++)
         {
             Bullet* bullet = bullet_Create(player_->player_id, player_->current_weapon);
 
@@ -224,8 +224,8 @@ void player_WeaponShoot(Map* map, Player* player_, float mouse_x, float mouse_y)
 
             bullet_SetPosition(bullet, x_center+vec_x*30, y_center+vec_y*30);
 
-            vec_x = 2000 * (mouse_x - x_center) / diagonale;
-            vec_y = 2000 * (mouse_y - y_center) / diagonale;
+            vec_x = 200 * (mouse_x - x_center) / diagonale;
+            vec_y = 200 * (mouse_y - y_center) / diagonale;
 
             float angle = ((int)(nb_bullet/2)) * ((nb_bullet%2) - 1) * 3.14/18;
             float vec_x2 = vec_x * cos(angle) + vec_y * sin(angle);

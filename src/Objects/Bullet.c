@@ -62,8 +62,11 @@ void bullet_DeleteFromList(Bullet* bullet2destroy)
     if (!bullet2destroy)
         logging_Error("bullet_DeleteFromList", "Bullet object sent NULL", NULL_PTR);
 
-    bullet2destroy->prev->next = bullet2destroy->next;
-    bullet2destroy->next->prev = bullet2destroy->prev;
+    if(bullet2destroy->prev != NULL)
+        bullet2destroy->prev->next = bullet2destroy->next;
+
+    if(bullet2destroy->next != NULL)
+        bullet2destroy->next->prev = bullet2destroy->prev;
 
     sprite_Destroy(bullet2destroy->draw_image);
     free_secure(bullet2destroy);
@@ -183,6 +186,7 @@ void BulletList_DeleteBullet(BulletList* ptr, Bullet* ptr2)
         bullet_DeleteFromList(ptr_temp);
         ptr->nb_bullets--;
     }
+
 }
 
 Bullet* BulletList_GetHead(BulletList* ptr)

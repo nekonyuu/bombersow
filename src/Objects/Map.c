@@ -238,8 +238,8 @@ void map_DelBullet(Map* map_, Bullet* bullet)
     }
 
     BulletList_DeleteBullet(map_->bullets, bullet);
-
     quadtree_Delete_Elt(bullet, BULLET);
+
 }
 
 void map_UpdateDisconnectedPlayers(void* UserData)

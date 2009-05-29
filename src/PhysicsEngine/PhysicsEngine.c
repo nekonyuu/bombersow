@@ -559,9 +559,7 @@ void quadtree_Add(QuadTree* quad, void* obj_, int type)
     else
     {
         Bullet* obj = obj_;
-        printf("QUADTREE : MOUCHARD 1\n");
         rect_obj = sprite_GetRect(obj->draw_image);
-        printf("QUADTREE : MOUCHARD 2\n");
     }
 
     if (quad->object == NULL)
@@ -584,19 +582,19 @@ void quadtree_Add(QuadTree* quad, void* obj_, int type)
             quad->noeuds[NW]->parent = quad;
             quad->noeuds[NW]->first = quad->first;
 
-            sfIntRect rectNE = {(quad->rect.Right+quad->rect.Left)/2, quad->rect.Top, quad->rect.Right, (quad->rect.Bottom+quad->rect.Top)/2};
+            sfIntRect rectNE = {(quad->rect.Right+quad->rect.Left)/2+1, quad->rect.Top, quad->rect.Right, (quad->rect.Bottom+quad->rect.Top)/2};
             quad->noeuds[NE] = quadtree_Create();
             quad->noeuds[NE]->rect = rectNE;
             quad->noeuds[NE]->parent = quad;
             quad->noeuds[NE]->first = quad->first;
 
-            sfIntRect rectSW = {quad->rect.Left, (quad->rect.Bottom+quad->rect.Top)/2, (quad->rect.Right+quad->rect.Left)/2, quad->rect.Bottom};
+            sfIntRect rectSW = {quad->rect.Left, (quad->rect.Bottom+quad->rect.Top)/2+1, (quad->rect.Right+quad->rect.Left)/2, quad->rect.Bottom};
             quad->noeuds[SW] = quadtree_Create();
             quad->noeuds[SW]->rect = rectSW;
             quad->noeuds[SW]->parent = quad;
             quad->noeuds[SW]->first = quad->first;
 
-            sfIntRect rectSE = {(quad->rect.Right+quad->rect.Left)/2, (quad->rect.Bottom+quad->rect.Top)/2, quad->rect.Right, quad->rect.Bottom};
+            sfIntRect rectSE = {(quad->rect.Right+quad->rect.Left)/2+1, (quad->rect.Bottom+quad->rect.Top)/2+1, quad->rect.Right, quad->rect.Bottom};
             quad->noeuds[SE] = quadtree_Create();
             quad->noeuds[SE]->rect = rectSE;
             quad->noeuds[SE]->parent = quad;
