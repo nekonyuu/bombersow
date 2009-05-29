@@ -48,7 +48,7 @@ typedef struct ANIMATION
     int nombre_image;
     int cur_image;              // Position dans l'animation
     int play;                   // Nombre de lectures à effectuer
-    float fps;                    // Temps d'attente entre chaque image (en s)
+    float fps;                  // Temps d'attente entre chaque image (en s)
 
     sfClock *clock;             // Timer
 } Animation;
@@ -87,7 +87,7 @@ sfIntRect sprite_GetRect(Sprite*);
 sfImage* sprite_GetImage(Sprite*);
 
 
-//Struct du gestionnaire d'image
+// Struct du gestionnaire d'image
 typedef struct IMAGE
 {
     sfImage **image_tab;        // Tableau stockant les images d'une map
@@ -99,8 +99,8 @@ typedef struct IMAGE
 Image* image_Create();
 void image_Destroy(Image*);
 
-void image_Loader(Image*, char**, int);     //Loader d'image
-sfImage* image_Get(Image*, int);            //Recuprer une sfImage a partir de son ID
+void image_Loader(Image*, char**, int);     // Loader d'image
+sfImage* image_Get(Image*, int);            // Récupérer une sfImage à partir de son ID
 
 #endif
 
