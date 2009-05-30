@@ -44,9 +44,6 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
     bool launched = true, close = false;
     // GUI Chat Init
     sfImage* textbox_bg = sfImage_CreateFromFile("base/images/gui/textbox_back_black.png");
-    sfFloatRect rect_view_chat = { 0.f, -50.f, (float) config->width, 300.f };
-    sfView* ChatText_View = sfView_CreateFromRect(rect_view_chat);
-    ChatMessages* mess_list = chatmessages_Create();
     char message[255] = { '\0' };
 
     server_creation = sfMutex_Create();
@@ -73,7 +70,7 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
     // Si mode Server
     if (link_type == SERVER)
     {
-        client_data = clientdata_Create(player_name, "127.0.0.1", port, config);
+        client_data = clientdata_Create(player_name, "127.0.0.1", port, config, 13);
 
         map = map_Create(map_id, nb_players, config);
         map_SetGamePort(map, port);
@@ -87,7 +84,7 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
     }
     else if (link_type == CLIENT)       // Sinon si mode Client
     {
-        client_data = clientdata_Create(player_name, ip, port, config);
+        client_data = clientdata_Create(player_name, ip, port, config, 14);
         client_thread = sfThread_Create(&client_Main, client_data);
         sfThread_Launch(client_thread);
         sfSleep(0.5f);
@@ -109,7 +106,7 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
 
         playerslist_Draw(players_display, Game);
 
-        chatmessages_Draw(client_data->messages, Game, ChatText_View);
+        ChatMessagesList_Draw(client_data->messages, Game);
 
         screen_Draw(lobby_view, Game);
 
@@ -151,6 +148,8 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
                         strcpy(message, "");
                         widget_textbox_Update(screen_GetTextbox(lobby_view, 0));
                     }
+                    else
+                        screen_SetActiveTextbox(lobby_view, 0);
                 }
             }
         }
@@ -173,9 +172,7 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
 
     clientdata_Destroy(client_data);
     playerslist_Destroy(players_display);
-    sfView_Destroy(ChatText_View);
     map_Destroy(map);
-    chatmessages_Destroy(mess_list);
 
     screen_Destroy(lobby_view);
 

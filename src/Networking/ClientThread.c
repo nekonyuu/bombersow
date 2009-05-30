@@ -109,7 +109,7 @@ void client_Main(void* UserData)
                                 client_data->server_close = true;
                                 break;
                             case CHAT_PACKET:
-                                chatmessages_AddMessage(client_data->messages, chat_ReadPacket(client_data->map, response));
+                                ChatMessagesList_AddMessage(client_data->messages, chat_ReadPacket(client_data->map, response));
                                 break;
                             default:
 

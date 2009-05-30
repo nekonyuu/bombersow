@@ -217,6 +217,7 @@ void server_Listen_TCP(void* UserData)
                             // Nettoyage
                             sfPacket_Destroy(packet);
                             sfPacket_Destroy(resend);
+                            free_secure(mess);
 
                             logging_Info("server_Listen_TCP", "Resending finished !");
                             break;

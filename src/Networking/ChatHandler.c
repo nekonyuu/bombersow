@@ -27,6 +27,8 @@
 #include "Networking/Networking.h"
 #include "Networking/PacketDefines.h"
 
+#define MARGIN_TOP 350.0f
+
 sfPacket* chat_CreatePacket(Player* player, const char* message)
 {
     if (!player)
@@ -58,6 +60,8 @@ char* chat_ReadPacket(Map* map, sfPacket* packet)
     strcpy(text, map_GetPlayerFromID(map, player_id)->char_name);
     strcat(text, ": ");
     strcat(text, recv_mess);
+
+    free_secure(recv_mess);
     return text;
 }
 
@@ -80,44 +84,143 @@ void chat_DestroyPlayerData(ChatData* data)
     free_secure(data);
 }
 
-ChatMessages* chatmessages_Create()
+ChatMessage* ChatMessage_Create()
 {
-    ChatMessages* ptr = malloc(sizeof(ChatMessages));
-    ptr->messages = NULL;
-    ptr->nb_mess = 0;
+    ChatMessage* ptr = malloc(sizeof(ChatMessage));
+
+    ptr->prev = NULL;
+    ptr->next = NULL;
+
+    ptr->message = sfString_Create();
 
     return ptr;
 }
 
-void chatmessages_AddMessage(ChatMessages* ptr, char* mess)
+void ChatMessage_Destroy(ChatMessage* ptr)
+{
+    sfString_Destroy(ptr->message);
+    free_secure(ptr);
+}
+
+void ChatMessage_DestroyFromList(ChatMessage* ptr)
+{
+    if(ptr->prev)
+        ptr->prev->next = ptr->next;
+    if(ptr->next)
+        ptr->next->prev = ptr->prev;
+
+    ChatMessage_Destroy(ptr);
+}
+
+void ChatMessage_SetPrev(ChatMessage* ptr, ChatMessage* prev_ptr)
+{
+    ptr->prev = prev_ptr;
+}
+
+void ChatMessage_SetNext(ChatMessage* ptr, ChatMessage* next_ptr)
+{
+    ptr->next = next_ptr;
+}
+
+ChatMessage* ChatMessage_GetPrev(ChatMessage* ptr)
+{
+    return ptr->prev;
+}
+
+ChatMessage* ChatMessage_GetNext(ChatMessage* ptr)
+{
+    return ptr->next;
+}
+
+void ChatMessage_SetText(ChatMessage* ptr, char* mess, unsigned int size)
+{
+    sfString_SetText(ptr->message, mess);
+    sfString_SetSize(ptr->message, size);
+}
+
+void ChatMessage_SetCoords(ChatMessage* ptr, unsigned int x, unsigned int y)
+{
+    sfString_SetPosition(ptr->message, x, y);
+}
+
+unsigned int ChatMessage_GetSize(ChatMessage* ptr)
+{
+    return (int) sfString_GetSize(ptr->message);
+}
+
+ChatMessagesList* ChatMessagesList_Create(unsigned int max_mess)
+{
+    ChatMessagesList* ptr = malloc(sizeof(ChatMessagesList));
+
+    ptr->head = NULL;
+    ptr->tail = NULL;
+
+    ptr->nb_mess = 0;
+    ptr->max_nb_mess = max_mess;
+
+    return ptr;
+}
+
+void ChatMessagesList_AddMessage(ChatMessagesList* ptr, char* mess)
 {
     if(!ptr)
-        logging_Error("chatmessages_AddMessage", "ChatMessages object sent NULL", NULL_PTR);
+        logging_Error("chatmessages_AddMessage", "ChatMessagesList object sent NULL", NULL_PTR);
 
-    ptr->messages = (sfString**) realloc(ptr->messages, ++ptr->nb_mess * sizeof(sfString*));
-    if(!ptr->messages)
-        logging_Error("chatmessages_AddMessage", "Memory allocation error", LOW_MEMORY);
+    ChatMessage* ptr2 = ChatMessage_Create();
+    ChatMessage_SetText(ptr2, mess, 20);
 
-    ptr->messages[ptr->nb_mess - 1] = sfString_Create();
-    sfString_SetText(ptr->messages[ptr->nb_mess - 1], mess);
-    sfString_SetSize(ptr->messages[ptr->nb_mess - 1], 12);
-    sfString_SetPosition(ptr->messages[ptr->nb_mess - 1], 0, ptr->nb_mess * 16);
+    if(!ptr->head)
+    {
+        ptr->head = ptr2;
+        ptr->tail = ptr2;
+    }
+    else
+    {
+        ChatMessage* tmp_ptr = NULL;
+        for(tmp_ptr = ptr->head; tmp_ptr->next != NULL; tmp_ptr = tmp_ptr->next);
+        tmp_ptr->next = ptr2;
+        ptr2->prev = tmp_ptr;
+        ptr->tail = ptr2;
+    }
 
+    if(ptr->max_nb_mess <= ptr->nb_mess)
+    {
+        ChatMessage* ptr3 = ptr->head;
+        ptr->head = ptr->head->next;
+        ChatMessage_DestroyFromList(ptr3);
+    }
+    else
+        ptr->nb_mess++;
+
+    ChatMessagesList_UpdateCoords(ptr);
     free_secure(mess);
 }
 
-void chatmessages_Draw(ChatMessages* ptr, sfRenderWindow* Game, sfView* view)
+void ChatMessagesList_Draw(ChatMessagesList* ptr, sfRenderWindow* Game)
 {
-    sfRenderWindow_SetView(Game, view);
-
-    for (int i = 0; i < ptr->nb_mess; i++)
-        sfRenderWindow_DrawString(Game, ptr->messages[i]);
-
-    sfRenderWindow_SetView(Game, sfRenderWindow_GetDefaultView(Game));
+    for (ChatMessage* i = ptr->head; i != NULL; i = i->next)
+        sfRenderWindow_DrawString(Game, i->message);
 }
 
-void chatmessages_Destroy(ChatMessages* ptr)
+void ChatMessagesList_UpdateCoords(ChatMessagesList* ptr)
 {
-    for (int i = 0; i < ptr->nb_mess; i++)
-        sfString_Destroy(ptr->messages[i]);
+    int cpt = 0;
+    for(ChatMessage* i = ptr->head; i != NULL; i = i->next, cpt++)
+        ChatMessage_SetCoords(i, 0, MARGIN_TOP + ChatMessage_GetSize(i) * cpt);
+}
+
+void ChatMessagesList_Destroy(ChatMessagesList* ptr)
+{
+    if (!ptr)
+        logging_Error("ChatMessagesList_Destroy", "ChatMessageList sent NULL", NULL_PTR);
+
+    ChatMessage* head = ptr->head, *temp_ptr = NULL;
+    while(head != NULL)
+    {
+        temp_ptr = head->next;
+        ChatMessage_Destroy(head);
+        head = temp_ptr;
+    }
+
+    free_secure(ptr);
 }

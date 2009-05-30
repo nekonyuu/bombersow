@@ -233,12 +233,12 @@ void map_DestroyAllPackets(Map* map_)
     free_secure(map_->gamepackets2send);
 }
 
-ClientData* clientdata_Create(char* player_name, char* ip, unsigned int port, Config* config)
+ClientData* clientdata_Create(char* player_name, char* ip, unsigned int port, Config* config, unsigned int max_mess)
 {
     ClientData* client_data = (ClientData*) malloc(sizeof(ClientData));
     client_data->map = NULL;
 
-    client_data->messages = chatmessages_Create();
+    client_data->messages = ChatMessagesList_Create(max_mess);
 
     client_data->player = NULL;
     client_data->name = player_name;
@@ -254,6 +254,6 @@ ClientData* clientdata_Create(char* player_name, char* ip, unsigned int port, Co
 
 void clientdata_Destroy(ClientData* ptr)
 {
-    chatmessages_Destroy(ptr->messages);
+    ChatMessagesList_Destroy(ptr->messages);
     free_secure(ptr);
 }
