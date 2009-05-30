@@ -156,6 +156,10 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
                 close = true;
                 break;
 
+            case sfEvtTextEntered:
+                gui_TextEntered(Current_Screen->gui, Event.Text.Unicode);
+                break;
+
             case sfEvtKeyPressed:
                 switch (Event.Key.Code)
                 {

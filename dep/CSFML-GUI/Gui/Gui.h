@@ -87,8 +87,7 @@ typedef struct WIDGET_TEXTBOX
 
     bool active;                   // Booléen de sélection
 
-}Widget_textbox;
-
+} Widget_textbox;
 
 Widget_textbox_var* widget_text_box_var_Create(Widget_textbox_type, void*);
 void widget_textbox_var_Destroy(Widget_textbox_var*);
@@ -99,8 +98,9 @@ Widget_textbox* widget_textbox_Create(int, int, int, int, int, sfImage*, sfColor
 void widget_textbox_Destroy(Widget_textbox*);
 void widget_textbox_Click(Widget_textbox*, int, int);
 void widget_textbox_Write(Widget_textbox*, sfUint32);
-bool widget_textbox_Check(Widget_textbox*);
+bool widget_textbox_IsActive(Widget_textbox*);
 void widget_textbox_Draw(sfRenderWindow*, Widget_textbox*);
+void widget_textbox_Update(Widget_textbox*);
 
 
 //Widget bouton

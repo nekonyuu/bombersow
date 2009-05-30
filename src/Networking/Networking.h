@@ -44,10 +44,16 @@ typedef struct CHAT_MESS_VIEW
 typedef struct CLIENT_DATA
 {
     Map* map;
+
+    ChatMessages* messages;
+
+    Player* player;
     char* name;
     sfIPAddress ip;
+
     int port;
     Config* config;
+
     bool server_close;
 } ClientData;
 
@@ -59,7 +65,7 @@ sfMutex* server_creation;
 void server_Main(void* UserData);
 void server_Listen_TCP(void* UserData);
 void server_Listen_Game(void* UserData);
-sfPacket* server_CreateResponsePacket(Map* map, unsigned int response);
+sfPacket* server_CreateResponsePacket(Map* map, Player* player, unsigned int response);
 sfPacket* server_CreateDestroyPlayerPacket(unsigned int player_id);
 sfPacket* server_CreateClosePacket();
 void server_ReadUDPPacket(sfPacket* packet, Map* map);
@@ -68,12 +74,14 @@ void server_ReadUDPPacket(sfPacket* packet, Map* map);
 void client_Main(void* UserData);
 sfPacket* client_CreateConnectPacket(char* name);
 sfPacket* client_CreateDisconnectPacket(unsigned int player_id);
+void client_SendChatPacket(char* mess, Player* player);
 
 // ChatHandler.c
 sfPacket* chat_CreatePacket(Player* player, const char* message);
 char* chat_ReadPacket(Map* map, sfPacket* packet);
 ChatData* chat_CreatePlayerData(Map*, unsigned int);
 ChatMessages* chatmessages_Create();
+void chatmessages_AddMessage(ChatMessages* ptr, char* mess);
 void chatmessages_Draw(ChatMessages* ptr, sfRenderWindow* Game, sfView* view);
 void chatmessages_Destroy(ChatMessages* ptr);
 

@@ -41,7 +41,7 @@ sfPacket* chat_CreatePacket(Player* player, const char* message)
     }
 
     sfPacket* new_packet = sfPacket_Create();
-    sfPacket_WriteUint8(new_packet, (sfUint8) CHAT);
+    sfPacket_WriteUint8(new_packet, (sfUint8) CHAT_PACKET);
     sfPacket_WriteUint8(new_packet, (sfUint8) player->player_id);
     sfPacket_WriteString(new_packet, message);
 
@@ -51,12 +51,11 @@ sfPacket* chat_CreatePacket(Player* player, const char* message)
 // Lit le paquet et renvoie le message construit
 char* chat_ReadPacket(Map* map, sfPacket* packet)
 {
-    char* text = NULL, *recv_mess = NULL;
+    char* text = malloc(255 * sizeof(char)), *recv_mess = malloc(255 * sizeof(char));
     unsigned int player_id = (unsigned int) sfPacket_ReadUint8(packet);
 
     sfPacket_ReadString(packet, recv_mess);
-    sfPacket_Destroy(packet);
-    strcpy(text, map->players_list[player_id]->char_name);
+    strcpy(text, map_GetPlayerFromID(map, player_id)->char_name);
     strcat(text, ": ");
     strcat(text, recv_mess);
     return text;
@@ -101,8 +100,10 @@ void chatmessages_AddMessage(ChatMessages* ptr, char* mess)
 
     ptr->messages[ptr->nb_mess - 1] = sfString_Create();
     sfString_SetText(ptr->messages[ptr->nb_mess - 1], mess);
-    sfString_SetSize(ptr->messages[ptr->nb_mess - 1], 8);
-    sfString_SetPosition(ptr->messages[ptr->nb_mess - 1], 0, ptr->nb_mess * 12);
+    sfString_SetSize(ptr->messages[ptr->nb_mess - 1], 12);
+    sfString_SetPosition(ptr->messages[ptr->nb_mess - 1], 0, ptr->nb_mess * 16);
+
+    free_secure(mess);
 }
 
 void chatmessages_Draw(ChatMessages* ptr, sfRenderWindow* Game, sfView* view)

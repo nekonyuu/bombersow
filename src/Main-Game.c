@@ -88,7 +88,7 @@ int main()
     armory_DestroyImages(weap_img);
     free_secure(game_config);
 
-#ifdef DEBUG_MODE
+#ifdef HALLOC_DBG
     ConteneurMalloc_Affiche (true);
 #endif
 

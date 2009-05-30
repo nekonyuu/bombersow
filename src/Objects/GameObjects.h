@@ -28,6 +28,7 @@
 #include <SFML/Network.h>
 #include <BaseSystem/Config.h>
 #include <GraphicEngine/Image.h>
+#include <Networking/PacketDefines.h>
 
 #define NB_MAX_WEAPONS 7
 #define SHOTGUN_SHRAPNELS 7
@@ -38,7 +39,7 @@ typedef enum DIRECTION {UP, DOWN, LEFT, RIGHT} Direction;
 // Structure stockant le paquet + son type
 typedef struct PACKET
 {
-    unsigned int code;
+    PacketType code;
     sfPacket* packet;
 } Packet;
 
@@ -64,12 +65,12 @@ typedef struct PLAYERS_LIST
     unsigned int nb_players;        // Nombre de joueurs
 } PlayersList;
 
-enum { PLATFORM, PLATFORM_DYNA, TRAP, WEAPON, AMMO };
+typedef enum { PLATFORM, PLATFORM_DYNA, TRAP, WEAPON, AMMO } ObjectType;
 
 typedef struct OBJECT
 {
     unsigned int objectID;          // ID de l'object (transmission réseau)
-    unsigned int type;              // Type d'objet (0 = Plate-forme fixe, 1 = Plate-forme dyna, 2 = Piège, 3 = Arme, 4 = Ammo)
+    ObjectType type;                // Type d'objet (0 = Plate-forme fixe, 1 = Plate-forme dyna, 2 = Piège, 3 = Arme, 4 = Ammo)
 
     Sprite* sprite;                 // Sprite de l'objet
 
@@ -227,12 +228,12 @@ typedef struct MAP
 
     BulletList* bullets;            // Liste des balles tirées
 
-    PacketList* game_packets2send;  // Liste des paquets de jeu à envoyer
+    PacketList* gamepackets2send;       // Liste des paquets de jeu à envoyer
 
     bool chat_started;              // Salon de discussion démarré ?
     bool game_started;              // Partie démarrée ?
 
-    sfSelectorTCP* tcp_selector;    // Selecteur de sockets TCP pour discussion/connexion/déconnexion
+    sfSelectorTCP* tcp_selector;    // Sélecteur de sockets TCP pour discussion/connexion/déconnexion
     sfSocketUDP* game_socket;       // Socket de jeu
     unsigned short game_port;       // Port de jeu
 
@@ -271,6 +272,7 @@ void player_Displace(Player*, Direction, float, Config*);
 void player_SwitchWeapon(Player*, int);
 void player_CollectWeapon(Player*, int);
 void player_WeaponShoot(Map*, Player*, float, float);
+unsigned int player_GetPlayerID(Player*);
 void player_SetPosition(Player*, float, float);
 void player_Draw(sfRenderWindow*, Player*);
 

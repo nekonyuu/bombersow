@@ -195,6 +195,14 @@ Gui* screen_GetGUI(Screen* ptr)
     return ptr->gui;
 }
 
+Widget_textbox* screen_GetTextbox(Screen* screen, unsigned int id)
+{
+    if(gui_Exist_Textbox(screen->gui, id))
+        return screen->gui->widget_textbox[id];
+    else
+        return NULL;
+}
+
 // Met le focus sur la textbox
 void screen_SetActiveTextbox(Screen* screen, int id)
 {

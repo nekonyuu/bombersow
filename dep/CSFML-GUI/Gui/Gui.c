@@ -290,9 +290,14 @@ void widget_textbox_Write(Widget_textbox* textbox, sfUint32 lettre)
     }
 }
 
-bool widget_textbox_Check(Widget_textbox* textbox)
+bool widget_textbox_IsActive(Widget_textbox* textbox)
 {
     return textbox->active;
+}
+
+void widget_textbox_Update(Widget_textbox* textbox)
+{
+    widget_textbox_var_Get(textbox->var, textbox);
 }
 
 void widget_textbox_Draw(sfRenderWindow* Game, Widget_textbox* textbox)
@@ -358,7 +363,6 @@ void widget_bouton_Over(Widget_bouton* bouton, int x, int y)
     else
         bouton->On = NOTHING;
 }
-
 
 void widget_bouton_Draw(sfRenderWindow* Game, Widget_bouton* bouton)
 {
@@ -595,7 +599,7 @@ void gui_TextEntered(Gui* gui, sfUint32 unicode)
 {
     for (int i = 0; i < gui->widget_textbox_nombre; i++)
     {
-        if (widget_textbox_Check(gui->widget_textbox[i]))
+        if (widget_textbox_IsActive(gui->widget_textbox[i]))
         {
             widget_textbox_Write(gui->widget_textbox[i], unicode);
         }
