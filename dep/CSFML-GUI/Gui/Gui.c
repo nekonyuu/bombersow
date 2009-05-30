@@ -511,7 +511,7 @@ void gui_Add_Textbox(Gui* gui, Widget_textbox* widget)
 
 bool gui_Exist_Textbox(Gui* gui, unsigned int id)
 {
-    return gui->widget_textbox_nombre > id;
+    return gui->widget_textbox_nombre > id && id >= 0;
 }
 
 void gui_Load_Bouton(Gui* gui, Widget_bouton** widget, int taille)
