@@ -28,6 +28,7 @@
 #include <SFML/Network.h>
 #include <BaseSystem/Config.h>
 #include <GraphicEngine/Image.h>
+#include "PhysicsEngine/ParticleSystem.h"
 
 #define NB_MAX_WEAPONS 7
 #define SHOTGUN_SHRAPNELS 7
@@ -225,6 +226,8 @@ typedef struct MAP
     Player** players_list;          // Liste des joueurs de la map
     unsigned int nb_players;        // Nombre de joueurs connectés sur la map
 
+    Particle_Table* particle_table; // Tableau de particule pour le sang
+
     BulletList* bullets;            // Liste des balles tirées
 
     PacketList* game_packets2send;  // Liste des paquets de jeu à envoyer
@@ -319,5 +322,6 @@ PlayersList* playerslist_Create(Map*, sfFont*, sfColor, int, sfStringStyle, floa
 void playerslist_Destroy(PlayersList*);
 void playerslist_Draw(PlayersList*, sfRenderWindow*);
 void playerslist_Update(PlayersList*, Map*);
+void player_BulletCollision(Player*, Bullet*, Map*);
 
 #endif

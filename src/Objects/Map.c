@@ -27,6 +27,7 @@
 #include "Objects/GameObjects.h"
 #include "Networking/Networking.h"
 #include "PhysicsEngine/PhysicsEngine.h"
+#include "PhysicsEngine/ParticleSystem.h"
 #include "GraphicEngine/Draw.h"
 
 // Constructeur
@@ -47,6 +48,8 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
 
     new_map->objects_list = NULL;
     new_map->nb_objects = 0;
+
+    new_map->particle_table = particle_table_Create();
 
     if (nb_players > 0)
     {
@@ -112,6 +115,8 @@ void map_Destroy(Map* map2destroy)
         for (int i = 0; i < map2destroy->nb_players; i++)
             player_Destroy(map2destroy->players_list[i]);
         free_secure(map2destroy->players_list);
+
+        particle_table_Destroy(map2destroy->particle_table);
 
         logging_Info("map_Destroy", "Destroy bullets...");
         BulletList_Destroy(map2destroy->bullets);
@@ -310,6 +315,8 @@ void map_Draw(sfRenderWindow* Game, Map* map)
     {
         object_Draw(Game, map->objects_list[i]);
     }
+
+    particle_table_Draw(Game, map->particle_table);
 
     bullet_DrawList(Game, BulletList_GetHead(map->bullets));
 }

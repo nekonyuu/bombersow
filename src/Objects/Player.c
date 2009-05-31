@@ -211,21 +211,18 @@ void player_WeaponShoot(Map* map, Player* player_, float mouse_x, float mouse_y)
 
     if (player_->weapons[player_->current_weapon]->type == SHOTGUN)
     {
-        srand (time (NULL));
 
-        for (int nb_bullet = 0; nb_bullet < 1; nb_bullet++)
+        for (int nb_bullet = 0; nb_bullet < SHOTGUN_SHRAPNELS; nb_bullet++)
         {
             Bullet* bullet = bullet_Create(player_->player_id, player_->current_weapon);
-
-            float rand_num = (float)rand() / (RAND_MAX+1);
 
             vec_x = (mouse_x - x_center) / diagonale;
             vec_y = (mouse_y - y_center) / diagonale;
 
             bullet_SetPosition(bullet, x_center+vec_x*30, y_center+vec_y*30);
 
-            vec_x = 200 * (mouse_x - x_center) / diagonale;
-            vec_y = 200 * (mouse_y - y_center) / diagonale;
+            vec_x = player_->weapons[player_->current_weapon]->proj_speed * (mouse_x - x_center) / diagonale;
+            vec_y = player_->weapons[player_->current_weapon]->proj_speed * (mouse_y - y_center) / diagonale;
 
             float angle = ((int)(nb_bullet/2)) * ((nb_bullet%2) - 1) * 3.14/18;
             float vec_x2 = vec_x * cos(angle) + vec_y * sin(angle);
@@ -265,3 +262,22 @@ void player_Draw(sfRenderWindow* Game, Player* player)
 {
     sprite_Draw(Game, player->sprite);
 }
+
+void player_BulletCollision(Player* player, Bullet* bullet, Map* map)
+{
+    srand(time(NULL));
+    for(int i = 0; i < 10; i++)
+    {
+        float random = (float) rand()/(RAND_MAX+1) * 10;
+        Particle* particle = particle_CreateBlood();
+        particle_SetPosition(particle, bullet->coord_x+random, bullet->coord_y+random);
+        particle->speed_y = random;
+        particle_table_AddParticle(map->particle_table, particle);
+    }
+    //player_CreateBlood(player, bullet->coord_x, bullet->coord_y);
+}
+/*
+void player_CreateBlood(Player* player, float x, float y)
+{
+
+}*/
