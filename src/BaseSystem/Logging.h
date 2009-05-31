@@ -27,7 +27,7 @@
 #include <assert.h>
 #include <SFML/Graphics.h>
 
-#ifdef DEBUG_MODE
+#ifdef HALLOC_DBG
 #include "Memleak/halloc.h"
 #endif
 

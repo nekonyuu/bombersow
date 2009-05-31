@@ -41,7 +41,7 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
 
     sfEvent Event;
     bool close = false;
-    int menu_select = 1;
+    int menu_select = 0;
     int error_code = NO_ERROR;
 
     char pseudo[20] = "Player", servername[20] = "Bombersow Server", ip[15] = "127.0.0.1";
@@ -56,65 +56,64 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
     screen_LoadFont(Screens_List[MAIN_MENU_SCR], OPT_FONT, "base/fonts/ITCKRIST.TTF");
     screen_LoadImage(Screens_List[MAIN_MENU_SCR], "base/images/Menu/menu_bg.png");
     screen_LoadMusic(Screens_List[MAIN_MENU_SCR], "sounds/music/ParagonX9 - Metropolis [8-Bit].ogg", sfTrue);
-    screen_LoadText(Screens_List[MAIN_MENU_SCR], GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
     screen_LoadText(Screens_List[MAIN_MENU_SCR], "Jouer", sfRed, 35, sfStringItalic, 450.0f, 140.0f);
     screen_LoadText(Screens_List[MAIN_MENU_SCR], "Options", sfWhite, 35, sfStringItalic, 450.0f, 190.0f);
     screen_LoadText(Screens_List[MAIN_MENU_SCR], "Credits", sfWhite, 35, sfStringItalic, 450.0f, 240.0f);
     screen_LoadText(Screens_List[MAIN_MENU_SCR], "Quitter", sfWhite, 35, sfStringItalic, 450.0f, 290.0f);
     screen_LoadText(Screens_List[MAIN_MENU_SCR], "Test Screen", sfWhite, 35, sfStringItalic, 450.0f, 340.0f);
-    screen_SetMenuInterval(Screens_List[MAIN_MENU_SCR], 1, 5);
+    screen_LoadText(Screens_List[MAIN_MENU_SCR], GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
+    screen_SetMenuInterval(Screens_List[MAIN_MENU_SCR], 0, 4);
 
     // Menu de jeu
     Screens_List[PLAY_SCR] = screen_Create();
     screen_LoadFont(Screens_List[PLAY_SCR], OPT_FONT, "base/fonts/ITCKRIST.TTF");
     screen_LoadImage(Screens_List[PLAY_SCR], "base/images/Menu/menu_bg.png");
-    screen_LoadText(Screens_List[PLAY_SCR], GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
     screen_LoadText(Screens_List[PLAY_SCR], "Rejoindre une partie", sfRed, 35, sfStringItalic, 450.0f, 140.0f);
     screen_LoadText(Screens_List[PLAY_SCR], "Créer un serveur", sfWhite, 35, sfStringItalic, 450.0f, 190.0f);
     screen_LoadText(Screens_List[PLAY_SCR], "Retour", sfWhite, 35, sfStringItalic, 450.0f, 240.0f);
-    screen_SetMenuInterval(Screens_List[PLAY_SCR], 1, 3);
+    screen_LoadText(Screens_List[PLAY_SCR], GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
+    screen_SetMenuInterval(Screens_List[PLAY_SCR], 0, 2);
 
     // Menu Server
     Screens_List[SERVER_SCR] = screen_Create();
     screen_LoadFont(Screens_List[SERVER_SCR], OPT_FONT, "base/fonts/ITCKRIST.TTF");
-    screen_LoadFont(Screens_List[SERVER_SCR], GUI_FONT, "base/fonts/friday13v12.ttf");
+    screen_LoadFont(Screens_List[SERVER_SCR], GUI_FONT, "base/fonts/ITCKRIST.TTF");
     screen_LoadFont(Screens_List[SERVER_SCR], ALT_GUI_FONT, "base/fonts/ITCKRIST.TTF");
     screen_LoadImage(Screens_List[SERVER_SCR], "base/images/Menu/menu_bg.png");
-    screen_LoadText(Screens_List[SERVER_SCR], GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
     screen_LoadText(Screens_List[SERVER_SCR], "Nom du serveur", sfRed, 20, sfStringRegular, 450.0f, 250.0f);
     screen_LoadText(Screens_List[SERVER_SCR], "Pseudo", sfWhite, 20, sfStringRegular, 450.0f, 300.0f);
     screen_LoadText(Screens_List[SERVER_SCR], "Port", sfWhite, 20, sfStringRegular, 450.0f, 350.0f);
     screen_LoadText(Screens_List[SERVER_SCR], "Démarrer le serveur", sfWhite, 20, sfStringRegular, 450.0f, 400.0f);
     screen_LoadText(Screens_List[SERVER_SCR], "Création du serveur", sfWhite, 35, sfStringRegular, 450.0f, 120.0f);
+    screen_LoadText(Screens_List[SERVER_SCR], GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
     screen_AddTextbox(Screens_List[SERVER_SCR], 630, 250, 175, 20, 20, textbox_bg_white, sfBlack, CHAR, servername, sfBlack, "", sfBlack, 10);
     screen_AddTextbox(Screens_List[SERVER_SCR], 630, 300, 175, 20, 20, textbox_bg_white, sfBlack, CHAR, pseudo, sfBlack, "", sfBlack, 10);
     screen_AddTextbox(Screens_List[SERVER_SCR], 630, 350, 75, 20, 5, textbox_bg_white, sfBlack, INT, &port, sfBlack, "", sfBlack, 10);
-    screen_SetMenuInterval(Screens_List[SERVER_SCR], 1, 4);
+    screen_SetMenuInterval(Screens_List[SERVER_SCR], 0, 3);
     Screens_List[SERVER_SCR]->gui->widget_textbox[0]->active = true;
 
     // Menu Client
     Screens_List[CLIENT_SCR] = screen_Create();
     screen_LoadFont(Screens_List[CLIENT_SCR], OPT_FONT, "base/fonts/ITCKRIST.TTF");
-    screen_LoadFont(Screens_List[CLIENT_SCR], GUI_FONT, "base/fonts/friday13v12.ttf");
+    screen_LoadFont(Screens_List[CLIENT_SCR], GUI_FONT, "base/fonts/ITCKRIST.TTF");
     screen_LoadFont(Screens_List[CLIENT_SCR], ALT_GUI_FONT, "base/fonts/ITCKRIST.TTF");
     screen_LoadImage(Screens_List[CLIENT_SCR], "base/images/Menu/menu_bg.png");
-    screen_LoadText(Screens_List[CLIENT_SCR], GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
     screen_LoadText(Screens_List[CLIENT_SCR], "Pseudo", sfRed, 20, sfStringRegular, 450.0f, 250.0f);
     screen_LoadText(Screens_List[CLIENT_SCR], "IP", sfWhite, 20, sfStringRegular, 450.0f, 300.0f);
     screen_LoadText(Screens_List[CLIENT_SCR], "Port", sfWhite, 20, sfStringRegular, 450.0f, 350.0f);
     screen_LoadText(Screens_List[CLIENT_SCR], "Connexion", sfWhite, 20, sfStringRegular, 450.0f, 400.0f);
     screen_LoadText(Screens_List[CLIENT_SCR], "Connexion IP", sfWhite, 35, sfStringRegular, 450.0f, 120.0f);
+    screen_LoadText(Screens_List[CLIENT_SCR], GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
     screen_AddTextbox(Screens_List[CLIENT_SCR], 630, 250, 175, 20, 20, textbox_bg_white, sfBlack, CHAR, pseudo, sfBlack, "", sfBlack, 10);
     screen_AddTextbox(Screens_List[CLIENT_SCR], 630, 300, 175, 20, 15, textbox_bg_white, sfBlack, CHAR, ip, sfBlack, "", sfBlack, 10);
     screen_AddTextbox(Screens_List[CLIENT_SCR], 630, 350, 75, 20, 5, textbox_bg_white, sfBlack, INT, &port, sfBlack, "", sfBlack, 10);
-    screen_SetMenuInterval(Screens_List[CLIENT_SCR], 1, 4);
+    screen_SetMenuInterval(Screens_List[CLIENT_SCR], 0, 3);
     Screens_List[CLIENT_SCR]->gui->widget_textbox[0]->active = true;
 
     // Credits
     Screens_List[CREDITS_SCR] = screen_Create();
     screen_LoadFont(Screens_List[CREDITS_SCR], OPT_FONT, "base/fonts/ITCKRIST.TTF");
     screen_LoadImage(Screens_List[CREDITS_SCR], "base/images/Menu/menu_bg.png");
-    screen_LoadText(Screens_List[CREDITS_SCR], GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
     screen_LoadText(Screens_List[CREDITS_SCR], "Auteurs :", sfWhite, 20, sfStringRegular, 450.0f, 140.0f);
     screen_LoadText(Screens_List[CREDITS_SCR], "Raffre Jonathan (Loven x Kotonoha)", sfWhite, 20, sfStringRegular, 450.0f, 190.0f);
     screen_LoadText(Screens_List[CREDITS_SCR], "Netcode, Gestion Objects", sfWhite, 20, sfStringRegular, 450.0f, 220.0f);
@@ -126,6 +125,7 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
     screen_LoadText(Screens_List[CREDITS_SCR], "http://www.sfml-dev.org/", sfWhite, 20, sfStringItalic, 450.0f, 460.0f);
     screen_LoadText(Screens_List[CREDITS_SCR], "Musiques par ParagonX9", sfWhite, 20, sfStringRegular, 450.0f, 520.0f);
     screen_LoadText(Screens_List[CREDITS_SCR], "Licence Creative Commons BY-NC-SA", sfWhite, 20, sfStringRegular, 450.0f, 550.0f);
+    screen_LoadText(Screens_List[CREDITS_SCR], GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
 
     /* ------------------------------ END ----------------------------- */
 
@@ -156,6 +156,10 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
                 close = true;
                 break;
 
+            case sfEvtTextEntered:
+                gui_TextEntered(Current_Screen->gui, Event.Text.Unicode);
+                break;
+
             case sfEvtKeyPressed:
                 switch (Event.Key.Code)
                 {
@@ -165,60 +169,60 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
                     else if (Current_Screen == Screens_List[CLIENT_SCR] || Current_Screen == Screens_List[SERVER_SCR])
                     {
                         Current_Screen = Screens_List[PLAY_SCR];
-                        screen_HightlightText(Current_Screen, 1, sfRed);
-                        menu_select = 1;
+                        screen_HightlightText(Current_Screen, 0, sfRed);
+                        menu_select = 0;
                     }
                     else
                     {
                         Current_Screen = Screens_List[MAIN_MENU_SCR];
-                        screen_HightlightText(Current_Screen, 1, sfRed);
-                        menu_select = 1;
+                        screen_HightlightText(Current_Screen, 0, sfRed);
+                        menu_select = 0;
                     }
                     break;
 
                 case sfKeyReturn:
                     switch (menu_select)
                     {
-                    case 1:
+                    case 0:
                         if (Current_Screen == Screens_List[MAIN_MENU_SCR])
                         {
                             Current_Screen = Screens_List[PLAY_SCR];
-                            screen_HightlightText(Current_Screen, 1, sfRed);
-                            menu_select = 1;
+                            screen_HightlightText(Current_Screen, 0, sfRed);
+                            menu_select = 0;
                         }
                         else if (Current_Screen == Screens_List[PLAY_SCR])
                         {
                             Current_Screen = Screens_List[CLIENT_SCR];
-                            screen_HightlightText(Current_Screen, 1, sfRed);
-                            menu_select = 1;
+                            screen_HightlightText(Current_Screen, 0, sfRed);
+                            menu_select = 0;
                         }
                         break;
-                    case 2:
+                    case 1:
                         if (Current_Screen == Screens_List[MAIN_MENU_SCR])
                             break;
                         else if (Current_Screen == Screens_List[PLAY_SCR])
                         {
                             Current_Screen = Screens_List[SERVER_SCR];
-                            screen_HightlightText(Current_Screen, 1, sfRed);
-                            menu_select = 1;
+                            screen_HightlightText(Current_Screen, 0, sfRed);
+                            menu_select = 0;
                         }
 
                         break;
-                    case 3:
+                    case 2:
                         if (Current_Screen == Screens_List[MAIN_MENU_SCR])
                         {
                             Current_Screen = Screens_List[CREDITS_SCR];
-                            screen_HightlightText(Current_Screen, 1, sfRed);
-                            menu_select = 1;
+                            screen_HightlightText(Current_Screen, 0, sfRed);
+                            menu_select = 0;
                         }
                         else if (Current_Screen == Screens_List[PLAY_SCR])
                         {
                             Current_Screen = Screens_List[MAIN_MENU_SCR];
-                            screen_HightlightText(Current_Screen, 1, sfRed);
-                            menu_select = 1;
+                            screen_HightlightText(Current_Screen, 0, sfRed);
+                            menu_select = 0;
                         }
                         break;
-                    case 4:
+                    case 3:
                         if (Current_Screen == Screens_List[MAIN_MENU_SCR])
                             close = true;
                         else if (Current_Screen == Screens_List[CLIENT_SCR])
@@ -227,7 +231,7 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
                             close = display_LobbyScreen(Game, config, port, SERVER, ip, 0, 4, pseudo);
 
                         break;
-                    case 5:
+                    case 4:
                         if (Current_Screen == Screens_List[MAIN_MENU_SCR])
                             display_Playing(Game, config);
                         break;
@@ -239,11 +243,11 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
                     {
                         sfString_SetColor(Current_Screen->texts[menu_select], sfWhite);
                         if ((Current_Screen == Screens_List[SERVER_SCR] || Current_Screen == Screens_List[CLIENT_SCR]) && gui_Exist_Textbox(screen_GetGUI(Current_Screen), menu_select))
-                            screen_SetInactiveTextbox(Current_Screen, menu_select - 1);
+                            screen_SetInactiveTextbox(Current_Screen, menu_select);
 
                         sfString_SetColor(Current_Screen->texts[--menu_select], sfRed);
                         if ((Current_Screen == Screens_List[SERVER_SCR] || Current_Screen == Screens_List[CLIENT_SCR]) && gui_Exist_Textbox(screen_GetGUI(Current_Screen), menu_select))
-                            screen_SetActiveTextbox(Current_Screen, menu_select - 1);
+                            screen_SetActiveTextbox(Current_Screen, menu_select);
                     }
                     break;
 
@@ -252,11 +256,11 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
                     {
                         sfString_SetColor(Current_Screen->texts[menu_select], sfWhite);
                         if ((Current_Screen == Screens_List[SERVER_SCR] || Current_Screen == Screens_List[CLIENT_SCR]) && gui_Exist_Textbox(screen_GetGUI(Current_Screen), menu_select))
-                            screen_SetInactiveTextbox(Current_Screen, menu_select - 1);
+                            screen_SetInactiveTextbox(Current_Screen, menu_select);
 
                         sfString_SetColor(Current_Screen->texts[++menu_select], sfRed);
                         if ((Current_Screen == Screens_List[SERVER_SCR] || Current_Screen == Screens_List[CLIENT_SCR]) && gui_Exist_Textbox(screen_GetGUI(Current_Screen), menu_select))
-                            screen_SetActiveTextbox(Current_Screen, menu_select - 1);
+                            screen_SetActiveTextbox(Current_Screen, menu_select);
                     }
                     break;
 

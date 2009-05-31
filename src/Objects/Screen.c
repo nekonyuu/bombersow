@@ -120,7 +120,7 @@ void screen_LoadText(Screen* screen, char* text, sfColor color, int font_size, s
 
 void screen_HightlightText(Screen* screen, unsigned int id, sfColor color)
 {
-    for(int i = 1; i < screen->nb_text; i++)
+    for(int i = 0; i < screen->nb_text - 1; i++)
     {
         if(i == id)
             sfString_SetColor(screen->texts[i], color);
@@ -193,6 +193,14 @@ void screen_AddTextbox(Screen* screen, int x, int y, int width, int height, int 
 Gui* screen_GetGUI(Screen* ptr)
 {
     return ptr->gui;
+}
+
+Widget_textbox* screen_GetTextbox(Screen* screen, unsigned int id)
+{
+    if(gui_Exist_Textbox(screen->gui, id))
+        return screen->gui->widget_textbox[id];
+    else
+        return NULL;
 }
 
 // Met le focus sur la textbox

@@ -64,7 +64,7 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
 
     new_map->bullets = BulletList_Create();
 
-    new_map->game_packets2send = NULL;
+    new_map->gamepackets2send = NULL;
 
     new_map->chat_started = false;
     new_map->game_started = false;
@@ -122,9 +122,9 @@ void map_Destroy(Map* map2destroy)
         BulletList_Destroy(map2destroy->bullets);
 
         logging_Info("map_Destroy", "Destroy pending packets...");
-        if (map2destroy->game_packets2send)
-            for (int i = 0; i < map2destroy->game_packets2send->nb_packets; i++)
-                packet_Destroy(map2destroy->game_packets2send->packets[i]);
+        if (map2destroy->gamepackets2send)
+            for (int i = 0; i < map2destroy->gamepackets2send->nb_packets; i++)
+                packet_Destroy(map2destroy->gamepackets2send->packets[i]);
 
         logging_Info("map_Destroy", "Destroy network sockets...");
         if (map2destroy->game_socket)
@@ -223,14 +223,18 @@ void map_DelPlayer(Map* map_, unsigned int player_id)
 
 void map_AddBullet(Map* map_, Bullet* bullet_)
 {
+    logging_Info("map_AddBullet", "Adding bullet to map...");
+
     if (!bullet_)
     {
         logging_Warning("map_AddBullet", "Bullet object sent NULL");
         return;
     }
 
+    logging_Info("map_AddBullet", "Adding bullet to list...");
     BulletList_AddBullet(map_->bullets, bullet_);
 
+    logging_Info("map_AddBullet", "Adding bullet to quadtree...");
     quadtree_Add(map_->quad_tree, bullet_, BULLET);
 }
 
@@ -244,7 +248,6 @@ void map_DelBullet(Map* map_, Bullet* bullet)
 
     BulletList_DeleteBullet(map_->bullets, bullet);
     quadtree_Delete_Elt(bullet, BULLET);
-
 }
 
 void map_UpdateDisconnectedPlayers(void* UserData)
@@ -282,6 +285,7 @@ Player* map_GetPlayerFromID(Map* map, unsigned int player_id)
     return ptr;
 }
 
+// Retourne l'id du player ayant le nom name
 unsigned int map_GetPlayerIDFromName(Map* map, char* name)
 {
     for(int i = 0; i < map->nb_players; i++)

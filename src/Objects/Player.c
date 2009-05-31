@@ -251,6 +251,11 @@ void player_WeaponShoot(Map* map, Player* player_, float mouse_x, float mouse_y)
 
 }
 
+unsigned int player_GetPlayerID(Player* player)
+{
+    return player->player_id;
+}
+
 void player_SetPosition(Player* player, float x, float y)
 {
     player->coord_x = x;

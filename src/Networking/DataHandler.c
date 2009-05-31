@@ -56,13 +56,13 @@ Packet* player_CreatePacket(Player* player_)
 
     sfPacket* new_packet = sfPacket_Create();
 
-    sfPacket_WriteUint8(new_packet, PLAYER);
+    sfPacket_WriteUint8(new_packet, PLAYER_PACKET);
     sfPacket_WriteUint8(new_packet, player_->player_id);
     sfPacket_WriteUint8(new_packet, player_->current_weapon);
     sfPacket_WriteFloat(new_packet, player_->coord_x);
     sfPacket_WriteFloat(new_packet, player_->coord_y);
 
-    return packet_Create(PLAYER, new_packet);
+    return packet_Create(PLAYER_PACKET, new_packet);
 }
 
 Packet* player_CreateStartPacket(Player* player_)
@@ -72,14 +72,14 @@ Packet* player_CreateStartPacket(Player* player_)
 
     sfPacket* new_packet = sfPacket_Create();
 
-    sfPacket_WriteUint8(new_packet, PLAYER);
+    sfPacket_WriteUint8(new_packet, PLAYER_PACKET);
     sfPacket_WriteUint8(new_packet, player_->player_id);
     sfPacket_WriteString(new_packet, player_->char_name);
     sfPacket_WriteUint8(new_packet, player_->current_weapon);
     sfPacket_WriteFloat(new_packet, player_->coord_x);
     sfPacket_WriteFloat(new_packet, player_->coord_y);
 
-    return packet_Create(PLAYER, new_packet);
+    return packet_Create(PLAYER_PACKET, new_packet);
 }
 
 Player* player_CreateFromPacket(Map* map, sfPacket* packet)
@@ -115,7 +115,7 @@ Packet* object_CreatePacket(Object* object_)
 
     sfPacket* new_packet = sfPacket_Create();
 
-    sfPacket_WriteUint8(new_packet, OBJECT);
+    sfPacket_WriteUint8(new_packet, OBJECT_PACKET);
     sfPacket_WriteUint8(new_packet, object_->type);
     sfPacket_WriteUint8(new_packet, object_->objectID);
 
@@ -136,7 +136,7 @@ Packet* object_CreatePacket(Object* object_)
         break;
     }
 
-    return packet_Create(OBJECT, new_packet);
+    return packet_Create(OBJECT_PACKET, new_packet);
 }
 
 void object_ReadPacket(Map* map, sfPacket* packet)
@@ -174,7 +174,7 @@ Packet* bullet_CreatePacket(Bullet* bullet)
 
     sfPacket* packet = sfPacket_Create();
 
-    sfPacket_WriteUint8(packet, (sfUint8) BULLET);
+    sfPacket_WriteUint8(packet, (sfUint8) BULLET_PACKET);
     sfPacket_WriteUint8(packet, (sfUint8) bullet->owner);
     sfPacket_WriteUint8(packet, (sfUint8) bullet->bullet_type);
     sfPacket_WriteUint8(packet, (sfUint8) bullet->trajectory);
@@ -182,7 +182,7 @@ Packet* bullet_CreatePacket(Bullet* bullet)
     sfPacket_WriteUint8(packet, (sfUint8) bullet->coord_x);
     sfPacket_WriteUint8(packet, (sfUint8) bullet->coord_y);
 
-    return packet_Create(BULLET, packet);
+    return packet_Create(BULLET_PACKET, packet);
 }
 
 void bullet_ReadPacket(Map* map, sfPacket* packet)
@@ -198,48 +198,55 @@ void map_CreateGamePackets(Map* map_)
     if (!map_)
         logging_Error("map_CreateAllPacket", "Map object sent NULL, can't create packet list", NULL_PTR);
 
-    assert(map_->game_packets2send = (PacketList*) malloc(sizeof(PacketList)));
+    assert(map_->gamepackets2send = (PacketList*) malloc(sizeof(PacketList)));
 
     sfMutex_Lock(Network_ServerMutex);                                                  // Verrouillage des ressources
 
-    map_->game_packets2send->nb_packets = map_->nb_players + BulletList_GetNbBullets(map_->bullets);
+    map_->gamepackets2send->nb_packets = map_->nb_players + BulletList_GetNbBullets(map_->bullets);
 
-    // Compte le nombre de paquets à créer
+    // Compte le nombre de paquets Object à créer
     for (int i = 0; i < map_->nb_objects; i++)
         if (map_->objects_list[i]->type > 0)
-            map_->game_packets2send->nb_packets++;
+            map_->gamepackets2send->nb_packets++;
 
-    assert(map_->game_packets2send->packets = (Packet**) malloc(map_->game_packets2send->nb_packets * sizeof(Packet*)));
+    assert(map_->gamepackets2send->packets = (Packet**) malloc(map_->gamepackets2send->nb_packets * sizeof(Packet*)));
 
     // Création des paquets
     for (int i = 0; i < map_->nb_players; i++)
-        map_->game_packets2send->packets[i] = player_CreatePacket(map_->players_list[i]);
+        map_->gamepackets2send->packets[i] = player_CreatePacket(map_->players_list[i]);
 
     for (cpt = 0, ptr = BulletList_GetHead(map_->bullets); ptr != NULL; ptr = bullet_GetNext(ptr), cpt++)
-        map_->game_packets2send->packets[cpt] = bullet_CreatePacket(ptr);
+        map_->gamepackets2send->packets[cpt] = bullet_CreatePacket(ptr);
 
-    for (int i = map_->nb_players; i < map_->game_packets2send->nb_packets; i++)
+    for (int i = map_->nb_players; i < map_->gamepackets2send->nb_packets; i++)
         if (map_->objects_list[i]->type > 0)
-            map_->game_packets2send->packets[i] = object_CreatePacket(map_->objects_list[i]);
+            map_->gamepackets2send->packets[i] = object_CreatePacket(map_->objects_list[i]);
 
     sfMutex_Unlock(Network_ServerMutex);                                                  // Déverrouillage
 }
 
 void map_DestroyAllPackets(Map* map_)
 {
-    for (int i = 0; i < map_->game_packets2send->nb_packets; i++)
-        packet_Destroy(map_->game_packets2send->packets[i]);
-    free_secure(map_->game_packets2send->packets);
-    free_secure(map_->game_packets2send);
+    for (int i = 0; i < map_->gamepackets2send->nb_packets; i++)
+        packet_Destroy(map_->gamepackets2send->packets[i]);
+    free_secure(map_->gamepackets2send->packets);
+    free_secure(map_->gamepackets2send);
 }
 
-ClientData* clientdata_Create(char* player_name, char* ip, unsigned int port, Config* config)
+ClientData* clientdata_Create(char* player_name, char* ip, unsigned int port, Config* config, unsigned int max_mess)
 {
     ClientData* client_data = (ClientData*) malloc(sizeof(ClientData));
+    client_data->map = NULL;
+
+    client_data->messages = ChatMessagesList_Create(max_mess);
+
+    client_data->player = NULL;
     client_data->name = player_name;
     client_data->ip = sfIPAddress_FromString(ip);
+
     client_data->port = port;
     client_data->config = config;
+
     client_data->server_close = false;
 
     return client_data;
@@ -247,5 +254,6 @@ ClientData* clientdata_Create(char* player_name, char* ip, unsigned int port, Co
 
 void clientdata_Destroy(ClientData* ptr)
 {
+    ChatMessagesList_Destroy(ptr->messages);
     free_secure(ptr);
 }

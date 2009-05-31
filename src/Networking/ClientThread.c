@@ -57,6 +57,7 @@ void client_Main(void* UserData)
             unsigned int max_players = (unsigned int) sfPacket_ReadUint8(response);
             unsigned int curr_players = (unsigned int) sfPacket_ReadUint8(response);
             unsigned int cpt_players_rev = (unsigned int) sfPacket_ReadUint8(response);
+            unsigned int your_id = (unsigned int) sfPacket_ReadUint8(response);
 
             sfPacket_Clear(response);
             logging_Info("client_Main", "Creating map...");
@@ -72,12 +73,14 @@ void client_Main(void* UserData)
                 unsigned int code = 0;
                 sfSocketTCP_ReceivePacket(client_socket, response);
                 code = sfPacket_ReadUint8(response);
-                if (code == PLAYER)
+                if (code == PLAYER_PACKET)
                     map_AddPlayer(client_data->map, player_CreateFromPacket(client_data->map, response));
 
                 sfPacket_Clear(response);
             }
             logging_Info("client_Main", "Client connected and ready !");
+            client_data->player = map_GetPlayerFromID(client_data->map, your_id);
+            client_data->player->listen_socket = client_socket;
             client_connected = true;
             sfMutex_Unlock(server_creation);
 
@@ -95,15 +98,18 @@ void client_Main(void* UserData)
                         code = sfPacket_ReadUint8(response);
                         switch(code)
                         {
-                            case PLAYER:
+                            case PLAYER_PACKET:
                                 map_AddPlayer(client_data->map, player_CreateFromPacket(client_data->map, response));
                                 break;
-                            case DISCONNECT:
+                            case DISCONNECT_PACKET:
                                 map_DelPlayer(client_data->map, (unsigned int) sfPacket_ReadUint8(response));
                                 break;
                             case SERVER_CLOSING:
                                 client_connected = false;
                                 client_data->server_close = true;
+                                break;
+                            case CHAT_PACKET:
+                                ChatMessagesList_AddMessage(client_data->messages, chat_ReadPacket(client_data->map, response));
                                 break;
                             default:
 
@@ -155,10 +161,17 @@ sfPacket* client_CreateConnectPacket(char* name)
     }
 
     sfPacket* new_packet = sfPacket_Create();
-    sfPacket_WriteUint8(new_packet, CONNECT);
+    sfPacket_WriteUint8(new_packet, CONNECT_PACKET);
     sfPacket_WriteString(new_packet, name);
 
     return new_packet;
+}
+
+void client_SendChatPacket(char* mess, Player* player)
+{
+    sfPacket* packet = chat_CreatePacket(player, mess);
+    sfSocketTCP_SendPacket(player->listen_socket, packet);
+    sfPacket_Destroy(packet);
 }
 
 sfPacket* client_CreateDisconnectPacket(unsigned int player_id)
@@ -170,7 +183,7 @@ sfPacket* client_CreateDisconnectPacket(unsigned int player_id)
     }
 
     sfPacket* new_packet = sfPacket_Create();
-    sfPacket_WriteUint8(new_packet, DISCONNECT);
+    sfPacket_WriteUint8(new_packet, DISCONNECT_PACKET);
     sfPacket_WriteUint8(new_packet, player_id);
 
     return new_packet;

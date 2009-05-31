@@ -33,21 +33,35 @@ typedef struct CHAT_DATA
     unsigned int player_id;
 } ChatData;
 
+typedef struct CHAT_MESS
+{
+    struct CHAT_MESS* prev;
+    sfString* message;
+    struct CHAT_MESS* next;
+} ChatMessage;
+
 // Permet de stocker les messages de discusison pour l'affichage
 typedef struct CHAT_MESS_VIEW
 {
-    sfString** messages;
+    ChatMessage* head, *tail;
     unsigned int nb_mess;
-} ChatMessages;
+    unsigned int max_nb_mess;
+} ChatMessagesList;
 
 // Permet de regrouper les données client à envoyer au thread
 typedef struct CLIENT_DATA
 {
     Map* map;
+
+    ChatMessagesList* messages;
+
+    Player* player;
     char* name;
     sfIPAddress ip;
+
     int port;
     Config* config;
+
     bool server_close;
 } ClientData;
 
@@ -59,7 +73,7 @@ sfMutex* server_creation;
 void server_Main(void* UserData);
 void server_Listen_TCP(void* UserData);
 void server_Listen_Game(void* UserData);
-sfPacket* server_CreateResponsePacket(Map* map, unsigned int response);
+sfPacket* server_CreateResponsePacket(Map* map, Player* player, unsigned int response);
 sfPacket* server_CreateDestroyPlayerPacket(unsigned int player_id);
 sfPacket* server_CreateClosePacket();
 void server_ReadUDPPacket(sfPacket* packet, Map* map);
@@ -68,14 +82,27 @@ void server_ReadUDPPacket(sfPacket* packet, Map* map);
 void client_Main(void* UserData);
 sfPacket* client_CreateConnectPacket(char* name);
 sfPacket* client_CreateDisconnectPacket(unsigned int player_id);
+void client_SendChatPacket(char* mess, Player* player);
 
 // ChatHandler.c
 sfPacket* chat_CreatePacket(Player* player, const char* message);
 char* chat_ReadPacket(Map* map, sfPacket* packet);
 ChatData* chat_CreatePlayerData(Map*, unsigned int);
-ChatMessages* chatmessages_Create();
-void chatmessages_Draw(ChatMessages* ptr, sfRenderWindow* Game, sfView* view);
-void chatmessages_Destroy(ChatMessages* ptr);
+ChatMessage* ChatMessage_Create();
+void ChatMessage_Destroy(ChatMessage* ptr);
+void ChatMessage_DestroyFromList(ChatMessage* ptr);
+void ChatMessage_SetPrev(ChatMessage* ptr, ChatMessage* prev_ptr);
+void ChatMessage_SetNext(ChatMessage* ptr, ChatMessage* next_ptr);
+ChatMessage* ChatMessage_GetPrev(ChatMessage* ptr);
+ChatMessage* ChatMessage_GetNext(ChatMessage* ptr);
+void ChatMessage_SetText(ChatMessage* ptr, char* mess, unsigned int size);
+void ChatMessage_SetCoords(ChatMessage* ptr, unsigned int x, unsigned int y);
+unsigned int ChatMessage_GetSize(ChatMessage* ptr);
+ChatMessagesList* ChatMessagesList_Create(unsigned int max_mess);
+void ChatMessagesList_AddMessage(ChatMessagesList* ptr, char* mess);
+void ChatMessagesList_Draw(ChatMessagesList* ptr, sfRenderWindow* Game);
+void ChatMessagesList_UpdateCoords(ChatMessagesList* ptr);
+void ChatMessagesList_Destroy(ChatMessagesList* ptr);
 
 // DataHandler.c
 Packet* packet_Create(unsigned int code, sfPacket* packet);
@@ -90,7 +117,7 @@ Packet* bullet_CreatePacket(Bullet*);
 void bullet_ReadPacket(Map*, sfPacket*);
 void map_CreateGamePackets(Map*);
 void map_DestroyAllPackets(Map*);
-ClientData* clientdata_Create(char*, char*, unsigned int, Config*);
+ClientData* clientdata_Create(char*, char*, unsigned int, Config*, unsigned int);
 void clientdata_Destroy(ClientData*);
 
 #endif
