@@ -28,8 +28,8 @@
 #include <SFML/Network.h>
 #include <BaseSystem/Config.h>
 #include <GraphicEngine/Image.h>
-#include "PhysicsEngine/ParticleSystem.h
-#include <Networking/PacketDefines.h
+#include "PhysicsEngine/ParticleSystem.h"
+#include <Networking/PacketDefines.h>
 
 #define NB_MAX_WEAPONS 7
 #define SHOTGUN_SHRAPNELS 7
