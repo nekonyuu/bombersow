@@ -184,6 +184,7 @@ void BulletList_DeleteBullet(BulletList* ptr, Bullet* ptr2)
     if(ptr2 == ptr->head)
         ptr->head = ptr2->next;
 
+
     if(ptr_temp)
     {
         bullet_DeleteFromList(ptr_temp);

@@ -63,16 +63,50 @@ void gravitysystem_BulletUpdate(Map* map_, Bullet* bullet_, Config* config)
 {
     float speed_x = bullet_->speed_x * map_->clock_time;
     float speed_y = bullet_->speed_y * map_->clock_time;
+    int traj = (int)sqrt(speed_y*speed_y + speed_x*speed_x);
     if (bullet_->coord_x+speed_x > 0 && bullet_->coord_x+speed_x < config->width &&
-        bullet_->coord_y+speed_y > 0 && bullet_->coord_y+speed_y < config->height)
+	 bullet_->coord_y+speed_y > 0 && bullet_->coord_y+speed_y < config->height &&
+        bullet_->range > 0)
     {
         bullet_SetPosition(bullet_, bullet_->coord_x+speed_x, bullet_->coord_y+speed_y);
+        bullet_->range = (traj > bullet_->range) ? 0 : bullet_->range - traj;
         quadtree_Update(bullet_, BULLET);
+        Collision* collision = collision_Detection_Object(bullet_, BULLET);
+        if(collision != NULL)
+        {
+            if(collision->type == PLAYER)
+            {
+                player_BulletCollision(collision->player, bullet_, map_);
+            }
+            map_DelBullet(map_, bullet_);
+        }
+        collision_Destroy(collision);
     }
     else
     {
         map_DelBullet(map_, bullet_);
     }
+}
+
+void gravitysystem_BloodUpdate(Map* map_, Particle* particle_, Config* config)
+{
+    float speed_y = particle_->speed_y + config->gravity_speed * map_->clock_time * config->gravity_coef;
+    float y = speed_y * map_->clock_time;
+
+    float largeur;
+    float hauteur;
+    sfShape_GetPointPosition(particle_->shape, 2, &largeur, &hauteur);
+    if(sfShape_GetY(particle_->shape)+hauteur+y <= config->height && sfShape_GetY(particle_->shape)+ y > 0)
+    {
+        particle_SetPosition(particle_, sfShape_GetX(particle_->shape), sfShape_GetY(particle_->shape) + y);
+        particle_->speed_y = speed_y;
+    }
+    else if(sfShape_GetY(particle_->shape)+hauteur+y > config->height)
+    {
+        particle_->speed_y = 0;
+    }
+    else
+        particle_->speed_y = 0;
 }
 
 void gravitysystem_WorldUpdate(Map* map_, Config* config)
@@ -87,6 +121,11 @@ void gravitysystem_WorldUpdate(Map* map_, Config* config)
     for (Bullet* ptr = BulletList_GetHead(map_->bullets); ptr != NULL; ptr = bullet_GetNext(ptr))
     {
         gravitysystem_BulletUpdate(map_, ptr, config);
+    }
+
+    for(int i = 0; i < map_->particle_table->nbr_particle; i++)
+    {
+        gravitysystem_BloodUpdate(map_, map_->particle_table->particle[i], config);
     }
 
     sfClock_Reset(map_->clock);

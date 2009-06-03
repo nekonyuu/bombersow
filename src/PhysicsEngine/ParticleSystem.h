@@ -24,4 +24,37 @@
 #ifndef PARTICLESYSTEM_H
 #define PARTICLESYSTEM_H
 
+typedef struct PARTICLE
+{
+    sfShape* shape;
+    float speed_x;
+    float speed_y;
+}Particle;
+
+typedef struct PARTICLE_TABLE
+{
+    int nbr_particle;
+    int nbr_max;
+    int indice_courant;
+    Particle** particle;
+    sfClock* clock;
+}Particle_Table;
+
+
+Particle* particle_Create();
+Particle* particle_CreateBlood();
+void particle_SetPosition(Particle*, float, float);
+void particle_Draw(sfRenderWindow*, Particle*);
+void particle_Destroy(Particle*);
+
+Particle_Table* particle_table_Create();
+void particle_table_Destroy(Particle_Table*);
+void particle_table_AddParticle(Particle_Table*, Particle*);
+void particle_table_Draw(sfRenderWindow*, Particle_Table*);
+
+/*typedef struct PARTICLE_ENGINE
+{
+
+}Particle_Engine;*/
+
 #endif

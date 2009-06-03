@@ -30,6 +30,7 @@
 #include "PhysicsEngine/PhysicsEngine.h"
 #include "PhysicsEngine/CollisionSystem.h"
 #include "PhysicsEngine/GravitySystem.h"
+#include "PhysicsEngine/ParticleSystem.h"
 
 bool display_Playing(sfRenderWindow* Game, Config* config)
 {
