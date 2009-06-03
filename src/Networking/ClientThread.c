@@ -96,24 +96,23 @@ void client_Main(void* UserData)
                         sfSocketTCP* new_socket = sfSelectorTCP_GetSocketReady(client_data->map->tcp_selector, i);
                         sfSocketTCP_ReceivePacket(new_socket, response);
                         code = sfPacket_ReadUint8(response);
-                        switch(code)
+                        switch (code)
                         {
-                            case PLAYER_PACKET:
-                                map_AddPlayer(client_data->map, player_CreateFromPacket(client_data->map, response));
-                                break;
-                            case DISCONNECT_PACKET:
-                                map_DelPlayer(client_data->map, (unsigned int) sfPacket_ReadUint8(response));
-                                break;
-                            case SERVER_CLOSING:
-                                client_connected = false;
-                                client_data->server_close = true;
-                                break;
-                            case CHAT_PACKET:
-                                ChatMessagesList_AddMessage(client_data->messages, chat_ReadPacket(client_data->map, response));
-                                break;
-                            default:
-
-                                break;
+                        case PLAYER_PACKET:
+                            map_AddPlayer(client_data->map, player_CreateFromPacket(client_data->map, response));
+                            break;
+                        case DISCONNECT_PACKET:
+                            map_DelPlayer(client_data->map, (unsigned int) sfPacket_ReadUint8(response));
+                            break;
+                        case SERVER_CLOSING:
+                            client_connected = false;
+                            client_data->server_close = true;
+                            break;
+                        case CHAT_PACKET:
+                            ChatMessagesList_AddMessage(client_data->messages, chat_ReadPacket(client_data->map, response));
+                            break;
+                        default:
+                            break;
                         }
 
                         sfPacket_Clear(response);
@@ -123,7 +122,7 @@ void client_Main(void* UserData)
 
             logging_Info("client_Main", "Disconnecting...");
             sfPacket_Destroy(response);
-            if(!client_data->server_close)
+            if (!client_data->server_close)
             {
                 response = client_CreateDisconnectPacket(map_GetPlayerIDFromName(client_data->map, client_data->name));
                 sfSocketTCP_SendPacket(client_socket, response);
