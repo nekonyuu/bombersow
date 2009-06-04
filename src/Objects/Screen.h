@@ -55,7 +55,7 @@ Screen* screen_Create();
 void screen_Destroy(Screen*);
 void screen_LoadFont(Screen*, ScreenFontType, char*);
 void screen_LoadText(Screen*, char*, sfColor, int, sfStringStyle, float, float);
-void screen_HightlightText(Screen*, unsigned int, sfColor);
+void screen_HighlightText(Screen*, unsigned int, sfColor);
 void screen_SetMenuInterval(Screen*, unsigned int, unsigned int);
 void screen_LoadMusic(Screen*, char*, sfBool);
 void screen_PlayMusic(Screen*);

@@ -169,13 +169,13 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
                     else if (Current_Screen == Screens_List[CLIENT_SCR] || Current_Screen == Screens_List[SERVER_SCR])
                     {
                         Current_Screen = Screens_List[PLAY_SCR];
-                        screen_HightlightText(Current_Screen, 0, sfRed);
+                        screen_HighlightText(Current_Screen, 0, sfRed);
                         menu_select = 0;
                     }
                     else
                     {
                         Current_Screen = Screens_List[MAIN_MENU_SCR];
-                        screen_HightlightText(Current_Screen, 0, sfRed);
+                        screen_HighlightText(Current_Screen, 0, sfRed);
                         menu_select = 0;
                     }
                     break;
@@ -187,13 +187,13 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
                         if (Current_Screen == Screens_List[MAIN_MENU_SCR])
                         {
                             Current_Screen = Screens_List[PLAY_SCR];
-                            screen_HightlightText(Current_Screen, 0, sfRed);
+                            screen_HighlightText(Current_Screen, 0, sfRed);
                             menu_select = 0;
                         }
                         else if (Current_Screen == Screens_List[PLAY_SCR])
                         {
                             Current_Screen = Screens_List[CLIENT_SCR];
-                            screen_HightlightText(Current_Screen, 0, sfRed);
+                            screen_HighlightText(Current_Screen, 0, sfRed);
                             menu_select = 0;
                         }
                         break;
@@ -203,7 +203,7 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
                         else if (Current_Screen == Screens_List[PLAY_SCR])
                         {
                             Current_Screen = Screens_List[SERVER_SCR];
-                            screen_HightlightText(Current_Screen, 0, sfRed);
+                            screen_HighlightText(Current_Screen, 0, sfRed);
                             menu_select = 0;
                         }
 
@@ -212,13 +212,13 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
                         if (Current_Screen == Screens_List[MAIN_MENU_SCR])
                         {
                             Current_Screen = Screens_List[CREDITS_SCR];
-                            screen_HightlightText(Current_Screen, 0, sfRed);
+                            screen_HighlightText(Current_Screen, 0, sfRed);
                             menu_select = 0;
                         }
                         else if (Current_Screen == Screens_List[PLAY_SCR])
                         {
                             Current_Screen = Screens_List[MAIN_MENU_SCR];
-                            screen_HightlightText(Current_Screen, 0, sfRed);
+                            screen_HighlightText(Current_Screen, 0, sfRed);
                             menu_select = 0;
                         }
                         break;
