@@ -141,7 +141,6 @@ void list_Delete(List* list, List_element* list_element)
         {
             list->last = list_element->previous;
         }
-
         list->taille--;
         if (list_element->previous != NULL)
             list_element->previous->next = list_element->next;
@@ -630,7 +629,7 @@ void quadtree_Add(QuadTree* quad, void* obj_, int type)
                 list_Add(quad->player, obj, type);
                 obj->quad_node = quad;
             }
-            else
+            else if (type == BULLET)
             {
                 Bullet* obj = obj_;
                 list_Add(quad->bullet, obj, type);
@@ -703,7 +702,7 @@ void quadtree_Delete_Elt(void* obj_, int type)
         list_Delete(obj->quad_node->player, obj->list_node);
         quadtree_Delete_Node(obj->quad_node);
     }
-    else
+    else if (type == BULLET)
     {
         Bullet* obj = obj_;
         list_Delete(obj->quad_node->bullet, obj->list_node);
@@ -758,27 +757,27 @@ void quadtree_Update(void* obj_, int type)
     if (type == OBJECT)
     {
         Object* obj = obj_;
-        quad = obj->quad_node;
+        quad = obj->quad_node->first;
         rect_obj = sprite_GetRect(obj->sprite);
     }
     else if (type == PLAYER)
     {
         Player* obj = obj_;
-        quad = obj->quad_node;
+        quad = obj->quad_node->first;
         rect_obj = sprite_GetRect(obj->sprite);
     }
     else
     {
         Bullet* obj = obj_;
-        quad = obj->quad_node;
+        quad = obj->quad_node->first;
         rect_obj = sprite_GetRect(obj->draw_image);
     }
 
-    if (!IntRect_Contains(&quad->rect, &rect_obj))
-    {
+    /*if (!IntRect_Contains(&quad->rect, &rect_obj))
+    {*/
         quadtree_Delete_Elt(obj_, type);
-        quadtree_Add(quad->first, obj_, type);
-    }
+        quadtree_Add(quad, obj_, type);
+   // }
 
 }
 

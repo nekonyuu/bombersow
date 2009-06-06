@@ -245,9 +245,8 @@ void map_DelBullet(Map* map_, Bullet* bullet)
         logging_Warning("map_DelBullet", "Bullet object sent NULL");
         return;
     }
-
-    BulletList_DeleteBullet(map_->bullets, bullet);
     quadtree_Delete_Elt(bullet, BULLET);
+    BulletList_DeleteBullet(map_->bullets, bullet);
 }
 
 void map_UpdateDisconnectedPlayers(void* UserData)

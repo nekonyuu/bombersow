@@ -65,7 +65,7 @@ void gravitysystem_BulletUpdate(Map* map_, Bullet* bullet_, Config* config)
     float speed_y = bullet_->speed_y * map_->clock_time;
     int traj = (int)sqrt(speed_y*speed_y + speed_x*speed_x);
     if (bullet_->coord_x+speed_x > 0 && bullet_->coord_x+speed_x < config->width &&
-	 bullet_->coord_y+speed_y > 0 && bullet_->coord_y+speed_y < config->height &&
+        bullet_->coord_y+speed_y > 0 && bullet_->coord_y+speed_y < config->height &&
         bullet_->range > 0)
     {
         bullet_SetPosition(bullet_, bullet_->coord_x+speed_x, bullet_->coord_y+speed_y);
@@ -118,10 +118,23 @@ void gravitysystem_WorldUpdate(Map* map_, Config* config)
         gravitysystem_PlayerUpdate(map_,map_->players_list[i], config);
     }
 
-    for (Bullet* ptr = BulletList_GetHead(map_->bullets); ptr != NULL; ptr = bullet_GetNext(ptr))
+    Bullet* ptr = BulletList_GetHead(map_->bullets);
+    Bullet* ptr2 = NULL;
+
+    while (ptr != NULL)
     {
+        ptr2 = bullet_GetNext(ptr);
         gravitysystem_BulletUpdate(map_, ptr, config);
+        ptr = ptr2;
     }
+
+
+    /*for (Bullet* ptr = BulletList_GetHead(map_->bullets); ptr != NULL; ptr = bullet_GetNext(ptr))
+    {
+        printf("%p %p\n", ptr, ptr->quad_node->first);
+        printf("bb%p %p %pbb\n", ptr->prev, ptr->next, ptr->next->prev);
+        gravitysystem_BulletUpdate(map_, ptr, config);
+    }*/
 
     for(int i = 0; i < map_->particle_table->nbr_particle; i++)
     {

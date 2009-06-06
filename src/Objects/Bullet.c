@@ -62,10 +62,10 @@ void bullet_DeleteFromList(Bullet* bullet2destroy)
     if (!bullet2destroy)
         logging_Error("bullet_DeleteFromList", "Bullet object sent NULL", NULL_PTR);
 
-    //if(bullet2destroy->prev != NULL)
+    if(bullet2destroy->prev != NULL)
         bullet2destroy->prev->next = bullet2destroy->next;
 
-    //if(bullet2destroy->next != NULL)
+    if(bullet2destroy->next != NULL)
         bullet2destroy->next->prev = bullet2destroy->prev;
 
     sprite_Destroy(bullet2destroy->draw_image);
@@ -101,12 +101,18 @@ void bullet_SetPrev(Bullet* ptr, Bullet* new_bullet)
 
 Bullet* bullet_GetNext(Bullet* ptr)
 {
-    return ptr->next;
+    if(ptr != NULL)
+        return ptr->next;
+    else
+        return NULL;
 }
 
 Bullet* bullet_GetPrev(Bullet* ptr)
 {
-    return ptr->prev;
+    if(ptr != NULL)
+        return ptr->prev;
+    else
+        return NULL;
 }
 
 void bullet_Draw(sfRenderWindow* Game, Bullet* bullet)
@@ -176,17 +182,21 @@ void BulletList_DeleteBullet(BulletList* ptr, Bullet* ptr2)
 {
     Bullet* ptr_temp = NULL;
 
+
     if(!ptr)
         logging_Error("BulletList_DeleteBullet", "BulletList pointer sent NULL", NULL_PTR);
 
     for(ptr_temp = ptr->head; ptr_temp != ptr2 && ptr_temp != NULL; ptr_temp = bullet_GetNext(ptr_temp));
 
-    if(ptr2 == ptr->head)
-        ptr->head = ptr2->next;
-
-
     if(ptr_temp)
     {
+        if(ptr2 == ptr->head)
+            ptr->head = ptr2->next;
+
+        if(ptr2 == ptr->tail)
+            ptr->tail = ptr2->prev;
+
+
         bullet_DeleteFromList(ptr_temp);
         ptr->nb_bullets--;
     }

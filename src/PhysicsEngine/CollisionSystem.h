@@ -28,7 +28,7 @@
 
 typedef struct COLLISION {
 
-    Physics_type type;
+    Physics_type type;  //type de l'objet en collision
 
     Object* object;
     Player* player;
@@ -38,7 +38,7 @@ typedef struct COLLISION {
 
 Collision* collision_Create();
 void collision_Destroy(Collision*);
-Collision* collision_Detection_Object(void*, int);
-void collision_Detection_ObjectArb(void*, int, QuadTree*, Collision*);
+Collision* collision_Detection_Object(void*, int);      //permet de detecter si un objet est en collision avec un autre
+void collision_Detection_ObjectArb(void*, int, QuadTree*, Collision*);  //Identique à la précédente mais parcours l'arbre en remontant les noeuds
 
 #endif
