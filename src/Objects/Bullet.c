@@ -62,11 +62,10 @@ void bullet_DeleteFromList(Bullet* bullet2destroy)
     if (!bullet2destroy)
         logging_Error("bullet_DeleteFromList", "Bullet object sent NULL", NULL_PTR);
 
-    //if(bullet2destroy->prev != NULL)
+    if(bullet2destroy->prev)
         bullet2destroy->prev->next = bullet2destroy->next;
-
-    //if(bullet2destroy->next != NULL)
-        bullet2destroy->next->prev = bullet2destroy->prev;
+    if(bullet2destroy->next)
+    bullet2destroy->next->prev = bullet2destroy->prev;
 
     sprite_Destroy(bullet2destroy->draw_image);
     free_secure(bullet2destroy);
@@ -79,7 +78,7 @@ void bullet_DestroyList(Bullet** head)
         logging_Error("bullet_DestroyList", "Bullet list sent NULL", NULL_PTR);
 
     Bullet* ptr = *head, *ptr2 = NULL;
-    while(ptr != NULL)
+    while (ptr != NULL)
     {
         ptr2 = ptr->next;
         bullet_Destroy(ptr);
@@ -153,10 +152,10 @@ void BulletList_Destroy(BulletList* ptr)
 
 void BulletList_AddBullet(BulletList* ptr, Bullet* ptr2)
 {
-    if(!ptr)
+    if (!ptr)
         logging_Error("BulletList_AddBullet", "BulletList pointer sent NULL", NULL_PTR);
 
-    if(!ptr->head)
+    if (!ptr->head)
     {
         ptr->head = ptr2;
         ptr->tail = ptr2;
@@ -176,15 +175,15 @@ void BulletList_DeleteBullet(BulletList* ptr, Bullet* ptr2)
 {
     Bullet* ptr_temp = NULL;
 
-    if(!ptr)
+    if (!ptr)
         logging_Error("BulletList_DeleteBullet", "BulletList pointer sent NULL", NULL_PTR);
 
-    for(ptr_temp = ptr->head; ptr_temp != ptr2 && ptr_temp != NULL; ptr_temp = bullet_GetNext(ptr_temp));
+    for (ptr_temp = ptr->head; ptr_temp != ptr2 && ptr_temp != NULL; ptr_temp = bullet_GetNext(ptr_temp));
 
-    if(ptr2 == ptr->head)
+    if (ptr2 == ptr->head)
         ptr->head = bullet_GetNext(ptr2);
 
-    if(ptr_temp)
+    if (ptr_temp)
     {
         bullet_DeleteFromList(ptr_temp);
         ptr->nb_bullets--;

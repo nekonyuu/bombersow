@@ -246,6 +246,8 @@ void map_DelBullet(Map* map_, Bullet* bullet)
         return;
     }
 
+    logging_Info("map_DelBullet", "Deleting sent bullet...");
+
     BulletList_DeleteBullet(map_->bullets, bullet);
     quadtree_Delete_Elt(bullet, BULLET);
 }

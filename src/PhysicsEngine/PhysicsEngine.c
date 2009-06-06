@@ -125,7 +125,6 @@ void list_Add(List* list, void* elt, int type)
         Bullet* obj = elt;
         obj->list_node = list_element;
     }
-
 }
 
 void list_Delete(List* list, List_element* list_element)
@@ -581,19 +580,28 @@ void quadtree_Add(QuadTree* quad, void* obj_, int type)
             quad->noeuds[NW]->rect = rectNW;
             quad->noeuds[NW]->parent = quad;
             quad->noeuds[NW]->first = quad->first;
+        }
 
+        if (quad->noeuds[NE] == NULL)
+        {
             sfIntRect rectNE = {(quad->rect.Right+quad->rect.Left)/2+1, quad->rect.Top, quad->rect.Right, (quad->rect.Bottom+quad->rect.Top)/2};
             quad->noeuds[NE] = quadtree_Create();
             quad->noeuds[NE]->rect = rectNE;
             quad->noeuds[NE]->parent = quad;
             quad->noeuds[NE]->first = quad->first;
+        }
 
+        if (quad->noeuds[SW] == NULL)
+        {
             sfIntRect rectSW = {quad->rect.Left, (quad->rect.Bottom+quad->rect.Top)/2+1, (quad->rect.Right+quad->rect.Left)/2, quad->rect.Bottom};
             quad->noeuds[SW] = quadtree_Create();
             quad->noeuds[SW]->rect = rectSW;
             quad->noeuds[SW]->parent = quad;
             quad->noeuds[SW]->first = quad->first;
+        }
 
+        if (quad->noeuds[SE] == NULL)
+        {
             sfIntRect rectSE = {(quad->rect.Right+quad->rect.Left)/2+1, (quad->rect.Bottom+quad->rect.Top)/2+1, quad->rect.Right, quad->rect.Bottom};
             quad->noeuds[SE] = quadtree_Create();
             quad->noeuds[SE]->rect = rectSE;
@@ -709,7 +717,6 @@ void quadtree_Delete_Elt(void* obj_, int type)
         list_Delete(obj->quad_node->bullet, obj->list_node);
         quadtree_Delete_Node(obj->quad_node);
     }
-
 }
 
 void quadtree_Check_Node(QuadTree* quad, bool* check)
@@ -735,8 +742,7 @@ void quadtree_Check_Node(QuadTree* quad, bool* check)
 void quadtree_Delete_Node(QuadTree* quad)
 {
 
-    bool test;
-    test = 1;
+    bool test = true;
     quadtree_Check_Node(quad, &test);
     if (test)
     {

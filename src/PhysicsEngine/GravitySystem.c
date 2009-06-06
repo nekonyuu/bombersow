@@ -119,9 +119,14 @@ void gravitysystem_WorldUpdate(Map* map_, Config* config)
         gravitysystem_PlayerUpdate(map_,map_->players_list[i], config);
     }
 
-    for (Bullet* ptr = BulletList_GetHead(map_->bullets); ptr != NULL; ptr = bullet_GetNext(ptr))
+    Bullet* ptr = BulletList_GetHead(map_->bullets);
+    Bullet* ptr2 = NULL;
+
+    while (ptr != NULL)
     {
+        ptr2 = bullet_GetNext(ptr);
         gravitysystem_BulletUpdate(map_, ptr, config);
+        ptr = ptr2;
     }
 
     for(int i = 0; i < map_->particle_table->nbr_particle; i++)
