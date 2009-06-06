@@ -33,11 +33,10 @@ typedef struct PARTICLE
 
 typedef struct PARTICLE_TABLE
 {
-    int nbr_particle;
-    int nbr_max;
-    int indice_courant;
-    Particle** particle;
-    sfClock* clock;
+    int nbr_particle;       //nombre actuel de particule
+    int nbr_max;            //nombre maximum de particule
+    int indice_courant;     //indice actuel du tableau
+    Particle** particle;    //tableau de particule
 }Particle_Table;
 
 

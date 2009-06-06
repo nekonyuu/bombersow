@@ -207,7 +207,7 @@ void armory_Create(Weapon* armory)
     armory[SHOTGUN].splash_coef = 1;
     armory[SHOTGUN].selfdamage_coef = 0;
 
-    armory[SHOTGUN].proj_speed = 2000;
+    armory[SHOTGUN].proj_speed = 200;
     armory[SHOTGUN].trajectory = 2;
 
     armory[SHOTGUN].collected = false;

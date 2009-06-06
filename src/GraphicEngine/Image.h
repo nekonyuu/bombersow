@@ -62,7 +62,7 @@ void animation_Draw(Animation*, sfRenderWindow*);
 void animation_SetPosition(Animation*, int, int);
 
 // Struct des drawables
-enum { SPRITE, ANIMATION };
+enum { SPRITE, ANIMATION }; //enum qui determine si il s'agit d'une image fixe ou d'une animation
 typedef struct SPRITE
 {
 
@@ -71,9 +71,9 @@ typedef struct SPRITE
 
     int type;           // Sprite/Animation
 
-    int x;
+    int x;              //coordonnée
     int y;
-    int largeur;
+    int largeur;        //taille
     int hauteur;
 
 } Sprite;

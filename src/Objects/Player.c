@@ -224,7 +224,7 @@ void player_WeaponShoot(Map* map, Player* player_, float mouse_x, float mouse_y)
             vec_x = player_->weapons[player_->current_weapon]->proj_speed * (mouse_x - x_center) / diagonale;
             vec_y = player_->weapons[player_->current_weapon]->proj_speed * (mouse_y - y_center) / diagonale;
 
-            float angle = ((int)(nb_bullet/2)) * ((nb_bullet%2) - 1) * 3.14/18;
+            float angle = (nb_bullet%2) ? -(nb_bullet/2+1)* 3.14/36 : (nb_bullet/2)* 3.14/36;
             float vec_x2 = vec_x * cos(angle) + vec_y * sin(angle);
             float vec_y2 = -vec_x * sin(angle) + vec_y * cos(angle);
             bullet_SetSpeed(bullet, vec_x2, vec_y2);

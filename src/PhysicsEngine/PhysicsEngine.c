@@ -140,7 +140,6 @@ void list_Delete(List* list, List_element* list_element)
         {
             list->last = list_element->previous;
         }
-
         list->taille--;
         if (list_element->previous != NULL)
             list_element->previous->next = list_element->next;
@@ -544,6 +543,7 @@ void quadtree_Destroy(QuadTree* quad)
 void quadtree_Add(QuadTree* quad, void* obj_, int type)
 {
 
+    //Meme chose que dans collision_Detection
     sfIntRect rect_obj;
     if (type == OBJECT)
     {
@@ -570,9 +570,11 @@ void quadtree_Add(QuadTree* quad, void* obj_, int type)
     if (quad->bullet == NULL)
         quad->bullet = list_Create();
 
+    //Determine si l'objet est dans le rect du Quad_tree
     if ( sfIntRect_Intersects(&quad->rect, &rect_obj, NULL) )
     {
 
+        //Si les noeuds fils n'existe pas on les créé
         if (quad->noeuds[NW] == NULL)
         {
             sfIntRect rectNW = {quad->rect.Left, quad->rect.Top, (quad->rect.Right+quad->rect.Left)/2, (quad->rect.Bottom+quad->rect.Top)/2};
@@ -609,7 +611,9 @@ void quadtree_Add(QuadTree* quad, void* obj_, int type)
             quad->noeuds[SE]->first = quad->first;
         }
 
+
         int nombre_noeuds = 0;
+        //Compte dans combien de noeuds fils est contenu l'objet
         for (int i = 0; i < 4; i++)
         {
             if ( sfIntRect_Intersects(&quad->noeuds[i]->rect, &rect_obj, NULL) )
@@ -618,6 +622,7 @@ void quadtree_Add(QuadTree* quad, void* obj_, int type)
             }
         }
 
+        //Si il est contenu dans un seul noeud fils, on refait une passe à partir du noeud fils qui le contient
         if (nombre_noeuds == 1)
         {
             for (int i = 0; i < 4; i++)
@@ -625,7 +630,7 @@ void quadtree_Add(QuadTree* quad, void* obj_, int type)
         }
         else
         {
-
+            //Cast
             if (type == OBJECT)
             {
                 Object* obj = obj_;
@@ -638,7 +643,7 @@ void quadtree_Add(QuadTree* quad, void* obj_, int type)
                 list_Add(quad->player, obj, type);
                 obj->quad_node = quad;
             }
-            else
+            else if (type == BULLET)
             {
                 Bullet* obj = obj_;
                 list_Add(quad->bullet, obj, type);
@@ -658,8 +663,10 @@ void quadtree_Print(QuadTree* quad)
     }
 }
 
+//Fonction qui permet de dessiner le quad_tree
 void quadtree_Draw(sfRenderWindow* Game, QuadTree* quad)
 {
+    //Simple parcours de l'arbre recursif qui créé un rectangle determiné par le rect contenu dans un noeud
     if (quad != NULL)
     {
         sfShape* test = NULL;
@@ -678,6 +685,7 @@ void quadtree_Draw(sfRenderWindow* Game, QuadTree* quad)
     }
 }
 
+//Genere un quad_tree à partir d'une Map
 void quadtree_Generate(QuadTree* quad, Map* map)
 {
 
@@ -697,6 +705,7 @@ void quadtree_Generate(QuadTree* quad, Map* map)
     }
 }
 
+//Supprime un element du quad_tree
 void quadtree_Delete_Elt(void* obj_, int type)
 {
     if (type == OBJECT)
@@ -711,7 +720,7 @@ void quadtree_Delete_Elt(void* obj_, int type)
         list_Delete(obj->quad_node->player, obj->list_node);
         quadtree_Delete_Node(obj->quad_node);
     }
-    else
+    else if (type == BULLET)
     {
         Bullet* obj = obj_;
         list_Delete(obj->quad_node->bullet, obj->list_node);
@@ -719,75 +728,91 @@ void quadtree_Delete_Elt(void* obj_, int type)
     }
 }
 
+//Fonction qui vérifie si un noeud et ces fils sont vides
 void quadtree_Check_Node(QuadTree* quad, bool* check)
 {
 
+    //Si on a deja trouvé un noeud non vide on s'arrete
     if (*check == 0)
         return;
 
+    //Si les list de bullet/player/object ne sont pas NULL (noeuds pas/mal initialisé)
     if (quad != NULL && quad->bullet != NULL && quad->player != NULL && quad->object != NULL)
     {
+        //On regarde si les noeuds ne contiennent rien
         if (quad->object->taille == 0 && quad->player->taille == 0 && quad->bullet->taille == 0)
         {
+            //Si oui, on check les noeuds fils
             for (int i = 0; i < 4; i++)
                 quadtree_Check_Node(quad->noeuds[i], check);
         }
         else
         {
+            //Sinon on s'arrete
             *check = 0;
         }
     }
 }
 
+//Fonction qui check un noeud et le supprime si il ne contient rien
 void quadtree_Delete_Node(QuadTree* quad)
 {
 
     bool test = true;
+    //vérifie que le noeud et ces fils sont vide
     quadtree_Check_Node(quad, &test);
     if (test)
     {
+        //Supprime les noeuds fils
         for (int i = 0; i < 4; i++)
         {
             quadtree_Destroy(quad->noeuds[i]);
             quad->noeuds[i] = NULL;
         }
+        //Supprime le noeud
         quadtree_Delete_Node(quad->parent);
     }
 
 }
 
+//Met à jour un objet dans un quad_tree
 void quadtree_Update(void* obj_, int type)
 {
-
+    //Cast
     sfIntRect rect_obj;
     QuadTree* quad = NULL;
     if (type == OBJECT)
     {
         Object* obj = obj_;
-        quad = obj->quad_node;
+        quad = obj->quad_node->first;
         rect_obj = sprite_GetRect(obj->sprite);
     }
     else if (type == PLAYER)
     {
         Player* obj = obj_;
-        quad = obj->quad_node;
+        quad = obj->quad_node->first;
         rect_obj = sprite_GetRect(obj->sprite);
     }
     else
     {
         Bullet* obj = obj_;
-        quad = obj->quad_node;
+        quad = obj->quad_node->first;
         rect_obj = sprite_GetRect(obj->draw_image);
     }
 
-    if (!IntRect_Contains(&quad->rect, &rect_obj))
-    {
-        quadtree_Delete_Elt(obj_, type);
-        quadtree_Add(quad->first, obj_, type);
-    }
+    
+    /*if (!IntRect_Contains(&quad->rect, &rect_obj))    
+{*/
+        quadtree_Delete_Elt(obj_, type);        
+        quadtree_Add(quad, obj_, type);
+   // }
+
+
+
 
 }
 
+//Fonction qui determine si un rect est contenu dans un autre
 bool IntRect_Contains(sfIntRect* rect, sfIntRect* rect2)
 {
 

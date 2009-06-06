@@ -84,7 +84,7 @@ Particle_Table* particle_table_Create()
     for(int i = 0; i < particle_table->nbr_max; i++)
         particle_table->particle[i] = NULL;
 
-    particle_table->clock = sfClock_Create();
+    //particle_table->clock = sfClock_Create();
 
     return particle_table;
 
@@ -96,7 +96,7 @@ void particle_table_Destroy(Particle_Table* particle_table)
     for(int i = 0; i < particle_table->nbr_max; i++)
         particle_Destroy(particle_table->particle[i]);
 
-    sfClock_Destroy(particle_table->clock);
+    //sfClock_Destroy(particle_table->clock);
     free_secure(particle_table->particle);
     free_secure(particle_table);
 
