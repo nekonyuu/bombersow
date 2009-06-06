@@ -65,25 +65,6 @@ char* chat_ReadPacket(Map* map, sfPacket* packet)
     return text;
 }
 
-// Sert seulement à stocker map et id joueur pour envoi en thread
-ChatData* chat_CreatePlayerData(Map* map, unsigned int player_id)
-{
-    assert(map);
-
-    ChatData* data = NULL;
-    assert(data = (ChatData*) malloc(sizeof(ChatData)));
-
-    data->map = map;
-    data->player_id = player_id;
-
-    return data;
-}
-
-void chat_DestroyPlayerData(ChatData* data)
-{
-    free_secure(data);
-}
-
 ChatMessage* ChatMessage_Create()
 {
     ChatMessage* ptr = malloc(sizeof(ChatMessage));

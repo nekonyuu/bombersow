@@ -118,7 +118,7 @@ void screen_LoadText(Screen* screen, char* text, sfColor color, int font_size, s
     sfString_SetPosition(screen->texts[screen->nb_text - 1], x, y);
 }
 
-void screen_HightlightText(Screen* screen, unsigned int id, sfColor color)
+void screen_HighlightText(Screen* screen, unsigned int id, sfColor color)
 {
     for(int i = 0; i < screen->nb_text - 1; i++)
     {

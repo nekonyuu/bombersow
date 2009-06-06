@@ -49,12 +49,18 @@ void collision_Destroy(Collision* collision)
 
 }
 
+/*
+    Parcoure l'arbre dans le sens remontant vers la racine
+    et descendant vers les dernières feuilles sous le noeud de l'object envoyé
+*/
 Collision* collision_Detection_Object(void* obj_, int type)
 {
     QuadTree* node = NULL;
     QuadTree* node_obj = NULL;
+    // Rectangle représentant la zone de l'objet envoyé
     sfIntRect rect_obj;
 
+    // Cast de l'objet au bon type et création de son rectangle de zone
     if (type == OBJECT)
     {
         Object* obj = obj_;
@@ -84,26 +90,32 @@ Collision* collision_Detection_Object(void* obj_, int type)
 
     Collision* collision = collision_Create();
 
-    int nbr = 0;
-
+    // Parcours de l'arbre en remontant vers la racine pour vérifier si l'objet donné est en collision
     while (node != NULL)
     {
+        // On récupère la liste des objects de la section de l'écran représentée par le node
         list_temp = (node->object != NULL) ? node->object->first : NULL;
+        // Si la liste des objets n'est pas nulle et tant qu'on a pas parcouru toute la liste
         while (list_temp != NULL && list_temp->elt != NULL)
         {
+            // Récupération de l'objet
             object_temp = list_temp->elt;
+            // Création du rectangle
             sfIntRect rect_obj2 = sprite_GetRect(object_temp->sprite);
+            // Détection de la collision par croisement de deux rectangles
             if ( object_temp != obj_ && sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) )
             {
                 collision->type = OBJECT;
                 collision->object = object_temp;
                 return collision;
             }
-
+            // S'il n'y a pas eu de collision avec l'object courant, on passe au suivant
             list_temp = list_temp->next;
         }
 
+        // On récupère la liste des bullets de la section
         list_temp = (node->bullet != NULL) ? node->bullet->first : NULL;
+        // Même principe
         while (list_temp != NULL && list_temp->elt != NULL)
         {
             bullet_temp = list_temp->elt;
@@ -118,7 +130,7 @@ Collision* collision_Detection_Object(void* obj_, int type)
             list_temp = list_temp->next;
         }
 
-        nbr = 0;
+        // On réeffectue l'algo pour les players
         list_temp = (node->player != NULL) ? node->player->first : NULL;
         while (list_temp != NULL && list_temp->elt != NULL)
         {
@@ -132,29 +144,42 @@ Collision* collision_Detection_Object(void* obj_, int type)
             }
 
             list_temp = list_temp->next;
-            nbr++;
         }
+
+        // On passe au noeud parent
         node = node->parent;
     }
 
+    // Détection de collision sur les feuilles du noeud de l'objet envoyé
     for (int i = 0; i < 4; i++)
     {
         collision_Detection_ObjectArb(obj_, type, node_obj->noeuds[i], collision);
     }
 
-    if ( collision->type != OBJECT || collision->object != NULL )
+    // Si on a une collision on retourne la collision
+
+    if ( collision->type != OBJECT /* Inhérent à l'initialisation de collision, on ne retourne pas une collision vide */
+        || collision->object != NULL )
         return collision;
 
+    //Detruit la struct si on n'a pas de collision
     collision_Destroy(collision);
     return NULL;
 }
 
+/*
+    Parcoure l'arbre dans le sens descendant vers
+    les dernières feuilles sous le noeud de l'object envoyé seulement
+*/
 void collision_Detection_ObjectArb(void* obj_, int type, QuadTree* node, Collision* collision)
 {
+    //Détermine si on n'a pas deja trouvé une collision, si non on effectue une recherche descendante
     if ( (collision->type == OBJECT && collision->object == NULL) && node != NULL)
     {
+        // Rectangle représentant la zone de l'objet envoyé
         sfIntRect rect_obj;
 
+        // Cast de l'objet au bon type et création de son rectangle de zone
         if (type == OBJECT)
         {
             Object* obj = obj_;
@@ -178,23 +203,28 @@ void collision_Detection_ObjectArb(void* obj_, int type, QuadTree* node, Collisi
         Player* player_temp = NULL;
         Bullet* bullet_temp = NULL;
 
+        // Parcours de l'arbre en remontant vers la racine pour vérifier si l'objet donné est en collision
         list_temp = (node->object != NULL) ? node->object->first : NULL;
         while (list_temp != NULL && list_temp->elt != NULL)
         {
+            // Récupération de l'objet
             object_temp = list_temp->elt;
+            // Création du rectangle
             sfIntRect rect_obj2 = sprite_GetRect(object_temp->sprite);
+            // Détection de la collision par croisement de deux rectangles
             if ( object_temp != obj_ && sfIntRect_Intersects(&rect_obj, &rect_obj2, NULL) )
             {
                 collision->type = OBJECT;
                 collision->object = object_temp;
                 return;
             }
-
+            // S'il n'y a pas eu de collision avec l'object courant, on passe au suivant
             list_temp = list_temp->next;
         }
 
-
+        //Recupere le premier element de la liste de bullet
         list_temp = (node->bullet != NULL) ? node->bullet->first : NULL;
+        //Même principe que la boucle précédente
         while (list_temp != NULL && list_temp->elt != NULL)
         {
             bullet_temp = list_temp->elt;
@@ -209,7 +239,9 @@ void collision_Detection_ObjectArb(void* obj_, int type, QuadTree* node, Collisi
             list_temp = list_temp->next;
         }
 
+        //Recupere le premier element de la liste de Player
         list_temp = (node->player != NULL) ? node->player->first : NULL;
+        //Même principe que la boucle précédente
         while (list_temp != NULL && list_temp->elt != NULL)
         {
             player_temp = list_temp->elt;
@@ -224,6 +256,7 @@ void collision_Detection_ObjectArb(void* obj_, int type, QuadTree* node, Collisi
             list_temp = list_temp->next;
         }
 
+        //Parcours les noeuds fils pour detecter les collisions
         for (int i = 0; i < 4; i++)
             collision_Detection_ObjectArb(obj_, type, node->noeuds[i], collision);
 

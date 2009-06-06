@@ -21,6 +21,7 @@
 
 */
 
+#include <math.h>
 #include "BaseSystem/Logging.h"
 #include "PhysicsEngine/PhysicsEngine.h"
 #include "PhysicsEngine/GravitySystem.h"
@@ -63,12 +64,12 @@ void gravitysystem_BulletUpdate(Map* map_, Bullet* bullet_, Config* config)
 {
     float speed_x = bullet_->speed_x * map_->clock_time;
     float speed_y = bullet_->speed_y * map_->clock_time;
-    int traj = (int)sqrt(speed_y*speed_y + speed_x*speed_x);
-    if (bullet_->coord_x+speed_x > 0 && bullet_->coord_x+speed_x < config->width &&
-        bullet_->coord_y+speed_y > 0 && bullet_->coord_y+speed_y < config->height &&
+    int traj = (int)sqrt(speed_y * speed_y + speed_x * speed_x);
+    if (bullet_->coord_x + speed_x > 0 && bullet_->coord_x + speed_x < config->width &&
+ bullet_->coord_y + speed_y > 0 && bullet_->coord_y + speed_y < config->height &&
         bullet_->range > 0)
     {
-        bullet_SetPosition(bullet_, bullet_->coord_x+speed_x, bullet_->coord_y+speed_y);
+        bullet_SetPosition(bullet_, bullet_->coord_x + speed_x, bullet_->coord_y + speed_y);
         bullet_->range = (traj > bullet_->range) ? 0 : bullet_->range - traj;
         quadtree_Update(bullet_, BULLET);
         Collision* collision = collision_Detection_Object(bullet_, BULLET);

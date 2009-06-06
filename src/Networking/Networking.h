@@ -26,13 +26,6 @@
 
 #define DEFAULT_PORT 48535
 
-// Permet de regrouper la map et l'id du joueur pour lequel on écoute
-typedef struct CHAT_DATA
-{
-    Map* map;
-    unsigned int player_id;
-} ChatData;
-
 typedef struct CHAT_MESS
 {
     struct CHAT_MESS* prev;
@@ -87,7 +80,6 @@ void client_SendChatPacket(char* mess, Player* player);
 // ChatHandler.c
 sfPacket* chat_CreatePacket(Player* player, const char* message);
 char* chat_ReadPacket(Map* map, sfPacket* packet);
-ChatData* chat_CreatePlayerData(Map*, unsigned int);
 ChatMessage* ChatMessage_Create();
 void ChatMessage_Destroy(ChatMessage* ptr);
 void ChatMessage_DestroyFromList(ChatMessage* ptr);
