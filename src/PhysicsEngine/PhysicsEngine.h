@@ -26,6 +26,9 @@
 
 #include "Objects/GameObjects.h"
 
+void PhysicsEngine_Init();
+void PhysicsEngine_Clean();
+
 typedef enum PHYSICS_TYPE {OBJECT, PLAYER, BULLET} Physics_type;    //type d'objet
 
 typedef enum QUAD_POS {NW, NE, SW, SE} Quad_pos;  //position d'un noeuds
@@ -90,5 +93,7 @@ void quadtree_Print(QuadTree*);
 void quadtree_Draw(sfRenderWindow*, QuadTree*);
 
 bool IntRect_Contains(sfIntRect*, sfIntRect*);
+
+extern sfMutex* g_QuadTree_Access;
 
 #endif

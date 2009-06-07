@@ -26,10 +26,10 @@
 
 #include <stdbool.h>
 #include <SFML/Network.h>
-#include <BaseSystem/Config.h>
-#include <GraphicEngine/Image.h>
+#include "BaseSystem/Config.h"
+#include "GraphicEngine/Image.h"
 #include "PhysicsEngine/ParticleSystem.h"
-#include <Networking/PacketDefines.h>
+#include "Networking/PacketDefines.h"
 
 #define NB_MAX_WEAPONS 7
 #define SHOTGUN_SHRAPNELS 7
@@ -210,11 +210,17 @@ typedef struct BULLET_LIST
     unsigned int nb_bullets;
 } BulletList;
 
+#define NB_CLOCKS 3
+typedef enum { PLAYER_CLOCK, PARTICLE_CLOCK, BULLET_CLOCK } ClockType;
+
 typedef struct MAP
 {
     unsigned int mapId;             // ID de la map (transmission réseau)
     unsigned int max_players;       // Nombre maxi de joueurs
     unsigned int cpt_players_rev;   // Compteur courant pour les player_id
+
+    Config* cfg;                    // Pointeur vers la config du jeu
+
     sfSprite* background;           // Arrière-plan
 
     Image* images;                  // Images de la map
@@ -240,8 +246,9 @@ typedef struct MAP
     sfSocketUDP* game_socket;       // Socket de jeu
     unsigned short game_port;       // Port de jeu
 
-    sfClock* clock;                 // Timer d'actualisation
-    float clock_time;               // Temps clock
+    // Timers d'actualisation
+    sfClock* clocks[NB_CLOCKS];     // Clocks
+    float clocks_time[NB_CLOCKS];   // Temps clocks
 
     struct QUAD_TREE* quad_tree;    // struct QUAD_TREE pour la gestion de collisions
 
@@ -314,6 +321,7 @@ Player* map_GetPlayerFromID(Map*, unsigned int);
 unsigned int map_GetPlayerIDFromName(Map*, char*);
 void map_SetGamePort(Map*, unsigned int);
 void map_SetCptCurrPlayers(Map*, unsigned int);
+void Map_ClockTick(Map*, ClockType);
 void map_Draw(sfRenderWindow*, Map*);
 
 // PlayerControl.c

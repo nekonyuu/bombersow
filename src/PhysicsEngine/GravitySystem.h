@@ -24,14 +24,18 @@
 #ifndef GRAVITYSYSTEM_H
 #define GRAVITYSYSTEM_H
 
-#include "Objects/GameObjects.h"
-
 typedef struct VECTOR2D
 {
     float x, y;
 } Vector2D;
 
-void gravitysystem_PlayerUpdate(Map*, Player*, Config*);
-void gravitysystem_WorldUpdate(Map*, Config*);
+// Threaded
+//void gravitysystem_PlayerUpdate(void* UserData);
+//void gravitysystem_BulletUpdate(void* UserData);
+
+void gravitysystem_PlayerUpdate(Map*);
+void gravitysystem_WorldUpdate(Map*);
+void gravitysystem_BulletUpdate(Map*);
+void gravitysystem_BloodUpdate(void* UserData);
 
 #endif

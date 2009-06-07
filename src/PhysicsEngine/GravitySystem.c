@@ -23,73 +23,200 @@
 
 #include <math.h>
 #include "BaseSystem/Logging.h"
+#include "Objects/GameObjects.h"
 #include "PhysicsEngine/PhysicsEngine.h"
 #include "PhysicsEngine/GravitySystem.h"
 #include "PhysicsEngine/CollisionSystem.h"
-#include "Objects/GameObjects.h"
 #include "GraphicEngine/Draw.h"
 
-void gravitysystem_PlayerUpdate(Map* map_, Player* player, Config* config)
-{
-    float speed_y = player->speed_y + config->gravity_speed * map_->clock_time * config->gravity_coef;
-    float y = speed_y * map_->clock_time;
 
-    if(player->sprite->hauteur + player->coord_y + y <= config->height && player->coord_y + y > 0)
+void gravitysystem_PlayerUpdate(Map* map_)
+{
+    Config* config = map_->cfg;
+    Player* player = NULL;
+
+    float speed_y = 0, y = 0;
+
+    Map_ClockTick(map_, PLAYER_CLOCK);
+
+    for (int i = 0; i < map_->nb_players; i++)
     {
-        player_SetPosition(player, player->coord_x, player->coord_y + y);
-        quadtree_Update(player, PLAYER);
-        Collision* collision = collision_Detection_Object(player, PLAYER);
-        if(collision != NULL)
+        player = map_->players_list[i];
+
+        speed_y = player->speed_y + config->gravity_speed * map_->clocks_time[PLAYER_CLOCK] * config->gravity_coef;
+        y = speed_y * map_->clocks_time[PLAYER_CLOCK];
+
+        if (player->sprite->hauteur + player->coord_y + y <= config->height && player->coord_y + y > 0)
         {
-            player_SetPosition(player, player->coord_x, player->coord_y - y);
+            player_SetPosition(player, player->coord_x, player->coord_y + y);
             quadtree_Update(player, PLAYER);
-            speed_y = 0;
+            Collision* collision = collision_Detection_Object(player, PLAYER);
+            if (collision != NULL)
+            {
+                player_SetPosition(player, player->coord_x, player->coord_y - y);
+                quadtree_Update(player, PLAYER);
+                speed_y = 0;
+                player->jump = NO_JUMP;
+            }
+            collision_Destroy(collision);
+            player->speed_y = speed_y;
+        }
+        else if (player->sprite->hauteur + player->coord_y + y > config->height)
+        {
+            player_SetPosition(player, player->coord_x, config->height - player->sprite->hauteur);
+            quadtree_Update(player, PLAYER);
+            player->speed_y = 0;
             player->jump = NO_JUMP;
         }
-        collision_Destroy(collision);
-        player->speed_y = speed_y;
+        else
+            player->speed_y = speed_y;
     }
-    else if(player->sprite->hauteur + player->coord_y + y > config->height)
-    {
-        player_SetPosition(player, player->coord_x, config->height - player->sprite->hauteur);
-        quadtree_Update(player, PLAYER);
-        player->speed_y = 0;
-        player->jump = NO_JUMP;
-    }
-    else
-        player->speed_y = speed_y;
 }
 
-void gravitysystem_BulletUpdate(Map* map_, Bullet* bullet_, Config* config)
+/*
+void gravitysystem_PlayerUpdate(void* UserData)
 {
-    float speed_x = bullet_->speed_x * map_->clock_time;
-    float speed_y = bullet_->speed_y * map_->clock_time;
-    int traj = (int)sqrt(speed_y * speed_y + speed_x * speed_x);
-    if (bullet_->coord_x + speed_x > 0 && bullet_->coord_x + speed_x < config->width &&
- bullet_->coord_y + speed_y > 0 && bullet_->coord_y + speed_y < config->height &&
-        bullet_->range > 0)
+    Map* map_ = (Map*) UserData;
+    Config* config = map_->cfg;
+    Player* player = NULL;
+
+    float speed_y = 0, y = 0;
+
+    while (map_->game_started)
     {
-        bullet_SetPosition(bullet_, bullet_->coord_x + speed_x, bullet_->coord_y + speed_y);
-        bullet_->range = (traj > bullet_->range) ? 0 : bullet_->range - traj;
-        quadtree_Update(bullet_, BULLET);
-        Collision* collision = collision_Detection_Object(bullet_, BULLET);
-        if(collision != NULL)
+        Map_ClockTick(map_, PLAYER_CLOCK);
+
+        for (int i = 0; i < map_->nb_players; i++)
         {
-            if(collision->type == PLAYER)
+            player = map_->players_list[i];
+
+            speed_y = player->speed_y + config->gravity_speed * map_->clocks_time[PLAYER_CLOCK] * config->gravity_coef;
+            y = speed_y * map_->clocks_time[PLAYER_CLOCK];
+
+            if (player->sprite->hauteur + player->coord_y + y <= config->height && player->coord_y + y > 0)
             {
-                player_BulletCollision(collision->player, bullet_, map_);
+                player_SetPosition(player, player->coord_x, player->coord_y + y);
+                quadtree_Update(player, PLAYER);
+                Collision* collision = collision_Detection_Object(player, PLAYER);
+                if (collision != NULL)
+                {
+                    player_SetPosition(player, player->coord_x, player->coord_y - y);
+                    quadtree_Update(player, PLAYER);
+                    speed_y = 0;
+                    player->jump = NO_JUMP;
+                }
+                collision_Destroy(collision);
+                player->speed_y = speed_y;
             }
+            else if (player->sprite->hauteur + player->coord_y + y > config->height)
+            {
+                player_SetPosition(player, player->coord_x, config->height - player->sprite->hauteur);
+                quadtree_Update(player, PLAYER);
+                player->speed_y = 0;
+                player->jump = NO_JUMP;
+            }
+            else
+                player->speed_y = speed_y;
+        }
+    }
+}
+*/
+
+void gravitysystem_BulletUpdate(Map* map_)
+{
+    Config* config = map_->cfg;
+    Bullet* bullet_ = NULL, *bullet_next = NULL;
+
+    bullet_ = BulletList_GetHead(map_->bullets);
+    bullet_next = NULL;
+
+    Map_ClockTick(map_, BULLET_CLOCK);
+
+    while (bullet_ != NULL)
+    {
+        bullet_next = bullet_GetNext(bullet_);
+
+        float speed_x = bullet_->speed_x * map_->clocks_time[BULLET_CLOCK];
+        float speed_y = bullet_->speed_y * map_->clocks_time[BULLET_CLOCK];
+        int traj = (int) sqrt(speed_y * speed_y + speed_x * speed_x);
+        if (bullet_->coord_x + speed_x > 0 && bullet_->coord_x + speed_x < config->width &&
+                bullet_->coord_y + speed_y > 0 && bullet_->coord_y + speed_y < config->height &&
+                bullet_->range > 0)
+        {
+            bullet_SetPosition(bullet_, bullet_->coord_x + speed_x, bullet_->coord_y + speed_y);
+            bullet_->range = (traj > bullet_->range) ? 0 : bullet_->range - traj;
+            quadtree_Update(bullet_, BULLET);
+            Collision* collision = collision_Detection_Object(bullet_, BULLET);
+            if (collision != NULL)
+            {
+                if (collision->type == PLAYER)
+                {
+                    player_BulletCollision(collision->player, bullet_, map_);
+                }
+                map_DelBullet(map_, bullet_);
+            }
+            collision_Destroy(collision);
+        }
+        else
+        {
             map_DelBullet(map_, bullet_);
         }
-        collision_Destroy(collision);
-    }
-    else
-    {
-        map_DelBullet(map_, bullet_);
+
+        bullet_ = bullet_next;
     }
 }
 
-void gravitysystem_BloodUpdate(Map* map_, Particle* particle_, Config* config)
+/*
+void gravitysystem_BulletUpdate(void* UserData)
+{
+    Map* map_ = (Map*) UserData;
+    Config* config = map_->cfg;
+    Bullet* bullet_ = NULL, *bullet_next = NULL;
+
+    while (map_->game_started)
+    {
+        bullet_ = BulletList_GetHead(map_->bullets);
+        bullet_next = NULL;
+
+        Map_ClockTick(map_, BULLET_CLOCK);
+
+        while (bullet_ != NULL)
+        {
+            bullet_next = bullet_GetNext(bullet_);
+
+            float speed_x = bullet_->speed_x * map_->clocks_time[BULLET_CLOCK];
+            float speed_y = bullet_->speed_y * map_->clocks_time[BULLET_CLOCK];
+            int traj = (int) sqrt(speed_y * speed_y + speed_x * speed_x);
+            if (bullet_->coord_x + speed_x > 0 && bullet_->coord_x + speed_x < config->width &&
+                    bullet_->coord_y + speed_y > 0 && bullet_->coord_y + speed_y < config->height &&
+                    bullet_->range > 0)
+            {
+                bullet_SetPosition(bullet_, bullet_->coord_x + speed_x, bullet_->coord_y + speed_y);
+                bullet_->range = (traj > bullet_->range) ? 0 : bullet_->range - traj;
+                quadtree_Update(bullet_, BULLET);
+                Collision* collision = collision_Detection_Object(bullet_, BULLET);
+                if (collision != NULL)
+                {
+                    if (collision->type == PLAYER)
+                    {
+                        player_BulletCollision(collision->player, bullet_, map_);
+                    }
+                    map_DelBullet(map_, bullet_);
+                }
+                collision_Destroy(collision);
+            }
+            else
+            {
+                map_DelBullet(map_, bullet_);
+            }
+
+            bullet_ = bullet_next;
+        }
+    }
+}
+*/
+
+/*void gravitysystem_BloodUpdate(Map* map_, Particle* particle_, Config* config)
 {
     float speed_y = particle_->speed_y + config->gravity_speed * map_->clock_time * config->gravity_coef;
     float y = speed_y * map_->clock_time;
@@ -97,50 +224,64 @@ void gravitysystem_BloodUpdate(Map* map_, Particle* particle_, Config* config)
     float largeur;
     float hauteur;
     sfShape_GetPointPosition(particle_->shape, 2, &largeur, &hauteur);
-    if(sfShape_GetY(particle_->shape)+hauteur+y <= config->height && sfShape_GetY(particle_->shape)+ y > 0)
+    if (sfShape_GetY(particle_->shape) + hauteur + y <= config->height && sfShape_GetY(particle_->shape)+ y > 0)
     {
         particle_SetPosition(particle_, sfShape_GetX(particle_->shape), sfShape_GetY(particle_->shape) + y);
         particle_->speed_y = speed_y;
     }
-    else if(sfShape_GetY(particle_->shape)+hauteur+y > config->height)
+    else if (sfShape_GetY(particle_->shape)+hauteur+y > config->height)
     {
         particle_->speed_y = 0;
     }
     else
         particle_->speed_y = 0;
+}*/
+
+void gravitysystem_BloodUpdate(void* UserData)
+{
+    Map* map_ = (Map*) UserData;
+    Particle* particle_ = NULL;
+    Config* config = map_->cfg;
+    float speed_y = 0, y = 0, largeur = 0, hauteur = 0;
+
+    while (map_->game_started)
+    {
+        Map_ClockTick(map_, PARTICLE_CLOCK);
+        for (int i = 0; i < map_->particle_table->nbr_particle; i++)
+        {
+            particle_ = map_->particle_table->particle[i];
+            speed_y = particle_->speed_y + config->gravity_speed * map_->clocks_time[PARTICLE_CLOCK] * config->gravity_coef;
+            y = speed_y * map_->clocks_time[PARTICLE_CLOCK];
+
+            sfShape_GetPointPosition(particle_->shape, 2, &largeur, &hauteur);
+
+            if (sfShape_GetY(particle_->shape) + hauteur + y <= config->height && sfShape_GetY(particle_->shape) + y > 0)
+            {
+                particle_SetPosition(particle_, sfShape_GetX(particle_->shape), sfShape_GetY(particle_->shape) + y);
+                particle_->speed_y = speed_y;
+            }
+            else if (sfShape_GetY(particle_->shape)+hauteur+y > config->height)
+                particle_->speed_y = 0;
+            else
+                particle_->speed_y = 0;
+        }
+        sfSleep(0.001f);
+    }
 }
 
-void gravitysystem_WorldUpdate(Map* map_, Config* config)
+void gravitysystem_WorldUpdate(Map* map_)
 {
-    map_->clock_time = (sfClock_GetTime(map_->clock) > 0) ? sfClock_GetTime(map_->clock) : 0;
+    // Mise à jour Players
+    gravitysystem_PlayerUpdate(map_);
 
-    for (int i = 0; i < map_->nb_players; i++)
-    {
-        gravitysystem_PlayerUpdate(map_,map_->players_list[i], config);
-    }
+    // Mise à jour Bullets
+    gravitysystem_BulletUpdate(map_);
 
-    Bullet* ptr = BulletList_GetHead(map_->bullets);
-    Bullet* ptr2 = NULL;
-
-    while (ptr != NULL)
-    {
-        ptr2 = bullet_GetNext(ptr);
-        gravitysystem_BulletUpdate(map_, ptr, config);
-        ptr = ptr2;
-    }
-
-
-    /*for (Bullet* ptr = BulletList_GetHead(map_->bullets); ptr != NULL; ptr = bullet_GetNext(ptr))
-    {
-        printf("%p %p\n", ptr, ptr->quad_node->first);
-        printf("bb%p %p %pbb\n", ptr->prev, ptr->next, ptr->next->prev);
-        gravitysystem_BulletUpdate(map_, ptr, config);
-    }*/
-
-    for(int i = 0; i < map_->particle_table->nbr_particle; i++)
+    /*
+    // Mise à jour Particle
+    for (int i = 0; i < map_->particle_table->nbr_particle; i++)
     {
         gravitysystem_BloodUpdate(map_, map_->particle_table->particle[i], config);
     }
-
-    sfClock_Reset(map_->clock);
+    */
 }

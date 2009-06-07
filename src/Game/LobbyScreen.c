@@ -78,19 +78,17 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
         server_thread = sfThread_Create(&server_Main, map);
         client_thread = sfThread_Create(&client_Main, client_data);
         sfThread_Launch(server_thread);
-        sfSleep(0.5f);
+        sfSleep(0.01f);
         sfThread_Launch(client_thread);
-        sfSleep(0.5f);
+        sfSleep(0.01f);
     }
     else if (link_type == CLIENT)       // Sinon si mode Client
     {
         client_data = clientdata_Create(player_name, ip, port, config, 14);
         client_thread = sfThread_Create(&client_Main, client_data);
         sfThread_Launch(client_thread);
-        sfSleep(0.5f);
+        sfSleep(0.01f);
     }
-
-    sfMutex_Lock(server_creation);
 
     while(!client_connected)
         sfSleep(0.05f);

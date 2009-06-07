@@ -27,6 +27,18 @@
 #include "PhysicsEngine/PhysicsEngine.h"
 #include "Objects/GameObjects.h"
 
+sfMutex* g_QuadTree_Access;
+
+void PhysicsEngine_Init()
+{
+    g_QuadTree_Access = sfMutex_Create();
+}
+
+void PhysicsEngine_Clean()
+{
+    sfMutex_Destroy(g_QuadTree_Access);
+}
+
 List_element* list_element_Create()
 {
 
@@ -561,6 +573,8 @@ void quadtree_Add(QuadTree* quad, void* obj_, int type)
         rect_obj = sprite_GetRect(obj->draw_image);
     }
 
+    sfMutex_Lock(g_QuadTree_Access);
+
     if (quad->object == NULL)
         quad->object = list_Create();
 
@@ -623,7 +637,7 @@ void quadtree_Add(QuadTree* quad, void* obj_, int type)
         }
 
         //Si il est contenu dans un seul noeud fils, on refait une passe à partir du noeud fils qui le contient
-        if (nombre_noeuds == 1)
+        if (nombre_noeuds == 1 && quad->rect.Right - quad->rect.Left > 100)
         {
             for (int i = 0; i < 4; i++)
                 quadtree_Add(quad->noeuds[i], obj_, type);
@@ -651,6 +665,8 @@ void quadtree_Add(QuadTree* quad, void* obj_, int type)
             }
         }
     }
+
+    sfMutex_Unlock(g_QuadTree_Access);
 }
 
 void quadtree_Print(QuadTree* quad)
@@ -708,6 +724,8 @@ void quadtree_Generate(QuadTree* quad, Map* map)
 //Supprime un element du quad_tree
 void quadtree_Delete_Elt(void* obj_, int type)
 {
+    sfMutex_Lock(g_QuadTree_Access);
+
     if (type == OBJECT)
     {
         Object* obj = obj_;
@@ -726,6 +744,8 @@ void quadtree_Delete_Elt(void* obj_, int type)
         list_Delete(obj->quad_node->bullet, obj->list_node);
         quadtree_Delete_Node(obj->quad_node);
     }
+
+    sfMutex_Unlock(g_QuadTree_Access);
 }
 
 //Fonction qui vérifie si un noeud et ces fils sont vides
@@ -754,33 +774,36 @@ void quadtree_Check_Node(QuadTree* quad, bool* check)
     }
 }
 
-//Fonction qui check un noeud et le supprime si il ne contient rien
+//Fonction qui check un noeud et le supprime s'il ne contient rien
 void quadtree_Delete_Node(QuadTree* quad)
 {
-
     bool test = true;
-    //vérifie que le noeud et ces fils sont vide
+
+    // Vérifie que le noeud et ses fils sont vides
     quadtree_Check_Node(quad, &test);
     if (test)
     {
-        //Supprime les noeuds fils
+        // Supprime les noeuds fils
         for (int i = 0; i < 4; i++)
         {
             quadtree_Destroy(quad->noeuds[i]);
             quad->noeuds[i] = NULL;
         }
-        //Supprime le noeud
+
+        // Supprime le noeud
         quadtree_Delete_Node(quad->parent);
     }
-
 }
 
 //Met à jour un objet dans un quad_tree
 void quadtree_Update(void* obj_, int type)
 {
-    //Cast
+    // Cast de obj_
     sfIntRect rect_obj;
     QuadTree* quad = NULL;
+
+    sfMutex_Lock(g_QuadTree_Access);
+
     if (type == OBJECT)
     {
         Object* obj = obj_;
@@ -800,16 +823,14 @@ void quadtree_Update(void* obj_, int type)
         rect_obj = sprite_GetRect(obj->draw_image);
     }
 
-    
-    /*if (!IntRect_Contains(&quad->rect, &rect_obj))    
+
+    /*if (!IntRect_Contains(&quad->rect, &rect_obj))
 {*/
-        quadtree_Delete_Elt(obj_, type);        
+        quadtree_Delete_Elt(obj_, type);
         quadtree_Add(quad, obj_, type);
    // }
 
-
-
-
+    sfMutex_Unlock(g_QuadTree_Access);
 }
 
 //Fonction qui determine si un rect est contenu dans un autre

@@ -132,7 +132,7 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
     Current_Screen = Screens_List[MAIN_MENU_SCR];
 
 #ifndef DEBUG_MODE
-    screen_PlayMusic(Screens_List[0]);                          // Lecture
+    //screen_PlayMusic(Screens_List[0]);                          // Lecture
 #endif
 
     logging_Info("game_MainMenu", "Started without error");

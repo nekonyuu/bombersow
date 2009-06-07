@@ -173,7 +173,7 @@ Collision* collision_Detection_Object(void* obj_, int type)
 */
 void collision_Detection_ObjectArb(void* obj_, int type, QuadTree* node, Collision* collision)
 {
-    //Détermine si on n'a pas deja trouvé une collision, si non on effectue une recherche descendante
+    // Détermine si on n'a pas deja trouvé une collision, si non on effectue une recherche descendante
     if ( (collision->type == OBJECT && collision->object == NULL) && node != NULL)
     {
         // Rectangle représentant la zone de l'objet envoyé
@@ -195,7 +195,6 @@ void collision_Detection_ObjectArb(void* obj_, int type, QuadTree* node, Collisi
             Bullet* obj = obj_;
             rect_obj = sprite_GetRect(obj->draw_image);
         }
-
 
         List_element* list_temp = NULL;
 
@@ -222,9 +221,9 @@ void collision_Detection_ObjectArb(void* obj_, int type, QuadTree* node, Collisi
             list_temp = list_temp->next;
         }
 
-        //Recupere le premier element de la liste de bullet
+        // Récupere le premier element de la liste de Bullet
         list_temp = (node->bullet != NULL) ? node->bullet->first : NULL;
-        //Même principe que la boucle précédente
+        // Même principe que la boucle précédente
         while (list_temp != NULL && list_temp->elt != NULL)
         {
             bullet_temp = list_temp->elt;
@@ -239,9 +238,9 @@ void collision_Detection_ObjectArb(void* obj_, int type, QuadTree* node, Collisi
             list_temp = list_temp->next;
         }
 
-        //Recupere le premier element de la liste de Player
+        // Récupere le premier element de la liste de Player
         list_temp = (node->player != NULL) ? node->player->first : NULL;
-        //Même principe que la boucle précédente
+        // Même principe que la boucle précédente
         while (list_temp != NULL && list_temp->elt != NULL)
         {
             player_temp = list_temp->elt;
@@ -256,7 +255,7 @@ void collision_Detection_ObjectArb(void* obj_, int type, QuadTree* node, Collisi
             list_temp = list_temp->next;
         }
 
-        //Parcours les noeuds fils pour detecter les collisions
+        // Parcours les noeuds fils pour detecter les collisions
         for (int i = 0; i < 4; i++)
             collision_Detection_ObjectArb(obj_, type, node->noeuds[i], collision);
 

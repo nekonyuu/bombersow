@@ -76,12 +76,26 @@ bool display_Playing(sfRenderWindow* Game, Config* config)
         map_AddObject(map, obj_temp);
     }
 
+    // Préparation des threads
+    sfThread* phys_BloodUpdate = sfThread_Create(&gravitysystem_BloodUpdate, map);
+    //sfThread* phys_PlayersUpdate = sfThread_Create(&gravitysystem_PlayerUpdate, map);
+    //sfThread* phys_BulletsUpdate = sfThread_Create(&gravitysystem_BulletUpdate, map);
+
+    map->game_started = true;
+
+    // Démarrage
+    sfThread_Launch(phys_BloodUpdate);
+    //sfThread_Launch(phys_PlayersUpdate);
+    //sfThread_Launch(phys_BulletsUpdate);
+
     do
     {
         sfRenderWindow_Clear(Game, sfBlack);                    // Vidage de l'écran
 
-        gravitysystem_WorldUpdate(map, config);
-        map_Draw(Game, map);
+        gravitysystem_WorldUpdate(map);
+
+        map_Draw(Game, map);                                    // Dessin de la map
+
         //quadtree_Draw(Game, map->quadtree);
 
         if(config->show_fps)
@@ -92,6 +106,16 @@ bool display_Playing(sfRenderWindow* Game, Config* config)
         control_PlayerControl(Game, map, map->players_list[0], config, &ingame);
     }
     while (ingame);
+
+    map->game_started = false;
+
+    sfThread_Wait(phys_BloodUpdate);
+    //sfThread_Wait(phys_BulletsUpdate);
+    //sfThread_Wait(phys_PlayersUpdate);
+
+    sfThread_Destroy(phys_BloodUpdate);
+    //sfThread_Destroy(phys_BulletsUpdate);
+    //sfThread_Destroy(phys_PlayersUpdate);
 
     map_Destroy(map);
 

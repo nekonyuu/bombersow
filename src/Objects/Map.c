@@ -40,6 +40,9 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
     new_map->mapId = map_id;
     new_map->max_players = nb_players;
     new_map->cpt_players_rev = 0;
+
+    new_map->cfg = config;
+
     new_map->background = NULL;
 
     new_map->images = NULL;
@@ -73,7 +76,11 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
     new_map->game_socket = sfSocketUDP_Create();
     new_map->game_port = 0;
 
-    new_map->clock = sfClock_Create();
+    for (int i = 0; i < NB_CLOCKS; i++)
+    {
+        new_map->clocks[i] = sfClock_Create();
+        new_map->clocks_time[i] = 0;
+    }
 
     new_map->quad_tree = quadtree_Create();
     new_map->quad_tree->rect.Left = 0;
@@ -82,6 +89,8 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
     new_map->quad_tree->rect.Right = config->width;
 
     new_map->quad_tree->first = new_map->quad_tree;
+
+    PhysicsEngine_Init();
 
     logging_Info("map_Create", "Map created !");
 
@@ -132,11 +141,14 @@ void map_Destroy(Map* map2destroy)
 
         sfSelectorTCP_Destroy(map2destroy->tcp_selector);
 
-        logging_Info("map_Destroy", "Destroy clock...");
-        sfClock_Destroy(map2destroy->clock);
+        logging_Info("map_Destroy", "Destroy clocks...");
+        for(int i = 0; i < NB_CLOCKS; i++)
+            sfClock_Destroy(map2destroy->clocks[i]);
 
         logging_Info("map_Destroy", "Destroy quad tree...");
         quadtree_Destroy(map2destroy->quad_tree);
+
+        PhysicsEngine_Clean();
 
         free_secure(map2destroy);
         logging_Info("map_Destroy", "Map destroyed !");
@@ -306,6 +318,14 @@ void map_SetGamePort(Map* map, unsigned int port)
 void map_SetCptCurrPlayers(Map* map, unsigned int cpt)
 {
     map->cpt_players_rev = cpt;
+}
+
+void Map_ClockTick(Map* map_, ClockType type)
+{
+    float time = 0;
+
+    map_->clocks_time[type] = ((time = sfClock_GetTime(map_->clocks[type])) > 0) ? time : 0;
+    sfClock_Reset(map_->clocks[type]);
 }
 
 // Dessin de la map

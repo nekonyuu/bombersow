@@ -114,7 +114,7 @@ void player_Destroy(Player* player2destroy)
 // Déplacement du personnage sur la map sur x et y, y seulement pour le jetpack
 void player_Displace(Player* player_, Direction move, float time, Config* config)
 {
-    float temp_x, temp_y, old_x = player_->coord_x, old_y = player_->coord_y, final_x, final_y;
+    float temp_x = 0, temp_y = 0, old_x = player_->coord_x, old_y = player_->coord_y, final_x = 0, final_y = 0;
 
     if (!player_->jetpack_mode)
     {

@@ -78,7 +78,7 @@ Particle_Table* particle_table_Create()
 
     particle_table->nbr_particle = 0;
     particle_table->indice_courant = 0;
-    particle_table->nbr_max = 1000;
+    particle_table->nbr_max = 2500;
 
     particle_table->particle = (Particle**) malloc(particle_table->nbr_max * sizeof(Particle*));
     for(int i = 0; i < particle_table->nbr_max; i++)
@@ -104,13 +104,12 @@ void particle_table_Destroy(Particle_Table* particle_table)
 
 void particle_table_AddParticle(Particle_Table* particle_table, Particle* particle)
 {
-
     particle_Destroy(particle_table->particle[particle_table->indice_courant]);
     particle_table->particle[particle_table->indice_courant] = particle;
-    if(particle_table->nbr_particle+1 < particle_table->nbr_max)
+    if(particle_table->nbr_particle + 1 < particle_table->nbr_max)
         particle_table->nbr_particle++;
     particle_table->indice_courant++;
-    if(particle_table->indice_courant > particle_table->nbr_max)
+    if(particle_table->indice_courant >= particle_table->nbr_max)
         particle_table->indice_courant = 0;
 }
 
