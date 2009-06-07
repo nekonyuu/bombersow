@@ -228,33 +228,21 @@ void sprite_Destroy(Sprite* sprite)
 
 void sprite_SetPosition(Sprite* sprite, int x, int y)
 {
-
     sprite->x = x;
     sprite->y = y;
 
-    if (sprite->type)
-    {
+    if (sprite->type == ANIMATION)
         animation_SetPosition(sprite->animation, x , y);
-    }
     else
-    {
-        sfSprite_SetPosition(sprite->sprite, (float)x, (float)y);
-    }
-
+        sfSprite_SetPosition(sprite->sprite, (float) x, (float) y);
 }
 
 void sprite_Draw(sfRenderWindow* Game, Sprite* sprite)
 {
-
     if (sprite->type)
-    {
         animation_Draw(sprite->animation, Game);
-    }
     else
-    {
         sfRenderWindow_DrawSprite(Game, sprite->sprite);
-    }
-
 }
 
 void sprite_SetColor(Sprite* sprite, sfColor color)
