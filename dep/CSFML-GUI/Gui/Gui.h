@@ -27,13 +27,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "SFML/Graphics.h"
 
 // Type de Widget
 typedef enum WIDGET_TYPE {BOUTON, TEXTBOX} Widget_Type;
 
 // Type de textbox
-typedef enum WIDGET_TEXTBOX_TYPE {INT, CHAR, STRING, FLOAT} Widget_textbox_type;
+typedef enum WIDGET_TEXTBOX_TYPE {INT_TYPE, CHAR_TYPE, STRING_TYPE, FLOAT_TYPE} Widget_textbox_type;
 
 
 // Cadre et background des Widget
@@ -80,7 +79,7 @@ typedef struct WIDGET_TEXTBOX
 
     Widget_textbox_var *var;        // Variable associé
     char *text_char;                // Utile ? Présent dans Widget_textbox_var
-    int taille;
+    unsigned int taille;
     sfString *text;                 // Texte de la textbox (Utile ? Oui string brut pas convertit)
 
     sfString *alt;                  // Annotation de la textbox
@@ -175,7 +174,7 @@ void gui_Destroy(Gui*);
 
 void gui_Load_Textbox(Gui*, Widget_textbox**, int);
 void gui_Add_Textbox(Gui*, Widget_textbox*);
-bool gui_Exist_Textbox(Gui*, unsigned int);
+bool gui_Exist_Textbox(Gui*, int);
 
 void gui_Load_Bouton(Gui*, Widget_bouton**, int);
 void gui_Add_Bouton(Gui*, Widget_bouton*);

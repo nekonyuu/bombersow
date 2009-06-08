@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2008 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2009 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -30,13 +30,7 @@
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.h>
 #include <SFML/Audio/SoundStatus.h>
-
-
-////////////////////////////////////////////////////////////
-/// sfMusic defines a big sound played using streaming,
-/// so usually what we call a music :)
-////////////////////////////////////////////////////////////
-typedef struct sfMusic sfMusic;
+#include <SFML/Audio/Types.h>
 
 
 ////////////////////////////////////////////////////////////
@@ -191,6 +185,17 @@ CSFML_API void sfMusic_SetVolume(sfMusic* Music, float Volume);
 CSFML_API void sfMusic_SetPosition(sfMusic* Music, float X, float Y, float Z);
 
 ////////////////////////////////////////////////////////////
+/// Make the music's position relative to the listener's
+/// position, or absolute.
+/// The default value is false (absolute)
+///
+/// \param Music :    Music to modify
+/// \param Relative : True to set the position relative, false to set it absolute
+///
+////////////////////////////////////////////////////////////
+CSFML_API void sfMusic_SetRelativeToListener(sfMusic* Music, sfBool Relative);
+
+////////////////////////////////////////////////////////////
 /// Set the minimum distance - closer than this distance,
 /// the listener will hear the music at its maximum volume.
 /// The default minimum distance is 1.0
@@ -242,6 +247,17 @@ CSFML_API float sfMusic_GetVolume(sfMusic* Music);
 ///
 ////////////////////////////////////////////////////////////
 CSFML_API void sfMusic_GetPosition(sfMusic* Music, float* X, float* Y, float* Z);
+
+////////////////////////////////////////////////////////////
+/// Tell if the music's position is relative to the listener's
+/// position, or if it's absolute
+///
+/// \param Music : Music to check
+///
+/// \return sfTrue if the position is relative, sfFalse if it's absolute
+///
+////////////////////////////////////////////////////////////
+CSFML_API sfBool sfMusic_IsRelativeToListener(sfMusic* Music);
 
 ////////////////////////////////////////////////////////////
 /// Get the minimum distance of a music

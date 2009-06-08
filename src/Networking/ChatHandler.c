@@ -145,7 +145,7 @@ ChatMessagesList* ChatMessagesList_Create(unsigned int max_mess)
 void ChatMessagesList_AddMessage(ChatMessagesList* ptr, char* mess)
 {
     if(!ptr)
-        logging_Error("chatmessages_AddMessage", "ChatMessagesList object sent NULL", NULL_PTR);
+        logging_Error("chatmessages_AddMessage", "ChatMessagesList object sent NULL", NULL_PTR_ERROR);
 
     ChatMessage* ptr2 = ChatMessage_Create();
     ChatMessage_SetText(ptr2, mess, 20);
@@ -193,7 +193,7 @@ void ChatMessagesList_UpdateCoords(ChatMessagesList* ptr)
 void ChatMessagesList_Destroy(ChatMessagesList* ptr)
 {
     if (!ptr)
-        logging_Error("ChatMessagesList_Destroy", "ChatMessageList sent NULL", NULL_PTR);
+        logging_Error("ChatMessagesList_Destroy", "ChatMessageList sent NULL", NULL_PTR_ERROR);
 
     ChatMessage* head = ptr->head, *temp_ptr = NULL;
     while(head != NULL)

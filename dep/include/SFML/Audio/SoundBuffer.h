@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2008 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2009 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -29,13 +29,7 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.h>
-
-
-////////////////////////////////////////////////////////////
-/// sfSoundBuffer is the low-level for loading and manipulating
-/// sound buffers
-////////////////////////////////////////////////////////////
-typedef struct sfSoundBuffer sfSoundBuffer;
+#include <SFML/Audio/Types.h>
 
 
 ////////////////////////////////////////////////////////////

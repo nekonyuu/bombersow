@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2008 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2009 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -29,15 +29,8 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.h>
-#include <SFML/Audio/SoundBuffer.h>
 #include <SFML/Audio/SoundStatus.h>
-
-
-////////////////////////////////////////////////////////////
-/// sfSound defines the properties of the sound such as position,
-/// volume, pitch, etc.
-////////////////////////////////////////////////////////////
-typedef struct sfSound sfSound;
+#include <SFML/Audio/Types.h>
 
 
 ////////////////////////////////////////////////////////////
@@ -158,6 +151,17 @@ CSFML_API void sfSound_SetVolume(sfSound* Sound, float Volume);
 CSFML_API void sfSound_SetPosition(sfSound* Sound, float X, float Y, float Z);
 
 ////////////////////////////////////////////////////////////
+/// Make the sound's position relative to the listener's
+/// position, or absolute.
+/// The default value is false (absolute)
+///
+/// \param Sound :    Sound to modify
+/// \param Relative : True to set the position relative, false to set it absolute
+///
+////////////////////////////////////////////////////////////
+CSFML_API void sfSound_SetRelativeToListener(sfSound* Sound, sfBool Relative);
+
+////////////////////////////////////////////////////////////
 /// Set the minimum distance - closer than this distance,
 /// the listener will hear the sound at its maximum volume.
 /// The default minimum distance is 1.0
@@ -218,6 +222,17 @@ CSFML_API float sfSound_GetVolume(sfSound* Sound);
 ///
 ////////////////////////////////////////////////////////////
 CSFML_API void sfSound_GetPosition(sfSound* Sound, float* X, float* Y, float* Z);
+
+////////////////////////////////////////////////////////////
+/// Tell if the sound's position is relative to the listener's
+/// position, or if it's absolute
+///
+/// \param Sound : Sound to check
+///
+/// \return sfTrue if the position is relative, sfFalse if it's absolute
+///
+////////////////////////////////////////////////////////////
+CSFML_API sfBool sfSound_IsRelativeToListener(sfSound* Sound);
 
 ////////////////////////////////////////////////////////////
 /// Get the minimum distance of a sound

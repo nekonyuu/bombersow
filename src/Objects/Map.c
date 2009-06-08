@@ -57,7 +57,7 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
     if (nb_players > 0)
     {
         new_map->players_list = (Player**) malloc(nb_players * sizeof(Player*));
-        for (int i = 0; i < nb_players; i++)
+        for (unsigned int i = 0; i < nb_players; i++)
             new_map->players_list[i] = NULL;
     }
     else // Ce cas ne doit pas arriver en pratique, implémenté pour tests
@@ -90,8 +90,6 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
 
     new_map->quad_tree->first = new_map->quad_tree;
 
-    PhysicsEngine_Init();
-
     logging_Info("map_Create", "Map created !");
 
     return new_map;
@@ -109,19 +107,19 @@ void map_Destroy(Map* map2destroy)
         sfSprite_Destroy(map2destroy->background);
 
         logging_Info("map_Destroy", "Destroy animations...");
-        for (int i = 0; i < map2destroy->nb_anim; i++)
+        for (unsigned int i = 0; i < map2destroy->nb_anim; i++)
             animation_Destroy(map2destroy->animations[i]);
 
         logging_Info("map_Destroy", "Destroy images...");
         image_Destroy(map2destroy->images);
 
         logging_Info("map_Destroy", "Destroy objects...");
-        for (int i = 0; i < map2destroy->nb_objects; i++)
+        for (unsigned int i = 0; i < map2destroy->nb_objects; i++)
             object_Destroy(map2destroy->objects_list[i]);
         free_secure(map2destroy->objects_list);
 
         logging_Info("map_Destroy", "Destroy players...");
-        for (int i = 0; i < map2destroy->nb_players; i++)
+        for (unsigned int i = 0; i < map2destroy->nb_players; i++)
             player_Destroy(map2destroy->players_list[i]);
         free_secure(map2destroy->players_list);
 
@@ -132,7 +130,7 @@ void map_Destroy(Map* map2destroy)
 
         logging_Info("map_Destroy", "Destroy pending packets...");
         if (map2destroy->gamepackets2send)
-            for (int i = 0; i < map2destroy->gamepackets2send->nb_packets; i++)
+            for (unsigned int i = 0; i < map2destroy->gamepackets2send->nb_packets; i++)
                 packet_Destroy(map2destroy->gamepackets2send->packets[i]);
 
         logging_Info("map_Destroy", "Destroy network sockets...");
@@ -148,8 +146,6 @@ void map_Destroy(Map* map2destroy)
         logging_Info("map_Destroy", "Destroy quad tree...");
         quadtree_Destroy(map2destroy->quad_tree);
 
-        PhysicsEngine_Clean();
-
         free_secure(map2destroy);
         logging_Info("map_Destroy", "Map destroyed !");
     }
@@ -163,7 +159,7 @@ void map_AddObject(Map* map_, Object* object_)
         map_->objects_list = (Object**) realloc(map_->objects_list, ++map_->nb_objects * sizeof(Object*));
 
     if (!map_->objects_list && !map_->objects_list[map_->nb_objects - 1])
-        logging_Error("map_AddObject", "Memory allocation error", LOW_MEMORY);
+        logging_Error("map_AddObject", "Memory allocation error", LOW_MEMORY_ERROR);
 
     map_->objects_list[map_->nb_objects - 1] = object_;
 
@@ -180,7 +176,7 @@ void map_DelObject(Map* map_, unsigned int object_id)
 
     object_Destroy(map_->objects_list[object_id]);
 
-    for (int i = object_id; i < map_->nb_objects - 1; i++)
+    for ( unsigned int i = object_id; i < map_->nb_objects - 1; i++)
         map_->objects_list[i] = map_->objects_list[i + 1];
 
     quadtree_Delete_Elt(map_->objects_list[object_id], OBJECT);
@@ -225,7 +221,7 @@ void map_DelPlayer(Map* map_, unsigned int player_id)
     player_Destroy(ptr);
 
     logging_Info("map_DelPlayer", "Fill vacant case...");
-    for (int i = player_id; i < map_->nb_players - 1; i++)
+    for (unsigned int i = player_id; i < map_->nb_players - 1; i++)
         map_->players_list[i] = map_->players_list[i + 1];
 
     map_->players_list[map_->nb_players - 1] = NULL;
@@ -269,7 +265,7 @@ void map_UpdateDisconnectedPlayers(void* UserData)
 
     while (map->chat_started)
     {
-        for (int i = 0; i < map->nb_players; i++)
+        for (unsigned int i = 0; i < map->nb_players; i++)
             if (!map->players_list[i]->connected)
             {
                 logging_Info("map_UpdateDisconnectedPlayers", "Destroying flagged player...");
@@ -284,9 +280,8 @@ void map_UpdateDisconnectedPlayers(void* UserData)
 Player* map_GetPlayerFromID(Map* map, unsigned int player_id)
 {
     Player* ptr = NULL;
-    int i = 0;
 
-    for (i = 0; i < map->nb_players; i++)
+    for (unsigned int i = 0; i < map->nb_players; i++)
     {
         if (player_id == map->players_list[i]->player_id)
         {
@@ -301,7 +296,7 @@ Player* map_GetPlayerFromID(Map* map, unsigned int player_id)
 // Retourne l'id du player ayant le nom name
 unsigned int map_GetPlayerIDFromName(Map* map, char* name)
 {
-    for(int i = 0; i < map->nb_players; i++)
+    for(unsigned int i = 0; i < map->nb_players; i++)
     {
         if(!strcmp(name, map->players_list[i]->char_name))
             return map->players_list[i]->player_id;
@@ -331,17 +326,23 @@ void Map_ClockTick(Map* map_, ClockType type)
 // Dessin de la map
 void map_Draw(sfRenderWindow* Game, Map* map)
 {
-    for (int i = 0; i < map->nb_players; i++)
+    for (unsigned int i = 0; i < map->nb_players; i++)
     {
         player_Draw(Game, map->players_list[i]);
     }
 
-    for (int i = 0; i < map->nb_objects; i++)
+    for (unsigned int i = 0; i < map->nb_objects; i++)
     {
         object_Draw(Game, map->objects_list[i]);
     }
 
+    sfClock* clock = sfClock_Create();
+
     particle_table_Draw(Game, map->particle_table);
+
+    printf("%f\n", sfClock_GetTime(clock));
+
+    sfClock_Destroy(clock);
 
     bullet_DrawList(Game, BulletList_GetHead(map->bullets));
 }

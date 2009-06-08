@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2008 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2009 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -30,26 +30,12 @@
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.h>
 #include <SFML/Graphics/Color.h>
-#include <SFML/Graphics/Image.h>
-#include <SFML/Graphics/PostFX.h>
 #include <SFML/Graphics/Rect.h>
-#include <SFML/Graphics/Shape.h>
-#include <SFML/Graphics/Sprite.h>
-#include <SFML/Graphics/String.h>
-#include <SFML/Graphics/View.h>
+#include <SFML/Graphics/Types.h>
 #include <SFML/Window/Event.h>
-#include <SFML/Window/Input.h>
 #include <SFML/Window/VideoMode.h>
-#include <SFML/Window/Window.h>
 #include <SFML/Window/WindowHandle.h>
-
-
-////////////////////////////////////////////////////////////
-/// sfRenderWindow is a simple wrapper for sfWindow that
-/// allows easy 2D rendering
-////////////////////////////////////////////////////////////
-
-//typedef struct sfRenderWindow sfRenderWindow;
+#include <SFML/Window/Window.h>
 
 
 ////////////////////////////////////////////////////////////

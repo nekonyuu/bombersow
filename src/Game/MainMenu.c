@@ -21,6 +21,8 @@
 
 */
 
+#include <SFML/Graphics.h>
+
 #include "BaseSystem/Config.h"
 #include "BaseSystem/Logging.h"
 #include "Game/GameScreens.h"
@@ -41,7 +43,7 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
 
     sfEvent Event;
     bool close = false;
-    int menu_select = 0;
+    unsigned int menu_select = 0;
     int error_code = NO_ERROR;
 
     char pseudo[20] = "Player", servername[20] = "Bombersow Server", ip[15] = "127.0.0.1";
@@ -86,9 +88,9 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
     screen_LoadText(Screens_List[SERVER_SCR], "Démarrer le serveur", sfWhite, 20, sfStringRegular, 450.0f, 400.0f);
     screen_LoadText(Screens_List[SERVER_SCR], "Création du serveur", sfWhite, 35, sfStringRegular, 450.0f, 120.0f);
     screen_LoadText(Screens_List[SERVER_SCR], GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
-    screen_AddTextbox(Screens_List[SERVER_SCR], 630, 250, 175, 20, 20, textbox_bg_white, sfBlack, CHAR, servername, sfBlack, "", sfBlack, 10);
-    screen_AddTextbox(Screens_List[SERVER_SCR], 630, 300, 175, 20, 20, textbox_bg_white, sfBlack, CHAR, pseudo, sfBlack, "", sfBlack, 10);
-    screen_AddTextbox(Screens_List[SERVER_SCR], 630, 350, 75, 20, 5, textbox_bg_white, sfBlack, INT, &port, sfBlack, "", sfBlack, 10);
+    screen_AddTextbox(Screens_List[SERVER_SCR], 630, 250, 175, 20, 20, textbox_bg_white, sfBlack, CHAR_TYPE, servername, sfBlack, "", sfBlack, 10);
+    screen_AddTextbox(Screens_List[SERVER_SCR], 630, 300, 175, 20, 20, textbox_bg_white, sfBlack, CHAR_TYPE, pseudo, sfBlack, "", sfBlack, 10);
+    screen_AddTextbox(Screens_List[SERVER_SCR], 630, 350, 75, 20, 5, textbox_bg_white, sfBlack, INT_TYPE, &port, sfBlack, "", sfBlack, 10);
     screen_SetMenuInterval(Screens_List[SERVER_SCR], 0, 3);
     Screens_List[SERVER_SCR]->gui->widget_textbox[0]->active = true;
 
@@ -104,9 +106,9 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
     screen_LoadText(Screens_List[CLIENT_SCR], "Connexion", sfWhite, 20, sfStringRegular, 450.0f, 400.0f);
     screen_LoadText(Screens_List[CLIENT_SCR], "Connexion IP", sfWhite, 35, sfStringRegular, 450.0f, 120.0f);
     screen_LoadText(Screens_List[CLIENT_SCR], GAME_NAME, sfRed, 50, sfStringRegular, 450.0f, 40.0f);
-    screen_AddTextbox(Screens_List[CLIENT_SCR], 630, 250, 175, 20, 20, textbox_bg_white, sfBlack, CHAR, pseudo, sfBlack, "", sfBlack, 10);
-    screen_AddTextbox(Screens_List[CLIENT_SCR], 630, 300, 175, 20, 15, textbox_bg_white, sfBlack, CHAR, ip, sfBlack, "", sfBlack, 10);
-    screen_AddTextbox(Screens_List[CLIENT_SCR], 630, 350, 75, 20, 5, textbox_bg_white, sfBlack, INT, &port, sfBlack, "", sfBlack, 10);
+    screen_AddTextbox(Screens_List[CLIENT_SCR], 630, 250, 175, 20, 20, textbox_bg_white, sfBlack, CHAR_TYPE, pseudo, sfBlack, "", sfBlack, 10);
+    screen_AddTextbox(Screens_List[CLIENT_SCR], 630, 300, 175, 20, 15, textbox_bg_white, sfBlack, CHAR_TYPE, ip, sfBlack, "", sfBlack, 10);
+    screen_AddTextbox(Screens_List[CLIENT_SCR], 630, 350, 75, 20, 5, textbox_bg_white, sfBlack, INT_TYPE, &port, sfBlack, "", sfBlack, 10);
     screen_SetMenuInterval(Screens_List[CLIENT_SCR], 0, 3);
     Screens_List[CLIENT_SCR]->gui->widget_textbox[0]->active = true;
 
@@ -144,7 +146,7 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
         screen_Draw(Current_Screen, Game);
 
         if (config->show_fps)
-            logging_FPSShow(Game);
+            Screen_FPSShow(Game);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 

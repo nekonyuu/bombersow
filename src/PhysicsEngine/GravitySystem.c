@@ -39,7 +39,7 @@ void gravitysystem_PlayerUpdate(Map* map_)
 
     Map_ClockTick(map_, PLAYER_CLOCK);
 
-    for (int i = 0; i < map_->nb_players; i++)
+    for (unsigned int i = 0; i < map_->nb_players; i++)
     {
         player = map_->players_list[i];
 
@@ -138,7 +138,7 @@ void gravitysystem_BulletUpdate(Map* map_)
 
         float speed_x = bullet_->speed_x * map_->clocks_time[BULLET_CLOCK];
         float speed_y = bullet_->speed_y * map_->clocks_time[BULLET_CLOCK];
-        int traj = (int) sqrt(speed_y * speed_y + speed_x * speed_x);
+        unsigned int traj = (unsigned int) sqrt(speed_y * speed_y + speed_x * speed_x);
         if (bullet_->coord_x + speed_x > 0 && bullet_->coord_x + speed_x < config->width &&
                 bullet_->coord_y + speed_y > 0 && bullet_->coord_y + speed_y < config->height &&
                 bullet_->range > 0)

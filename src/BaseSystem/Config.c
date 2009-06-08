@@ -21,6 +21,7 @@
 
 */
 
+#include <SFML/Graphics.h>
 #include <BaseSystem/Logging.h>
 #include <BaseSystem/Config.h>
 

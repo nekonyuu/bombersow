@@ -22,6 +22,8 @@
 */
 
 #include <string.h>
+#include <SFML/Graphics.h>
+
 #include "BaseSystem/Logging.h"
 #include "Game/GameScreens.h"
 #include "GraphicEngine/Draw.h"
@@ -52,6 +54,8 @@ bool display_Playing(sfRenderWindow* Game, Config* config)
 
     logging_Info("display_Playing", "Create map...");
     Map* map = map_Create(0, 100, config);
+    PhysicsEngine_Init();
+
     map_AddObject(map, obj_temp);
     map_AddObject(map, obj_temp2);
 
@@ -99,7 +103,7 @@ bool display_Playing(sfRenderWindow* Game, Config* config)
         //quadtree_Draw(Game, map->quadtree);
 
         if(config->show_fps)
-            logging_FPSShow(Game);
+            Screen_FPSShow(Game);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre
 
@@ -118,6 +122,8 @@ bool display_Playing(sfRenderWindow* Game, Config* config)
     //sfThread_Destroy(phys_PlayersUpdate);
 
     map_Destroy(map);
+
+    PhysicsEngine_Clean();
 
     sfImage_Destroy(image_animation);
 

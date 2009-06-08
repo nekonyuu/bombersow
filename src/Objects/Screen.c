@@ -21,6 +21,9 @@
 
 */
 
+#include <SFML/Graphics.h>
+#include <SFML/Graphics/Font.h>
+
 #include "BaseSystem/Logging.h"
 #include "Objects/Screen.h"
 
@@ -56,15 +59,15 @@ void screen_Destroy(Screen* screen2destroy)
 {
     assert(screen2destroy);
 
-    for (int i = 0; i < screen2destroy->nb_text; i++)
+    for (unsigned int i = 0; i < screen2destroy->nb_text; i++)
         sfString_Destroy(screen2destroy->texts[i]);
     free_secure(screen2destroy->texts);
 
-    for (int i = 0; i < screen2destroy->nb_spr; i++)
+    for (unsigned int i = 0; i < screen2destroy->nb_spr; i++)
         sfSprite_Destroy(screen2destroy->sprites[i]);
     free_secure(screen2destroy->sprites);
 
-    for (int i = 0; i < screen2destroy->nb_img; i++)
+    for (unsigned int i = 0; i < screen2destroy->nb_img; i++)
         sfImage_Destroy(screen2destroy->base_images[i]);
     free_secure(screen2destroy->base_images);
 
@@ -82,7 +85,7 @@ void screen_Destroy(Screen* screen2destroy)
 void screen_LoadFont(Screen* screen, ScreenFontType type, char* path)
 {
     if (!path)
-        logging_Error("screen_LoadFont", "No path sent", NULL_PTR);
+        logging_Error("screen_LoadFont", "No path sent", NULL_PTR_ERROR);
 
     switch(type)
     {
@@ -105,7 +108,7 @@ void screen_LoadFont(Screen* screen, ScreenFontType type, char* path)
 void screen_LoadText(Screen* screen, char* text, sfColor color, int font_size, sfStringStyle style, float x, float y)
 {
     if (!screen)
-        logging_Error("screen_LoadText", "Screen object sent NULL", NULL_PTR);
+        logging_Error("screen_LoadText", "Screen object sent NULL", NULL_PTR_ERROR);
 
     assert(screen->texts = (sfString**) realloc(screen->texts, ++screen->nb_text * sizeof(sfString*)));
 
@@ -120,7 +123,7 @@ void screen_LoadText(Screen* screen, char* text, sfColor color, int font_size, s
 
 void screen_HighlightText(Screen* screen, unsigned int id, sfColor color)
 {
-    for(int i = 0; i < screen->nb_text - 1; i++)
+    for(unsigned int i = 0; i < screen->nb_text - 1; i++)
     {
         if(i == id)
             sfString_SetColor(screen->texts[i], color);
@@ -139,7 +142,7 @@ void screen_SetMenuInterval(Screen* screen, unsigned int min, unsigned int max)
 void screen_LoadMusic(Screen* screen, char* path, sfBool loop)
 {
     if (!path)
-        logging_Error("screen_LoadMusic", "No music path sent", NULL_PTR);
+        logging_Error("screen_LoadMusic", "No music path sent", NULL_PTR_ERROR);
 
     screen->music = sfMusic_CreateFromFile(path);
     sfMusic_SetLoop(screen->music, loop);
@@ -163,9 +166,9 @@ void screen_StopMusic(Screen* screen)
 void screen_LoadImage(Screen* screen, char* path)
 {
     if (!path)
-        logging_Error("screen_LoadImage", "No image path sent", NULL_PTR);
+        logging_Error("screen_LoadImage", "No image path sent", NULL_PTR_ERROR);
     if (!screen)
-        logging_Error("screen_LoadImage", "Screen object sent NULL", NULL_PTR);
+        logging_Error("screen_LoadImage", "Screen object sent NULL", NULL_PTR_ERROR);
 
     assert(screen->base_images = (sfImage**) realloc(screen->base_images, ++screen->nb_img * sizeof(sfImage*)));
 
@@ -182,10 +185,10 @@ void screen_AddTextbox(Screen* screen, int x, int y, int width, int height, int 
                        sfColor label_color, int text_size)
 {
     if(!screen)
-        logging_Error("screen_AddTextbox", "Screen object sent NULL", NULL_PTR);
+        logging_Error("screen_AddTextbox", "Screen object sent NULL", NULL_PTR_ERROR);
 
     Widget_textbox* textbox = widget_textbox_Create(x, y, width, height, length, image, border_color, type, var,
-        text_color, text, label_color, (type == INT) ? screen->alt_gui_font : screen->gui_font, text_size);
+        text_color, text, label_color, (type == INT_TYPE) ? screen->alt_gui_font : screen->gui_font, text_size);
 
     gui_Add_Textbox(screen->gui, textbox);
 }
@@ -219,16 +222,33 @@ void screen_SetInactiveTextbox(Screen* screen, int id)
 void screen_Draw(Screen* screen, sfRenderWindow* Game)
 {
     if (!screen)
-        logging_Error("screen_DrawText", "Screen object sent NULL", NULL_PTR);
+        logging_Error("screen_DrawText", "Screen object sent NULL", NULL_PTR_ERROR);
 
     // Dessin images
-    for(int i = 0; i < screen->nb_spr; i++)
+    for(unsigned int i = 0; i < screen->nb_spr; i++)
         sfRenderWindow_DrawSprite(Game, screen->sprites[i]);
 
     // Dessin textes
-    for (int i = 0; i < screen->nb_text; i++)
+    for (unsigned int i = 0; i < screen->nb_text; i++)
         sfRenderWindow_DrawString(Game, screen->texts[i]);
 
     // Dessin GUI
     gui_Draw(Game, screen->gui);
 }
+
+
+inline void Screen_FPSShow(sfRenderWindow* App)
+{
+    sfString* fps_text = sfString_Create();
+    sfString_SetSize(fps_text, 14);
+    sfString_SetPosition(fps_text, 0, 0);
+    char* tmp_fps = malloc(20 * sizeof(char));
+
+    sprintf(tmp_fps, "%d", (int) (1.0f/sfRenderWindow_GetFrameTime(App)));
+    sfString_SetText(fps_text, tmp_fps);
+    sfRenderWindow_DrawString(App, fps_text);
+
+    free_secure(tmp_fps);
+    sfString_Destroy(fps_text);
+}
+

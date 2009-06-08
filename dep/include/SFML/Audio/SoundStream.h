@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2008 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2009 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -30,15 +30,8 @@
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.h>
 #include <SFML/Audio/SoundStatus.h>
+#include <SFML/Audio/Types.h>
 
-
-////////////////////////////////////////////////////////////
-/// sfSoundStream is a streamed sound, ie samples are acquired
-/// while the sound is playing. Use it for big sound that would
-/// require hundreds of MB in memory (see sfMusic),
-/// or for streaming sound from the network
-////////////////////////////////////////////////////////////
-typedef struct sfSoundStream sfSoundStream;
 
 ////////////////////////////////////////////////////////////
 /// sfSoundStreamChunk defines the data to fill by the
@@ -165,6 +158,17 @@ CSFML_API void sfSoundStream_SetVolume(sfSoundStream* SoundStream, float Volume)
 CSFML_API void sfSoundStream_SetPosition(sfSoundStream* SoundStream, float X, float Y, float Z);
 
 ////////////////////////////////////////////////////////////
+/// Make the sound stream's position relative to the listener's
+/// position, or absolute.
+/// The default value is false (absolute)
+///
+/// \param SoundStream : Sound stream to modify
+/// \param Relative :    True to set the position relative, false to set it absolute
+///
+////////////////////////////////////////////////////////////
+CSFML_API void sfSoundStream_SetRelativeToListener(sfSoundStream* SoundStream, sfBool Relative);
+
+////////////////////////////////////////////////////////////
 /// Set the minimum distance - closer than this distance,
 /// the listener will hear the sound stream at its maximum volume.
 /// The default minimum distance is 1.0
@@ -225,6 +229,17 @@ CSFML_API float sfSoundStream_GetVolume(sfSoundStream* SoundStream);
 ///
 ////////////////////////////////////////////////////////////
 CSFML_API void sfSoundStream_GetPosition(sfSoundStream* SoundStream, float* X, float* Y, float* Z);
+
+////////////////////////////////////////////////////////////
+/// Tell if the sound stream's position is relative to the listener's
+/// position, or if it's absolute
+///
+/// \param SoundStream : Sound stream to check
+///
+/// \return sfTrue if the position is relative, sfFalse if it's absolute
+///
+////////////////////////////////////////////////////////////
+CSFML_API sfBool sfSoundStream_IsRelativeToListener(sfSoundStream* SoundStream);
 
 ////////////////////////////////////////////////////////////
 /// Get the minimum distance of a sound stream

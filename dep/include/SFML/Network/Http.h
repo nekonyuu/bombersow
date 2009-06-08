@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2008 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2009 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -29,6 +29,7 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.h>
+#include <SFML/Network/Types.h>
 
 
 ////////////////////////////////////////////////////////////
@@ -76,14 +77,6 @@ enum sfHttpStatus
     sfHttpInvalidResponse  = 1000, ///< Response is not a valid HTTP one
     sfHttpConnectionFailed = 1001  ///< Connection with server failed
 };
-
-
-////////////////////////////////////////////////////////////
-/// sfHttpRequest wraps an HTTP request, which is basically :
-/// - a header with a method, a target URI, and a set of field/value pairs
-/// - an optional body (for POST requests)
-////////////////////////////////////////////////////////////
-typedef struct sfHttpRequest sfHttpRequest;
 
 
 ////////////////////////////////////////////////////////////
@@ -154,15 +147,6 @@ CSFML_API void sfHttpRequest_SetHttpVersion(sfHttpRequest* HttpRequest, unsigned
 ////////////////////////////////////////////////////////////
 CSFML_API void sfHttpRequest_SetBody(sfHttpRequest* HttpRequest, const char* Body);
 
-
-////////////////////////////////////////////////////////////
-/// sfHttpResponse wraps an HTTP response, which is basically :
-/// - a header with a status code and a set of field/value pairs
-/// - a body (the content of the requested resource)
-////////////////////////////////////////////////////////////
-typedef struct sfHttpResponse sfHttpResponse;
-
-
 ////////////////////////////////////////////////////////////
 /// Destroy an existing Http response
 ///
@@ -226,15 +210,6 @@ CSFML_API unsigned int sfHttpResponse_GetMinorVersion(sfHttpResponse* HttpRespon
 ////////////////////////////////////////////////////////////
 CSFML_API const char* sfHttpResponse_GetBody(sfHttpResponse* HttpResponse);
 
-
-////////////////////////////////////////////////////////////
-/// sfHttp provides methods for manipulating the HTTP
-/// protocol (described in RFC 1945).
-/// It can connect to a website, get its files, send requests, etc.
-////////////////////////////////////////////////////////////
-typedef struct sfHttp sfHttp;
-
-
 ////////////////////////////////////////////////////////////
 /// Construct a new Http object
 ///
@@ -271,11 +246,12 @@ CSFML_API void sfHttp_SetHost(sfHttp* Http, const char* Host, unsigned short Por
 ///
 /// \param Http :    Http object
 /// \param Request : Request to send
+/// \param Timeout : Maximum time to wait (0 to use no timeout)
 ///
 /// \return Server's response, or NULL if request is invalid
 ///
 ////////////////////////////////////////////////////////////
-CSFML_API sfHttpResponse* sfHttp_SendRequest(sfHttp* Http, sfHttpRequest* Request);
+CSFML_API sfHttpResponse* sfHttp_SendRequest(sfHttp* Http, sfHttpRequest* Request, float Timeout);
 
 
 #endif // SFML_HTTP_H

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2008 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2009 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -31,15 +31,8 @@
 #include <SFML/Config.h>
 #include <SFML/Graphics/BlendMode.h>
 #include <SFML/Graphics/Color.h>
-#include <SFML/Graphics/Image.h>
 #include <SFML/Graphics/Rect.h>
-
-
-////////////////////////////////////////////////////////////
-/// sfSprite defines a sprite : texture, transformations,
-/// color, and draw on screen
-////////////////////////////////////////////////////////////
-typedef struct sfSprite sfSprite;
+#include <SFML/Graphics/Types.h>
 
 
 ////////////////////////////////////////////////////////////
@@ -313,7 +306,7 @@ CSFML_API void sfSprite_SetImage(sfSprite* Sprite, sfImage* Image);
 /// \param SubRect : New sub-rectangle
 ///
 ////////////////////////////////////////////////////////////
-CSFML_API void sfSprite_SetSubRect(sfSprite* Sprite, const sfIntRect* SubRect);
+CSFML_API void sfSprite_SetSubRect(sfSprite* Sprite, sfIntRect SubRect);
 
 ////////////////////////////////////////////////////////////
 /// Resize a sprite (by changing its scale factors)
@@ -361,7 +354,7 @@ CSFML_API sfImage* sfSprite_GetImage(sfSprite* Sprite);
 /// \return Sub-rectangle
 ///
 ////////////////////////////////////////////////////////////
-CSFML_API sfIntRect* sfSprite_GetSubRect(sfSprite* Sprite);
+CSFML_API sfIntRect sfSprite_GetSubRect(sfSprite* Sprite);
 
 ////////////////////////////////////////////////////////////
 /// Get a sprite width

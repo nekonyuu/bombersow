@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2008 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2009 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -29,14 +29,8 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.h>
+#include <SFML/System/Types.h>
 
-
-////////////////////////////////////////////////////////////
-/// sfMutex defines a mutex (MUTual EXclusion) object,
-/// that allows a thread to lock critical instructions
-/// to avoid simultaneous access with other threads.
-////////////////////////////////////////////////////////////
-typedef struct sfMutex sfMutex;
 
 ////////////////////////////////////////////////////////////
 /// Create a new mutex

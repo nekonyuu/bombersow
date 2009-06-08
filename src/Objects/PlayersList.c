@@ -32,7 +32,7 @@ PlayersList* playerslist_Create(Map* map, sfFont* font, sfColor color, int font_
     ptr->max_players = map->max_players;
     ptr->nb_players = 0;
 
-    for(int i = 0; i < map->max_players; i++)
+    for(unsigned int i = 0; i < map->max_players; i++)
     {
         ptr->players[i] = sfString_Create();
         sfString_SetColor(ptr->players[i], color);
@@ -52,7 +52,7 @@ PlayersList* playerslist_Create(Map* map, sfFont* font, sfColor color, int font_
 
 void playerslist_Destroy(PlayersList* ptr)
 {
-    for(int i = 0; i < ptr->max_players; i++)
+    for(unsigned int i = 0; i < ptr->max_players; i++)
         sfString_Destroy(ptr->players[i]);
 
     free_secure(ptr->players);
@@ -67,7 +67,7 @@ void playerslist_Draw(PlayersList* ptr, sfRenderWindow* App)
         return;
     }
 
-    for(int i = 0; i < ptr->nb_players; i++)
+    for(unsigned int i = 0; i < ptr->nb_players; i++)
         sfRenderWindow_DrawString(App, ptr->players[i]);
 }
 
@@ -76,6 +76,6 @@ void playerslist_Update(PlayersList* lst, Map* map)
     for(lst->nb_players = 0; lst->nb_players < map->nb_players; lst->nb_players++)
         sfString_SetText(lst->players[lst->nb_players], map->players_list[lst->nb_players]->char_name);
 
-    for(int i = lst->nb_players; i < lst->max_players; i++)
+    for(unsigned int i = lst->nb_players; i < lst->max_players; i++)
         sfString_SetText(lst->players[i], "");
 }

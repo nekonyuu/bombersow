@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2008 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2009 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -31,14 +31,7 @@
 #include <SFML/Config.h>
 #include <SFML/Graphics/BlendMode.h>
 #include <SFML/Graphics/Color.h>
-
-
-////////////////////////////////////////////////////////////
-/// sfShape defines a drawable convex Shape ; it also defines
-/// helper functions to draw simple Shapes like
-/// lines, rectangles, circles, etc.
-////////////////////////////////////////////////////////////
-typedef struct sfShape sfShape;
+#include <SFML/Graphics/Types.h>
 
 
 ////////////////////////////////////////////////////////////

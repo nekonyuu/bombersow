@@ -22,6 +22,7 @@
 */
 
 #include <SFML/Graphics.h>
+
 #include "BaseSystem/Logging.h"
 #include "Objects/GameObjects.h"
 

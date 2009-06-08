@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2008 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2009 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -30,15 +30,8 @@
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.h>
 #include <SFML/Network/IPAddress.h>
-#include <SFML/Network/Packet.h>
 #include <SFML/Network/SocketStatus.h>
-
-
-////////////////////////////////////////////////////////////
-/// sfSocketUDP wraps a socket using UDP protocol to
-/// send data fastly (but with less safety)
-////////////////////////////////////////////////////////////
-typedef struct sfSocketUDP sfSocketUDP;
+#include <SFML/Network/Types.h>
 
 
 ////////////////////////////////////////////////////////////
@@ -56,6 +49,16 @@ CSFML_API sfSocketUDP* sfSocketUDP_Create();
 ///
 ////////////////////////////////////////////////////////////
 CSFML_API void sfSocketUDP_Destroy(sfSocketUDP* Socket);
+
+////////////////////////////////////////////////////////////
+/// Change the blocking state of a UDP socket.
+/// The default behaviour of a socket is blocking
+///
+/// \param Socket :   Socket to modify
+/// \param Blocking : Pass sfTrue to set the socket as blocking, or false for non-blocking
+///
+////////////////////////////////////////////////////////////
+CSFML_API void sfSocketUDP_SetBlocking(sfSocketUDP* Socket, sfBool Blocking);
 
 ////////////////////////////////////////////////////////////
 /// Bind a socket to a specific port
@@ -102,11 +105,12 @@ CSFML_API sfSocketStatus sfSocketUDP_Send(sfSocketUDP* Socket, const char* Data,
 /// \param MaxSize :      Maximum number of bytes to read
 /// \param SizeReceived : Number of bytes received
 /// \param Address :      Address of the computer which sent the data
+/// \param Port :         Port on which the remote computer sent the data
 ///
 /// \return Socket status
 ///
 ////////////////////////////////////////////////////////////
-CSFML_API sfSocketStatus sfSocketUDP_Receive(sfSocketUDP* Socket, char* Data, size_t MaxSize, size_t* SizeReceived, sfIPAddress* Address);
+CSFML_API sfSocketStatus sfSocketUDP_Receive(sfSocketUDP* Socket, char* Data, size_t MaxSize, size_t* SizeReceived, sfIPAddress* Address, unsigned short* Port);
 
 ////////////////////////////////////////////////////////////
 /// Send a packet of data
@@ -129,11 +133,12 @@ CSFML_API sfSocketStatus sfSocketUDP_SendPacket(sfSocketUDP* Socket, sfPacket* P
 /// \param Socket :  Socket to use for receiving
 /// \param Packet :  Packet to fill with received data
 /// \param Address : Address of the computer which sent the packet
+/// \param Port :    Port on which the remote computer sent the data
 ///
 /// \return Socket status
 ///
 ////////////////////////////////////////////////////////////
-CSFML_API sfSocketStatus sfSocketUDP_ReceivePacket(sfSocketUDP* Socket, sfPacket* Packet, sfIPAddress* Address);
+CSFML_API sfSocketStatus sfSocketUDP_ReceivePacket(sfSocketUDP* Socket, sfPacket* Packet, sfIPAddress* Address, unsigned short* Port);
 
 ////////////////////////////////////////////////////////////
 /// Check if a socket is in a valid state ; this function

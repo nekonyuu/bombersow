@@ -37,7 +37,7 @@ void client_Main(void* UserData)
     sfSocketTCP* client_socket = sfSocketTCP_Create();
     unsigned int code = REFUSED;
 
-    if (!sfSocketTCP_Connect(client_socket, client_data->port, client_data->ip, 0))     // Bug CSFML 1.4, sfSocketTCP_Connect retourne sfFalse au lieu de sfTrue et vice versa
+    if (sfSocketTCP_Connect(client_socket, client_data->port, client_data->ip, 0))
     {
         sfPacket* connect_request = client_CreateConnectPacket(client_data->name), *response = sfPacket_Create();
         logging_Info("client_Main", "Sending connect resquest");
@@ -68,7 +68,7 @@ void client_Main(void* UserData)
             sfSelectorTCP_Add(client_data->map->tcp_selector, client_socket);
 
             logging_Info("client_Main", "Adding players");
-            for (int i = 0; i < curr_players; i++)
+            for (unsigned int i = 0; i < curr_players; i++)
             {
                 unsigned int code = 0;
                 sfSocketTCP_ReceivePacket(client_socket, response);
@@ -91,7 +91,7 @@ void client_Main(void* UserData)
 
                 if (nb_sck_ready > 0)
                 {
-                    for (int i = 0; i < nb_sck_ready; i++)
+                    for (unsigned int i = 0; i < nb_sck_ready; i++)
                     {
                         sfSocketTCP* new_socket = sfSelectorTCP_GetSocketReady(client_data->map->tcp_selector, i);
                         sfSocketTCP_ReceivePacket(new_socket, response);

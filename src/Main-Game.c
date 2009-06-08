@@ -21,6 +21,8 @@
 
 */
 
+#include <SFML/Graphics.h>
+
 #include "BaseSystem/Config.h"
 #include "BaseSystem/Logging.h"
 #include "Game/GameScreens.h"
@@ -72,7 +74,7 @@ int main()
 
     logging_Info("main", "Verify Window state");
     if (!Game)
-        return DISPLAY_FAIL;
+        return DISPLAY_FAIL_ERROR;
 
     // Démarrage du jeu
     armory_Create(armory);          // Remplissage de l'armurerie

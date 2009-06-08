@@ -705,12 +705,12 @@ void quadtree_Draw(sfRenderWindow* Game, QuadTree* quad)
 void quadtree_Generate(QuadTree* quad, Map* map)
 {
 
-    for (int i = 0; i < map->nb_objects; i++)
+    for (unsigned int i = 0; i < map->nb_objects; i++)
     {
         quadtree_Add(quad, map->objects_list[i], OBJECT);
     }
 
-    for (int i = 0; i < map->nb_players; i++)
+    for (unsigned int i = 0; i < map->nb_players; i++)
     {
         quadtree_Add(quad, map->players_list[i], PLAYER);
     }

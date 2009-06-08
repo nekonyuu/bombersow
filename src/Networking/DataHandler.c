@@ -52,7 +52,7 @@ void packet_Destroy(Packet* packet)
 Packet* player_CreatePacket(Player* player_)
 {
     if (!player_)
-        logging_Error("player_PacketCreate", "Player object sent NULL, can't continue networking", NULL_PTR);
+        logging_Error("player_PacketCreate", "Player object sent NULL, can't continue networking", NULL_PTR_ERROR);
 
     sfPacket* new_packet = sfPacket_Create();
 
@@ -68,7 +68,7 @@ Packet* player_CreatePacket(Player* player_)
 Packet* player_CreateStartPacket(Player* player_)
 {
     if (!player_)
-        logging_Error("player_PacketCreate", "Player object sent NULL, can't continue networking", NULL_PTR);
+        logging_Error("player_PacketCreate", "Player object sent NULL, can't continue networking", NULL_PTR_ERROR);
 
     sfPacket* new_packet = sfPacket_Create();
 
@@ -85,7 +85,7 @@ Packet* player_CreateStartPacket(Player* player_)
 Player* player_CreateFromPacket(Map* map, sfPacket* packet)
 {
     if(!packet)
-        logging_Error("player_CreateFromPacket", "sfPacket sent NULL", NULL_PTR);
+        logging_Error("player_CreateFromPacket", "sfPacket sent NULL", NULL_PTR_ERROR);
 
     Player* new_player;
     char* name = (char*) malloc(20 * sizeof(char));
@@ -111,7 +111,7 @@ void player_ReadPacket(Map* map, sfPacket* packet)
 Packet* object_CreatePacket(Object* object_)
 {
     if (!object_)
-        logging_Error("object_CreatePacket", "Object object sent NULL, can't continue networking", NULL_PTR);
+        logging_Error("object_CreatePacket", "Object object sent NULL, can't continue networking", NULL_PTR_ERROR);
 
     sfPacket* new_packet = sfPacket_Create();
 
@@ -170,7 +170,7 @@ void object_ReadPacket(Map* map, sfPacket* packet)
 Packet* bullet_CreatePacket(Bullet* bullet)
 {
     if (!bullet)
-        logging_Error("bullet_CreatePacket", "Bullet object sent NULL, can't continue networking", NULL_PTR);
+        logging_Error("bullet_CreatePacket", "Bullet object sent NULL, can't continue networking", NULL_PTR_ERROR);
 
     sfPacket* packet = sfPacket_Create();
 
@@ -196,7 +196,7 @@ void map_CreateGamePackets(Map* map_)
     int cpt = 0;
 
     if (!map_)
-        logging_Error("map_CreateAllPacket", "Map object sent NULL, can't create packet list", NULL_PTR);
+        logging_Error("map_CreateAllPacket", "Map object sent NULL, can't create packet list", NULL_PTR_ERROR);
 
     assert(map_->gamepackets2send = (PacketList*) malloc(sizeof(PacketList)));
 
@@ -205,20 +205,20 @@ void map_CreateGamePackets(Map* map_)
     map_->gamepackets2send->nb_packets = map_->nb_players + BulletList_GetNbBullets(map_->bullets);
 
     // Compte le nombre de paquets Object à créer
-    for (int i = 0; i < map_->nb_objects; i++)
+    for (unsigned int i = 0; i < map_->nb_objects; i++)
         if (map_->objects_list[i]->type > 0)
             map_->gamepackets2send->nb_packets++;
 
     assert(map_->gamepackets2send->packets = (Packet**) malloc(map_->gamepackets2send->nb_packets * sizeof(Packet*)));
 
     // Création des paquets
-    for (int i = 0; i < map_->nb_players; i++)
+    for (unsigned int i = 0; i < map_->nb_players; i++)
         map_->gamepackets2send->packets[i] = player_CreatePacket(map_->players_list[i]);
 
     for (cpt = 0, ptr = BulletList_GetHead(map_->bullets); ptr != NULL; ptr = bullet_GetNext(ptr), cpt++)
         map_->gamepackets2send->packets[cpt] = bullet_CreatePacket(ptr);
 
-    for (int i = map_->nb_players; i < map_->gamepackets2send->nb_packets; i++)
+    for (unsigned int i = map_->nb_players; i < map_->gamepackets2send->nb_packets; i++)
         if (map_->objects_list[i]->type > 0)
             map_->gamepackets2send->packets[i] = object_CreatePacket(map_->objects_list[i]);
 
@@ -227,7 +227,7 @@ void map_CreateGamePackets(Map* map_)
 
 void map_DestroyAllPackets(Map* map_)
 {
-    for (int i = 0; i < map_->gamepackets2send->nb_packets; i++)
+    for (unsigned int i = 0; i < map_->gamepackets2send->nb_packets; i++)
         packet_Destroy(map_->gamepackets2send->packets[i]);
     free_secure(map_->gamepackets2send->packets);
     free_secure(map_->gamepackets2send);

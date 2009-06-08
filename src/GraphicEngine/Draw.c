@@ -21,5 +21,7 @@
 
 */
 
+#include <SFML/Graphics.h>
+
 #include "BaseSystem/Logging.h"
 #include "GraphicEngine/Draw.h"

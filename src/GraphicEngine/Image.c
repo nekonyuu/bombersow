@@ -21,6 +21,8 @@
 
 */
 
+#include <SFML/Graphics.h>
+
 #include "BaseSystem/Logging.h"
 #include "GraphicEngine/Image.h"
 
@@ -163,7 +165,7 @@ void animation_Draw(Animation* animation_, sfRenderWindow* App)
     }
 
     sfIntRect rect = {animation_->x + animation_->image_largeur*animation_->cur_image, animation_->y, animation_->x + animation_->image_largeur*animation_->cur_image+animation_->image_largeur, animation_->y + animation_->image_hauteur};
-    sfSprite_SetSubRect(animation_->sprite, &rect);
+    sfSprite_SetSubRect(animation_->sprite, rect);
     sfRenderWindow_DrawSprite(App, animation_->sprite);
 }
 

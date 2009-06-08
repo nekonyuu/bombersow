@@ -23,7 +23,7 @@
 
 #include <assert.h>
 #include <string.h>
-#include "SFML/Graphics.h"
+#include <SFML/Graphics.h>
 #include "BaseSystem/Logging.h"
 #include "Gui/Gui.h"
 
@@ -81,32 +81,32 @@ Widget_textbox_var* widget_text_box_var_Create(Widget_textbox_type type, void* v
 
     switch (type)
     {
-    case INT:
-        textbox_var->type = INT;
+    case INT_TYPE:
+        textbox_var->type = INT_TYPE;
         textbox_var->var_int = (int*) var;
         textbox_var->var_string = NULL;
         textbox_var->var_char = NULL;
         textbox_var->var_float = NULL;
         break;
 
-    case FLOAT:
-        textbox_var->type = FLOAT;
+    case FLOAT_TYPE:
+        textbox_var->type = FLOAT_TYPE;
         textbox_var->var_int = NULL;
         textbox_var->var_float = (float*) var;
         textbox_var->var_string = NULL;
         textbox_var->var_char = NULL;
         break;
 
-    case STRING:
-        textbox_var->type = STRING;
+    case STRING_TYPE:
+        textbox_var->type = STRING_TYPE;
         textbox_var->var_int = NULL;
         textbox_var->var_string = (sfString*) var;
         textbox_var->var_char = NULL;
         textbox_var->var_float = NULL;
         break;
 
-    case CHAR:
-        textbox_var->type = CHAR;
+    case CHAR_TYPE:
+        textbox_var->type = CHAR_TYPE;
         textbox_var->var_int = NULL;
         textbox_var->var_string = NULL;
         textbox_var->var_char = (char*) var;
@@ -138,17 +138,17 @@ void widget_textbox_var_Destroy(Widget_textbox_var* textbox_var)
 // Récupère la valeur active de la Widget_textbox_var
 void widget_textbox_var_Get(Widget_textbox_var* textbox_var, Widget_textbox* textbox)
 {
-    if (textbox_var->type == INT)
+    if (textbox_var->type == INT_TYPE)
     {
         sprintf(textbox->text_char, "%d", *textbox_var->var_int);
         sfString_SetText(textbox->text, textbox->text_char);
     }
-    else if (textbox_var->type == FLOAT)
+    else if (textbox_var->type == FLOAT_TYPE)
     {
         sprintf(textbox->text_char, "%f", *textbox_var->var_float);
         sfString_SetText(textbox->text, textbox->text_char);
     }
-    else if (textbox_var->type == CHAR)
+    else if (textbox_var->type == CHAR_TYPE)
     {
         sfString_SetText(textbox->text, textbox_var->var_char);
         strcpy(textbox->text_char, textbox_var->var_char);
@@ -163,19 +163,19 @@ void widget_textbox_var_Set(Widget_textbox_var* textbox_var, Widget_textbox* tex
 {
     switch (textbox_var->type)
     {
-    case INT:
+    case INT_TYPE:
         *textbox_var->var_int = atoi(textbox->text_char);
         break;
 
-    case FLOAT:
+    case FLOAT_TYPE:
         *textbox_var->var_float = atof(textbox->text_char);
         break;
 
-    case STRING:
+    case STRING_TYPE:
         textbox_var->var_string = textbox->text;
         break;
 
-    case CHAR:
+    case CHAR_TYPE:
         strcpy(textbox_var->var_char, textbox->text_char);
         break;
     }
@@ -195,14 +195,14 @@ Widget_textbox* widget_textbox_Create(int x, int y, int width, int height, int t
     if (font)
         sfString_SetFont(textbox->alt, font);
 
-    sfFloatRect* rect = sfString_GetRect(textbox->alt);
-    sfString_SetPosition(textbox->alt, x, y + ((height - (rect->Bottom - rect->Top)) / 2) - 2);
+    sfFloatRect rect = sfString_GetRect(textbox->alt);
+    sfString_SetPosition(textbox->alt, x, y + ((height - (rect.Bottom - rect.Top)) / 2) - 2);
 
     rect = sfString_GetRect(textbox->alt);
-    rect->Right += 2;
+    rect.Right += 2;
 
     textbox->text = sfString_Create();
-    sfString_SetPosition(textbox->text, rect->Right, y-2);
+    sfString_SetPosition(textbox->text, rect.Right, y-2);
     sfString_SetColor(textbox->text, couleur_text);
     sfString_SetSize(textbox->text, height-2);
     if (font)
@@ -213,12 +213,12 @@ Widget_textbox* widget_textbox_Create(int x, int y, int width, int height, int t
 
     textbox->taille = taille;
 
-    textbox->x = (int) rect->Right;
+    textbox->x = (int) rect.Right;
     textbox->y = y;
     textbox->width = width;
     textbox->height = height;
 
-    textbox->cadre = widget_cadre_Create(bg_image, couleur_cadre, (int)rect->Right, y, width, height);
+    textbox->cadre = widget_cadre_Create(bg_image, couleur_cadre, (int) rect.Right, y, width, height);
 
     textbox->var = widget_text_box_var_Create(type, var);
     widget_textbox_var_Get(textbox->var, textbox);
@@ -253,7 +253,7 @@ void widget_textbox_Click(Widget_textbox* textbox, int x, int y)
 
 void widget_textbox_Write(Widget_textbox* textbox, sfUint32 lettre)
 {
-    if (textbox->var->type != STRING)
+    if (textbox->var->type != STRING_TYPE)
     {
         if (lettre == UNI32_RETURN)
         {
@@ -268,17 +268,17 @@ void widget_textbox_Write(Widget_textbox* textbox, sfUint32 lettre)
             if (strlen(textbox->text_char) < textbox->taille)
             {
                 int taille = strlen(textbox->text_char);
-                if (textbox->var->type == INT && lettre > 47 && lettre < 58)
+                if (textbox->var->type == INT_TYPE && lettre > 47 && lettre < 58)
                 {
                     textbox->text_char[taille] = lettre;
                     textbox->text_char[taille+1] = '\0';
                 }
-                else if (textbox->var->type == FLOAT && ((lettre > 47 && lettre < 58) || lettre == '.'))
+                else if (textbox->var->type == FLOAT_TYPE && ((lettre > 47 && lettre < 58) || lettre == '.'))
                 {
                     textbox->text_char[taille] = lettre;
                     textbox->text_char[taille+1] = '\0';
                 }
-                else if (textbox->var->type == CHAR)
+                else if (textbox->var->type == CHAR_TYPE)
                 {
                     textbox->text_char[taille] = lettre;
                     textbox->text_char[taille+1] = '\0';
@@ -509,7 +509,7 @@ void gui_Add_Textbox(Gui* gui, Widget_textbox* widget)
     gui->widget_textbox[gui->widget_textbox_nombre - 1] = widget;
 }
 
-bool gui_Exist_Textbox(Gui* gui, unsigned int id)
+bool gui_Exist_Textbox(Gui* gui, int id)
 {
     return gui->widget_textbox_nombre > id && id >= 0;
 }

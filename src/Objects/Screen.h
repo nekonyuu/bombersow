@@ -67,5 +67,6 @@ Widget_textbox* screen_GetTextbox(Screen*, unsigned int);
 void screen_SetActiveTextbox(Screen*, int);
 void screen_SetInactiveTextbox(Screen*, int);
 void screen_Draw(Screen*, sfRenderWindow*);
+void Screen_FPSShow(sfRenderWindow*);
 
 #endif

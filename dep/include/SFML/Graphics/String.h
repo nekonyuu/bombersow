@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2008 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2009 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -31,14 +31,8 @@
 #include <SFML/Config.h>
 #include <SFML/Graphics/BlendMode.h>
 #include <SFML/Graphics/Color.h>
-#include <SFML/Graphics/Font.h>
 #include <SFML/Graphics/Rect.h>
-
-
-////////////////////////////////////////////////////////////
-/// sfString defines a graphical 2D text, that can be drawn on screen
-////////////////////////////////////////////////////////////
-typedef struct sfString sfString;
+#include <SFML/Graphics/Types.h>
 
 
 ////////////////////////////////////////////////////////////
@@ -424,7 +418,7 @@ CSFML_API void sfString_GetCharacterPos(sfString* String, size_t Index, float* X
 /// \return Rectangle contaning the string in screen coordinates
 ///
 ////////////////////////////////////////////////////////////
-CSFML_API sfFloatRect* sfString_GetRect(sfString* String);
+CSFML_API sfFloatRect sfString_GetRect(sfString* String);
 
 
 #endif // SFML_STRING_H

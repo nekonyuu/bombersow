@@ -22,6 +22,7 @@
 */
 
 #include <string.h>
+#include <SFML/Graphics.h>
 
 #include "BaseSystem/Logging.h"
 #include "Game/GameScreens.h"
@@ -29,6 +30,7 @@
 #include "Objects/GameObjects.h"
 #include "Objects/Screen.h"
 #include "Networking/Networking.h"
+#include "PhysicsEngine/PhysicsEngine.h"
 
 bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port, link_t link_type, char* ip, unsigned int map_id, unsigned int nb_players, char* player_name)
 {
@@ -46,6 +48,9 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
     sfImage* textbox_bg = sfImage_CreateFromFile("base/images/gui/textbox_back_black.png");
     char message[255] = { '\0' };
 
+    char player_pseudo[20];
+    strcpy(player_pseudo, player_name);
+
     server_creation = sfMutex_Create();
 
     // Squelette de l'écran Lobby
@@ -53,7 +58,7 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
     screen_LoadText(lobby_view, "Joueurs connectés", sfRed, 18, sfStringRegular, 40.f, 25.f);
 
     // Gui Chat
-    screen_AddTextbox(lobby_view, 0, config->height - 21, config->width - 4, 20, 255, textbox_bg, sfWhite, CHAR, message, sfWhite, "", sfWhite, 6);
+    screen_AddTextbox(lobby_view, 0, config->height - 21, config->width - 4, 20, 255, textbox_bg, sfWhite, CHAR_TYPE, message, sfWhite, "", sfWhite, 6);
     screen_SetActiveTextbox(lobby_view, 0);
 
     // Ecran d'attente
@@ -67,10 +72,12 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
     sfRenderWindow_DrawString(Game, text_display);
     sfRenderWindow_Display(Game);
 
+    PhysicsEngine_Init();
+
     // Si mode Server
     if (link_type == SERVER)
     {
-        client_data = clientdata_Create(player_name, "127.0.0.1", port, config, 13);
+        client_data = clientdata_Create(player_pseudo, "127.0.0.1", port, config, 13);
 
         map = map_Create(map_id, nb_players, config);
         map_SetGamePort(map, port);
@@ -84,7 +91,7 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
     }
     else if (link_type == CLIENT)       // Sinon si mode Client
     {
-        client_data = clientdata_Create(player_name, ip, port, config, 14);
+        client_data = clientdata_Create(player_pseudo, ip, port, config, 14);
         client_thread = sfThread_Create(&client_Main, client_data);
         sfThread_Launch(client_thread);
         sfSleep(0.01f);
@@ -109,7 +116,7 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
         screen_Draw(lobby_view, Game);
 
         if(config->show_fps)
-            logging_FPSShow(Game);
+            Screen_FPSShow(Game);
 
         sfRenderWindow_Display(Game);
 
@@ -171,6 +178,8 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
     clientdata_Destroy(client_data);
     playerslist_Destroy(players_display);
     map_Destroy(map);
+
+    PhysicsEngine_Clean();
 
     screen_Destroy(lobby_view);
 

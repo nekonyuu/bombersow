@@ -41,7 +41,7 @@ void server_Main(void* UserData)
 
     sfSocketUDP_Bind(map->game_socket, map->game_port);
     if (!sfSocketUDP_IsValid(map->game_socket))
-        logging_Error("server_Start", "Port already used", NETWORK_FAIL);
+        logging_Error("server_Start", "Port already used", NETWORK_FAIL_ERROR);
 
     logging_Info("server_Main", "Listen_TCP thread launch...");
     sfThread_Launch(tcp_listening);
@@ -92,7 +92,7 @@ void server_Listen_TCP(void* UserData)
 
         if (nb_sck_ready > 0)
         {
-            for (int i = 0; i < nb_sck_ready; i++)
+            for (unsigned int i = 0; i < nb_sck_ready; i++)
             {
                 sfSocketTCP* new_socket = sfSelectorTCP_GetSocketReady(map->tcp_selector, i);
 
@@ -144,7 +144,7 @@ void server_Listen_TCP(void* UserData)
 
                             // Envoyer les players présents au nouveau client
                             logging_Info("server_Listen_TCP", "Send connected players to the new client...");
-                            for (int i = 0; i < map->nb_players; i++)
+                            for (unsigned int i = 0; i < map->nb_players; i++)
                             {
                                 Packet* players_packet = player_CreateStartPacket(map->players_list[i]);
                                 sfSocketTCP_SendPacket(new_player_sck, players_packet->packet);
@@ -154,7 +154,7 @@ void server_Listen_TCP(void* UserData)
                             // Avertir les autres clients
                             logging_Info("server_Listen_TCP", "Send the new player to connected clients...");
                             Packet* new_player_packet_obj = player_CreateStartPacket(map->players_list[map->nb_players - 1]);
-                            for (int i = 0; i < map->nb_players - 1; i++)
+                            for (unsigned int i = 0; i < map->nb_players - 1; i++)
                                 sfSocketTCP_SendPacket(map->players_list[i]->listen_socket, new_player_packet_obj->packet);
 
                             // Nettoyage
@@ -205,7 +205,7 @@ void server_Listen_TCP(void* UserData)
 
                             logging_Info("server_Listen_TCP", "Resend...");
 
-                            for (int i = 0; i < map->nb_players; i++)                                   // Envoi à tous
+                            for (unsigned int i = 0; i < map->nb_players; i++)                                   // Envoi à tous
                             {
                                 sfMutex_Lock(Network_ServerMutex);
                                 sfSocketTCP_SendPacket(map->players_list[i]->listen_socket, resend);
@@ -229,7 +229,7 @@ void server_Listen_TCP(void* UserData)
                             unsigned int playerid2destroy = (unsigned int) sfPacket_ReadUint8(packet);
                             sfPacket* destroy_request = server_CreateDestroyPlayerPacket(playerid2destroy);
                             // On préviens les autres players du départ du player donné
-                            for(int i = 0; i < map->nb_players; i++)
+                            for(unsigned int i = 0; i < map->nb_players; i++)
                             {
                                 if(playerid2destroy != map->players_list[i]->player_id)
                                     sfSocketTCP_SendPacket(map->players_list[i]->listen_socket, destroy_request);
@@ -259,7 +259,7 @@ void server_Listen_TCP(void* UserData)
 
     sfPacket* disconnect_notify = server_CreateClosePacket();
 
-    for(int i = 0; i < map->nb_players; i++)
+    for(unsigned int i = 0; i < map->nb_players; i++)
         sfSocketTCP_SendPacket(map->players_list[i]->listen_socket, disconnect_notify);
 
     sfPacket_Destroy(disconnect_notify);
@@ -275,14 +275,14 @@ void server_Listen_Game(void* UserData)
         sfIPAddress* packet_ip = NULL;
 
         // Réception et Lecture
-        sfSocketUDP_ReceivePacket(map->game_socket, packet, packet_ip);
+        sfSocketUDP_ReceivePacket(map->game_socket, packet, packet_ip, NULL);
         server_ReadUDPPacket(packet, map);
 
         // Envoi des nouvelles données à chaque player
         map_CreateGamePackets(map);
 
-        for (int i = 0; i < map->gamepackets2send->nb_packets; i++)
-            for (int j = 0; j < map->nb_players; j++)
+        for (unsigned int i = 0; i < map->gamepackets2send->nb_packets; i++)
+            for (unsigned int j = 0; j < map->nb_players; j++)
                 sfSocketUDP_SendPacket(map->game_socket, map->gamepackets2send->packets[i]->packet, *map->players_list[j]->player_ip, map->game_port);
 
         // Nettoyage

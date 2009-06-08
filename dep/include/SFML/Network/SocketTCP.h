@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2008 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2009 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -30,15 +30,8 @@
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.h>
 #include <SFML/Network/IPAddress.h>
-#include <SFML/Network/Packet.h>
 #include <SFML/Network/SocketStatus.h>
-
-
-////////////////////////////////////////////////////////////
-/// SocketTCP wraps a socket using TCP protocol to
-/// send data safely (but a bit slower)
-////////////////////////////////////////////////////////////
-typedef struct sfSocketTCP sfSocketTCP;
+#include <SFML/Network/Types.h>
 
 
 ////////////////////////////////////////////////////////////
@@ -58,6 +51,16 @@ CSFML_API sfSocketTCP* sfSocketTCP_Create();
 CSFML_API void sfSocketTCP_Destroy(sfSocketTCP* Socket);
 
 ////////////////////////////////////////////////////////////
+/// Change the blocking state of a TCP socket.
+/// The default behaviour of a socket is blocking
+///
+/// \param Socket :   Socket to modify
+/// \param Blocking : Pass sfTrue to set the socket as blocking, or false for non-blocking
+///
+////////////////////////////////////////////////////////////
+CSFML_API void sfSocketTCP_SetBlocking(sfSocketTCP* Socket, sfBool Blocking);
+
+////////////////////////////////////////////////////////////
 /// Connect a TCP socket to another computer on a specified port
 ///
 /// \param Socket :      Socket to use for connecting
@@ -68,7 +71,7 @@ CSFML_API void sfSocketTCP_Destroy(sfSocketTCP* Socket);
 /// \return sfTrue if operation has been successful
 ///
 ////////////////////////////////////////////////////////////
-CSFML_API sfBool sfSocketTCP_Connect(sfSocketTCP* Socket, unsigned short Port, sfIPAddress HostAddress, float Timeout);
+CSFML_API sfSocketStatus sfSocketTCP_Connect(sfSocketTCP* Socket, unsigned short Port, sfIPAddress HostAddress, float Timeout);
 
 ////////////////////////////////////////////////////////////
 /// Listen to a specified port for incoming data or connections

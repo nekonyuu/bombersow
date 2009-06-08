@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2008 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2009 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -29,16 +29,7 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.h>
-#include <SFML/Network/SocketTCP.h>
-#include <SFML/Network/SocketUDP.h>
-
-
-////////////////////////////////////////////////////////////
-/// sfSelectorTCP and sfSelectorUDP allow reading from multiple sockets
-/// without blocking. It's a kind of multiplexer
-////////////////////////////////////////////////////////////
-typedef struct sfSelectorTCP sfSelectorTCP;
-typedef struct sfSelectorUDP sfSelectorUDP;
+#include <SFML/Network/Types.h>
 
 
 ////////////////////////////////////////////////////////////

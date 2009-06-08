@@ -51,7 +51,7 @@ Bullet* bullet_Create(unsigned int player_id, unsigned int type)
 void bullet_Destroy(Bullet* ptr)
 {
     if (!ptr)
-        logging_Error("bullet_Destroy", "Bullet object sent NULL", NULL_PTR);
+        logging_Error("bullet_Destroy", "Bullet object sent NULL", NULL_PTR_ERROR);
 
     sprite_Destroy(ptr->draw_image);
     free_secure(ptr);
@@ -60,7 +60,7 @@ void bullet_Destroy(Bullet* ptr)
 void bullet_DeleteFromList(Bullet* bullet2destroy)
 {
     if (!bullet2destroy)
-        logging_Error("bullet_DeleteFromList", "Bullet object sent NULL", NULL_PTR);
+        logging_Error("bullet_DeleteFromList", "Bullet object sent NULL", NULL_PTR_ERROR);
 
     if(bullet2destroy->prev)
         bullet2destroy->prev->next = bullet2destroy->next;
@@ -75,7 +75,7 @@ void bullet_DeleteFromList(Bullet* bullet2destroy)
 void bullet_DestroyList(Bullet** head)
 {
     if (!head)
-        logging_Error("bullet_DestroyList", "Bullet list sent NULL", NULL_PTR);
+        logging_Error("bullet_DestroyList", "Bullet list sent NULL", NULL_PTR_ERROR);
 
     Bullet* ptr = *head, *ptr2 = NULL;
     while (ptr != NULL)
@@ -159,7 +159,7 @@ void BulletList_Destroy(BulletList* ptr)
 void BulletList_AddBullet(BulletList* ptr, Bullet* ptr2)
 {
     if (!ptr)
-        logging_Error("BulletList_AddBullet", "BulletList pointer sent NULL", NULL_PTR);
+        logging_Error("BulletList_AddBullet", "BulletList pointer sent NULL", NULL_PTR_ERROR);
 
     if (!ptr->head)
     {
@@ -183,7 +183,7 @@ void BulletList_DeleteBullet(BulletList* ptr, Bullet* ptr2)
 
 
     if (!ptr)
-        logging_Error("BulletList_DeleteBullet", "BulletList pointer sent NULL", NULL_PTR);
+        logging_Error("BulletList_DeleteBullet", "BulletList pointer sent NULL", NULL_PTR_ERROR);
 
     for (ptr_temp = ptr->head; ptr_temp != ptr2 && ptr_temp != NULL; ptr_temp = bullet_GetNext(ptr_temp));
 
