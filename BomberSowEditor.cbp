@@ -120,7 +120,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-std=c99" />
-			<Add option="-DGLEW_STATIC" />
 			<Add directory="dep\include\" />
 			<Add directory="src\" />
 			<Add directory="dep\CSFML-GUI" />
@@ -129,11 +128,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="dep\CSFML-GUI\Gui\Gui.h" />
-		<Unit filename="dep\GLEW\glew.c">
-			<Option compilerVar="CC" />
-			<Option target="Debug" />
-			<Option target="Release" />
-		</Unit>
 		<Unit filename="dep\include\Memleak\halloc.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -21,6 +21,9 @@
 
 */
 
+#include <GL/gl.h>
+#include <GL/glu.h>
+
 #include "BaseSystem/Logging.h"
 #include "PhysicsEngine/PhysicsEngine.h"
 #include "PhysicsEngine/GravitySystem.h"
@@ -29,11 +32,19 @@
 #include "Objects/GameObjects.h"
 #include "GraphicEngine/Draw.h"
 
+static const int max_particles = 2000;
+
 Particle* particle_Create()
 {
     Particle* particle = NULL;
     assert(particle = (Particle*) malloc(sizeof(Particle)));
-    particle->shape = sfShape_Create();
+
+    particle->x = 0;
+    particle->y = 0;
+
+    particle->size_x = 0;
+    particle->size_y = 0;
+
     particle->speed_x = 0;
     particle->speed_y = 0;
 
@@ -42,32 +53,41 @@ Particle* particle_Create()
 
 Particle* particle_CreateBlood()
 {
-    Particle* particle = NULL;
-    assert(particle = (Particle*) malloc(sizeof(Particle)));
-    particle->shape = sfShape_CreateRectangle(0, 0, 4, 4, sfColor_FromRGB(255,0,0), 0, sfWhite);
-    particle->speed_x = 0;
-    particle->speed_y = 0;
+    Particle* particle = particle_Create();
+
+    particle->particle_color = sfColor_FromRGB(255,0,0);
+
+    particle->size_x = 1;
+    particle->size_y = 1;
 
     return particle;
 }
 
 void particle_SetPosition(Particle* particle, float x, float y)
 {
-    sfShape_SetPosition(particle->shape, x, y);
+    particle->x = x;
+    particle->y = y;
 }
 
 void particle_Draw(sfRenderWindow* Game, Particle* particle)
 {
-    sfRenderWindow_DrawShape(Game, particle->shape);
+    //sfRenderWindow_DrawShape(Game, particle->shape);
+
+    glColor3f(particle->particle_color.r, particle->particle_color.g, particle->particle_color.b);
+
+    glBegin(GL_QUADS);
+        glVertex2d(particle->x, particle->y);
+        glVertex2d(particle->x + particle->size_x, particle->y);
+        glVertex2d(particle->x + particle->size_x, particle->y + particle->size_y);
+        glVertex2d(particle->x, particle->y + particle->size_y);
+    glEnd();
+
 }
 
 void particle_Destroy(Particle* particle)
 {
-    if(particle != NULL)
-    {
-        sfShape_Destroy(particle->shape);
+    if (particle != NULL)
         free_secure(particle);
-    }
 }
 
 Particle_Table* particle_table_Create()
@@ -78,10 +98,10 @@ Particle_Table* particle_table_Create()
 
     particle_table->nbr_particle = 0;
     particle_table->indice_courant = 0;
-    particle_table->nbr_max = 2500;
+    particle_table->nbr_max = max_particles;
 
     particle_table->particle = (Particle**) malloc(particle_table->nbr_max * sizeof(Particle*));
-    for(int i = 0; i < particle_table->nbr_max; i++)
+    for (int i = 0; i < particle_table->nbr_max; i++)
         particle_table->particle[i] = NULL;
 
     //particle_table->clock = sfClock_Create();
@@ -93,7 +113,7 @@ Particle_Table* particle_table_Create()
 void particle_table_Destroy(Particle_Table* particle_table)
 {
 
-    for(int i = 0; i < particle_table->nbr_max; i++)
+    for (int i = 0; i < particle_table->nbr_max; i++)
         particle_Destroy(particle_table->particle[i]);
 
     //sfClock_Destroy(particle_table->clock);
@@ -106,16 +126,20 @@ void particle_table_AddParticle(Particle_Table* particle_table, Particle* partic
 {
     particle_Destroy(particle_table->particle[particle_table->indice_courant]);
     particle_table->particle[particle_table->indice_courant] = particle;
-    if(particle_table->nbr_particle + 1 < particle_table->nbr_max)
+    if (particle_table->nbr_particle + 1 < particle_table->nbr_max)
         particle_table->nbr_particle++;
     particle_table->indice_courant++;
-    if(particle_table->indice_courant >= particle_table->nbr_max)
+    if (particle_table->indice_courant >= particle_table->nbr_max)
         particle_table->indice_courant = 0;
 }
 
 void particle_table_Draw(sfRenderWindow* Game, Particle_Table* particle_table)
 {
-    for(int i = 0; i < particle_table->nbr_particle; i++)
+    sfRenderWindow_SetActive(Game, sfTrue);
+
+
+
+    for (int i = 0; i < particle_table->nbr_particle; i++)
     {
         particle_Draw(Game, particle_table->particle[i]);
     }

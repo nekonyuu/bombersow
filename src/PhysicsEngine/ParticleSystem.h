@@ -26,10 +26,11 @@
 
 typedef struct PARTICLE
 {
-    sfShape* shape;
-    float speed_x;
-    float speed_y;
-}Particle;
+    sfColor particle_color;     // Couleur de la particule
+    float x, y;                 // Coordonnées
+    int size_x, size_y;         // Taille
+    float speed_x, speed_y;     // Vitesse
+} Particle;
 
 typedef struct PARTICLE_TABLE
 {

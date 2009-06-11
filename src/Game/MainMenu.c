@@ -134,7 +134,7 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
     Current_Screen = Screens_List[MAIN_MENU_SCR];
 
 #ifndef DEBUG_MODE
-    //screen_PlayMusic(Screens_List[0]);                          // Lecture
+    screen_PlayMusic(Screens_List[MAIN_MENU_SCR]);                          // Lecture
 #endif
 
     logging_Info("game_MainMenu", "Started without error");
@@ -142,6 +142,8 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
     do
     {
         sfRenderWindow_Clear(Game, sfBlack);                    // Vidage de l'écran
+
+        glClear(GL_COLOR_BUFFER_BIT);
 
         screen_Draw(Current_Screen, Game);
 

@@ -253,14 +253,15 @@ void gravitysystem_BloodUpdate(void* UserData)
             speed_y = particle_->speed_y + config->gravity_speed * map_->clocks_time[PARTICLE_CLOCK] * config->gravity_coef;
             y = speed_y * map_->clocks_time[PARTICLE_CLOCK];
 
-            sfShape_GetPointPosition(particle_->shape, 2, &largeur, &hauteur);
+            largeur = particle_->size_x;
+            hauteur = particle_->size_y;
 
-            if (sfShape_GetY(particle_->shape) + hauteur + y <= config->height && sfShape_GetY(particle_->shape) + y > 0)
+            if (particle_->y + hauteur + y <= config->height && particle_->y + y > 0)
             {
-                particle_SetPosition(particle_, sfShape_GetX(particle_->shape), sfShape_GetY(particle_->shape) + y);
+                particle_SetPosition(particle_, particle_->x, particle_->y + y);
                 particle_->speed_y = speed_y;
             }
-            else if (sfShape_GetY(particle_->shape)+hauteur+y > config->height)
+            else if (particle_->y + hauteur + y > config->height)
                 particle_->speed_y = 0;
             else
                 particle_->speed_y = 0;

@@ -21,9 +21,9 @@
 
 */
 
-#include <Gui/Gui.h>
 #include <SFML/Graphics.h>
-#include <SFML/Audio.h>
+
+#include <Gui/Gui.h>
 #include "Screen/Objects_Screen.h"
 #include "Screen/Menu_Screen.h"
 #include "Screen/Map_screen.h"

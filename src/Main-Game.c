@@ -25,6 +25,7 @@
 
 #include "BaseSystem/Config.h"
 #include "BaseSystem/Logging.h"
+#include "GraphicEngine/Draw.h"
 #include "Game/GameScreens.h"
 #include "Objects/Screen.h"
 #include "Map/MapLoader.h"
@@ -41,7 +42,7 @@ int main()
     game_config->width = 900;
     game_config->height = 675;
     game_config->vsync = sfFalse;
-    game_config->fps_limit = 2000;
+    game_config->fps_limit = 125;
     game_config->show_fps = true;
     game_config->move_speed = 425;
     game_config->jump_speed = -85;
@@ -55,7 +56,7 @@ int main()
     player_default_image = sfImage_CreateFromFile("base/images/animation2.png");
 
     logging_Info("main", "Set Display parameters");
-    sfWindowSettings Settings = {24, 8, 0};
+    sfWindowSettings Settings = {24, 8, 2};
     sfVideoMode Mode = {game_config->width, game_config->height, 32};
     sfRenderWindow* Game;
 
@@ -69,12 +70,14 @@ int main()
 
     logging_Info("main", "Set framerate parameters");
     sfRenderWindow_UseVerticalSync(Game, game_config->vsync);
-    if(!game_config->vsync)
+    if (!game_config->vsync)
         sfRenderWindow_SetFramerateLimit(Game, game_config->fps_limit);
 
     logging_Info("main", "Verify Window state");
     if (!Game)
         return DISPLAY_FAIL_ERROR;
+
+    GraphicEngine_Init(Game, game_config);
 
     // Démarrage du jeu
     armory_Create(armory);          // Remplissage de l'armurerie

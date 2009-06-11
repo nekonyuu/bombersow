@@ -37,7 +37,7 @@ void client_Main(void* UserData)
     sfSocketTCP* client_socket = sfSocketTCP_Create();
     unsigned int code = REFUSED;
 
-    if (sfSocketTCP_Connect(client_socket, client_data->port, client_data->ip, 0))
+    if (!sfSocketTCP_Connect(client_socket, client_data->port, client_data->ip, 0))     // Bug CSFML 1.5...
     {
         sfPacket* connect_request = client_CreateConnectPacket(client_data->name), *response = sfPacket_Create();
         logging_Info("client_Main", "Sending connect resquest");

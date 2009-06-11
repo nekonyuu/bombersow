@@ -22,8 +22,7 @@
 */
 
 #include <assert.h>
-#include <GL/glew.h>
-#include "SFML/Graphics.h"
+#include <SFML/Graphics.h>
 #include "Gui/Gui.h"
 #include "Objects/Editor.h"
 #include "Screen/Objects_Screen.h"

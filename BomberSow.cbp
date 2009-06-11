@@ -34,6 +34,7 @@
 					<Add option="-lcsfml-system-s-d" />
 					<Add option="-lsfml-system-s-d" />
 					<Add option="-lopengl32" />
+					<Add option="-lglu32" />
 					<Add option="-lmingw32" />
 					<Add directory="dep\lib-win" />
 				</Linker>
@@ -64,6 +65,7 @@
 					<Add option="-lcsfml-system-s-d" />
 					<Add option="-lsfml-system-s-d" />
 					<Add option="-lopengl32" />
+					<Add option="-lglu32" />
 					<Add option="-lmingw32" />
 					<Add directory="dep\lib-win" />
 				</Linker>
@@ -100,6 +102,7 @@
 					<Add option="-lcsfml-system-s" />
 					<Add option="-lsfml-system-s" />
 					<Add option="-lopengl32" />
+					<Add option="-lglu32" />
 					<Add option="-lmingw32" />
 					<Add directory="dep\lib-win" />
 				</Linker>
@@ -156,7 +159,6 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-DGLEW_STATIC" />
 			<Add directory="src" />
 			<Add directory="dep\include" />
 			<Add directory="dep\CSFML-GUI" />
@@ -165,12 +167,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="dep\CSFML-GUI\Gui\Gui.h" />
-		<Unit filename="dep\GLEW\glew.c">
-			<Option compilerVar="CC" />
-			<Option target="Debug w/ halloc" />
-			<Option target="Release" />
-			<Option target="Debug" />
-		</Unit>
 		<Unit filename="dep\include\GL\glew.h" />
 		<Unit filename="dep\include\GL\glxew.h" />
 		<Unit filename="dep\include\GL\wglew.h" />

@@ -29,4 +29,7 @@
 // Temporaire ?
 sfImage* player_default_image;
 
+void GraphicEngine_Init(sfRenderWindow* Game, Config* config);
+void GraphicEngine_ClearScreen(sfRenderWindow* Game);
+
 #endif

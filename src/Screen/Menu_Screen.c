@@ -90,22 +90,22 @@ Object_Menu* menu_screen_Create(sfRenderWindow* Game, Image* image, int x, int y
     animation_Destroy(editor->animation_create);
     editor->animation_create = animation_Create(image_Get(image, 0), 0, 0, 0, 0, 0 ,0 ,0 ,0);
 
-    Widget_textbox *textbox = widget_textbox_Create(10, 65, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &editor->animation_create->image_largeur, sfBlack, "Largeur :", sfBlack, NULL, 12);
+    Widget_textbox *textbox = widget_textbox_Create(10, 65, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT_TYPE, &editor->animation_create->image_largeur, sfBlack, "Largeur :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox);
 
-    Widget_textbox *textbox2 = widget_textbox_Create(90, 65, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &editor->animation_create->image_hauteur, sfBlack, "Hauteur :", sfBlack, NULL, 12);
+    Widget_textbox *textbox2 = widget_textbox_Create(90, 65, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT_TYPE, &editor->animation_create->image_hauteur, sfBlack, "Hauteur :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox2);
 
-    Widget_textbox *textbox3 = widget_textbox_Create(110, 85, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &editor->animation_create->nombre_image, sfBlack, "Nbr img :", sfBlack, NULL, 12);
+    Widget_textbox *textbox3 = widget_textbox_Create(110, 85, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT_TYPE, &editor->animation_create->nombre_image, sfBlack, "Nbr img :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox3);
 
-    Widget_textbox *textbox4 = widget_textbox_Create(10, 85, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &editor->animation_create->x, sfBlack, "X :", sfBlack, NULL, 12);
+    Widget_textbox *textbox4 = widget_textbox_Create(10, 85, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT_TYPE, &editor->animation_create->x, sfBlack, "X :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox4);
 
-    Widget_textbox *textbox5 = widget_textbox_Create(60, 85, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &editor->animation_create->y, sfBlack, "Y :", sfBlack, NULL, 12);
+    Widget_textbox *textbox5 = widget_textbox_Create(60, 85, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT_TYPE, &editor->animation_create->y, sfBlack, "Y :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox5);
 
-    Widget_textbox *textbox6 = widget_textbox_Create(10, 105, 80, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), FLOAT, &editor->animation_create->fps, sfBlack, "FPS :", sfBlack, NULL, 12);
+    Widget_textbox *textbox6 = widget_textbox_Create(10, 105, 80, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), FLOAT_TYPE, &editor->animation_create->fps, sfBlack, "FPS :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox6);
 
 
@@ -115,22 +115,22 @@ Object_Menu* menu_screen_Create(sfRenderWindow* Game, Image* image, int x, int y
     Widget_bouton *bouton = widget_bouton_Create(rect_bouton, bouton_anim, menu->object_screen, NULL, image_Get(menu->image, 8), image_Get(menu->image, 8), image_Get(menu->image, 8));
     gui_Add_Bouton(menu->gui, bouton);
 
-    textbox = widget_textbox_Create(10, 175, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &editor->current_plan, sfBlack, "Plan :", sfBlack, NULL, 12);
+    textbox = widget_textbox_Create(10, 175, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT_TYPE, &editor->current_plan, sfBlack, "Plan :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox);
 
-    textbox = widget_textbox_Create(70, 175, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &editor->object_create->type, sfBlack, "Type :", sfBlack, NULL, 12);
+    textbox = widget_textbox_Create(70, 175, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT_TYPE, &editor->object_create->type, sfBlack, "Type :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox);
 
-    textbox = widget_textbox_Create(10, 195, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &editor->bool_dynamic, sfBlack, "Dynamique :", sfBlack, NULL, 12);
+    textbox = widget_textbox_Create(10, 195, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT_TYPE, &editor->bool_dynamic, sfBlack, "Dynamique :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox);
 
-    textbox = widget_textbox_Create(110, 195, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &editor->object_create->speed, sfBlack, "Speed :", sfBlack, NULL, 12);
+    textbox = widget_textbox_Create(110, 195, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT_TYPE, &editor->object_create->speed, sfBlack, "Speed :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox);
 
-    textbox = widget_textbox_Create(10, 215, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &editor->object_create->weapon_id, sfBlack, "Weapon :", sfBlack, NULL, 12);
+    textbox = widget_textbox_Create(10, 215, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT_TYPE, &editor->object_create->weapon_id, sfBlack, "Weapon :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox);
 
-     textbox = widget_textbox_Create(100, 215, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT, &editor->object_create->nb_ammo, sfBlack, "Ammo :", sfBlack, NULL, 12);
+     textbox = widget_textbox_Create(100, 215, 25, 15, 100, image_Get(menu->image, MENU_TEXTBOX_BACKGROUND), sfColor_FromRGB(0,0,0), INT_TYPE, &editor->object_create->nb_ammo, sfBlack, "Ammo :", sfBlack, NULL, 12);
     gui_Add_Textbox(menu->gui, textbox);
 
 

@@ -24,6 +24,8 @@
 #include <math.h>
 #include <string.h>
 #include <time.h>
+
+#include "BaseSystem/Config.h"
 #include "BaseSystem/Logging.h"
 #include "GraphicEngine/Draw.h"
 #include "PhysicsEngine/CollisionSystem.h"

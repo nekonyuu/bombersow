@@ -23,5 +23,41 @@
 
 #include <SFML/Graphics.h>
 
+#include "BaseSystem/Config.h"
 #include "BaseSystem/Logging.h"
 #include "GraphicEngine/Draw.h"
+
+void GraphicEngine_Init(sfRenderWindow* Game, Config* config)
+{
+    sfRenderWindow_PreserveOpenGLStates(Game, sfTrue);
+    sfRenderWindow_SetActive(Game, sfTrue);
+
+    /* --- Initialisation OpenGL --- */
+
+    // Initialisation des valeurs d'effacement pour les tampons de couleur et de profondeur
+    glClearDepth(1.f);
+    glClearColor(0.f, 0.f, 0.f, 0.f);
+
+    // Activation de la lecture et de l'écriture dans le tampon de profondeur
+    glEnable(GL_DEPTH_TEST);
+    glDepthMask(GL_TRUE);
+
+    // Viewport configuré sur toute la fenêtre
+    glViewport(0, 0, config->width, config->height);
+
+    // Projection orthogonale
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0, config->width, 0, config->height);
+
+    /* ---------- END INIT ---------- */
+}
+
+void GraphicEngine_ClearScreen(sfRenderWindow* Game)
+{
+    sfRenderWindow_SetActive(Game, sfTrue);
+    sfRenderWindow_Clear(Game, sfBlack);
+
+    glClearColor(0, 0, 0, 0);
+    glClear(GL_COLOR_BUFFER_BIT);
+}

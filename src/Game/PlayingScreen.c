@@ -94,13 +94,13 @@ bool display_Playing(sfRenderWindow* Game, Config* config)
 
     do
     {
-        sfRenderWindow_Clear(Game, sfBlack);                    // Vidage de l'écran
+        GraphicEngine_ClearScreen(Game);
 
         gravitysystem_WorldUpdate(map);
 
         map_Draw(Game, map);                                    // Dessin de la map
 
-        //quadtree_Draw(Game, map->quadtree);
+        //quadtree_Draw(Game, map->quad_tree);
 
         if(config->show_fps)
             Screen_FPSShow(Game);
