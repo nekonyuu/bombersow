@@ -44,13 +44,13 @@ typedef struct PARTICLE_TABLE
 Particle* particle_Create();
 Particle* particle_CreateBlood();
 void particle_SetPosition(Particle*, float, float);
-void particle_Draw(sfRenderWindow*, Particle*);
+void particle_Draw(sfRenderWindow*, Particle*, Config*);
 void particle_Destroy(Particle*);
 
 Particle_Table* particle_table_Create();
 void particle_table_Destroy(Particle_Table*);
 void particle_table_AddParticle(Particle_Table*, Particle*);
-void particle_table_Draw(sfRenderWindow*, Particle_Table*);
+void particle_table_Draw(sfRenderWindow*, Particle_Table*, Config*);
 
 /*typedef struct PARTICLE_ENGINE
 {

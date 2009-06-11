@@ -326,6 +326,11 @@ void Map_ClockTick(Map* map_, ClockType type)
 // Dessin de la map
 void map_Draw(sfRenderWindow* Game, Map* map)
 {
+    sfClock* clock = sfClock_Create();
+
+    particle_table_Draw(Game, map->particle_table, map->cfg);
+    printf("%f\n", sfClock_GetTime(clock));
+
     for (unsigned int i = 0; i < map->nb_players; i++)
     {
         player_Draw(Game, map->players_list[i]);
@@ -335,12 +340,6 @@ void map_Draw(sfRenderWindow* Game, Map* map)
     {
         object_Draw(Game, map->objects_list[i]);
     }
-
-    sfClock* clock = sfClock_Create();
-
-    particle_table_Draw(Game, map->particle_table);
-
-    printf("%f\n", sfClock_GetTime(clock));
 
     sfClock_Destroy(clock);
 

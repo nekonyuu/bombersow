@@ -32,7 +32,7 @@
 #include "Objects/GameObjects.h"
 #include "GraphicEngine/Draw.h"
 
-static const int max_particles = 2000;
+static const int max_particles = 10000;
 
 Particle* particle_Create()
 {
@@ -57,8 +57,8 @@ Particle* particle_CreateBlood()
 
     particle->particle_color = sfColor_FromRGB(255,0,0);
 
-    particle->size_x = 1;
-    particle->size_y = 1;
+    particle->size_x = 3;
+    particle->size_y = 3;
 
     return particle;
 }
@@ -69,17 +69,17 @@ void particle_SetPosition(Particle* particle, float x, float y)
     particle->y = y;
 }
 
-void particle_Draw(sfRenderWindow* Game, Particle* particle)
+void particle_Draw(sfRenderWindow* Game, Particle* particle, Config* config)
 {
     //sfRenderWindow_DrawShape(Game, particle->shape);
 
     glColor3f(particle->particle_color.r, particle->particle_color.g, particle->particle_color.b);
-
+    // Repère à origine différente
     glBegin(GL_QUADS);
-        glVertex2d(particle->x, particle->y);
-        glVertex2d(particle->x + particle->size_x, particle->y);
-        glVertex2d(particle->x + particle->size_x, particle->y + particle->size_y);
-        glVertex2d(particle->x, particle->y + particle->size_y);
+        glVertex2d(particle->x, config->height - particle->y);
+        glVertex2d(particle->x + particle->size_x, config->height - particle->y);
+        glVertex2d(particle->x + particle->size_x, config->height - particle->y + particle->size_y);
+        glVertex2d(particle->x, config->height - particle->y + particle->size_y);
     glEnd();
 
 }
@@ -133,14 +133,10 @@ void particle_table_AddParticle(Particle_Table* particle_table, Particle* partic
         particle_table->indice_courant = 0;
 }
 
-void particle_table_Draw(sfRenderWindow* Game, Particle_Table* particle_table)
+void particle_table_Draw(sfRenderWindow* Game, Particle_Table* particle_table, Config* config)
 {
     sfRenderWindow_SetActive(Game, sfTrue);
 
-
-
     for (int i = 0; i < particle_table->nbr_particle; i++)
-    {
-        particle_Draw(Game, particle_table->particle[i]);
-    }
+        particle_Draw(Game, particle_table->particle[i], config);
 }
