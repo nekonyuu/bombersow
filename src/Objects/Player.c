@@ -30,6 +30,8 @@
 #include "GraphicEngine/Draw.h"
 #include "PhysicsEngine/CollisionSystem.h"
 
+static const int nb_blood_particles = 50;
+
 // Constructeur
 Player* player_Create(char* name, unsigned int current_weapon)
 {
@@ -210,11 +212,12 @@ void player_WeaponShoot(Map* map, Player* player_, float mouse_x, float mouse_y)
     float vec_x = (mouse_x - x_center) / diagonale;
     float vec_y = (mouse_y - y_center) / diagonale;
 
-    player_CollectWeapon(player_, SHOTGUN);
-    player_SwitchWeapon(player_, SHOTGUN);
-
     if (sfClock_GetTime(player_->weapon_reload) >= player_->weapons[player_->current_weapon]->reload_latency)
     {
+        sfClock_Reset(player_->weapon_reload);
+
+        float proj_speed = player_->weapons[player_->current_weapon]->proj_speed;
+
         if (player_->weapons[player_->current_weapon]->type == SHOTGUN)
         {
             for (int nb_bullet = 0; nb_bullet < SHOTGUN_SHRAPNELS; nb_bullet++)
@@ -224,12 +227,12 @@ void player_WeaponShoot(Map* map, Player* player_, float mouse_x, float mouse_y)
                 vec_x = (mouse_x - x_center) / diagonale;
                 vec_y = (mouse_y - y_center) / diagonale;
 
-                bullet_SetPosition(bullet, x_center+vec_x*30, y_center+vec_y*30);
+                bullet_SetPosition(bullet, x_center + vec_x * 30, y_center + vec_y * 30);
 
-                vec_x = player_->weapons[player_->current_weapon]->proj_speed * (mouse_x - x_center) / diagonale;
-                vec_y = player_->weapons[player_->current_weapon]->proj_speed * (mouse_y - y_center) / diagonale;
+                vec_x = proj_speed * (mouse_x - x_center) / diagonale;
+                vec_y = proj_speed * (mouse_y - y_center) / diagonale;
 
-                float angle = (nb_bullet%2) ? -(nb_bullet/2+1)* 3.14/36 : (nb_bullet/2)* 3.14/36;
+                float angle = (nb_bullet % 2) ? -(nb_bullet / 2 + 1) * 3.14 / 36 : (nb_bullet / 2)* 3.14 / 36;
                 float vec_x2 = vec_x * cos(angle) + vec_y * sin(angle);
                 float vec_y2 = -vec_x * sin(angle) + vec_y * cos(angle);
                 bullet_SetSpeed(bullet, vec_x2, vec_y2);
@@ -243,8 +246,8 @@ void player_WeaponShoot(Map* map, Player* player_, float mouse_x, float mouse_y)
 
             bullet_SetPosition(bullet, x_center+vec_x*30, y_center+vec_y*30);
 
-            vec_x = player_->weapons[player_->current_weapon]->proj_speed * (mouse_x - x_center) / diagonale;
-            vec_y = player_->weapons[player_->current_weapon]->proj_speed * (mouse_y - y_center) / diagonale;
+            vec_x = proj_speed * (mouse_x - x_center) / diagonale;
+            vec_y = proj_speed * (mouse_y - y_center) / diagonale;
 
             bullet_SetSpeed(bullet, vec_x, vec_y);
 
@@ -252,7 +255,6 @@ void player_WeaponShoot(Map* map, Player* player_, float mouse_x, float mouse_y)
         }
 
         player_->weapons[player_->current_weapon]->nb_curr_bullets--;
-        sfClock_Reset(player_->weapon_reload);
     }
 }
 
@@ -275,11 +277,12 @@ void player_Draw(sfRenderWindow* Game, Player* player)
 
 void player_BulletCollision(Player* player, Bullet* bullet, Map* map)
 {
-    for (int i = 0; i < 10; i++)
+    srand(time(NULL));
+    for (int i = 0; i < nb_blood_particles; i++)
     {
-        float random = (float) rand()/(RAND_MAX+1) * 10;
+        float random = (float) rand() / (RAND_MAX + 1) * 10;
         Particle* particle = particle_CreateBlood();
-        particle_SetPosition(particle, bullet->coord_x+random, bullet->coord_y+random);
+        particle_SetPosition(particle, bullet->coord_x + random, bullet->coord_y + random);
         particle->speed_y = random;
         particle_table_AddParticle(map->particle_table, particle);
     }

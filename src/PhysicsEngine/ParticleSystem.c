@@ -57,8 +57,8 @@ Particle* particle_CreateBlood()
 
     particle->particle_color = sfColor_FromRGB(255,0,0);
 
-    particle->size_x = 3;
-    particle->size_y = 3;
+    particle->size_x = 2;
+    particle->size_y = 2;
 
     return particle;
 }

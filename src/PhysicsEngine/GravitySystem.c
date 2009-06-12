@@ -265,7 +265,7 @@ void gravitysystem_BloodUpdate(void* UserData)
             else
                 Particle_SetSpeedY(particle_, 0);
         }
-        sfSleep(0.001f);
+        sfSleep(0.005f);
     }
 }
 
