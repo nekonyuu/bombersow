@@ -26,7 +26,7 @@
 
 #include "BaseSystem/Logging.h"
 #include "Game/GameScreens.h"
-#include <Gui/Gui.h>
+#include "Gui/Gui.h"
 #include "Objects/GameObjects.h"
 #include "Objects/Screen.h"
 #include "Networking/Networking.h"
@@ -46,7 +46,7 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
     bool launched = true, close = false;
     // GUI Chat Init
     sfImage* textbox_bg = sfImage_CreateFromFile("base/images/gui/textbox_back_black.png");
-    char message[255] = { '\0' };
+    char message[120] = { '\0' };
 
     char player_pseudo[20];
     strcpy(player_pseudo, player_name);
@@ -58,7 +58,7 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
     screen_LoadText(lobby_view, "Joueurs connectés", sfRed, 18, sfStringRegular, 40.f, 25.f);
 
     // Gui Chat
-    screen_AddTextbox(lobby_view, 0, config->height - 21, config->width - 4, 20, 255, textbox_bg, sfWhite, CHAR_TYPE, message, sfWhite, "", sfWhite, 6);
+    screen_AddTextbox(lobby_view, 0, config->height - 21, config->width - 4, 20, 120, textbox_bg, sfWhite, CHAR_TYPE, message, sfWhite, "", sfWhite, 6);
     screen_SetActiveTextbox(lobby_view, 0);
 
     // Ecran d'attente
@@ -85,16 +85,16 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
         server_thread = sfThread_Create(&server_Main, map);
         client_thread = sfThread_Create(&client_Main, client_data);
         sfThread_Launch(server_thread);
-        sfSleep(0.01f);
+        //sfSleep(0.01f);
         sfThread_Launch(client_thread);
-        sfSleep(0.01f);
+        //sfSleep(0.01f);
     }
     else if (link_type == CLIENT)       // Sinon si mode Client
     {
         client_data = clientdata_Create(player_pseudo, ip, port, config, 14);
         client_thread = sfThread_Create(&client_Main, client_data);
         sfThread_Launch(client_thread);
-        sfSleep(0.01f);
+        //sfSleep(0.01f);
     }
 
     while(!client_connected)
@@ -167,7 +167,7 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
     sfThread_Wait(client_thread);
     sfThread_Destroy(client_thread);
 
-    if(server_thread)
+    if(link_type == SERVER)
     {
         sfThread_Wait(server_thread);
         sfThread_Destroy(server_thread);

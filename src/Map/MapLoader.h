@@ -66,13 +66,7 @@ ID_IMAGE
 int
 
 [OBJECTS]
-TYPE    ID_ANIMATION    ID_IMAGE        LARGEUR     HAUTEUR     [PARAMETRE OPTIONNEL]
-int     int             int             int         int         [PARA]
-//Si id_animation = -1, image fixe id_image != -1
-//si id_animation !=-1, id_image = -1
-
-[ELEMENTS]
-ID_OBJECT      X       Y      PLAN     [PARAMETRE OPTIONNEL]
-int            int    int     int      [para en plus suivant le type]
+TYPE    X       Y      PLAN     ID_ANIMATION    ID_IMAGE        LARGEUR     HAUTEUR     [PARAMETRE OPTIONNEL]
+int     int     int    int      int             int             int         int         [PARA]
 
 */

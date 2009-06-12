@@ -216,33 +216,12 @@ void gravitysystem_BulletUpdate(void* UserData)
 }
 */
 
-/*void gravitysystem_BloodUpdate(Map* map_, Particle* particle_, Config* config)
-{
-    float speed_y = particle_->speed_y + config->gravity_speed * map_->clock_time * config->gravity_coef;
-    float y = speed_y * map_->clock_time;
-
-    float largeur;
-    float hauteur;
-    sfShape_GetPointPosition(particle_->shape, 2, &largeur, &hauteur);
-    if (sfShape_GetY(particle_->shape) + hauteur + y <= config->height && sfShape_GetY(particle_->shape)+ y > 0)
-    {
-        particle_SetPosition(particle_, sfShape_GetX(particle_->shape), sfShape_GetY(particle_->shape) + y);
-        particle_->speed_y = speed_y;
-    }
-    else if (sfShape_GetY(particle_->shape)+hauteur+y > config->height)
-    {
-        particle_->speed_y = 0;
-    }
-    else
-        particle_->speed_y = 0;
-}*/
-
 void gravitysystem_BloodUpdate(void* UserData)
 {
     Map* map_ = (Map*) UserData;
     Particle* particle_ = NULL;
     Config* config = map_->cfg;
-    float speed_y = 0, y = 0, part_size_y = 0, part_y = 0;
+    float speed_y = 0, y = 0, largeur = 0, hauteur = 0;
 
     while (map_->game_started)
     {
@@ -250,22 +229,29 @@ void gravitysystem_BloodUpdate(void* UserData)
         for (int i = 0; i < map_->particle_table->nbr_particle; i++)
         {
             particle_ = map_->particle_table->particle[i];
-
-            part_size_y = Particle_GetSizeY(particle_);
-            part_y = Particle_GetY(particle_);
-
-            speed_y = Particle_GetSpeedY(particle_) + config->gravity_speed * map_->clocks_time[PARTICLE_CLOCK] * config->gravity_coef;
+            speed_y = particle_->speed_y + config->gravity_speed * map_->clocks_time[PARTICLE_CLOCK] * config->gravity_coef;
             y = speed_y * map_->clocks_time[PARTICLE_CLOCK];
 
-            if (part_y + part_size_y + y <= config->height && part_y + y > 0)
+            largeur = particle_->size_x;
+            hauteur = particle_->size_y;
+
+            if (particle_->y + hauteur + y <= config->height && particle_->y + y > 0)
             {
-                Particle_SetY(particle_, part_y + y);
-                Particle_SetSpeedY(particle_, speed_y);
+                particle_SetPosition(particle_, particle_->x + particle_->speed_x*map_->clocks_time[PARTICLE_CLOCK], particle_->y + y);
+                particle_->speed_y = speed_y;
+            }
+            else if (particle_->y + hauteur + y > config->height)
+            {
+                particle_->speed_y = 0;
+                particle_->speed_x = 0;
             }
             else
-                Particle_SetSpeedY(particle_, 0);
+            {
+                particle_->speed_y = 0;
+                particle_->speed_x = 0;
+            }
         }
-        sfSleep(0.005f);
+        sfSleep(0.001f);
     }
 }
 

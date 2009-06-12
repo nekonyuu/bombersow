@@ -148,7 +148,7 @@ typedef struct PLAYER
     float speed_x, speed_y;         // Vitesse
 
     jump_t jump;                    // Type de saut en cours
-    bool jetpack_mode;             // Mode JetPack ?
+    bool jetpack_mode;              // Mode JetPack ?
 
     unsigned int frags;             // Nombre de tués
     unsigned int killed;            // Nombre de morts

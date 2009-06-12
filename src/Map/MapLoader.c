@@ -171,6 +171,25 @@ void map_Loader_Image(Image* image_, char* path)
     data_Destroy(liste);
 }
 
+// Loader d'animations pour les map
+void map_Loader_Animation(Animation** animation, unsigned int taille, Image* images, char* path)
+{
+    Data* data;
+
+    data = data_Parser("[ANIMATION]", path);
+
+    for (int i = 0; i < data->taille; i++)
+    {
+        int id = 0, id_image = 0, coord_x = 0, coord_y = 0, hauteur = 0, largeur = 0, nb_image = 0;
+        float fps = 0.0;
+
+        sscanf(data->data[i], "%d %d %d %d %d %d %d %f", &id, &id_image, &coord_x, &coord_y, &hauteur, &largeur, &nb_image, &fps);
+        animation[i] = animation_Create(images->image_tab[id_image], coord_x, coord_y, hauteur, largeur, nb_image, 0, STOP, fps);
+    }
+
+    data_Destroy(data);
+}
+
 void dossier_Read_Image(Image* image, char* path)
 {
     DIR *rep = opendir(path);
@@ -209,5 +228,5 @@ void dossier_Read_Image(Image* image, char* path)
         free_secure(image_path);
     }
 
-    closedir (rep);
+    closedir(rep);
 }

@@ -28,9 +28,13 @@
 #include "Networking/Networking.h"
 #include "Networking/PacketDefines.h"
 
+sfMutex* server_creation;
+
 void server_Main(void* UserData)
 {
     sfMutex_Lock(server_creation);
+
+    logging_Info("server_Main", "Starting Server thread...");
 
     Map* map = (Map*) UserData;
     sfThread* update_disconnect_players = sfThread_Create(&map_UpdateDisconnectedPlayers, map);

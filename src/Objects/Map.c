@@ -134,9 +134,8 @@ void map_Destroy(Map* map2destroy)
                 packet_Destroy(map2destroy->gamepackets2send->packets[i]);
 
         logging_Info("map_Destroy", "Destroy network sockets...");
-        if (map2destroy->game_socket)
-            sfSocketUDP_Destroy(map2destroy->game_socket);
 
+        sfSocketUDP_Destroy(map2destroy->game_socket);
         sfSelectorTCP_Destroy(map2destroy->tcp_selector);
 
         logging_Info("map_Destroy", "Destroy clocks...");

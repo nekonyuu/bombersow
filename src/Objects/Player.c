@@ -277,13 +277,21 @@ void player_Draw(sfRenderWindow* Game, Player* player)
 
 void player_BulletCollision(Player* player, Bullet* bullet, Map* map)
 {
-    srand(time(NULL));
-    for (int i = 0; i < nb_blood_particles; i++)
+    for(int i = 0; i < 30; i++)
     {
-        float random = (float) rand() / (RAND_MAX + 1) * 10;
         Particle* particle = particle_CreateBlood();
-        particle_SetPosition(particle, bullet->coord_x + random, bullet->coord_y + random);
-        particle->speed_y = random;
+        particle_SetPosition(particle, bullet->coord_x, bullet->coord_y);
+        particle->speed_x = bullet->speed_x/(5+(i%5));
+        particle->speed_y = bullet->speed_y/(5+(i%5));
+
+        float angle = (i%2) ? -(i/2+1)* 3.14/72 : (i/2)* 3.14/72;
+        float vec_x2 = particle->speed_x * cos(angle) + particle->speed_y * sin(angle);
+        float vec_y2 = -particle->speed_x * sin(angle) + particle->speed_y * cos(angle);
+
+        particle->speed_x = vec_x2;
+        printf("%f\n", particle->speed_x);
+        particle->speed_y = vec_y2;
+
         particle_table_AddParticle(map->particle_table, particle);
     }
     //player_CreateBlood(player, bullet->coord_x, bullet->coord_y);

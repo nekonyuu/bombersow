@@ -24,4 +24,34 @@
 #ifndef AUDIOENGINE_H
 #define AUDIOENGINE_H
 
+typedef struct AUDIO_ENGINE_SOUND
+{
+    struct AUDIO_ENGINE_SOUNDS* prev;
+
+    sfSound* sound;
+
+    struct AUDIO_ENGINE_SOUNDS* next;
+} AudioEngineSound;
+
+typedef struct
+{
+    sfThread* update_thread;
+
+    sfSoundBuffer** soundbuffers;
+    unsigned int nb_soundbuffers;
+
+    AudioEngineSounds* sounds;
+
+    sfMusic** musics;
+    unsigned int nb_musics;
+
+    sfBool started;
+} AudioEngine;
+
+AudioEngine* AudioEngine_Init();
+void AudioEngine_Destroy(AudioEngine* engine);
+void AudioEngine_LoadSound(AudioEngine* engine, char* path);
+void AudioEngine_LoadMusic(AudioEngine* engine, char* path);
+void AudioEngine_PlaySound(AudioEngine* engine, int index);
+
 #endif

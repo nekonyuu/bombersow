@@ -60,7 +60,7 @@ typedef struct CLIENT_DATA
 
 bool server_started;
 bool client_connected;
-sfMutex* server_creation;
+extern sfMutex* server_creation;
 
 // ServerThread.c
 void server_Main(void* UserData);
