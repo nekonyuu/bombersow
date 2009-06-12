@@ -27,7 +27,7 @@
 typedef struct PARTICLE
 {
     sfColor particle_color;     // Couleur de la particule
-    float x, y;                 // Coordonnées
+    int x, y;                   // Coordonnées
     int size_x, size_y;         // Taille
     float speed_x, speed_y;     // Vitesse
 } Particle;
@@ -43,8 +43,28 @@ typedef struct PARTICLE_TABLE
 
 Particle* particle_Create();
 Particle* particle_CreateBlood();
-void particle_SetPosition(Particle*, float, float);
-void particle_Draw(sfRenderWindow*, Particle*, Config*);
+
+void particle_SetPosition(Particle*, int, int);
+
+int Particle_GetX(Particle*);
+int Particle_GetY(Particle*);
+
+void Particle_SetX(Particle*, int);
+void Particle_SetY(Particle*, int);
+
+int Particle_GetSizeX(Particle*);
+int Particle_GetSizeY(Particle*);
+
+void Particle_SetSizeX(Particle*, int);
+void Particle_SetSizeY(Particle*, int);
+
+float Particle_GetSpeedX(Particle*);
+float Particle_GetSpeedY(Particle*);
+
+void Particle_SetSpeedX(Particle*, float);
+void Particle_SetSpeedY(Particle*, float);
+
+void particle_Draw(Particle*, Config*);
 void particle_Destroy(Particle*);
 
 Particle_Table* particle_table_Create();

@@ -140,6 +140,7 @@ typedef struct PLAYER
     Weapon **weapons;               // Armes du joueur
     unsigned int nb_weapons;        // Nombre d'armes
     unsigned int current_weapon;    // Arme courante
+    sfClock* weapon_reload;         // Timer de recharge arme
 
     float coord_x, coord_y;         // Emplacement sur la map
     float m_coord_x, m_coord_y;     // Coordonnées souris

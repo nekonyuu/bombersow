@@ -63,25 +63,83 @@ Particle* particle_CreateBlood()
     return particle;
 }
 
-void particle_SetPosition(Particle* particle, float x, float y)
+inline void particle_SetPosition(Particle* particle, int x, int y)
 {
     particle->x = x;
     particle->y = y;
 }
 
-void particle_Draw(sfRenderWindow* Game, Particle* particle, Config* config)
+inline int Particle_GetX(Particle* particle)
 {
-    //sfRenderWindow_DrawShape(Game, particle->shape);
+    return particle->x;
+}
 
+inline int Particle_GetY(Particle* particle)
+{
+    return particle->y;
+}
+
+inline void Particle_SetX(Particle* particle, int x)
+{
+    particle->x = x;
+}
+
+inline void Particle_SetY(Particle* particle, int y)
+{
+    particle->y = y;
+}
+
+inline int Particle_GetSizeX(Particle* particle)
+{
+    return particle->size_x;
+}
+
+inline int Particle_GetSizeY(Particle* particle)
+{
+    return particle->size_y;
+}
+
+inline void Particle_SetSizeX(Particle* particle, int x)
+{
+    particle->size_x = x;
+}
+
+inline void Particle_SetSizeY(Particle* particle, int y)
+{
+    particle->size_y = y;
+}
+
+inline float Particle_GetSpeedX(Particle* particle)
+{
+    return particle->speed_x;
+}
+
+inline float Particle_GetSpeedY(Particle* particle)
+{
+    return particle->speed_y;
+}
+
+inline void Particle_SetSpeedX(Particle* particle, float speed)
+{
+    particle->speed_x = speed;
+}
+
+inline void Particle_SetSpeedY(Particle* particle, float speed)
+{
+    particle->speed_y = speed;
+}
+
+inline void particle_Draw(Particle* particle, Config* config)
+{
+    // Couleur rouge sang
     glColor3f(particle->particle_color.r, particle->particle_color.g, particle->particle_color.b);
     // Repère à origine différente
-    glBegin(GL_QUADS);
-        glVertex2d(particle->x, config->height - particle->y);
-        glVertex2d(particle->x + particle->size_x, config->height - particle->y);
-        glVertex2d(particle->x + particle->size_x, config->height - particle->y + particle->size_y);
-        glVertex2d(particle->x, config->height - particle->y + particle->size_y);
+    glBegin(GL_TRIANGLE_STRIP); // Dessin par triangles assemblés, plus performant pour le GPU
+        glVertex2i(particle->x, config->height - particle->y);
+        glVertex2i(particle->x + particle->size_x, config->height - particle->y);
+        glVertex2i(particle->x + particle->size_x, config->height - particle->y + particle->size_y);
+        glVertex2i(particle->x, config->height - particle->y + particle->size_y);
     glEnd();
-
 }
 
 void particle_Destroy(Particle* particle)
@@ -104,10 +162,7 @@ Particle_Table* particle_table_Create()
     for (int i = 0; i < particle_table->nbr_max; i++)
         particle_table->particle[i] = NULL;
 
-    //particle_table->clock = sfClock_Create();
-
     return particle_table;
-
 }
 
 void particle_table_Destroy(Particle_Table* particle_table)
@@ -116,7 +171,6 @@ void particle_table_Destroy(Particle_Table* particle_table)
     for (int i = 0; i < particle_table->nbr_max; i++)
         particle_Destroy(particle_table->particle[i]);
 
-    //sfClock_Destroy(particle_table->clock);
     free_secure(particle_table->particle);
     free_secure(particle_table);
 
@@ -138,5 +192,5 @@ void particle_table_Draw(sfRenderWindow* Game, Particle_Table* particle_table, C
     sfRenderWindow_SetActive(Game, sfTrue);
 
     for (int i = 0; i < particle_table->nbr_particle; i++)
-        particle_Draw(Game, particle_table->particle[i], config);
+        particle_Draw(particle_table->particle[i], config);
 }

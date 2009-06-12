@@ -21,6 +21,7 @@
 
 */
 
+#include <time.h>
 #include <SFML/Graphics.h>
 
 #include "BaseSystem/Config.h"
@@ -50,6 +51,9 @@ int main()
     game_config->gravity_speed = 275.f;
     game_config->gravity_coef = 6.66f;
     /* --------- END CONFIG --------- */
+
+    logging_Info("main", "Initializing rand...");
+    srand(time(NULL));
 
     /* -------- Player Image -------- */
     logging_Info("main", "Load default sprite");

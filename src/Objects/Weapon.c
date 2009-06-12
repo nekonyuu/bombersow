@@ -120,7 +120,7 @@ void armory_Create(Weapon* armory)
     armory[CROWBAR].nb_curr_bullets = -1;
     armory[CROWBAR].damage = 20;
 
-    armory[CROWBAR].reload_latency = 1000;
+    armory[CROWBAR].reload_latency = 1.f;
     armory[CROWBAR].switch_latency = 800;
     armory[CROWBAR].respawn_time = 0;
 
@@ -146,7 +146,7 @@ void armory_Create(Weapon* armory)
     armory[ROCKET_LAUNCHER].nb_curr_bullets = 0;
     armory[ROCKET_LAUNCHER].damage = 65;
 
-    armory[ROCKET_LAUNCHER].reload_latency = 800;
+    armory[ROCKET_LAUNCHER].reload_latency = 0.8f;
     armory[ROCKET_LAUNCHER].switch_latency = 800;
     armory[ROCKET_LAUNCHER].respawn_time = 15;
 
@@ -172,7 +172,7 @@ void armory_Create(Weapon* armory)
     armory[GRENADES].nb_curr_bullets = 0;
     armory[GRENADES].damage = 80;
 
-    armory[GRENADES].reload_latency = 1500;
+    armory[GRENADES].reload_latency = 1.5f;
     armory[GRENADES].switch_latency = 500;
     armory[GRENADES].respawn_time = 15;
 
@@ -198,7 +198,7 @@ void armory_Create(Weapon* armory)
     armory[SHOTGUN].nb_curr_bullets = 0;
     armory[SHOTGUN].damage = 13;							// Dommage pour une cartouche
 
-    armory[SHOTGUN].reload_latency = 1000;
+    armory[SHOTGUN].reload_latency = 1.f;
     armory[SHOTGUN].switch_latency = 1000;
     armory[SHOTGUN].respawn_time = 15;
 
@@ -224,7 +224,7 @@ void armory_Create(Weapon* armory)
     armory[MACHINEGUN].nb_curr_bullets = 0;
     armory[MACHINEGUN].damage = 10;
 
-    armory[MACHINEGUN].reload_latency = 100;
+    armory[MACHINEGUN].reload_latency = 0.1f;
     armory[MACHINEGUN].switch_latency = 0;
     armory[MACHINEGUN].respawn_time = 15;
 
@@ -250,7 +250,7 @@ void armory_Create(Weapon* armory)
     armory[SNIPER].nb_curr_bullets = 0;
     armory[SNIPER].damage = 100;
 
-    armory[SNIPER].reload_latency = 1500;
+    armory[SNIPER].reload_latency = 1.5f;
     armory[SNIPER].switch_latency = -1;
     armory[SNIPER].respawn_time = 60;
 
@@ -276,7 +276,7 @@ void armory_Create(Weapon* armory)
     armory[LASERGUN].nb_curr_bullets = 0;
     armory[LASERGUN].damage = 10;
 
-    armory[LASERGUN].reload_latency = 50;
+    armory[LASERGUN].reload_latency = 0.05f;
     armory[LASERGUN].switch_latency = -1;
     armory[LASERGUN].respawn_time = 60;
 

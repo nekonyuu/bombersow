@@ -242,7 +242,7 @@ void gravitysystem_BloodUpdate(void* UserData)
     Map* map_ = (Map*) UserData;
     Particle* particle_ = NULL;
     Config* config = map_->cfg;
-    float speed_y = 0, y = 0, largeur = 0, hauteur = 0;
+    float speed_y = 0, y = 0, part_size_y = 0, part_y = 0;
 
     while (map_->game_started)
     {
@@ -250,21 +250,20 @@ void gravitysystem_BloodUpdate(void* UserData)
         for (int i = 0; i < map_->particle_table->nbr_particle; i++)
         {
             particle_ = map_->particle_table->particle[i];
-            speed_y = particle_->speed_y + config->gravity_speed * map_->clocks_time[PARTICLE_CLOCK] * config->gravity_coef;
+
+            part_size_y = Particle_GetSizeY(particle_);
+            part_y = Particle_GetY(particle_);
+
+            speed_y = Particle_GetSpeedY(particle_) + config->gravity_speed * map_->clocks_time[PARTICLE_CLOCK] * config->gravity_coef;
             y = speed_y * map_->clocks_time[PARTICLE_CLOCK];
 
-            largeur = particle_->size_x;
-            hauteur = particle_->size_y;
-
-            if (particle_->y + hauteur + y <= config->height && particle_->y + y > 0)
+            if (part_y + part_size_y + y <= config->height && part_y + y > 0)
             {
-                particle_SetPosition(particle_, particle_->x, particle_->y + y);
-                particle_->speed_y = speed_y;
+                Particle_SetY(particle_, part_y + y);
+                Particle_SetSpeedY(particle_, speed_y);
             }
-            else if (particle_->y + hauteur + y > config->height)
-                particle_->speed_y = 0;
             else
-                particle_->speed_y = 0;
+                Particle_SetSpeedY(particle_, 0);
         }
         sfSleep(0.001f);
     }
@@ -277,12 +276,4 @@ void gravitysystem_WorldUpdate(Map* map_)
 
     // Mise à jour Bullets
     gravitysystem_BulletUpdate(map_);
-
-    /*
-    // Mise à jour Particle
-    for (int i = 0; i < map_->particle_table->nbr_particle; i++)
-    {
-        gravitysystem_BloodUpdate(map_, map_->particle_table->particle[i], config);
-    }
-    */
 }

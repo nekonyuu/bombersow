@@ -53,6 +53,8 @@ Player* player_Create(char* name, unsigned int current_weapon)
     new_player->weapons[current_weapon]->collected = true;      // Arme active
     new_player->nb_weapons = 1;
 
+    new_player->weapon_reload = sfClock_Create();
+
     /* TODO : Fonction donnant les coordonnées de spawn
     new_player->coord_x = ;                                     // Coordonnées de spawn
     new_player->coord_y = ;
@@ -173,7 +175,7 @@ void player_Displace(Player* player_, Direction move, float time, Config* config
     player_SetPosition(player_, final_x, final_y);
     quadtree_Update(player_, PLAYER);
     Collision* collision = collision_Detection_Object(player_, PLAYER);
-    if(collision != NULL)
+    if (collision != NULL)
     {
         player_SetPosition(player_, old_x, old_y);
         quadtree_Update(player_, PLAYER);
@@ -200,10 +202,10 @@ void player_CollectWeapon(Player* player_, int weapon_type)
 // Diminue le nombre de cartouches restantes et crée un/des bullet(s)
 void player_WeaponShoot(Map* map, Player* player_, float mouse_x, float mouse_y)
 {
-    float x_center = player_->coord_x+player_->sprite->largeur/2;
-    float y_center = player_->coord_y+player_->sprite->hauteur/2;
+    float x_center = player_->coord_x + player_->sprite->largeur / 2;
+    float y_center = player_->coord_y + player_->sprite->hauteur / 2;
 
-    float diagonale = sqrt((mouse_x - x_center)*(mouse_x - x_center) + (mouse_y - y_center)*(mouse_y - y_center));
+    float diagonale = sqrt((mouse_x - x_center) * (mouse_x - x_center) + (mouse_y - y_center) * (mouse_y - y_center));
 
     float vec_x = (mouse_x - x_center) / diagonale;
     float vec_y = (mouse_y - y_center) / diagonale;
@@ -211,46 +213,47 @@ void player_WeaponShoot(Map* map, Player* player_, float mouse_x, float mouse_y)
     player_CollectWeapon(player_, SHOTGUN);
     player_SwitchWeapon(player_, SHOTGUN);
 
-    if (player_->weapons[player_->current_weapon]->type == SHOTGUN)
+    if (sfClock_GetTime(player_->weapon_reload) >= player_->weapons[player_->current_weapon]->reload_latency)
     {
+        if (player_->weapons[player_->current_weapon]->type == SHOTGUN)
+        {
+            for (int nb_bullet = 0; nb_bullet < SHOTGUN_SHRAPNELS; nb_bullet++)
+            {
+                Bullet* bullet = bullet_Create(player_->player_id, player_->current_weapon);
 
-        for (int nb_bullet = 0; nb_bullet < SHOTGUN_SHRAPNELS; nb_bullet++)
+                vec_x = (mouse_x - x_center) / diagonale;
+                vec_y = (mouse_y - y_center) / diagonale;
+
+                bullet_SetPosition(bullet, x_center+vec_x*30, y_center+vec_y*30);
+
+                vec_x = player_->weapons[player_->current_weapon]->proj_speed * (mouse_x - x_center) / diagonale;
+                vec_y = player_->weapons[player_->current_weapon]->proj_speed * (mouse_y - y_center) / diagonale;
+
+                float angle = (nb_bullet%2) ? -(nb_bullet/2+1)* 3.14/36 : (nb_bullet/2)* 3.14/36;
+                float vec_x2 = vec_x * cos(angle) + vec_y * sin(angle);
+                float vec_y2 = -vec_x * sin(angle) + vec_y * cos(angle);
+                bullet_SetSpeed(bullet, vec_x2, vec_y2);
+
+                map_AddBullet(map, bullet);
+            }
+        }
+        else
         {
             Bullet* bullet = bullet_Create(player_->player_id, player_->current_weapon);
-
-            vec_x = (mouse_x - x_center) / diagonale;
-            vec_y = (mouse_y - y_center) / diagonale;
 
             bullet_SetPosition(bullet, x_center+vec_x*30, y_center+vec_y*30);
 
             vec_x = player_->weapons[player_->current_weapon]->proj_speed * (mouse_x - x_center) / diagonale;
             vec_y = player_->weapons[player_->current_weapon]->proj_speed * (mouse_y - y_center) / diagonale;
 
-            float angle = (nb_bullet%2) ? -(nb_bullet/2+1)* 3.14/36 : (nb_bullet/2)* 3.14/36;
-            float vec_x2 = vec_x * cos(angle) + vec_y * sin(angle);
-            float vec_y2 = -vec_x * sin(angle) + vec_y * cos(angle);
-            bullet_SetSpeed(bullet, vec_x2, vec_y2);
+            bullet_SetSpeed(bullet, vec_x, vec_y);
 
             map_AddBullet(map, bullet);
         }
 
+        player_->weapons[player_->current_weapon]->nb_curr_bullets--;
+        sfClock_Reset(player_->weapon_reload);
     }
-    else
-    {
-        Bullet* bullet = bullet_Create(player_->player_id, player_->current_weapon);
-
-        bullet_SetPosition(bullet, x_center+vec_x*30, y_center+vec_y*30);
-
-        vec_x = player_->weapons[player_->current_weapon]->proj_speed * (mouse_x - x_center) / diagonale;
-        vec_y = player_->weapons[player_->current_weapon]->proj_speed * (mouse_y - y_center) / diagonale;
-
-        bullet_SetSpeed(bullet, vec_x, vec_y);
-
-        map_AddBullet(map, bullet);
-    }
-
-    player_->weapons[player_->current_weapon]->nb_curr_bullets--;
-
 }
 
 unsigned int player_GetPlayerID(Player* player)
@@ -272,8 +275,7 @@ void player_Draw(sfRenderWindow* Game, Player* player)
 
 void player_BulletCollision(Player* player, Bullet* bullet, Map* map)
 {
-    srand(time(NULL));
-    for(int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++)
     {
         float random = (float) rand()/(RAND_MAX+1) * 10;
         Particle* particle = particle_CreateBlood();

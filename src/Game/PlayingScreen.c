@@ -61,24 +61,16 @@ bool display_Playing(sfRenderWindow* Game, Config* config)
 
     int i = 0;
     logging_Info("display_Playing", "Create players...");
-    for (i = 0; i < 25; i++)
+    for (i = 0; i < 35; i++)
     {
         char* name = malloc(5 * sizeof(char));
         strcpy(name, "HAHA");
         Player* plr = player_Create(name, CROWBAR);
-        player_SetPosition(plr, (i-i%10)*5, (i%10)*50);
+        player_SetPosition(plr, (i - i % 3) * 15, (i % 10) * 50);
         map_AddPlayer(map, plr);
     }
 
     logging_Info("display_Playing", "Create pseudo-platform...");
-    for (i = 50; i < 76; i++)
-    {
-        Animation* ani = animation_Create(image_animation2, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
-        Object* obj_temp = object_Create(0);
-        object_LoadImg(obj_temp, NULL, ani);
-        object_SetPosition(obj_temp, (i-i%10)*5, (i%10)*50);
-        map_AddObject(map, obj_temp);
-    }
 
     // Préparation des threads
     sfThread* phys_BloodUpdate = sfThread_Create(&gravitysystem_BloodUpdate, map);
