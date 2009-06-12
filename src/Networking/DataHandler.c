@@ -84,7 +84,7 @@ Packet* player_CreateStartPacket(Player* player_)
 
 Player* player_CreateFromPacket(Map* map, sfPacket* packet)
 {
-    if(!packet)
+    if (!packet)
         logging_Error("player_CreateFromPacket", "sfPacket sent NULL", NULL_PTR_ERROR);
 
     Player* new_player;

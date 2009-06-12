@@ -57,8 +57,8 @@ Particle* particle_CreateBlood()
 
     particle->particle_color = sfColor_FromRGB(255,0,0);
 
-    particle->size_x = 2;
-    particle->size_y = 2;
+    particle->size_x = 3;
+    particle->size_y = 3;
 
     return particle;
 }
@@ -135,10 +135,10 @@ inline void particle_Draw(Particle* particle, Config* config)
     glColor3f(particle->particle_color.r, particle->particle_color.g, particle->particle_color.b);
     // Repère à origine différente
     glBegin(GL_TRIANGLE_STRIP); // Dessin par triangles assemblés, plus performant pour le GPU
-        glVertex2i(particle->x, config->height - particle->y);
-        glVertex2i(particle->x + particle->size_x, config->height - particle->y);
-        glVertex2i(particle->x + particle->size_x, config->height - particle->y + particle->size_y);
-        glVertex2i(particle->x, config->height - particle->y + particle->size_y);
+    glVertex2i(particle->x, config->height - particle->y);
+    glVertex2i(particle->x + particle->size_x, config->height - particle->y);
+    glVertex2i(particle->x + particle->size_x, config->height - particle->y + particle->size_y);
+    glVertex2i(particle->x, config->height - particle->y + particle->size_y);
     glEnd();
 }
 

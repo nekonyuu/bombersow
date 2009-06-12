@@ -87,7 +87,7 @@ void screen_LoadFont(Screen* screen, ScreenFontType type, char* path)
     if (!path)
         logging_Error("screen_LoadFont", "No path sent", NULL_PTR_ERROR);
 
-    switch(type)
+    switch (type)
     {
     case OPT_FONT:
         screen->opt_font = sfFont_CreateFromFile(path, 50, NULL);
@@ -123,9 +123,9 @@ void screen_LoadText(Screen* screen, char* text, sfColor color, int font_size, s
 
 void screen_HighlightText(Screen* screen, unsigned int id, sfColor color)
 {
-    for(unsigned int i = 0; i < screen->nb_text - 1; i++)
+    for (unsigned int i = 0; i < screen->nb_text - 1; i++)
     {
-        if(i == id)
+        if (i == id)
             sfString_SetColor(screen->texts[i], color);
         else
             sfString_SetColor(screen->texts[i], sfWhite);
@@ -184,11 +184,11 @@ void screen_AddTextbox(Screen* screen, int x, int y, int width, int height, int 
                        sfColor border_color, Widget_textbox_type type, void* var, sfColor text_color, char* text,
                        sfColor label_color, int text_size)
 {
-    if(!screen)
+    if (!screen)
         logging_Error("screen_AddTextbox", "Screen object sent NULL", NULL_PTR_ERROR);
 
     Widget_textbox* textbox = widget_textbox_Create(x, y, width, height, length, image, border_color, type, var,
-        text_color, text, label_color, (type == INT_TYPE) ? screen->alt_gui_font : screen->gui_font, text_size);
+                              text_color, text, label_color, (type == INT_TYPE) ? screen->alt_gui_font : screen->gui_font, text_size);
 
     gui_Add_Textbox(screen->gui, textbox);
 }
@@ -200,7 +200,7 @@ Gui* screen_GetGUI(Screen* ptr)
 
 Widget_textbox* screen_GetTextbox(Screen* screen, unsigned int id)
 {
-    if(gui_Exist_Textbox(screen->gui, id))
+    if (gui_Exist_Textbox(screen->gui, id))
         return screen->gui->widget_textbox[id];
     else
         return NULL;
@@ -225,7 +225,7 @@ void screen_Draw(Screen* screen, sfRenderWindow* Game)
         logging_Error("screen_DrawText", "Screen object sent NULL", NULL_PTR_ERROR);
 
     // Dessin images
-    for(unsigned int i = 0; i < screen->nb_spr; i++)
+    for (unsigned int i = 0; i < screen->nb_spr; i++)
         sfRenderWindow_DrawSprite(Game, screen->sprites[i]);
 
     // Dessin textes

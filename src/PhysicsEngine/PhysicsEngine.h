@@ -33,7 +33,8 @@ typedef enum PHYSICS_TYPE {OBJECT, PLAYER, BULLET} Physics_type;    //type d'obj
 
 typedef enum QUAD_POS {NW, NE, SW, SE} Quad_pos;  //position d'un noeuds
 
-typedef struct LIST_ELEMENT{
+typedef struct LIST_ELEMENT
+{
 
     struct LIST_ELEMENT* previous;  //pointeur vers l'element précédent
     void* elt;                      //element
@@ -63,7 +64,8 @@ void list_Delete(List*, List_element*); //detruit un element
 void list_Destroy(List*);               //detruit la liste
 void list_Print(List*);
 
-typedef struct QUAD_TREE {
+typedef struct QUAD_TREE
+{
 
     List* bullet;
     List* object;

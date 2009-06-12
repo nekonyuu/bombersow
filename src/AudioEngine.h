@@ -26,11 +26,11 @@
 
 typedef struct AUDIO_ENGINE_SOUND
 {
-    struct AUDIO_ENGINE_SOUNDS* prev;
+    struct AUDIO_ENGINE_SOUND* prev;
 
     sfSound* sound;
 
-    struct AUDIO_ENGINE_SOUNDS* next;
+    struct AUDIO_ENGINE_SOUND* next;
 } AudioEngineSound;
 
 typedef struct
@@ -40,7 +40,7 @@ typedef struct
     sfSoundBuffer** soundbuffers;
     unsigned int nb_soundbuffers;
 
-    AudioEngineSounds* sounds;
+    AudioEngineSound* sounds;
 
     sfMusic** musics;
     unsigned int nb_musics;
@@ -50,6 +50,7 @@ typedef struct
 
 AudioEngine* AudioEngine_Init();
 void AudioEngine_Destroy(AudioEngine* engine);
+void AudioEngine_UpdateEngine(void* UserData);
 void AudioEngine_LoadSound(AudioEngine* engine, char* path);
 void AudioEngine_LoadMusic(AudioEngine* engine, char* path);
 void AudioEngine_PlaySound(AudioEngine* engine, int index);

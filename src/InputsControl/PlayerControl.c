@@ -66,6 +66,13 @@ inline void control_PlayerControl(sfRenderWindow* App, Map* map, Player* player,
                 // TODO : Boite de dialogue quitte y/n, ou bien sur le menu
                 *ingame = false;
             }
+
+            if (Event.Key.Code == sfKeyF10)
+            {
+                sfImage* screen = sfRenderWindow_Capture(App);
+                sfImage_SaveToFile(screen, "capture.bmp");
+                sfImage_Destroy(screen);
+            }
         }
 
         if (Event.Type == sfEvtClosed)

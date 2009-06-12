@@ -36,7 +36,7 @@ void GraphicEngine_Init(sfRenderWindow* Game, Config* config)
 
     // Initialisation des valeurs d'effacement pour les tampons de couleur et de profondeur
     glClearDepth(1.f);
-    glClearColor(0.f, 0.f, 0.f, 0.f);
+    glClearColor(255, 255, 255, 0);
 
     // Activation de la lecture et de l'écriture dans le tampon de profondeur
     glEnable(GL_DEPTH_TEST);
@@ -56,8 +56,8 @@ void GraphicEngine_Init(sfRenderWindow* Game, Config* config)
 void GraphicEngine_ClearScreen(sfRenderWindow* Game)
 {
     sfRenderWindow_SetActive(Game, sfTrue);
-    sfRenderWindow_Clear(Game, sfBlack);
+    sfRenderWindow_Clear(Game, sfWhite);
 
-    glClearColor(0, 0, 0, 0);
+    glClearColor(255, 255, 255, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }

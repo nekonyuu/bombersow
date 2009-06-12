@@ -85,9 +85,9 @@ void ChatMessage_Destroy(ChatMessage* ptr)
 
 void ChatMessage_DestroyFromList(ChatMessage* ptr)
 {
-    if(ptr->prev)
+    if (ptr->prev)
         ptr->prev->next = ptr->next;
-    if(ptr->next)
+    if (ptr->next)
         ptr->next->prev = ptr->prev;
 
     ChatMessage_Destroy(ptr);
@@ -144,13 +144,13 @@ ChatMessagesList* ChatMessagesList_Create(unsigned int max_mess)
 
 void ChatMessagesList_AddMessage(ChatMessagesList* ptr, char* mess)
 {
-    if(!ptr)
+    if (!ptr)
         logging_Error("chatmessages_AddMessage", "ChatMessagesList object sent NULL", NULL_PTR_ERROR);
 
     ChatMessage* ptr2 = ChatMessage_Create();
     ChatMessage_SetText(ptr2, mess, 20);
 
-    if(!ptr->head)
+    if (!ptr->head)
     {
         ptr->head = ptr2;
         ptr->tail = ptr2;
@@ -158,13 +158,13 @@ void ChatMessagesList_AddMessage(ChatMessagesList* ptr, char* mess)
     else
     {
         ChatMessage* tmp_ptr = NULL;
-        for(tmp_ptr = ptr->head; tmp_ptr->next != NULL; tmp_ptr = tmp_ptr->next);
+        for (tmp_ptr = ptr->head; tmp_ptr->next != NULL; tmp_ptr = tmp_ptr->next);
         tmp_ptr->next = ptr2;
         ptr2->prev = tmp_ptr;
         ptr->tail = ptr2;
     }
 
-    if(ptr->max_nb_mess <= ptr->nb_mess)
+    if (ptr->max_nb_mess <= ptr->nb_mess)
     {
         ChatMessage* ptr3 = ptr->head;
         ptr->head = ptr->head->next;
@@ -186,7 +186,7 @@ void ChatMessagesList_Draw(ChatMessagesList* ptr, sfRenderWindow* Game)
 void ChatMessagesList_UpdateCoords(ChatMessagesList* ptr)
 {
     int cpt = 0;
-    for(ChatMessage* i = ptr->head; i != NULL; i = i->next, cpt++)
+    for (ChatMessage* i = ptr->head; i != NULL; i = i->next, cpt++)
         ChatMessage_SetCoords(i, 0, MARGIN_TOP + ChatMessage_GetSize(i) * cpt);
 }
 
@@ -196,7 +196,7 @@ void ChatMessagesList_Destroy(ChatMessagesList* ptr)
         logging_Error("ChatMessagesList_Destroy", "ChatMessageList sent NULL", NULL_PTR_ERROR);
 
     ChatMessage* head = ptr->head, *temp_ptr = NULL;
-    while(head != NULL)
+    while (head != NULL)
     {
         temp_ptr = head->next;
         ChatMessage_Destroy(head);

@@ -139,7 +139,7 @@ void map_Destroy(Map* map2destroy)
         sfSelectorTCP_Destroy(map2destroy->tcp_selector);
 
         logging_Info("map_Destroy", "Destroy clocks...");
-        for(int i = 0; i < NB_CLOCKS; i++)
+        for (int i = 0; i < NB_CLOCKS; i++)
             sfClock_Destroy(map2destroy->clocks[i]);
 
         logging_Info("map_Destroy", "Destroy quad tree...");
@@ -186,7 +186,7 @@ void map_DelObject(Map* map_, unsigned int object_id)
 
 void map_AddPlayer(Map* map_, Player* player_)
 {
-    if(!map_ && !player_)
+    if (!map_ && !player_)
     {
         logging_Warning("map_AddPlayer", "Map or Player object sent NULL");
     }
@@ -295,9 +295,9 @@ Player* map_GetPlayerFromID(Map* map, unsigned int player_id)
 // Retourne l'id du player ayant le nom name
 unsigned int map_GetPlayerIDFromName(Map* map, char* name)
 {
-    for(unsigned int i = 0; i < map->nb_players; i++)
+    for (unsigned int i = 0; i < map->nb_players; i++)
     {
-        if(!strcmp(name, map->players_list[i]->char_name))
+        if (!strcmp(name, map->players_list[i]->char_name))
             return map->players_list[i]->player_id;
     }
 
@@ -325,13 +325,16 @@ void Map_ClockTick(Map* map_, ClockType type)
 // Dessin de la map
 void map_Draw(sfRenderWindow* Game, Map* map)
 {
-    particle_table_Draw(Game, map->particle_table, map->cfg);
+    for (unsigned int i = 0; i < map->nb_objects; i++)
+        object_Draw(Game, map->objects_list[i]);
 
     for (unsigned int i = 0; i < map->nb_players; i++)
         player_Draw(Game, map->players_list[i]);
 
-    for (unsigned int i = 0; i < map->nb_objects; i++)
-        object_Draw(Game, map->objects_list[i]);
+    for (unsigned int i = 0; i < map->nb_players; i++)
+        player_DrawLife(Game, map->players_list[i]);
 
     bullet_DrawList(Game, BulletList_GetHead(map->bullets));
+
+    particle_table_Draw(Game, map->particle_table, map->cfg);
 }

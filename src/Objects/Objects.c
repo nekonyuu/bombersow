@@ -24,24 +24,35 @@
 #include "BaseSystem/Logging.h"
 #include "Objects/GameObjects.h"
 
-Object* object_Create(unsigned int type)
+Object* object_Create(unsigned int id, unsigned int type, int x, int y, sfImage* image, Animation* animation)
 {
     Object* new_object = NULL;
     assert(new_object = (Object*) malloc(sizeof(Object)));
 
-    new_object->objectID = 0;
+    new_object->objectID = id;
     new_object->type = type;
 
-    new_object->sprite = NULL;
+    if (image == NULL && animation == NULL)
+        new_object->sprite = NULL;
+    else
+        new_object->sprite = sprite_Create(x, y, image, animation);
 
-    new_object->start_coord_x = 0;
-    new_object->start_coord_y = 0;
+    new_object->start_coord_x = x;
+    new_object->start_coord_y = y;
 
-    new_object->curr_coord_x = 0;
-    new_object->curr_coord_y = 0;
+    new_object->curr_coord_x = x;
+    new_object->curr_coord_y = y;
 
-    new_object->dest_coord_x = 0;
-    new_object->dest_coord_y = 0;
+    if (type == PLATFORM)
+    {
+        new_object->dest_coord_x = x;
+        new_object->dest_coord_y = y;
+    }
+    else
+    {
+        new_object->dest_coord_x = 0;
+        new_object->dest_coord_y = 0;
+    }
 
     new_object->speed = 0;
     new_object->weapon_id = 0;
@@ -73,7 +84,7 @@ void object_Destroy(Object* object2destroy)
 
 void object_LoadImg(Object* object, sfImage* image, Animation* animation)
 {
-    if(object->sprite)
+    if (object->sprite)
         sprite_Destroy(object->sprite);
     object->sprite = sprite_Create((int)object->curr_coord_x, (int)object->curr_coord_y, image, animation);
 }

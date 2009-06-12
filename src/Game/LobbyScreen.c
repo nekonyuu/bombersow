@@ -97,7 +97,7 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
         //sfSleep(0.01f);
     }
 
-    while(!client_connected)
+    while (!client_connected)
         sfSleep(0.05f);
 
     players_display = playerslist_Create(client_data->map, lobby_view->opt_font, sfWhite, 12, sfStringItalic, 40.f, 60.f);
@@ -115,7 +115,7 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
 
         screen_Draw(lobby_view, Game);
 
-        if(config->show_fps)
+        if (config->show_fps)
             Screen_FPSShow(Game);
 
         sfRenderWindow_Display(Game);
@@ -147,7 +147,7 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
                 }
                 else if (Event.Key.Code == sfKeyReturn)
                 {
-                    if(widget_textbox_IsActive(screen_GetTextbox(lobby_view, 0)) && strcmp(message, ""))
+                    if (widget_textbox_IsActive(screen_GetTextbox(lobby_view, 0)) && strcmp(message, ""))
                     {
                         client_SendChatPacket(message, client_data->player);
                         strcpy(message, "");
@@ -167,7 +167,7 @@ bool display_LobbyScreen(sfRenderWindow* Game, Config* config, unsigned int port
     sfThread_Wait(client_thread);
     sfThread_Destroy(client_thread);
 
-    if(link_type == SERVER)
+    if (link_type == SERVER)
     {
         sfThread_Wait(server_thread);
         sfThread_Destroy(server_thread);

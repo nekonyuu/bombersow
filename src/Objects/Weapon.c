@@ -96,7 +96,7 @@ void armory_LoadImages(WeaponImg* img_tab)
 
 void armory_DestroyImages(WeaponImg* img_tab)
 {
-    for(int i = 0; i < NB_MAX_WEAPONS; i++)
+    for (int i = 0; i < NB_MAX_WEAPONS; i++)
     {
         sfImage_Destroy(img_tab[i].weapon_img);
         sfImage_Destroy(img_tab[i].bullet_img);
@@ -106,7 +106,7 @@ void armory_DestroyImages(WeaponImg* img_tab)
 // Création de l'armurerie & WeaponDefs
 void armory_Create(Weapon* armory)
 {
-    for(int i = 0; i < NB_MAX_WEAPONS; i++)
+    for (int i = 0; i < NB_MAX_WEAPONS; i++)
         assert(armory[i].name = (char*) malloc(20 * sizeof(char)));
 
     // Pied de biche

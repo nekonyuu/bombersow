@@ -77,24 +77,6 @@ sfImage* image_Get(Image *image_, int id)
 
 }
 
-/*Animation* animation_Create(){
-    Animation* animation_ = NULL;
-    assert(animation_ = (Animation*) malloc(sizeof(Animation)));
-
-    animation_->sprite = sfSprite_Create();
-    animation_->x = 0;
-    animation_->y = 0;
-    animation_->image_hauteur = 0;
-    animation_->image_largeur = 0;
-    animation_->nombre_image = 0;
-    animation_->cur_image = 0;
-    animation_->play = STOP;
-    animation_->fps = 0;
-    animation_->clock = sfClock_Create();
-
-    return animation_;
-}*/
-
 // Constructeur
 Animation* animation_Create(sfImage *image, int x, int y, int hauteur, int largeur, int nombre_image, int cur_image, int play, float fps)
 {
@@ -115,8 +97,6 @@ Animation* animation_Create(sfImage *image, int x, int y, int hauteur, int large
 
     animation_->x_c = 0;
     animation_->y_c = 0;
-
-    //printf("%f",animation_->fps);
 
     return animation_;
 }
@@ -189,7 +169,6 @@ Sprite* sprite_Create(int x, int y, sfImage* image, Animation* animation)
 
         sprite->hauteur = animation->image_hauteur;
         sprite->largeur = animation->image_largeur;
-
     }
     else if (image != NULL)
     {

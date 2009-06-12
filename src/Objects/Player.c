@@ -32,6 +32,24 @@
 
 static const int nb_blood_particles = 50;
 
+sfShape* life_Create(Player* player)
+{
+    sfShape* life = NULL;
+    if (player->life < 50)
+        life = sfShape_CreateRectangle(0, 0, player->life/2, 3, sfColor_FromRGB(255,0,0), 0, sfColor_FromRGB(255,255,255));
+    else
+        life = sfShape_CreateRectangle(0, 0, player->life/2, 3, sfColor_FromRGB(0,255,0), 0, sfColor_FromRGB(255,255,255));
+    life_SetPosition(life, player);
+    return life;
+}
+
+void life_SetPosition(sfShape* life, Player* player)
+{
+    float y = player->coord_y + player->sprite->hauteur;
+    float x = player->sprite->largeur/2 + player->coord_x - player->life/4;
+    sfShape_SetPosition(life, x, y);
+}
+
 // Constructeur
 Player* player_Create(char* name, unsigned int current_weapon)
 {
@@ -87,6 +105,10 @@ Player* player_Create(char* name, unsigned int current_weapon)
 
     new_player->gravity = 0;
 
+    new_player->shape_life = life_Create(new_player);
+    new_player->clock_respawn = sfClock_Create();
+    new_player->player_dead = 0;
+
     return new_player;
 }
 
@@ -106,7 +128,10 @@ void player_Destroy(Player* player2destroy)
         logging_Info("player_Destroy", "Destroy weapons...");
         for (int i = 0; i < NB_MAX_WEAPONS; i++)
             weapon_Destroy(player2destroy->weapons[i]);
-        free_secure(player2destroy->weapons);
+        free(player2destroy->weapons);
+
+        sfShape_Destroy(player2destroy->shape_life);
+        sfClock_Destroy(player2destroy->clock_respawn);
 
         logging_Info("player_Destroy", "Destroy player's sprite...");
         sprite_Destroy(player2destroy->sprite);
@@ -201,6 +226,21 @@ void player_CollectWeapon(Player* player_, int weapon_type)
         player_->weapons[weapon_type]->collected = true;
 }
 
+void player_Damage(Player* player_, int damage)
+{
+    player_->life = ((int)player_->life-damage > 0) ? player_->life-damage : 0;
+
+    sfShape_Destroy(player_->shape_life);
+    player_->shape_life = life_Create(player_);
+
+    if (player_->life == 0)
+    {
+        player_->player_dead = 1;
+        quadtree_Delete_Elt(player_, PLAYER);
+        sfClock_GetTime(player_->clock_respawn);
+    }
+}
+
 // Diminue le nombre de cartouches restantes et crée un/des bullet(s)
 void player_WeaponShoot(Map* map, Player* player_, float mouse_x, float mouse_y)
 {
@@ -268,20 +308,30 @@ void player_SetPosition(Player* player, float x, float y)
     player->coord_x = x;
     player->coord_y = y;
     sprite_SetPosition(player->sprite, x, y);
+    life_SetPosition(player->shape_life, player);
 }
 
 void player_Draw(sfRenderWindow* Game, Player* player)
 {
     sprite_Draw(Game, player->sprite);
+    if (!player->player_dead)
+        sprite_Draw(Game, player->sprite);
+}
+
+void player_DrawLife(sfRenderWindow* Game, Player* player)
+{
+    sfRenderWindow_DrawShape(Game, player->shape_life);
 }
 
 void player_BulletCollision(Player* player, Bullet* bullet, Map* map)
 {
-    for(int i = 0; i < 30; i++)
+    player_Damage(player, bullet->damage);
+
+    for (int i = 0; i < 30; i++)
     {
         Particle* particle = particle_CreateBlood();
         particle_SetPosition(particle, bullet->coord_x, bullet->coord_y);
-        particle->speed_x = bullet->speed_x/(5+(i%5));
+        particle->speed_x = bullet->speed_x/(3+(i%5));
         particle->speed_y = bullet->speed_y/(5+(i%5));
 
         float angle = (i%2) ? -(i/2+1)* 3.14/72 : (i/2)* 3.14/72;
@@ -289,7 +339,6 @@ void player_BulletCollision(Player* player, Bullet* bullet, Map* map)
         float vec_y2 = -particle->speed_x * sin(angle) + particle->speed_y * cos(angle);
 
         particle->speed_x = vec_x2;
-        printf("%f\n", particle->speed_x);
         particle->speed_y = vec_y2;
 
         particle_table_AddParticle(map->particle_table, particle);

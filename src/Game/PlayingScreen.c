@@ -44,13 +44,9 @@ bool display_Playing(sfRenderWindow* Game, Config* config)
     Animation *animation2 = animation_Create(image_animation2, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
 
     logging_Info("display_Playing", "Create objects...");
-    Object* obj_temp = object_Create(0);
-    object_LoadImg(obj_temp, NULL, animation);
-    object_SetPosition(obj_temp, 800, 560);
+    Object* obj_temp = object_Create(0, PLATFORM, 800, 560, NULL, animation);
 
-    Object* obj_temp2 = object_Create(0);
-    object_LoadImg(obj_temp2, NULL, animation2);
-    object_SetPosition(obj_temp2, 800, 230);
+    Object* obj_temp2 = object_Create(1, PLATFORM, 800, 230, NULL, animation2);
 
     logging_Info("display_Playing", "Create map...");
     Map* map = map_Create(0, 100, config);
@@ -95,7 +91,7 @@ bool display_Playing(sfRenderWindow* Game, Config* config)
 
         //quadtree_Draw(Game, map->quad_tree);
 
-        if(config->show_fps)
+        if (config->show_fps)
             Screen_FPSShow(Game);
 
         sfRenderWindow_Display(Game);                           // Mise à jour de la fenêtre

@@ -136,6 +136,9 @@ typedef struct PLAYER
     unsigned int player_id;         // ID joueur
     sfIPAddress* player_ip;         // IP joueur
     unsigned int life;              // Vie restante
+    sfShape* shape_life;            // Barre de vie
+    sfClock* clock_respawn;         // Clock pour le respawn
+    bool player_dead;               // Booléen pour la mort
 
     Weapon **weapons;               // Armes du joueur
     unsigned int nb_weapons;        // Nombre d'armes
@@ -262,7 +265,7 @@ sfMutex* Players_CoordUpdate;           // Mutex MàJ Players
 sfMutex* Network_ServerMutex;           // Mutex Serveur
 
 // Objects.c
-Object* object_Create(unsigned int);
+Object* object_Create(unsigned int, unsigned int, int, int, sfImage*, Animation*);
 void object_Destroy(Object*);
 void object_LoadImg(Object*, sfImage*, Animation*);
 void object_Draw(sfRenderWindow*, Object*);
@@ -277,6 +280,8 @@ void armory_Create(Weapon*);
 void armory_Destroy(Weapon*);
 
 // Player.c
+sfShape* life_Create(Player* player);
+void life_SetPosition(sfShape* life, Player* player);
 Player* player_Create(char*, unsigned int);
 void player_Destroy(Player*);
 void player_Displace(Player*, Direction, float, Config*);
@@ -286,6 +291,9 @@ void player_WeaponShoot(Map*, Player*, float, float);
 unsigned int player_GetPlayerID(Player*);
 void player_SetPosition(Player*, float, float);
 void player_Draw(sfRenderWindow*, Player*);
+void player_Damage(Player* player_, int damage);
+void player_DrawLife(sfRenderWindow* Game, Player* player);
+void player_BulletCollision(Player*, Bullet*, Map*);
 
 // Bullet.c
 Bullet* bullet_Create(unsigned int, unsigned int);
@@ -333,6 +341,5 @@ PlayersList* playerslist_Create(Map*, sfFont*, sfColor, int, sfStringStyle, floa
 void playerslist_Destroy(PlayersList*);
 void playerslist_Draw(PlayersList*, sfRenderWindow*);
 void playerslist_Update(PlayersList*, Map*);
-void player_BulletCollision(Player*, Bullet*, Map*);
 
 #endif

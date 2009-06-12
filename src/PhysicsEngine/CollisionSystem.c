@@ -159,7 +159,7 @@ Collision* collision_Detection_Object(void* obj_, int type)
     // Si on a une collision on retourne la collision
 
     if ( collision->type != OBJECT /* Inhérent à l'initialisation de collision, on ne retourne pas une collision vide */
-        || collision->object != NULL )
+            || collision->object != NULL )
         return collision;
 
     //Detruit la struct si on n'a pas de collision

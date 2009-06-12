@@ -23,6 +23,7 @@
 
 #include <SFML/Audio.h>
 
+#include "BaseSystem/Logging.h"
 #include "AudioEngine.h"
 
 sfMutex* g_AudioEngine_SoundsUpdate;
@@ -44,30 +45,60 @@ AudioEngine* AudioEngine_Init()
 
     g_AudioEngine_SoundsUpdate = sfMutex_Create();
 
+    engine->update_thread = sfThread_Create(&AudioEngine_UpdateEngine, engine);
+    sfThread_Launch(engine->update_thread);
+
     return engine;
 }
 
 void AudioEngine_Destroy(AudioEngine* engine)
 {
-    for(int i = 0; i < engine->nb_sounds; i++)
-        sfSound_Destroy(engine->sounds[i]);
+    AudioEngineSound* ptr = engine->sounds, *ptr2 = NULL;
 
-    for(int i = 0; i < engine->nb_sounds; i++)
+    engine->started = sfFalse;
+
+    sfThread_Wait(engine->update_thread);
+    sfThread_Destroy(engine->update_thread);
+
+    while (ptr != NULL)
+    {
+        ptr2 = ptr->next;
+        sfSound_Destroy(ptr->sound);
+        ptr = ptr2;
+    }
+
+    for (int i = 0; i < engine->nb_soundbuffers; i++)
         sfSoundBuffer_Destroy(engine->soundbuffers[i]);
 
-    for(int i = 0; i < engine->nb_sounds; i++)
+    for (int i = 0; i < engine->nb_musics; i++)
         sfMusic_Destroy(engine->musics[i]);
 }
 
 void AudioEngine_UpdateEngine(void* UserData)
 {
     AudioEngine* engine = (AudioEngine*) UserData;
+    AudioEngineSound* ptr = engine->sounds, *ptr2 = NULL;
 
-    while(engine->started)
+    while (engine->started)
     {
-        for(AudioEngineSounds* ptr = engine->sounds; ptr != NULL; ptr = ptr->next)
+        while (ptr != NULL)
         {
+            ptr2 = ptr->next;
 
+            sfMutex_Lock(g_AudioEngine_SoundsUpdate);
+
+            if (sfSound_GetStatus(ptr->sound) == sfStopped)
+            {
+                ptr->prev->next = ptr->next;
+                ptr->next->prev = ptr->prev;
+
+                sfSound_Destroy(ptr->sound);
+                free(ptr);
+            }
+
+            sfMutex_Unlock(g_AudioEngine_SoundsUpdate);
+
+            ptr = ptr2;
         }
 
         sfSleep(0.5f);
@@ -90,14 +121,28 @@ void AudioEngine_PlaySound(AudioEngine* engine, int index)
 {
     sfMutex_Lock(g_AudioEngine_SoundsUpdate);
 
-    AudioEngineSounds* new_sound = NULL;
-    assert(new_sound = malloc(sizeof(AudioEngineSounds*)));
+    AudioEngineSound* new_sound = NULL;
+    assert(new_sound = malloc(sizeof(AudioEngineSound*)));
 
     new_sound->sound = sfSound_Create();
 
-    sfSound_SetBuffer(engine->sounds[engine->nb_sounds - 1], engine->soundbuffers[index]);
-    sfSound_SetLoop(engine->sounds[engine->nb_sounds - 1], sfFalse);
-    sfSound_Play(engine->sounds[engine->nb_sounds - 1]);
+    if (engine->sounds)
+    {
+        engine->sounds->prev = new_sound;
+        new_sound->next = engine->sounds;
+        new_sound->prev = NULL;
+        engine->sounds = new_sound;
+    }
+    else
+    {
+        engine->sounds = new_sound;
+        new_sound->prev = NULL;
+        new_sound->next = NULL;
+    }
+
+    sfSound_SetBuffer(new_sound->sound, engine->soundbuffers[index]);
+    sfSound_SetLoop(new_sound->sound, sfFalse);
+    sfSound_Play(new_sound->sound);
 
     sfMutex_Unlock(g_AudioEngine_SoundsUpdate);
 }

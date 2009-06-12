@@ -43,33 +43,36 @@ void gravitysystem_PlayerUpdate(Map* map_)
     {
         player = map_->players_list[i];
 
-        speed_y = player->speed_y + config->gravity_speed * map_->clocks_time[PLAYER_CLOCK] * config->gravity_coef;
-        y = speed_y * map_->clocks_time[PLAYER_CLOCK];
-
-        if (player->sprite->hauteur + player->coord_y + y <= config->height && player->coord_y + y > 0)
+        if (!player->player_dead)
         {
-            player_SetPosition(player, player->coord_x, player->coord_y + y);
-            quadtree_Update(player, PLAYER);
-            Collision* collision = collision_Detection_Object(player, PLAYER);
-            if (collision != NULL)
+            speed_y = player->speed_y + config->gravity_speed * map_->clocks_time[PLAYER_CLOCK] * config->gravity_coef;
+            y = speed_y * map_->clocks_time[PLAYER_CLOCK];
+
+            if (player->sprite->hauteur + player->coord_y + y <= config->height && player->coord_y + y > 0)
             {
-                player_SetPosition(player, player->coord_x, player->coord_y - y);
+                player_SetPosition(player, player->coord_x, player->coord_y + y);
                 quadtree_Update(player, PLAYER);
-                speed_y = 0;
+                Collision* collision = collision_Detection_Object(player, PLAYER);
+                if (collision != NULL)
+                {
+                    player_SetPosition(player, player->coord_x, player->coord_y - y);
+                    quadtree_Update(player, PLAYER);
+                    speed_y = 0;
+                    player->jump = NO_JUMP;
+                }
+                collision_Destroy(collision);
+                player->speed_y = speed_y;
+            }
+            else if (player->sprite->hauteur + player->coord_y + y > config->height)
+            {
+                player_SetPosition(player, player->coord_x, config->height - player->sprite->hauteur);
+                quadtree_Update(player, PLAYER);
+                player->speed_y = 0;
                 player->jump = NO_JUMP;
             }
-            collision_Destroy(collision);
-            player->speed_y = speed_y;
+            else
+                player->speed_y = speed_y;
         }
-        else if (player->sprite->hauteur + player->coord_y + y > config->height)
-        {
-            player_SetPosition(player, player->coord_x, config->height - player->sprite->hauteur);
-            quadtree_Update(player, PLAYER);
-            player->speed_y = 0;
-            player->jump = NO_JUMP;
-        }
-        else
-            player->speed_y = speed_y;
     }
 }
 
@@ -251,7 +254,7 @@ void gravitysystem_BloodUpdate(void* UserData)
                 particle_->speed_x = 0;
             }
         }
-        sfSleep(0.001f);
+        sfSleep(0.005f);
     }
 }
 

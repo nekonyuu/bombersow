@@ -233,9 +233,9 @@ void server_Listen_TCP(void* UserData)
                             unsigned int playerid2destroy = (unsigned int) sfPacket_ReadUint8(packet);
                             sfPacket* destroy_request = server_CreateDestroyPlayerPacket(playerid2destroy);
                             // On préviens les autres players du départ du player donné
-                            for(unsigned int i = 0; i < map->nb_players; i++)
+                            for (unsigned int i = 0; i < map->nb_players; i++)
                             {
-                                if(playerid2destroy != map->players_list[i]->player_id)
+                                if (playerid2destroy != map->players_list[i]->player_id)
                                     sfSocketTCP_SendPacket(map->players_list[i]->listen_socket, destroy_request);
                             }
                             // On retire le socket concerné du selector
@@ -263,7 +263,7 @@ void server_Listen_TCP(void* UserData)
 
     sfPacket* disconnect_notify = server_CreateClosePacket();
 
-    for(unsigned int i = 0; i < map->nb_players; i++)
+    for (unsigned int i = 0; i < map->nb_players; i++)
         sfSocketTCP_SendPacket(map->players_list[i]->listen_socket, disconnect_notify);
 
     sfPacket_Destroy(disconnect_notify);

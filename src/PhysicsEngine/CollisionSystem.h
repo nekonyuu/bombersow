@@ -26,7 +26,8 @@
 
 #include "PhysicsEngine/PhysicsEngine.h"
 
-typedef struct COLLISION {
+typedef struct COLLISION
+{
 
     Physics_type type;  //type de l'objet en collision
 

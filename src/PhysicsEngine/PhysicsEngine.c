@@ -59,7 +59,7 @@ void list_element_Destroy(List_element* list)
 
 void list_element_Destroy_All(List_element* list)
 {
-    if(list != NULL)
+    if (list != NULL)
     {
         list_element_Destroy_All(list->next);
         free_secure(list);
@@ -94,7 +94,7 @@ List* list_Create()
 int list_Next(List* list)
 {
     list->pointeur = list->pointeur->next;
-    if(list->pointeur == NULL)
+    if (list->pointeur == NULL)
         return 0;
     else
         return 1;
@@ -825,10 +825,10 @@ void quadtree_Update(void* obj_, int type)
 
 
     /*if (!IntRect_Contains(&quad->rect, &rect_obj))
-{*/
-        quadtree_Delete_Elt(obj_, type);
-        quadtree_Add(quad, obj_, type);
-   // }
+    {*/
+    quadtree_Delete_Elt(obj_, type);
+    quadtree_Add(quad, obj_, type);
+    // }
 
     sfMutex_Unlock(g_QuadTree_Access);
 }
