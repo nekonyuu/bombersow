@@ -38,31 +38,56 @@ typedef struct PARTICLE_TABLE
     int nbr_max;            //nombre maximum de particule
     int indice_courant;     //indice actuel du tableau
     Particle** particle;    //tableau de particule
-}Particle_Table;
+} Particle_Table;
 
+// Structure pour chaque groupe de particule de sang à créer
+typedef struct BLOOD_PARTICLES_INFO
+{
+    int coord_x, coord_y;
+    float speed_x, speed_y;
+
+    struct BLOOD_PARTICLES_INFO* next;
+} BloodParticleInfo;
+
+// Moteur à particules
+typedef struct PARTICLE_ENGINE
+{
+    Particle_Table* table;
+    BloodParticleInfo* blood_part_list;
+
+    sfThread* create_thread;
+    sfThread* update_thread;
+
+    bool running;
+} ParticleEngine;
+
+void ParticleEngine_Init();
+void ParticleEngine_Clean(ParticleEngine* engine);
+void ParticleEngine_CreateParticles(void* UserData);
+void ParticleEngine_CreateBlood(ParticleEngine* engine, int coord_x, int coord_y, float speed_x, float speed_y);
 
 Particle* particle_Create();
 Particle* particle_CreateBlood();
 
-void particle_SetPosition(Particle*, int, int);
+inline void particle_SetPosition(Particle*, int, int);
 
-int Particle_GetX(Particle*);
-int Particle_GetY(Particle*);
+inline int Particle_GetX(Particle*);
+inline int Particle_GetY(Particle*);
 
-void Particle_SetX(Particle*, int);
-void Particle_SetY(Particle*, int);
+inline void Particle_SetX(Particle*, int);
+inline void Particle_SetY(Particle*, int);
 
-int Particle_GetSizeX(Particle*);
-int Particle_GetSizeY(Particle*);
+inline int Particle_GetSizeX(Particle*);
+inline int Particle_GetSizeY(Particle*);
 
-void Particle_SetSizeX(Particle*, int);
-void Particle_SetSizeY(Particle*, int);
+inline void Particle_SetSizeX(Particle*, int);
+inline void Particle_SetSizeY(Particle*, int);
 
-float Particle_GetSpeedX(Particle*);
-float Particle_GetSpeedY(Particle*);
+inline float Particle_GetSpeedX(Particle*);
+inline float Particle_GetSpeedY(Particle*);
 
-void Particle_SetSpeedX(Particle*, float);
-void Particle_SetSpeedY(Particle*, float);
+inline void Particle_SetSpeedX(Particle*, float);
+inline void Particle_SetSpeedY(Particle*, float);
 
 void particle_Draw(Particle*, Config*);
 void particle_Destroy(Particle*);
@@ -71,10 +96,5 @@ Particle_Table* particle_table_Create();
 void particle_table_Destroy(Particle_Table*);
 void particle_table_AddParticle(Particle_Table*, Particle*);
 void particle_table_Draw(sfRenderWindow*, Particle_Table*, Config*);
-
-/*typedef struct PARTICLE_ENGINE
-{
-
-}Particle_Engine;*/
 
 #endif

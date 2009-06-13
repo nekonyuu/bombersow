@@ -30,8 +30,6 @@
 #include "GraphicEngine/Draw.h"
 #include "PhysicsEngine/CollisionSystem.h"
 
-static const int nb_blood_particles = 50;
-
 sfShape* life_Create(Player* player)
 {
     sfShape* life = NULL;
@@ -327,6 +325,9 @@ void player_BulletCollision(Player* player, Bullet* bullet, Map* map)
 {
     player_Damage(player, bullet->damage);
 
+    ParticleEngine_CreateBlood(map->particle_engine, bullet->coord_x, bullet->coord_y, bullet->speed_x, bullet->speed_y);
+
+    /*
     for (int i = 0; i < 30; i++)
     {
         Particle* particle = particle_CreateBlood();
@@ -342,7 +343,7 @@ void player_BulletCollision(Player* player, Bullet* bullet, Map* map)
         particle->speed_y = vec_y2;
 
         particle_table_AddParticle(map->particle_table, particle);
-    }
+    }*/
     //player_CreateBlood(player, bullet->coord_x, bullet->coord_y);
 }
 /*

@@ -53,7 +53,6 @@ int main()
     /* --------- END CONFIG --------- */
 
     logging_Info("main", "Initializing rand...");
-//    srand(time(NULL));
 
     /* -------- Player Image -------- */
     logging_Info("main", "Load default sprite");

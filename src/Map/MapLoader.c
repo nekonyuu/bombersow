@@ -171,25 +171,6 @@ void map_Loader_Image(Image* image_, char* path)
     data_Destroy(liste);
 }
 
-// Loader d'animations pour les map
-void map_Loader_Animation(Animation** animation, unsigned int taille, Image* images, char* path)
-{
-    Data* data;
-
-    data = data_Parser("[ANIMATION]", path);
-
-    for (int i = 0; i < data->taille; i++)
-    {
-        int id = 0, id_image = 0, coord_x = 0, coord_y = 0, hauteur = 0, largeur = 0, nb_image = 0;
-        float fps = 0.0;
-
-        sscanf(data->data[i], "%d %d %d %d %d %d %d %f", &id, &id_image, &coord_x, &coord_y, &hauteur, &largeur, &nb_image, &fps);
-        animation[i] = animation_Create(images->image_tab[id_image], coord_x, coord_y, hauteur, largeur, nb_image, 0, STOP, fps);
-    }
-
-    data_Destroy(data);
-}
-
 void dossier_Read_Image(Image* image, char* path)
 {
     DIR *rep = opendir(path);
@@ -229,4 +210,91 @@ void dossier_Read_Image(Image* image, char* path)
     }
 
     closedir(rep);
+}
+
+void map_Loader_Animation(Animation** animation, Image* image, unsigned int* taille_anim, char* path)                         //Chargement d'une animation
+{
+    Data* data;                                     //Var qui va servir à stocker les infos de l'animation
+    *taille_anim = 0;                                    //Initialisation de la taille de l'animation
+
+    data = data_Parser("[ANIMATION]", path);        //chargement des infos
+
+    for (int i = 0; i < data->taille; i++)
+    {
+        int id = 0, id_image = 0, coord_x = 0, coord_y = 0, hauteur = 0, largeur = 0, nb_image = 0;     //Carac. de l'animation
+        float fps = 0.0;
+
+        sscanf(data->data[i], "%d %d %d %d %d %d %d %f", &id, &id_image, &coord_x, &coord_y, &hauteur, &largeur, &nb_image, &fps);      //On les récupère dans le fichier txt
+        animation[i] = animation_Create(image_Get(image, id_image), coord_x, coord_y, hauteur, largeur, nb_image, 0, STOP, fps);                    //Et on les stock dans l'animation
+        *taille_anim++;                                                                                                                  //On augmente la taille \o/ Ce sera en fait le nombre d'animation de la map
+    }
+
+    data_Destroy(data);  //Libère la mémoire
+}
+
+unsigned int map_Loader_Background(char* path)     //Chargement du background
+{
+    Data* data;
+    unsigned int id_image = 0;
+
+    data = data_Parser("[BACKGROUND]", path);       //Recherche et stockage des caracs du BG
+    sscanf(data->data[0], "%d", &id_image);         //Saisi
+
+    data_Destroy(data);
+    return id_image;                                //On renvoie l'id de l'image qui servira à afficher le background dans la fonctions principale
+}
+
+void map_Loader_Objects(Object** object, Image* image, Animation** animation, unsigned int* taille_obj, unsigned int taille_anim, char* path)     //Chargement des objets proprement dit
+{
+    Data* data;
+    *taille_obj = 0;
+
+    data = data_Parser("[OBJECTS]", path);
+
+    for (int i = 0; i < data->taille; i++)
+    {
+        int type = 0, coord_x = 0, coord_y = 0, plan = 0, id_animation = 0, id_image = 0, largeur = 0, hauteur = 0;
+
+        sscanf( data->data[i], "%d %d %d %d %d %d %d %d", &type, &coord_x, &coord_y, &plan, &id_animation, &id_image, &largeur, &hauteur);
+        if ( id_image == -1)                                                                                                                   //Si ce n'est pas une simple image, (id_image == -1 -> id_animation != -1)
+        {
+            if ( id_animation < 0 || id_animation > taille_anim)                                                                                //Gestion d'erreur
+                logging_Error("map_Loader_Objects", "Problème sur l'affectation de l'id à l'animatio : \n id trop grande -> problème d'indexation \n id plus petite que zero -> !=animation, alors que c'en est une.", FUCKING_STUPID_CLIENT_ERROR);
+            else
+            {
+                object[i] = object_Create( i, type, coord_x, coord_y, NULL, animation[id_animation]);        //S'il n'y a pas de problème on créer l'objet comme une animation
+            }
+        }
+        else
+        {
+            object[i] = object_Create( i, type, coord_x, coord_y, image_Get(image, id_image), NULL);          //Si id_image != -1, on crée alors l'objet comme une image
+        }
+        taille_obj++;
+    }
+
+
+    data_Destroy(data);
+}
+
+void map_Loader(Map* map, char* path)
+{
+    Image* image = image_Create();
+    Animation** animation = NULL;
+    Object** object = NULL;
+    unsigned int nb_anim = 0, nb_objects = 0;
+
+    map_Loader_Image(image, path);            //On charge les images
+    map->images = image;                      //On les intègres à la structures map
+
+    map->background = sfSprite_Create();
+    sfSprite_SetImage(map->background, image_Get(map->images, map_Loader_Background(path))); //On affiche l'arrière plan
+
+    map_Loader_Animation(animation, image, &nb_anim, path);   //On charge les animations
+    map->nb_anim = nb_anim;
+    map->animations = animation;                       //On les intègres à la structure de la map
+
+    map_Loader_Objects(object, image, animation, &nb_objects, nb_anim, path);     //On charge les objets
+    map->nb_objects = nb_objects;
+    map->objects_list = object;      //On les intègre à la map
+
 }

@@ -23,6 +23,7 @@
 
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <math.h>
 
 #include "BaseSystem/Logging.h"
 #include "PhysicsEngine/PhysicsEngine.h"
@@ -33,6 +34,132 @@
 #include "GraphicEngine/Draw.h"
 
 static const int max_particles = 10000;
+static const int nb_blood_particles = 30;
+sfMutex* g_ParticleEngine_Mutex;
+
+void ParticleEngine_Init(Map* map)
+{
+    ParticleEngine* engine = NULL;
+    assert(engine = malloc(sizeof(ParticleEngine)));
+
+    g_ParticleEngine_Mutex = sfMutex_Create();
+
+    map->particle_engine = engine;
+
+    engine->table = particle_table_Create();
+    engine->blood_part_list = NULL;
+
+    engine->running = true;
+
+    engine->create_thread = sfThread_Create(&ParticleEngine_CreateParticles, engine);
+    engine->update_thread = sfThread_Create(&gravitysystem_BloodUpdate, map);
+
+    sfThread_Launch(engine->create_thread);
+    sfThread_Launch(engine->update_thread);
+}
+
+void ParticleEngine_Clean(ParticleEngine* engine)
+{
+    BloodParticleInfo* ptr = engine->blood_part_list, *ptr2 = NULL;
+
+    engine->running = false;
+
+    sfThread_Wait(engine->update_thread);
+    sfThread_Wait(engine->create_thread);
+
+    sfThread_Destroy(engine->update_thread);
+    sfThread_Destroy(engine->create_thread);
+
+    sfMutex_Destroy(g_ParticleEngine_Mutex);
+
+    particle_table_Destroy(engine->table);
+
+    while (ptr != NULL)
+    {
+        ptr2 = ptr->next;
+        free(ptr);
+        ptr = ptr2;
+    }
+
+    free(engine);
+}
+
+void ParticleEngine_CreateParticles(void* UserData)
+{
+    ParticleEngine* engine = (ParticleEngine*) UserData;
+    BloodParticleInfo* ptr = NULL, *ptr2 = NULL;
+
+    while (engine->running)
+    {
+        sfMutex_Lock(g_ParticleEngine_Mutex);
+
+        ptr = engine->blood_part_list;
+        engine->blood_part_list = NULL;
+
+        sfMutex_Unlock(g_ParticleEngine_Mutex);
+
+        while (ptr != NULL)
+        {
+            ptr2 = ptr->next;
+
+            for (int i = 0; i < nb_blood_particles; i++)
+            {
+                logging_Info("ParticleEngine_CreateParticles", "Creating particles...");
+
+                Particle* particle = particle_CreateBlood();
+                particle_SetPosition(particle, ptr->coord_x, ptr->coord_y);
+                particle->speed_x = ptr->speed_x / (3 + (i % 5));
+                particle->speed_y = ptr->speed_y / (5 + (i % 5));
+
+                float angle = (i % 2) ? -(i / 2 + 1)* 3.14 / 72 : (i / 2)* 3.14 / 72;
+                float vec_x2 = particle->speed_x * cos(angle) + particle->speed_y * sin(angle);
+                float vec_y2 = -particle->speed_x * sin(angle) + particle->speed_y * cos(angle);
+
+                particle->speed_x = vec_x2;
+                particle->speed_y = vec_y2;
+
+                particle_table_AddParticle(engine->table, particle);
+            }
+
+            free(ptr);
+
+            ptr = ptr2;
+        }
+
+        sfSleep(0.005f);
+    }
+}
+
+void ParticleEngine_CreateBlood(ParticleEngine* engine, int coord_x, int coord_y, float speed_x, float speed_y)
+{
+    BloodParticleInfo* info = NULL;
+    assert(info = malloc(sizeof(BloodParticleInfo)));
+
+    info->coord_x = coord_x;
+    info->coord_y = coord_y;
+
+    info->speed_x = speed_x;
+    info->speed_y = speed_y;
+
+    if(!engine->blood_part_list)
+    {
+        info->next = NULL;
+
+        sfMutex_Lock(g_ParticleEngine_Mutex);
+
+        engine->blood_part_list = info;
+
+        sfMutex_Unlock(g_ParticleEngine_Mutex);
+    }
+    else
+    {
+        BloodParticleInfo* ptr = NULL;
+        for(ptr = engine->blood_part_list; ptr->next != NULL; ptr = ptr->next);
+
+        info->next = NULL;
+        ptr->next = info;
+    }
+}
 
 Particle* particle_Create()
 {
@@ -129,7 +256,7 @@ inline void Particle_SetSpeedY(Particle* particle, float speed)
     particle->speed_y = speed;
 }
 
-inline void particle_Draw(Particle* particle, Config* config)
+void particle_Draw(Particle* particle, Config* config)
 {
     // Couleur rouge sang
     glColor3f(particle->particle_color.r, particle->particle_color.g, particle->particle_color.b);
@@ -150,7 +277,6 @@ void particle_Destroy(Particle* particle)
 
 Particle_Table* particle_table_Create()
 {
-
     Particle_Table* particle_table = NULL;
     assert(particle_table = (Particle_Table*)malloc(sizeof(Particle_Table)));
 
@@ -167,13 +293,11 @@ Particle_Table* particle_table_Create()
 
 void particle_table_Destroy(Particle_Table* particle_table)
 {
-
     for (int i = 0; i < particle_table->nbr_max; i++)
         particle_Destroy(particle_table->particle[i]);
 
     free_secure(particle_table->particle);
     free_secure(particle_table);
-
 }
 
 void particle_table_AddParticle(Particle_Table* particle_table, Particle* particle)

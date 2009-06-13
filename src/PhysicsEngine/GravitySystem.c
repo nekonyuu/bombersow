@@ -226,12 +226,12 @@ void gravitysystem_BloodUpdate(void* UserData)
     Config* config = map_->cfg;
     float speed_y = 0, y = 0, largeur = 0, hauteur = 0;
 
-    while (map_->game_started)
+    while (map_->particle_engine->running)
     {
         Map_ClockTick(map_, PARTICLE_CLOCK);
-        for (int i = 0; i < map_->particle_table->nbr_particle; i++)
+        for (int i = 0; i < map_->particle_engine->table->nbr_particle; i++)
         {
-            particle_ = map_->particle_table->particle[i];
+            particle_ = map_->particle_engine->table->particle[i];
             speed_y = particle_->speed_y + config->gravity_speed * map_->clocks_time[PARTICLE_CLOCK] * config->gravity_coef;
             y = speed_y * map_->clocks_time[PARTICLE_CLOCK];
 

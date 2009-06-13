@@ -42,6 +42,7 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
     new_map->cpt_players_rev = 0;
 
     new_map->cfg = config;
+    new_map->particle_engine = NULL;
 
     new_map->background = NULL;
 
@@ -51,8 +52,6 @@ Map* map_Create(unsigned int map_id, unsigned int nb_players, Config* config)
 
     new_map->objects_list = NULL;
     new_map->nb_objects = 0;
-
-    new_map->particle_table = particle_table_Create();
 
     if (nb_players > 0)
     {
@@ -122,8 +121,6 @@ void map_Destroy(Map* map2destroy)
         for (unsigned int i = 0; i < map2destroy->nb_players; i++)
             player_Destroy(map2destroy->players_list[i]);
         free_secure(map2destroy->players_list);
-
-        particle_table_Destroy(map2destroy->particle_table);
 
         logging_Info("map_Destroy", "Destroy bullets...");
         BulletList_Destroy(map2destroy->bullets);
@@ -336,5 +333,5 @@ void map_Draw(sfRenderWindow* Game, Map* map)
 
     bullet_DrawList(Game, BulletList_GetHead(map->bullets));
 
-    particle_table_Draw(Game, map->particle_table, map->cfg);
+    particle_table_Draw(Game, map->particle_engine->table, map->cfg);
 }

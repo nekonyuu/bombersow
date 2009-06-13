@@ -50,7 +50,10 @@ bool display_Playing(sfRenderWindow* Game, Config* config)
 
     logging_Info("display_Playing", "Create map...");
     Map* map = map_Create(0, 100, config);
+
+    // Initialisation des moteurs
     PhysicsEngine_Init();
+    ParticleEngine_Init(map);
 
     map_AddObject(map, obj_temp);
     map_AddObject(map, obj_temp2);
@@ -70,14 +73,14 @@ bool display_Playing(sfRenderWindow* Game, Config* config)
     player_SwitchWeapon(map->players_list[0], SHOTGUN);
 
     // Préparation des threads
-    sfThread* phys_BloodUpdate = sfThread_Create(&gravitysystem_BloodUpdate, map);
+    //sfThread* phys_BloodUpdate = sfThread_Create(&gravitysystem_BloodUpdate, map);
     //sfThread* phys_PlayersUpdate = sfThread_Create(&gravitysystem_PlayerUpdate, map);
     //sfThread* phys_BulletsUpdate = sfThread_Create(&gravitysystem_BulletUpdate, map);
 
     map->game_started = true;
 
     // Démarrage
-    sfThread_Launch(phys_BloodUpdate);
+    //sfThread_Launch(phys_BloodUpdate);
     //sfThread_Launch(phys_PlayersUpdate);
     //sfThread_Launch(phys_BulletsUpdate);
 
@@ -102,17 +105,17 @@ bool display_Playing(sfRenderWindow* Game, Config* config)
 
     map->game_started = false;
 
-    sfThread_Wait(phys_BloodUpdate);
+    //sfThread_Wait(phys_BloodUpdate);
     //sfThread_Wait(phys_BulletsUpdate);
     //sfThread_Wait(phys_PlayersUpdate);
 
-    sfThread_Destroy(phys_BloodUpdate);
+    //sfThread_Destroy(phys_BloodUpdate);
     //sfThread_Destroy(phys_BulletsUpdate);
     //sfThread_Destroy(phys_PlayersUpdate);
 
-    map_Destroy(map);
-
+    ParticleEngine_Clean(map->particle_engine);
     PhysicsEngine_Clean();
+    map_Destroy(map);
 
     sfImage_Destroy(image_animation);
 

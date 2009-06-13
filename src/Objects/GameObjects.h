@@ -224,6 +224,7 @@ typedef struct MAP
     unsigned int cpt_players_rev;   // Compteur courant pour les player_id
 
     Config* cfg;                    // Pointeur vers la config du jeu
+    ParticleEngine* particle_engine;// Moteur à particules
 
     sfSprite* background;           // Arrière-plan
 
@@ -237,11 +238,9 @@ typedef struct MAP
     Player** players_list;          // Liste des joueurs de la map
     unsigned int nb_players;        // Nombre de joueurs connectés sur la map
 
-    Particle_Table* particle_table; // Tableau de particule pour le sang
-
     BulletList* bullets;            // Liste des balles tirées
 
-    PacketList* gamepackets2send;       // Liste des paquets de jeu à envoyer
+    PacketList* gamepackets2send;   // Liste des paquets de jeu à envoyer
 
     bool chat_started;              // Salon de discussion démarré ?
     bool game_started;              // Partie démarrée ?
