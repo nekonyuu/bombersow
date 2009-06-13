@@ -48,7 +48,8 @@ void GraphicEngine_Init(sfRenderWindow* Game, Config* config)
     // Projection orthogonale
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(0, config->width, 0, config->height);
+    // Repère orthogonal identique à SFML
+    gluOrtho2D(0, config->width, config->height, 0);
 
     /* ---------- END INIT ---------- */
 }
