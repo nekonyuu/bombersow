@@ -38,15 +38,20 @@ bool display_Playing(sfRenderWindow* Game, Config* config)
 {
     sfImage *image_animation = sfImage_CreateFromFile("base/images/animation2.png"); // Test
     sfImage *image_animation2 = sfImage_CreateFromFile("base/images/animation.png"); // Test
+    sfImage *img_platform = sfImage_CreateFromFile("base/images/Une plateforme mobile ou non.png");
     bool ingame = true;
 
     Animation *animation = animation_Create(image_animation2, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
     Animation *animation2 = animation_Create(image_animation2, 0, 0, 30, 30, 4, 0, BOUCLE, 0.1f);
 
+
     logging_Info("display_Playing", "Create objects...");
     Object* obj_temp = object_Create(0, PLATFORM, 800, 560, NULL, animation);
-
     Object* obj_temp2 = object_Create(1, PLATFORM, 800, 230, NULL, animation2);
+    Object* obj_temp3 = object_Create(2, PLATFORM, 400, 330, img_platform, NULL);
+    Object* obj_temp4 = object_Create(3, PLATFORM, 400, 575, img_platform, NULL);
+    Object* obj_temp5 = object_Create(4, PLATFORM, 200, 150, img_platform, NULL);
+    Object* obj_temp6 = object_Create(5, PLATFORM, 200, 350, img_platform, NULL);
 
     logging_Info("display_Playing", "Create map...");
     Map* map = map_Create(0, 100, config);
@@ -57,6 +62,10 @@ bool display_Playing(sfRenderWindow* Game, Config* config)
 
     map_AddObject(map, obj_temp);
     map_AddObject(map, obj_temp2);
+    map_AddObject(map, obj_temp3);
+    map_AddObject(map, obj_temp4);
+    map_AddObject(map, obj_temp5);
+    map_AddObject(map, obj_temp6);
 
     int i = 0;
     logging_Info("display_Playing", "Create players...");
@@ -65,12 +74,14 @@ bool display_Playing(sfRenderWindow* Game, Config* config)
         char* name = malloc(5 * sizeof(char));
         strcpy(name, "HAHA");
         Player* plr = player_Create(name, CROWBAR);
-        player_SetPosition(plr, (i - i % 6) * 15, (i % 10) * 50);
+        player_SetPosition(plr, (i - i % 6) * 18, (i % 10) * 50);
         map_AddPlayer(map, plr);
     }
 
-    player_CollectWeapon(map->players_list[0], SHOTGUN);
-    player_SwitchWeapon(map->players_list[0], SHOTGUN);
+    for(int i = 0; i < NB_MAX_WEAPONS; i++)
+    {
+        player_CollectWeapon(map->players_list[0], i);
+    }
 
     // Préparation des threads
     //sfThread* phys_BloodUpdate = sfThread_Create(&gravitysystem_BloodUpdate, map);
@@ -118,6 +129,8 @@ bool display_Playing(sfRenderWindow* Game, Config* config)
     map_Destroy(map);
 
     sfImage_Destroy(image_animation);
+    sfImage_Destroy(image_animation2);
+    sfImage_Destroy(img_platform);
 
     return false;
 }

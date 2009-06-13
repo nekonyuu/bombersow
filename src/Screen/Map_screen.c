@@ -156,7 +156,7 @@ void map_screen_Click(Map_screen* map, int mouse_x, int mouse_y)
                 }
 
             }else{
-                map->editor->object[hash_object] = object_Create(PLATFORM);
+                map->editor->object[hash_object] = object_Create(0, PLATFORM, 0, 0, NULL, NULL);
                 map->editor->object[hash_object]->type = map->editor->object_create->type;
                 Animation* temp_anim = NULL;
                 if(map->editor->selected_sprite->type)
@@ -172,7 +172,7 @@ void map_screen_Click(Map_screen* map, int mouse_x, int mouse_y)
                 map->editor->object[hash_object]->sprite = sprite_Create(map->editor->selected_sprite->x,map->editor->selected_sprite->y, sprite_GetImage(map->editor->selected_sprite), temp_anim);
             }
 
-            Object* obj = object_Create(PLATFORM);
+            Object* obj = object_Create(0, PLATFORM, 0, 0, NULL, NULL);
             obj->type = map->editor->object_create->type;
             obj->speed = 0;
             obj->weapon_id = map->editor->object_create->weapon_id;

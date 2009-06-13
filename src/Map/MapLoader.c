@@ -214,7 +214,7 @@ void dossier_Read_Image(Image* image, char* path)
 
 void map_Loader_Animation(Animation** animation, Image* image, unsigned int* taille_anim, char* path)                         //Chargement d'une animation
 {
-    Data* data;                                     //Var qui va servir à stocker les infos de l'animation
+    Data* data = data_Create();                                     //Var qui va servir à stocker les infos de l'animation
     *taille_anim = 0;                                    //Initialisation de la taille de l'animation
 
     data = data_Parser("[ANIMATION]", path);        //chargement des infos
@@ -234,7 +234,7 @@ void map_Loader_Animation(Animation** animation, Image* image, unsigned int* tai
 
 unsigned int map_Loader_Background(char* path)     //Chargement du background
 {
-    Data* data;
+    Data* data = data_Create();
     unsigned int id_image = 0;
 
     data = data_Parser("[BACKGROUND]", path);       //Recherche et stockage des caracs du BG
@@ -246,7 +246,7 @@ unsigned int map_Loader_Background(char* path)     //Chargement du background
 
 void map_Loader_Objects(Object** object, Image* image, Animation** animation, unsigned int* taille_obj, unsigned int taille_anim, char* path)     //Chargement des objets proprement dit
 {
-    Data* data;
+    Data* data = data_Create();
     *taille_obj = 0;
 
     data = data_Parser("[OBJECTS]", path);

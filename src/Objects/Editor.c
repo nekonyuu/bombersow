@@ -52,7 +52,7 @@ Editor* editor_Create()
     for(int i = 0; i < editor->nombre_object; i++)
         editor->object[i] = NULL;
 
-    editor->object_create = object_Create(PLATFORM);
+    editor->object_create = object_Create(0, PLATFORM, 0, 0, NULL, NULL);
 
     editor->object_create_dynamic = NULL;
 

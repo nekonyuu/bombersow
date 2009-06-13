@@ -45,7 +45,7 @@ int main()
     game_config->vsync = sfFalse;
     game_config->fps_limit = 2000;
     game_config->show_fps = true;
-    game_config->move_speed = 425;
+    game_config->move_speed = 250;
     game_config->jump_speed = -85;
     game_config->force_fall_speed = 250;
     game_config->gravity_speed = 275.f;

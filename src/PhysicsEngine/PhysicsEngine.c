@@ -688,11 +688,11 @@ void quadtree_Draw(sfRenderWindow* Game, QuadTree* quad)
         sfShape* test = NULL;
         if (quad->player != NULL && quad->player->taille > 0)
         {
-            test = sfShape_CreateRectangle(quad->rect.Left+1, quad->rect.Top+1, quad->rect.Right-1, quad->rect.Bottom-1, sfColor_FromRGBA(255,255,255,0), 1, sfRed);
+            test = sfShape_CreateRectangle(quad->rect.Left+1, quad->rect.Top+1, quad->rect.Right-1, quad->rect.Bottom-1, sfColor_FromRGBA(0,0,0,0), 1, sfRed);
         }
         else
         {
-            test = sfShape_CreateRectangle(quad->rect.Left + 1, quad->rect.Top + 1, quad->rect.Right - 1, quad->rect.Bottom - 1, sfColor_FromRGBA(255, 255, 255, 0), 1, sfWhite);
+            test = sfShape_CreateRectangle(quad->rect.Left + 1, quad->rect.Top + 1, quad->rect.Right - 1, quad->rect.Bottom - 1, sfColor_FromRGBA(0, 0, 0, 0), 1, sfBlack);
         }
         sfRenderWindow_DrawShape(Game, test);
         sfShape_Destroy(test);

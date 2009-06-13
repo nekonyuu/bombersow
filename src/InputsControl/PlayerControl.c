@@ -73,6 +73,23 @@ inline void control_PlayerControl(sfRenderWindow* App, Map* map, Player* player,
                 sfImage_SaveToFile(screen, "capture.bmp");
                 sfImage_Destroy(screen);
             }
+
+            if (Event.Key.Code == sfKeyNum1)
+                player_SwitchWeapon(player, CROWBAR);
+
+            if (Event.Key.Code == sfKeyNum2)
+                player_SwitchWeapon(player, SHOTGUN);
+
+            if (Event.Key.Code == sfKeyNum3)
+                player_SwitchWeapon(player, ROCKET_LAUNCHER);
+            if (Event.Key.Code == sfKeyNum4)
+                player_SwitchWeapon(player, MACHINEGUN);
+            if (Event.Key.Code == sfKeyNum5)
+                player_SwitchWeapon(player, GRENADES);
+            if (Event.Key.Code == sfKeyNum6)
+                player_SwitchWeapon(player, SNIPER);
+            if (Event.Key.Code == sfKeyNum7)
+                player_SwitchWeapon(player, LASERGUN);
         }
 
         if (Event.Type == sfEvtClosed)

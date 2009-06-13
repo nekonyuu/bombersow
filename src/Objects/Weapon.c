@@ -71,10 +71,10 @@ void weapon_Destroy(Weapon* weapon2destroy)
 void armory_LoadImages(WeaponImg* img_tab)
 {
     img_tab[CROWBAR].weapon_img = sfImage_CreateFromFile("base/images/weapons/Crowbar.png");
-    img_tab[CROWBAR].bullet_img = sfImage_CreateFromFile("base/images/weapons/Grenade.png");
+    img_tab[CROWBAR].bullet_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
 
     img_tab[ROCKET_LAUNCHER].weapon_img = sfImage_CreateFromFile("base/images/weapons/Rocket Launcher.png");
-    img_tab[ROCKET_LAUNCHER].bullet_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
+    img_tab[ROCKET_LAUNCHER].bullet_img = sfImage_CreateFromFile("base/images/weapons/rocket_launcherammo.png");
 
     img_tab[GRENADES].weapon_img = sfImage_CreateFromFile("base/images/weapons/Crowbar.png");
     img_tab[GRENADES].bullet_img = sfImage_CreateFromFile("base/images/weapons/Grenade.png");
@@ -83,7 +83,7 @@ void armory_LoadImages(WeaponImg* img_tab)
     img_tab[SHOTGUN].bullet_img = sfImage_CreateFromFile("base/images/weapons/shotgunammo.png");
 
     img_tab[MACHINEGUN].weapon_img = sfImage_CreateFromFile("base/images/weapons/Machine-Gun.png");
-    img_tab[MACHINEGUN].bullet_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
+    img_tab[MACHINEGUN].bullet_img = sfImage_CreateFromFile("base/images/weapons/machinegunammo.png");
 
     img_tab[SNIPER].weapon_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
     img_tab[SNIPER].bullet_img = sfImage_CreateFromFile("base/images/weapons/Crowbar_bullet.png");
@@ -118,7 +118,7 @@ void armory_Create(Weapon* armory)
 
     armory[CROWBAR].nb_max_bullets = -1;
     armory[CROWBAR].nb_curr_bullets = -1;
-    armory[CROWBAR].damage = 20;
+    armory[CROWBAR].damage = 25;
 
     armory[CROWBAR].reload_latency = 1.f;
     armory[CROWBAR].switch_latency = 800;
@@ -129,7 +129,7 @@ void armory_Create(Weapon* armory)
     armory[CROWBAR].splash_coef = 0;
     armory[CROWBAR].selfdamage_coef = 0;
 
-    armory[CROWBAR].proj_speed = -1;
+    armory[CROWBAR].proj_speed = 10;
     armory[CROWBAR].trajectory = 0;
 
     armory[CROWBAR].collected = false;
@@ -146,7 +146,7 @@ void armory_Create(Weapon* armory)
     armory[ROCKET_LAUNCHER].nb_curr_bullets = 0;
     armory[ROCKET_LAUNCHER].damage = 65;
 
-    armory[ROCKET_LAUNCHER].reload_latency = 0.8f;
+    armory[ROCKET_LAUNCHER].reload_latency = 1.2f;
     armory[ROCKET_LAUNCHER].switch_latency = 800;
     armory[ROCKET_LAUNCHER].respawn_time = 15;
 
@@ -259,7 +259,7 @@ void armory_Create(Weapon* armory)
     armory[SNIPER].splash_coef = 1;
     armory[SNIPER].selfdamage_coef = 0;
 
-    armory[SNIPER].proj_speed = 1200;
+    armory[SNIPER].proj_speed = 2000;
     armory[SNIPER].trajectory = 0;
 
     armory[SNIPER].collected = false;
@@ -285,7 +285,7 @@ void armory_Create(Weapon* armory)
     armory[LASERGUN].splash_coef = 1;
     armory[LASERGUN].selfdamage_coef = 0;
 
-    armory[LASERGUN].proj_speed = -1;
+    armory[LASERGUN].proj_speed = 200;
     armory[LASERGUN].trajectory = 0;
 
     armory[LASERGUN].collected = false;

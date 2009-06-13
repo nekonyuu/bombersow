@@ -311,7 +311,6 @@ void player_SetPosition(Player* player, float x, float y)
 
 void player_Draw(sfRenderWindow* Game, Player* player)
 {
-    sprite_Draw(Game, player->sprite);
     if (!player->player_dead)
         sprite_Draw(Game, player->sprite);
 }

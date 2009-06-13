@@ -238,7 +238,18 @@ void gravitysystem_BloodUpdate(void* UserData)
             largeur = particle_->size_x;
             hauteur = particle_->size_y;
 
-            if (particle_->y + hauteur + y <= config->height && particle_->y + y > 0)
+            bool _bool_col = 0;
+
+            for(int i = 0; i < map_->nb_objects; i++)
+            {
+                if(particle_->x >= map_->objects_list[i]->curr_coord_x
+                && particle_->x <= map_->objects_list[i]->curr_coord_x + map_->objects_list[i]->sprite->largeur
+                && particle_->y >= map_->objects_list[i]->curr_coord_y
+                && particle_->y <= map_->objects_list[i]->curr_coord_y + map_->objects_list[i]->sprite->hauteur)
+                    _bool_col = 1;
+            }
+
+            if (!_bool_col && particle_->y + hauteur + y <= config->height && particle_->y + y > 0)
             {
                 particle_SetPosition(particle_, particle_->x + particle_->speed_x*map_->clocks_time[PARTICLE_CLOCK], particle_->y + y);
                 particle_->speed_y = speed_y;

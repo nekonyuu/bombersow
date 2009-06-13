@@ -262,10 +262,10 @@ void particle_Draw(Particle* particle, Config* config)
     glColor3f(particle->particle_color.r, particle->particle_color.g, particle->particle_color.b);
     // Repère à origine différente
     glBegin(GL_TRIANGLE_STRIP); // Dessin par triangles assemblés, plus performant pour le GPU
-    glVertex2i(particle->x, config->height - particle->y);
+    glVertex2i(particle->x, config->height - particle->y - particle->size_y);
+    glVertex2i(particle->x + particle->size_x, config->height - particle->y - particle->size_y);
     glVertex2i(particle->x + particle->size_x, config->height - particle->y);
-    glVertex2i(particle->x + particle->size_x, config->height - particle->y + particle->size_y);
-    glVertex2i(particle->x, config->height - particle->y + particle->size_y);
+    glVertex2i(particle->x, config->height - particle->y);
     glEnd();
 }
 

@@ -32,6 +32,7 @@
 					<Add option="-lcsfml-system-s-d" />
 					<Add option="-lsfml-system-s-d" />
 					<Add option="-lopengl32" />
+					<Add option="-lglu32" />
 					<Add option="-lmingw32" />
 					<Add directory="dep\lib-win" />
 				</Linker>
@@ -64,6 +65,7 @@
 					<Add option="-lcsfml-system-s" />
 					<Add option="-lsfml-system-s" />
 					<Add option="-lopengl32" />
+					<Add option="-lglu32" />
 					<Add option="-lmingw32" />
 					<Add directory="dep\lib-win" />
 				</Linker>
