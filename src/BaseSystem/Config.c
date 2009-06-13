@@ -27,5 +27,5 @@
 
 void config_Destroy(Config* config)
 {
-    free_secure(config);
+    free(config);
 }

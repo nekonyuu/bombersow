@@ -64,7 +64,7 @@ void weapon_Destroy(Weapon* weapon2destroy)
     else
     {
         sfSprite_Destroy(weapon2destroy->weapon_img);
-        free_secure(weapon2destroy);
+        free(weapon2destroy);
     }
 }
 
@@ -297,5 +297,5 @@ void armory_Create(Weapon* armory)
 void armory_Destroy(Weapon* armory2destroy)
 {
     for (int i = 0; i < NB_MAX_WEAPONS; i++)
-        free_secure(armory2destroy[i].name);
+        free(armory2destroy[i].name);
 }

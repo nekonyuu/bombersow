@@ -49,8 +49,8 @@ void image_Destroy(Image *image_)
         for (i = 0; i < image_->image_nombre; i++)
             sfImage_Destroy(image_->image_tab[i]);
 
-        free_secure(image_->image_tab);
-        free_secure(image_);
+        free(image_->image_tab);
+        free(image_);
     }
 }
 
@@ -109,7 +109,7 @@ void animation_Destroy(Animation *animation_)
         if (animation_->sprite != NULL)
             sfSprite_Destroy(animation_->sprite);
         sfClock_Destroy(animation_->clock);
-        free_secure(animation_);
+        free(animation_);
     }
 }
 
@@ -204,7 +204,7 @@ void sprite_Destroy(Sprite* sprite)
         break;
     }
 
-    free_secure(sprite);
+    free(sprite);
 }
 
 void sprite_SetPosition(Sprite* sprite, int x, int y)

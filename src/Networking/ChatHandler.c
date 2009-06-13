@@ -61,7 +61,7 @@ char* chat_ReadPacket(Map* map, sfPacket* packet)
     strcat(text, ": ");
     strcat(text, recv_mess);
 
-    free_secure(recv_mess);
+    free(recv_mess);
     return text;
 }
 
@@ -80,7 +80,7 @@ ChatMessage* ChatMessage_Create()
 void ChatMessage_Destroy(ChatMessage* ptr)
 {
     sfString_Destroy(ptr->message);
-    free_secure(ptr);
+    free(ptr);
 }
 
 void ChatMessage_DestroyFromList(ChatMessage* ptr)
@@ -174,7 +174,7 @@ void ChatMessagesList_AddMessage(ChatMessagesList* ptr, char* mess)
         ptr->nb_mess++;
 
     ChatMessagesList_UpdateCoords(ptr);
-    free_secure(mess);
+    free(mess);
 }
 
 void ChatMessagesList_Draw(ChatMessagesList* ptr, sfRenderWindow* Game)
@@ -203,5 +203,5 @@ void ChatMessagesList_Destroy(ChatMessagesList* ptr)
         head = temp_ptr;
     }
 
-    free_secure(ptr);
+    free(ptr);
 }

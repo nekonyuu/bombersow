@@ -272,7 +272,7 @@ void particle_Draw(Particle* particle, Config* config)
 void particle_Destroy(Particle* particle)
 {
     if (particle != NULL)
-        free_secure(particle);
+        free(particle);
 }
 
 Particle_Table* particle_table_Create()
@@ -296,8 +296,8 @@ void particle_table_Destroy(Particle_Table* particle_table)
     for (int i = 0; i < particle_table->nbr_max; i++)
         particle_Destroy(particle_table->particle[i]);
 
-    free_secure(particle_table->particle);
-    free_secure(particle_table);
+    free(particle_table->particle);
+    free(particle_table);
 }
 
 void particle_table_AddParticle(Particle_Table* particle_table, Particle* particle)

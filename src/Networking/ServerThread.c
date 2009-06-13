@@ -221,7 +221,7 @@ void server_Listen_TCP(void* UserData)
                             // Nettoyage
                             sfPacket_Destroy(packet);
                             sfPacket_Destroy(resend);
-                            free_secure(mess);
+                            free(mess);
 
                             logging_Info("server_Listen_TCP", "Resending finished !");
                             break;
@@ -292,7 +292,7 @@ void server_Listen_Game(void* UserData)
         // Nettoyage
         map_DestroyAllPackets(map);
         sfPacket_Clear(packet);
-        free_secure(packet_ip);
+        free(packet_ip);
 
         // Environ 50 actualisations par seconde
         sfSleep(0.02f);

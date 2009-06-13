@@ -61,15 +61,15 @@ void screen_Destroy(Screen* screen2destroy)
 
     for (unsigned int i = 0; i < screen2destroy->nb_text; i++)
         sfString_Destroy(screen2destroy->texts[i]);
-    free_secure(screen2destroy->texts);
+    free(screen2destroy->texts);
 
     for (unsigned int i = 0; i < screen2destroy->nb_spr; i++)
         sfSprite_Destroy(screen2destroy->sprites[i]);
-    free_secure(screen2destroy->sprites);
+    free(screen2destroy->sprites);
 
     for (unsigned int i = 0; i < screen2destroy->nb_img; i++)
         sfImage_Destroy(screen2destroy->base_images[i]);
-    free_secure(screen2destroy->base_images);
+    free(screen2destroy->base_images);
 
     sfMusic_Destroy(screen2destroy->music);
     gui_Destroy(screen2destroy->gui);
@@ -78,7 +78,7 @@ void screen_Destroy(Screen* screen2destroy)
     sfFont_Destroy(screen2destroy->gui_font);
     sfFont_Destroy(screen2destroy->alt_gui_font);
 
-    free_secure(screen2destroy);
+    free(screen2destroy);
 }
 
 // Charge une police
@@ -248,7 +248,7 @@ inline void Screen_FPSShow(sfRenderWindow* App)
     sfString_SetText(fps_text, tmp_fps);
     sfRenderWindow_DrawString(App, fps_text);
 
-    free_secure(tmp_fps);
+    free(tmp_fps);
     sfString_Destroy(fps_text);
 }
 

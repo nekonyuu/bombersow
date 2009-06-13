@@ -55,8 +55,8 @@ void playerslist_Destroy(PlayersList* ptr)
     for (unsigned int i = 0; i < ptr->max_players; i++)
         sfString_Destroy(ptr->players[i]);
 
-    free_secure(ptr->players);
-    free_secure(ptr);
+    free(ptr->players);
+    free(ptr);
 }
 
 void playerslist_Draw(PlayersList* ptr, sfRenderWindow* App)

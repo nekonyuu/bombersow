@@ -54,7 +54,7 @@ List_element* list_element_Create()
 
 void list_element_Destroy(List_element* list)
 {
-    free_secure(list);
+    free(list);
 }
 
 void list_element_Destroy_All(List_element* list)
@@ -62,7 +62,7 @@ void list_element_Destroy_All(List_element* list)
     if (list != NULL)
     {
         list_element_Destroy_All(list->next);
-        free_secure(list);
+        free(list);
     }
 }
 
@@ -168,7 +168,7 @@ void list_Destroy(List* list)
     if (list != NULL)
     {
         list_element_Destroy_All(list->first);
-        free_secure(list);
+        free(list);
     }
 }
 
@@ -223,7 +223,7 @@ void quadtree_Destroy(QuadTree* quad)
 
         for (int i = 0; i < 4; i++)
             quadtree_Destroy(quad->noeuds[i]);
-        free_secure(quad);
+        free(quad);
     }
 }
 
@@ -548,7 +548,7 @@ void quadtree_Destroy(QuadTree* quad)
 
         for (int i = 0; i < 4; i++)
             quadtree_Destroy(quad->noeuds[i]);
-        free_secure(quad);
+        free(quad);
     }
 }
 

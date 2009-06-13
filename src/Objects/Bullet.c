@@ -54,7 +54,7 @@ void bullet_Destroy(Bullet* ptr)
         logging_Error("bullet_Destroy", "Bullet object sent NULL", NULL_PTR_ERROR);
 
     sprite_Destroy(ptr->draw_image);
-    free_secure(ptr);
+    free(ptr);
 }
 
 void bullet_DeleteFromList(Bullet* bullet2destroy)
@@ -68,7 +68,7 @@ void bullet_DeleteFromList(Bullet* bullet2destroy)
         bullet2destroy->next->prev = bullet2destroy->prev;
 
     sprite_Destroy(bullet2destroy->draw_image);
-    free_secure(bullet2destroy);
+    free(bullet2destroy);
 }
 
 // Destruction d'une liste complète, head vaut NULL après destruction
@@ -153,7 +153,7 @@ BulletList* BulletList_Create()
 void BulletList_Destroy(BulletList* ptr)
 {
     bullet_DestroyList(&ptr->head);
-    free_secure(ptr);
+    free(ptr);
 }
 
 void BulletList_AddBullet(BulletList* ptr, Bullet* ptr2)

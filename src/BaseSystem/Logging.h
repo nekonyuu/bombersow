@@ -30,8 +30,6 @@
 #include "Memleak/halloc.h"
 #endif
 
-#define free_secure(ptr) { free(ptr); ptr = NULL; }
-
 enum ERROR_CODES { NO_ERROR_CODE, DISPLAY_FAIL_ERROR, NULL_PTR_ERROR, NETWORK_FAIL_ERROR, LOW_MEMORY_ERROR, FUCKING_STUPID_CLIENT_ERROR };
 
 void logging_Warning(char*, char*);

@@ -281,7 +281,7 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
     for (int i = 0; i < NB_SCREENS; i++)
         screen_Destroy(Screens_List[i]);
 
-    free_secure(Screens_List);
+    free(Screens_List);
 
     sfImage_Destroy(textbox_bg_black);
     sfImage_Destroy(textbox_bg_white);

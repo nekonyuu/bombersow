@@ -78,7 +78,7 @@ void object_Destroy(Object* object2destroy)
     {
         sfClock_Destroy(object2destroy->clock_mouvement);
         sprite_Destroy(object2destroy->sprite);
-        free_secure(object2destroy);
+        free(object2destroy);
     }
 }
 

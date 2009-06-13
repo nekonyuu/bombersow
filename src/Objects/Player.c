@@ -121,7 +121,7 @@ void player_Destroy(Player* player2destroy)
         logging_Info("player_Destroy", "Destroy sfString...");
         sfString_Destroy(player2destroy->name);
         logging_Info("player_Destroy", "Destroy name...");
-        free_secure(player2destroy->char_name);
+        free(player2destroy->char_name);
 
         logging_Info("player_Destroy", "Destroy weapons...");
         for (int i = 0; i < NB_MAX_WEAPONS; i++)
@@ -135,7 +135,7 @@ void player_Destroy(Player* player2destroy)
         sprite_Destroy(player2destroy->sprite);
         logging_Info("player_Destroy", "Destroy player's TCP socket...");
         sfSocketTCP_Destroy(player2destroy->listen_socket);
-        free_secure(player2destroy);
+        free(player2destroy);
         logging_Info("player_Destroy", "Player destroyed !");
     }
 }

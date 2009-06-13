@@ -94,7 +94,7 @@ int main()
     sfImage_Destroy(player_default_image);
     armory_Destroy(armory);
     armory_DestroyImages(weap_img);
-    free_secure(game_config);
+    free(game_config);
 
 #ifdef HALLOC_DBG
     ConteneurMalloc_Affiche (true);

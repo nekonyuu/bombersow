@@ -115,12 +115,12 @@ void map_Destroy(Map* map2destroy)
         logging_Info("map_Destroy", "Destroy objects...");
         for (unsigned int i = 0; i < map2destroy->nb_objects; i++)
             object_Destroy(map2destroy->objects_list[i]);
-        free_secure(map2destroy->objects_list);
+        free(map2destroy->objects_list);
 
         logging_Info("map_Destroy", "Destroy players...");
         for (unsigned int i = 0; i < map2destroy->nb_players; i++)
             player_Destroy(map2destroy->players_list[i]);
-        free_secure(map2destroy->players_list);
+        free(map2destroy->players_list);
 
         logging_Info("map_Destroy", "Destroy bullets...");
         BulletList_Destroy(map2destroy->bullets);
@@ -142,7 +142,7 @@ void map_Destroy(Map* map2destroy)
         logging_Info("map_Destroy", "Destroy quad tree...");
         quadtree_Destroy(map2destroy->quad_tree);
 
-        free_secure(map2destroy);
+        free(map2destroy);
         logging_Info("map_Destroy", "Map destroyed !");
     }
 }

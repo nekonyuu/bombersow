@@ -205,8 +205,8 @@ void dossier_Read_Image(Image* image, char* path)
         image_Loader(image, image_path, nombre_image);
 
         for (i = 0; i < nombre_image; i++)
-            free_secure(image_path[i]);
-        free_secure(image_path);
+            free(image_path[i]);
+        free(image_path);
     }
 
     closedir(rep);

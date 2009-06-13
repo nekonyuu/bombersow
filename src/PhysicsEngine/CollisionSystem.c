@@ -44,7 +44,7 @@ Collision* collision_Create()
 void collision_Destroy(Collision* collision)
 {
 
-    free_secure(collision);
+    free(collision);
     collision = NULL;
 
 }
