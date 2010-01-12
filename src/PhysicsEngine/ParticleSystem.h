@@ -69,25 +69,25 @@ void ParticleEngine_CreateBlood(ParticleEngine* engine, int coord_x, int coord_y
 Particle* particle_Create();
 Particle* particle_CreateBlood();
 
-inline void particle_SetPosition(Particle*, int, int);
+void particle_SetPosition(Particle*, int, int);
 
-inline int Particle_GetX(Particle*);
-inline int Particle_GetY(Particle*);
+int Particle_GetX(Particle*);
+int Particle_GetY(Particle*);
 
-inline void Particle_SetX(Particle*, int);
-inline void Particle_SetY(Particle*, int);
+void Particle_SetX(Particle*, int);
+void Particle_SetY(Particle*, int);
 
-inline int Particle_GetSizeX(Particle*);
-inline int Particle_GetSizeY(Particle*);
+int Particle_GetSizeX(Particle*);
+int Particle_GetSizeY(Particle*);
 
-inline void Particle_SetSizeX(Particle*, int);
-inline void Particle_SetSizeY(Particle*, int);
+void Particle_SetSizeX(Particle*, int);
+void Particle_SetSizeY(Particle*, int);
 
-inline float Particle_GetSpeedX(Particle*);
-inline float Particle_GetSpeedY(Particle*);
+float Particle_GetSpeedX(Particle*);
+float Particle_GetSpeedY(Particle*);
 
-inline void Particle_SetSpeedX(Particle*, float);
-inline void Particle_SetSpeedY(Particle*, float);
+void Particle_SetSpeedX(Particle*, float);
+void Particle_SetSpeedY(Particle*, float);
 
 void particle_Draw(Particle*, Config*);
 void particle_Destroy(Particle*);

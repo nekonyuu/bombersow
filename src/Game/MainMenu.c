@@ -44,7 +44,7 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
     sfEvent Event;
     bool close = false;
     unsigned int menu_select = 0;
-    int error_code = NO_ERROR;
+    int error_code = NO_ERROR_CODE;
 
     char pseudo[20] = "Player", servername[20] = "Bombersow Server", ip[15] = "127.0.0.1";
     int port = DEFAULT_PORT;

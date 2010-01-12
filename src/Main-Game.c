@@ -100,5 +100,5 @@ int main()
     ConteneurMalloc_Affiche (true);
 #endif
 
-    return NO_ERROR;
+    return NO_ERROR_CODE;
 }

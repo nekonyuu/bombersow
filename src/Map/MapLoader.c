@@ -226,7 +226,7 @@ void map_Loader_Animation(Animation** animation, Image* image, unsigned int* tai
 
         sscanf(data->data[i], "%d %d %d %d %d %d %d %f", &id, &id_image, &coord_x, &coord_y, &hauteur, &largeur, &nb_image, &fps);      //On les récupère dans le fichier txt
         animation[i] = animation_Create(image_Get(image, id_image), coord_x, coord_y, hauteur, largeur, nb_image, 0, STOP, fps);                    //Et on les stock dans l'animation
-        *taille_anim++;                                                                                                                  //On augmente la taille \o/ Ce sera en fait le nombre d'animation de la map
+        (*taille_anim)++;                                                                                                                  //On augmente la taille \o/ Ce sera en fait le nombre d'animation de la map
     }
 
     data_Destroy(data);  //Libère la mémoire
