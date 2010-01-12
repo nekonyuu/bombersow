@@ -117,7 +117,7 @@ int game_MainMenu(sfRenderWindow* Game, Config* config)
     screen_LoadFont(Screens_List[CREDITS_SCR], OPT_FONT, "base/fonts/ITCKRIST.TTF");
     screen_LoadImage(Screens_List[CREDITS_SCR], "base/images/Menu/menu_bg.png");
     screen_LoadText(Screens_List[CREDITS_SCR], "Auteurs :", sfWhite, 20, sfStringRegular, 450.0f, 140.0f);
-    screen_LoadText(Screens_List[CREDITS_SCR], "Raffre Jonathan (Loven x Kotonoha)", sfWhite, 20, sfStringRegular, 450.0f, 190.0f);
+    screen_LoadText(Screens_List[CREDITS_SCR], "Raffre Jonathan (NekoLover)", sfWhite, 20, sfStringRegular, 450.0f, 190.0f);
     screen_LoadText(Screens_List[CREDITS_SCR], "Netcode, Gestion Objects", sfWhite, 20, sfStringRegular, 450.0f, 220.0f);
     screen_LoadText(Screens_List[CREDITS_SCR], "Brieulle Ludovic (Klice)", sfWhite, 20, sfStringRegular, 450.0f, 260.0f);
     screen_LoadText(Screens_List[CREDITS_SCR], "Graphisme, Gestion clavier, Gameplay", sfWhite, 20, sfStringRegular, 450.0f, 290.0f);
